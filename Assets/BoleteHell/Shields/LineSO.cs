@@ -1,7 +1,5 @@
 using System;
 using BulletHell.Scripts.Lines;
-using SerializeReferenceEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 enum LineType
@@ -18,17 +16,13 @@ public class LineSO:ScriptableObject
     [SerializeField] private Sprite sprite;
     
     [SerializeReference] 
-    [SR(typeof(LineHitLogic))]
-    private LineHitLogic onRayHitLogic;
-    
-    [SerializeReference] 
-    [SR(typeof(LineHitLogic))]
-    private LineHitLogic onProjectileHitLogic;
+   
+    private LineHitLogic onHitLogic;
 
     private GameObject shieldPreview;
     private LineDrawer lineDrawer;
 
-   
+   //TODO: 
     private void Setup()
     {
        shieldPreview = Resources.Load<GameObject>("ShieldPreview");
@@ -41,6 +35,7 @@ public class LineSO:ScriptableObject
 
     public void DrawShieldPreview(Vector3 nextPos)
     {
+        //There has to be a better way than this to init
         if (!lineDrawer)
         {
             Setup();
@@ -55,15 +50,15 @@ public class LineSO:ScriptableObject
         lineDrawer.FinishLine(this);
     }
 
-    public void OnRayHit(Vector3 incomingDirection,RaycastHit hitPoint,Ray ray)
+    public void OnRayHit(Vector3 incomingDirection,RaycastHit2D hitPoint,Ray ray)
     {
-        onRayHitLogic.ExecuteRay(incomingDirection,hitPoint,ray);
+        onHitLogic.ExecuteRay(incomingDirection,hitPoint,ray);
         
     }
 
     public void OnProjectileHit(Vector3 incomingDirection)
     {
-        onProjectileHitLogic.ExecuteProjectile(incomingDirection);
+        onHitLogic.ExecuteProjectile(incomingDirection);
     }
     
     

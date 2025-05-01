@@ -101,6 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineWidth: 0.3
   spaceBetweenPoints: 0.3
-  linePrefab: {fileID: 2023966897301175169, guid: 5662c5937e259af48ac246fdab9ef616, type: 3}
+  linePrefab: {fileID: 2023966897301175169, guid: ba756d888a6b5874eb97c106b1b5df2b, type: 3}
   tolerance: 0.1
   <materialRefractiveIndice>k__BackingField: 10

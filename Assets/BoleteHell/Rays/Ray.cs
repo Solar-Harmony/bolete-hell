@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
+[Serializable]
 public abstract class Ray
 {
     [field: SerializeField] public Color color { get; private set; }
@@ -13,9 +15,9 @@ public abstract class Ray
 
     public void Cast(Vector3 bulletSpawnPoint, Vector3 direction)
     {
-        RaycastHit hit;
+        RaycastHit2D hit = Physics2D.Raycast(bulletSpawnPoint, direction,10 );
 
-        if (Physics.Raycast(bulletSpawnPoint, direction, out hit, math.INFINITY))
+        if (hit)
         {
             if (hit.transform.gameObject.TryGetComponent(out Line lineHit))
             {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using SerializeReferenceEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,13 +9,13 @@ public class Player : MonoBehaviour
     [SerializeField]private List<LineSO> currentShields = new List<LineSO>();
     [SerializeField]private int selectedShieldIndex;
     [SerializeReference]
-    [SR(typeof(Ray))]
     private Ray currentRay;
     [SerializeField] private Transform bulletSpawnPoint;
     
     
     
 
+    //Pourrais être hardcodé pour que Q = refraction,E = reflexion, R = diffraction
     public void CycleShields(bool forward)
     {
         if (currentShields.Count <= 1)
@@ -39,7 +38,8 @@ public class Player : MonoBehaviour
             else
                 selectedShieldIndex--;
         }
-        
+
+        Debug.Log($"selected {GetSelectedShield().name}");
         //TODO: trigger le changement du ui
     }
 

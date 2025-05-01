@@ -5,9 +5,9 @@ public class RefractLogic:LineHitLogic
 {
     private float materialRefractiveIndice = 2f;
     
-    public void ExecuteRay(Vector3 incomingDirection, RaycastHit hitPoint,Ray ray)
+    public void ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,Ray ray)
     {
-        Vector3 direction = Refract(incomingDirection, hitPoint.normal, ray.lightRefractiveIndice,
+        Vector2 direction = Refract(incomingDirection, hitPoint.normal, ray.lightRefractiveIndice,
             materialRefractiveIndice);
         Vector3 originPoint = hitPoint.point + direction * 0.001f;
         ray.Cast(originPoint,direction);

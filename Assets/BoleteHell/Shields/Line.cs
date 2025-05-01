@@ -9,7 +9,7 @@ public class Line : MonoBehaviour
         _lineInfo = lineInfo;
     }
 
-    public void OnRayHitLine(Vector3 incomingDirection,RaycastHit hitPoint,Ray ray)
+    public void OnRayHitLine(Vector3 incomingDirection,RaycastHit2D hitPoint,Ray ray)
     {
         if(_lineInfo.Equals(null))
             Debug.LogError($"{name} has no lineInfo setup");

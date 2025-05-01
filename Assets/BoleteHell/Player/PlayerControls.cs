@@ -56,12 +56,14 @@ namespace BulletHell.Scripts
 
         public void OnCycleShieldsForward(InputAction.CallbackContext context)
         {
-            player.CycleShields(true);
+            if(context.performed) 
+                player.CycleShields(true);
         }
 
         public void OnCycleShieldsBackwards(InputAction.CallbackContext context)
         {
-            player.CycleShields(false);
+            if(context.performed) 
+                player.CycleShields(false);
         }
 
         public void OnShootRay(InputAction.CallbackContext context)
