@@ -13,10 +13,9 @@ enum LineType
 public class LineSO:ScriptableObject
 {
     [SerializeField] private Color color;
-    [SerializeField] private Sprite sprite;
+    
     
     [SerializeReference] 
-   
     private LineHitLogic onHitLogic;
 
     private GameObject shieldPreview;

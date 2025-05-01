@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 604794fded01c8943a45fbfe5f2acd44, type: 3}
-  m_Name: ReflectionShield
+  m_Name: DiffractionShield
   m_EditorClassIdentifier: 
-  color: {r: 0.2520206, g: 1, b: 0, a: 1}
+  color: {r: 0, g: 0, b: 0, a: 0}
   onHitLogic:
-    rid: 4156091315713475036
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 4156091315713475036
-      type: {class: MirrorLogic, ns: , asm: Assembly-CSharp}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
