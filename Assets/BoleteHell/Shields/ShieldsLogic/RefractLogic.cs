@@ -9,7 +9,7 @@ public class RefractLogic:LineHitLogic
     {
         Vector2 direction = Refract(incomingDirection, hitPoint.normal, ray.lightRefractiveIndice,
             materialRefractiveIndice);
-        Vector3 originPoint = hitPoint.point + direction * 0.001f;
+        Vector3 originPoint = hitPoint.point + direction * 0.01f;
         ray.Cast(originPoint,direction);
     }
 

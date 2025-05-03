@@ -5,7 +5,7 @@ using UnityEngine.Splines;
 
 //Déssine le preview de la ligne que le joueur déssine
 [RequireComponent(typeof(MeshRenderer),typeof(MeshFilter))]
-public class LineDrawer : MonoBehaviour
+public class ShieldPreviewDrawer : MonoBehaviour
 {
     private Mesh mesh;
 
@@ -64,9 +64,12 @@ public class LineDrawer : MonoBehaviour
         
         line.SetLineInfo(lineinfo);
         lineGameObject.GetComponent<SplineCreator>().CreateSpline(LineSimplifier.Simplify(points,tolerance),lineWidth);
-        ResetPreviewLine();
+        
+        Destroy(gameObject);
+        
     }
 
+    //Si jamais on le change pour toujour exister dans la scene plutot que de créé un nouveau drawer chaque fois qu'on créé un preview
     private void ResetPreviewLine()
     {
         points.Clear();

@@ -9,6 +9,9 @@ enum LineType
     Disperse
 }
 
+/// <summary>
+/// Classe qui permet de déterminer les informations spécifique a un shield
+/// </summary>
 [CreateAssetMenu(fileName= "LineSO",menuName = "LineData",order = 0)]
 public class LineSO:ScriptableObject
 {
@@ -19,7 +22,7 @@ public class LineSO:ScriptableObject
     private LineHitLogic onHitLogic;
 
     private GameObject shieldPreview;
-    private LineDrawer lineDrawer;
+    private ShieldPreviewDrawer lineDrawer;
 
    //TODO: 
     private void Setup()
@@ -29,7 +32,7 @@ public class LineSO:ScriptableObject
            Debug.LogError("Missing reference to ShieldPreview gameobject");
 
        GameObject obj = Instantiate(shieldPreview);
-       lineDrawer = obj.GetComponent<LineDrawer>();
+       lineDrawer = obj.GetComponent<ShieldPreviewDrawer>();
     }
 
     public void DrawShieldPreview(Vector3 nextPos)
@@ -54,11 +57,4 @@ public class LineSO:ScriptableObject
         onHitLogic.ExecuteRay(incomingDirection,hitPoint,ray);
         
     }
-
-    public void OnProjectileHit(Vector3 incomingDirection)
-    {
-        onHitLogic.ExecuteProjectile(incomingDirection);
-    }
-    
-    
 }

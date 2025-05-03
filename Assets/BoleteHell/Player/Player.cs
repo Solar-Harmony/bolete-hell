@@ -6,10 +6,14 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float movementSpeed { get; private set; } = 10;
 
     //TODO: ne devrait aps être des sfield, il va falloir les setter selon des upgrades ou des drop wtv
-    [SerializeField]private List<LineSO> currentShields = new List<LineSO>();
-    [SerializeField]private int selectedShieldIndex;
-    [SerializeReference]
-    private Ray currentRay;
+    [SerializeField]private List<LineSO> currentShields = new ();
+    private int selectedShieldIndex;
+    // [SerializeReference]
+    // private Ray currentRay;
+    [SerializeField]
+    private List<Prism> equippedPrisms = new();
+    private int selectedPrismIndex;
+
     [SerializeField] private Transform bulletSpawnPoint;
     
     
@@ -24,20 +28,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (forward)
-        {
-            if (selectedShieldIndex + 1 == currentShields.Count)
-                selectedShieldIndex = 0;
-            else
-                selectedShieldIndex++;
-        }
-        else
-        {
-            if (selectedShieldIndex - 1 < 0)
-                selectedShieldIndex = currentShields.Count - 1;
-            else
-                selectedShieldIndex--;
-        }
+        selectedShieldIndex = (selectedShieldIndex + (forward ? 1 : -1) + currentShields.Count) % currentShields.Count;
 
         Debug.Log($"selected {GetSelectedShield().name}");
         //TODO: trigger le changement du ui
@@ -53,7 +44,7 @@ public class Player : MonoBehaviour
         GetSelectedShield().FinishLine();
     }
 
-    public LineSO GetSelectedShield()
+    private LineSO GetSelectedShield()
     {
         return currentShields[selectedShieldIndex];
     }
@@ -61,6 +52,6 @@ public class Player : MonoBehaviour
     public void Shoot(Vector3 targetPos)
     {
         Vector3 direction = (targetPos - bulletSpawnPoint.position).normalized;
-        currentRay.Cast(bulletSpawnPoint.position,direction);
+        equippedPrisms[selectedPrismIndex].Shoot(bulletSpawnPoint.position,direction);
     }
 }
