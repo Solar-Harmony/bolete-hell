@@ -34,7 +34,6 @@ namespace BulletHell.Scripts
             {
                 player.Shoot(mousePos2D);
             }
-
             if (isDrawingShield)
             {
                 player.DrawShield(mousePos2D);
@@ -57,13 +56,13 @@ namespace BulletHell.Scripts
         public void OnCycleShieldsForward(InputAction.CallbackContext context)
         {
             if(context.performed) 
-                player.CycleShields(true);
+                player.CycleShields(1);
         }
 
         public void OnCycleShieldsBackwards(InputAction.CallbackContext context)
         {
             if(context.performed) 
-                player.CycleShields(false);
+                player.CycleShields(-1);
         }
 
         public void OnShootRay(InputAction.CallbackContext context)
@@ -85,6 +84,11 @@ namespace BulletHell.Scripts
                 player.FinishShield();
             }
 
+        }
+
+        public void OnScrollWeapons(InputAction.CallbackContext context)
+        {
+            player.CycleWeapons((int)context.ReadValue<Vector2>().y);
         }
     }
 }

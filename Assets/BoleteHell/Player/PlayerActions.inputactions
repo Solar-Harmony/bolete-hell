@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollWeapons",
+                    "type": "PassThrough",
+                    "id": "356f2f95-8325-43de-9318-d8dec143cb5a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -168,6 +177,17 @@
                     "processors": "",
                     "groups": ";KB+M",
                     "action": "DrawShield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "694fb9af-9cc2-4886-a434-b6b2dd644fcd",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KB+M",
+                    "action": "ScrollWeapons",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

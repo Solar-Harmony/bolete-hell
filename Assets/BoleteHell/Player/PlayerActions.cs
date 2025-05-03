@@ -80,6 +80,15 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollWeapons"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""356f2f95-8325-43de-9318-d8dec143cb5a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""action"": ""DrawShield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""694fb9af-9cc2-4886-a434-b6b2dd644fcd"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KB+M"",
+                    ""action"": ""ScrollWeapons"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +243,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_Combat_CycleShieldsBackwards = m_Combat.FindAction("CycleShieldsBackwards", throwIfNotFound: true);
         m_Combat_ShootRay = m_Combat.FindAction("ShootRay", throwIfNotFound: true);
         m_Combat_DrawShield = m_Combat.FindAction("DrawShield", throwIfNotFound: true);
+        m_Combat_ScrollWeapons = m_Combat.FindAction("ScrollWeapons", throwIfNotFound: true);
     }
 
     ~@PlayerActions()
@@ -295,6 +316,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_CycleShieldsBackwards;
     private readonly InputAction m_Combat_ShootRay;
     private readonly InputAction m_Combat_DrawShield;
+    private readonly InputAction m_Combat_ScrollWeapons;
     public struct CombatActions
     {
         private @PlayerActions m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         public InputAction @CycleShieldsBackwards => m_Wrapper.m_Combat_CycleShieldsBackwards;
         public InputAction @ShootRay => m_Wrapper.m_Combat_ShootRay;
         public InputAction @DrawShield => m_Wrapper.m_Combat_DrawShield;
+        public InputAction @ScrollWeapons => m_Wrapper.m_Combat_ScrollWeapons;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +355,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @DrawShield.started += instance.OnDrawShield;
             @DrawShield.performed += instance.OnDrawShield;
             @DrawShield.canceled += instance.OnDrawShield;
+            @ScrollWeapons.started += instance.OnScrollWeapons;
+            @ScrollWeapons.performed += instance.OnScrollWeapons;
+            @ScrollWeapons.canceled += instance.OnScrollWeapons;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -354,6 +380,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @DrawShield.started -= instance.OnDrawShield;
             @DrawShield.performed -= instance.OnDrawShield;
             @DrawShield.canceled -= instance.OnDrawShield;
+            @ScrollWeapons.started -= instance.OnScrollWeapons;
+            @ScrollWeapons.performed -= instance.OnScrollWeapons;
+            @ScrollWeapons.canceled -= instance.OnScrollWeapons;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -388,5 +417,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         void OnCycleShieldsBackwards(InputAction.CallbackContext context);
         void OnShootRay(InputAction.CallbackContext context);
         void OnDrawShield(InputAction.CallbackContext context);
+        void OnScrollWeapons(InputAction.CallbackContext context);
     }
 }

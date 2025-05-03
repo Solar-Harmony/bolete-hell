@@ -8,10 +8,8 @@ public class Player : MonoBehaviour
     //TODO: ne devrait aps être des sfield, il va falloir les setter selon des upgrades ou des drop wtv
     [SerializeField]private List<LineSO> currentShields = new ();
     private int selectedShieldIndex;
-    // [SerializeReference]
-    // private Ray currentRay;
-    [SerializeField]
-    private List<Prism> equippedPrisms = new();
+    
+    [SerializeField] private List<Prism> equippedPrisms = new();
     private int selectedPrismIndex;
 
     [SerializeField] private Transform bulletSpawnPoint;
@@ -20,7 +18,7 @@ public class Player : MonoBehaviour
     
 
     //Pourrais être hardcodé pour que Q = refraction,E = reflexion, R = diffraction
-    public void CycleShields(bool forward)
+    public void CycleShields(int value)
     {
         if (currentShields.Count <= 1)
         {
@@ -28,10 +26,23 @@ public class Player : MonoBehaviour
             return;
         }
 
-        selectedShieldIndex = (selectedShieldIndex + (forward ? 1 : -1) + currentShields.Count) % currentShields.Count;
+        selectedShieldIndex = (selectedShieldIndex + value + currentShields.Count) % currentShields.Count;
 
         Debug.Log($"selected {GetSelectedShield().name}");
         //TODO: trigger le changement du ui
+    }
+
+    public void CycleWeapons(int value)
+    {
+        if (equippedPrisms.Count <= 1)
+        {
+            Debug.LogWarning("No weapons to cycle trough");
+            return;
+        }
+
+        selectedPrismIndex = (selectedPrismIndex + value + equippedPrisms.Count) % equippedPrisms.Count;
+
+        Debug.Log($"selected {GetSelectedWeapon().name}");
     }
 
     public void DrawShield(Vector3 nextPos)
@@ -47,6 +58,10 @@ public class Player : MonoBehaviour
     private LineSO GetSelectedShield()
     {
         return currentShields[selectedShieldIndex];
+    }
+    private Prism GetSelectedWeapon()
+    {
+        return equippedPrisms[selectedPrismIndex];
     }
 
     public void Shoot(Vector3 targetPos)

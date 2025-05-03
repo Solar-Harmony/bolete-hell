@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Prism : MonoBehaviour
 {
-    [field: SerializeField] public Color color { get; private set; }
     [Tooltip("bool for prototyping purposes True = automatic, False = charged")]
     [SerializeField] private bool firingType;
 
@@ -17,7 +16,6 @@ public class Prism : MonoBehaviour
 
     public void Shoot(Vector3 startPosition, Vector3 direction)
     {
-        ray.Init(color);
         ray.Cast(startPosition,direction);
     }
 }

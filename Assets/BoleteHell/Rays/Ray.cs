@@ -4,29 +4,23 @@ using UnityEngine;
 
 public class Ray:ScriptableObject
 {
-    private Color _color;
+    [field: SerializeField] public Color color { get; private set; }
     [field: SerializeField] public float lightRefractiveIndice { get; private set; }
     [field: SerializeField] public int hitDamage { get; private set; }
     //ray
     [SerializeReference]private RayHitLogic logic;
-
-    public void Init(Color color)
-    {
-        _color = color;
-    }
 
 
     public void Cast(Vector3 bulletSpawnPoint, Vector3 direction)
     {
         RaycastHit2D hit = Physics2D.Raycast(bulletSpawnPoint, direction,10 );
 
-        //TODO:fix rays getting refracted twice when they go trough a shield (once going in and again going out)
         //TODO: change raycasts to the actual way of shooting lasers and fix the problems it give with shield collision
         if (hit)
         {
             if (hit.transform.gameObject.TryGetComponent(out Line lineHit))
             {
-                Debug.DrawLine(bulletSpawnPoint, hit.point, _color);
+                Debug.DrawLine(bulletSpawnPoint, hit.point, color);
                 lineHit.OnRayHitLine(direction, hit, this);
             }
             else
