@@ -43,7 +43,8 @@ namespace BoleteHell.Input
             
             shipExhaustLight.intensity = Mathf.Lerp(0.0f, maxLightIntensity, alpha); 
             
-            rb.linearVelocity = moveDir * speed;
+            if (IsMoving)
+                rb.linearVelocity = moveDir * speed;
             
             float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Euler(0, 0, angle);
