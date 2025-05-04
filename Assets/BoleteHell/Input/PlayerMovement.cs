@@ -66,7 +66,8 @@ namespace BoleteHell.Input
             // get shift pressed
             float speed = Keyboard.current.shiftKey.isPressed ? 2.0f * SpeedFactor : SpeedFactor;
             if (IsMoving)
-                rb.linearVelocity = moveDir * speed;
+                rb.MovePosition(rb.position + moveDir * (speed * Time.fixedDeltaTime));
+                // rb.linearVelocity = moveDir * speed;
 
             if (inputDir.y < 0.0f && !bStop)
             {
