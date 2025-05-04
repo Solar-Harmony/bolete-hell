@@ -1,9 +1,11 @@
-﻿using BoleteHell.Graphics;
+﻿using System;
+using BoleteHell.Graphics;
 using BoleteHell.Utils;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 namespace BoleteHell.Input
 {
@@ -11,7 +13,23 @@ namespace BoleteHell.Input
     {
         [SerializeField]
         private InputController input;
+
+        [SerializeField]
+        private int enemyDamage = 5;
         
+        [SerializeField]
+        private int enemyDamageOverTime = 1;
+        
+        [SerializeField]
+        private int health = 100;
+
+        private void OnGUI()
+        {
+            // set font siez
+            GUI.skin.label.fontSize = 32;
+            GUI.Label(new Rect(10, 10, 300, 80), "Health: " + health);
+        }
+
         [SerializeField]
         private Camera mainCamera;
 
@@ -55,9 +73,26 @@ namespace BoleteHell.Input
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            // fragmenter.Fragment(other.GetContact(0).normal);
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                if (health <= 0)
+                    fragmenter.Fragment(other.GetContact(0).normal);
+
+                health -= enemyDamage;
+            }
         }
-        
+
+        // private void OnCollisionStay2D(Collision2D other)
+        // {
+        //     if (other.gameObject.CompareTag("Enemy"))
+        //     {
+        //         if (health <= 0)
+        //             fragmenter.Fragment(other.GetContact(0).normal);
+        //
+        //         health -= enemyDamageOverTime;
+        //     }
+        // }
+
         // Maps the mouse position between 0 and 1, where 0 is the center and 1 is the edge of the screen
         private static float NormalizedDistanceToCenter(out Vector2 direction)
         {

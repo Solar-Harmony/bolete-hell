@@ -28,6 +28,19 @@ namespace BoleteHell
             string randomText = GetRandomText();
             textMeshPro.text = randomText;
         }
+        
+        private int health = 100;
+        
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                if (health <= 0)
+                    Destroy(gameObject);
+
+                health -= 5;
+            }
+        }
 
         private readonly string[] texts = 
         {
