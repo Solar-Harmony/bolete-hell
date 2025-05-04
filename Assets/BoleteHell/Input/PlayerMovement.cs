@@ -1,10 +1,9 @@
-﻿using System;
-using BoleteHell.Graphics;
+﻿using BoleteHell.Graphics;
+using BoleteHell.Utils;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
-using Utils;
 
 namespace BoleteHell.Input
 {
@@ -33,17 +32,21 @@ namespace BoleteHell.Input
 
         public bool IsMoving => input.GetMovementDisplacement() != Vector2.zero;
 
-        private void Start()
-        {
-            this.AssertNotNull(input);
-            this.AssertNotNull(mainCamera);
-            this.AssertNotNull(shipExhaustLight);
-            this.AssertNotNull(rb);
-        }
-
         private void FixedUpdate()
         {
-            Move();
+            var alpha = NormalizedDistanceToCenter(out Vector2 lookDir);
+            float speed = SpeedFactor * speedCurve.Evaluate(alpha);
+
+            Vector2 inputDir = input.GetMovementDisplacement().normalized;
+            Vector2 right = new Vector2(lookDir.y, -lookDir.x);
+            Vector2 moveDir = inputDir.x * right + inputDir.y * lookDir;
+            
+            shipExhaustLight.intensity = Mathf.Lerp(0.0f, maxLightIntensity, alpha); 
+            
+            rb.linearVelocity = moveDir * speed;
+            
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
         }
         
         [SerializeField]
@@ -51,21 +54,7 @@ namespace BoleteHell.Input
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            fragmenter.Fragment(other.GetContact(0).normal);
-        }
-
-        private void Move()
-        {
-            var alpha = NormalizedDistanceToCenter(out Vector2 dir);
-            float speed = SpeedFactor * speedCurve.Evaluate(alpha);
-            
-            shipExhaustLight.intensity = Mathf.Lerp(0.0f, maxLightIntensity, alpha); 
-            
-            if (IsMoving)
-                rb.linearVelocity = dir * speed;
-            
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            // fragmenter.Fragment(other.GetContact(0).normal);
         }
         
         // Maps the mouse position between 0 and 1, where 0 is the center and 1 is the edge of the screen

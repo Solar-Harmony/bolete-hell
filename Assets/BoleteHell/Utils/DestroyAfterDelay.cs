@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace BoleteHell.Graphics
+namespace BoleteHell.Utils
 {
-    public class DeleteLater : MonoBehaviour
+    public class DestroyAfterDelay : MonoBehaviour
     {
         public float lifetime = 0.5f;
         

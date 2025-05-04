@@ -16,5 +16,10 @@ namespace Input
         {
             return _actions.Player.Move.ReadValue<Vector2>();
         }
+        
+        public bool IsShooting()
+        {
+            return _actions.Player.Attack.triggered;
+        }
     }
 }

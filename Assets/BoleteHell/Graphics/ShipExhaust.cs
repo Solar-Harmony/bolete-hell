@@ -1,8 +1,6 @@
-﻿using System;
-using BoleteHell.Input;
-using Input;
+﻿using BoleteHell.Input;
+using BoleteHell.Utils;
 using UnityEngine;
-using Utils;
 
 namespace BoleteHell.Graphics
 {
@@ -13,13 +11,7 @@ namespace BoleteHell.Graphics
         
         [SerializeField]
         private GameObject shipExhaust;
-
-        private void Awake()
-        {
-            this.AssertNotNull(movement);
-            this.AssertNotNull(shipExhaust);
-        }
-
+        
         private void Update()
         {
             shipExhaust.SetActive(movement.IsMoving);
