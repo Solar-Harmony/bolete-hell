@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4ac7ceb7a5ef245a3b450cac32c1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <color>k__BackingField: {r: 0.8742138, g: 0.48659062, b: 0.48659062, a: 1}
   firingType: 0
   timeBetweenShots: 0
   chargingSpeed: 0
@@ -52,4 +51,4 @@ MonoBehaviour:
   numBulletsPerShot: 0
   spreadAngle: 0
   precision: 0
-  ray: {fileID: 11400000, guid: 8c57c211aa47cdf4a93bf69a28c77aef, type: 2}
+  ray: {fileID: 11400000, guid: 20af61ff56bcb2049a1508a111646940, type: 2}

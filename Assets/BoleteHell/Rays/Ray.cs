@@ -7,7 +7,6 @@ public class Ray:ScriptableObject
     [field: SerializeField] public Color color { get; private set; }
     [field: SerializeField] public float lightRefractiveIndice { get; private set; }
     [field: SerializeField] public int hitDamage { get; private set; }
-    //ray
     [SerializeReference]private RayHitLogic logic;
 
 

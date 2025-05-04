@@ -7,6 +7,7 @@ public class RefractLogic:LineHitLogic
     
     public void ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,Ray ray)
     {
+        //TODO: devrait pas pouvoir hit le meme collider plus d'une fois
         Vector2 direction = Refract(incomingDirection, hitPoint.normal, ray.lightRefractiveIndice,
             materialRefractiveIndice);
         Vector3 originPoint = hitPoint.point + direction * 0.01f;

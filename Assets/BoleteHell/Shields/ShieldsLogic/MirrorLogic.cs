@@ -7,7 +7,7 @@ public class MirrorLogic:LineHitLogic
     {
         Vector2 direction = Vector2.Reflect(incomingDirection, hitPoint.normal);
         //Le float permet de ne pas recast le même point infiniment (desfois selon l'angle ça explosait de rayons)
-        ray.Cast(hitPoint.point + direction * 0.01f,direction);
+        ray.Cast(hitPoint.point + direction * 0.1f,direction);
     }
 
     public void ExecuteProjectile(Vector3 incomingDirection)
