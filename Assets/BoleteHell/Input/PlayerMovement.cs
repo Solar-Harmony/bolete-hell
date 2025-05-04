@@ -50,10 +50,12 @@ namespace BoleteHell.Input
 
         public bool IsMoving => input.GetMovementDisplacement() != Vector2.zero;
 
+        private bool bStop = false;
+        
         private void FixedUpdate()
         {
             var alpha = NormalizedDistanceToCenter(out Vector2 lookDir);
-            float speed = SpeedFactor * speedCurve.Evaluate(alpha);
+            // float speed = SpeedFactor * speedCurve.Evaluate(alpha);
 
             Vector2 inputDir = input.GetMovementDisplacement().normalized;
             Vector2 right = new Vector2(lookDir.y, -lookDir.x);
@@ -61,8 +63,20 @@ namespace BoleteHell.Input
             
             shipExhaustLight.intensity = Mathf.Lerp(0.0f, maxLightIntensity, alpha); 
             
+            // get shift pressed
+            float speed = Keyboard.current.shiftKey.isPressed ? 2.0f * SpeedFactor : SpeedFactor;
             if (IsMoving)
                 rb.linearVelocity = moveDir * speed;
+
+            if (inputDir.y < 0.0f && !bStop)
+            {
+                rb.linearVelocity = Vector2.zero;
+                bStop = true;
+            }
+            else
+            {
+                bStop = false;
+            }
             
             float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Euler(0, 0, angle);

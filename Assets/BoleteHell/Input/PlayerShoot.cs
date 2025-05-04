@@ -30,7 +30,9 @@ namespace BoleteHell.Input
         private void Shoot()
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            var proj = Instantiate(projPrefab, mousePos, Quaternion.identity);
+            Vector2 dir = (mousePos - (Vector2)transform.position).normalized;
+            Vector2 shootPos = transform.position + (Vector3)dir * 0.5f;
+            var proj = Instantiate(projPrefab, shootPos, Quaternion.identity);
             var rb = proj.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
