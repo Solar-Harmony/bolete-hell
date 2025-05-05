@@ -15,8 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: d61a877ad74f6ba49a07f20d77ae41df
   m_SerializeEntries:
-  - m_GUID: 19a188a251cc1464e9bc549d64d0fbc8
-    m_Address: Assets/BoleteHell/Prisms/PrismsPrefabs
+  - m_GUID: 2fbda5954ee341fcbee8854857b5a335
+    m_Address: Assets/Data/Cannons
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prisms

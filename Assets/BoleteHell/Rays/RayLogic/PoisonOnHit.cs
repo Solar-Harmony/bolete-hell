@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class PoisonOnHit:RayHitLogic
+namespace Lasers.RayLogic
 {
-    public override void OnHit()
+    public class PoisonOnHit : RayHitLogic
     {
-        Debug.Log("Get well soon");
+        public override void OnHit()
+        {
+            Debug.Log("Get well soon");
+        }
     }
 }
