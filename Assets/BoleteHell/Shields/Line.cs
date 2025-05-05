@@ -12,12 +12,12 @@ public class Line : MonoBehaviour
         _lineInfo = lineInfo;
     }
 
-    public void OnRayHitLine(Vector3 incomingDirection,RaycastHit2D hitPoint,Ray ray)
+    public Vector3 OnRayHitLine(Vector3 incomingDirection,RaycastHit2D hitPoint,float lightRefractiveIndice)
     {
         if(_lineInfo.Equals(null))
             Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
         
-        _lineInfo.OnRayHit(incomingDirection, hitPoint,ray);
+        return _lineInfo.OnRayHit(incomingDirection, hitPoint,lightRefractiveIndice);
     }
 
 }

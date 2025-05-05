@@ -55,14 +55,14 @@ public class ShieldPreviewDrawer : MonoBehaviour
         }
     }
 
-    public void FinishLine(LineSO lineinfo)
+    public void FinishLine(LineSO lineInfo)
     {
         GameObject lineGameObject = Instantiate(linePrefab);
 
         lineGameObject.name = $"test{testInt++}";
         Line line = lineGameObject.GetComponent<Line>();
         
-        line.SetLineInfo(lineinfo);
+        line.SetLineInfo(lineInfo);
         lineGameObject.GetComponent<SplineCreator>().CreateSpline(LineSimplifier.Simplify(points,tolerance),lineWidth);
         
         Destroy(gameObject);

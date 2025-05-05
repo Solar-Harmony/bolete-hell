@@ -16,13 +16,14 @@ MonoBehaviour:
   <lightRefractiveIndice>k__BackingField: 1
   <hitDamage>k__BackingField: 10
   logic:
-    rid: 4156091343518302289
+    rid: 4156091387209580616
+  maxNumberOfBounces: 10
+  maxRayDistance: 10
   references:
     version: 2
     RefIds:
-    - rid: 4156091343518302289
-      type: {class: ExplodeOnHit, ns: , asm: Assembly-CSharp}
+    - rid: 4156091387209580616
+      type: {class: PoisonOnHit, ns: , asm: Assembly-CSharp}
       data:
         baseDamage: 10
         projectileSpeed: 20
-        width: 30

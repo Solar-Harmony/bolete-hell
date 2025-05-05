@@ -21,40 +21,29 @@ public class LineSO:ScriptableObject
     [SerializeReference] 
     private LineHitLogic onHitLogic;
 
-    private GameObject shieldPreview;
+    [SerializeField] private GameObject shieldPreview;
     private ShieldPreviewDrawer lineDrawer;
 
-   //TODO: 
-    private void Setup()
-    {
-       shieldPreview = Resources.Load<GameObject>("ShieldPreview");
-       if (!shieldPreview)
-           Debug.LogError("Missing reference to ShieldPreview gameobject");
+    //Doing this so they all have a reference to the same object and so it can't be changed from editor
 
-       GameObject obj = Instantiate(shieldPreview);
-       lineDrawer = obj.GetComponent<ShieldPreviewDrawer>();
+    public void StartLine()
+    {
+        GameObject obj = Instantiate(shieldPreview);
+        lineDrawer = obj.GetComponent<ShieldPreviewDrawer>();
     }
 
     public void DrawShieldPreview(Vector3 nextPos)
     {
-        //There has to be a better way than this to init
-        if (!lineDrawer)
-        {
-            Setup();
-        }
-
         lineDrawer.DrawPreview(nextPos);
     }
 
     public void FinishLine()
     {
-        Debug.Log("Finishing line");
         lineDrawer.FinishLine(this);
     }
 
-    public void OnRayHit(Vector3 incomingDirection,RaycastHit2D hitPoint,Ray ray)
+    public Vector3 OnRayHit(Vector3 incomingDirection,RaycastHit2D hitPoint,float lightRefractiveIndice)
     {
-        onHitLogic.ExecuteRay(incomingDirection,hitPoint,ray);
-        
+        return onHitLogic.ExecuteRay(incomingDirection,hitPoint,lightRefractiveIndice);
     }
 }

@@ -32,10 +32,13 @@ public class SplineCreator : MonoBehaviour
         GameObject leftObj = new GameObject("EdgeCollider1");
         leftObj.transform.parent = transform;
         leftEdge = leftObj.AddComponent<EdgeCollider2D>();
+        leftObj.layer = LayerMask.NameToLayer("FrontWall");
         
         GameObject rightObj = new GameObject("EdgeCollider2");
         rightObj.transform.parent = transform;
         rightEdge = rightObj.AddComponent<EdgeCollider2D>();
+        rightObj.layer = LayerMask.NameToLayer("BackWall");
+
         
         GameObject startObj = new GameObject("CapCollider1");
         startObj.transform.parent = transform;
@@ -49,6 +52,7 @@ public class SplineCreator : MonoBehaviour
     public void CreateSpline(List<Vector3> points,float width)
     {
         splineExtrude.Radius = width;
+        meshFilter.sharedMesh = new Mesh();
       
 
         float3[] float3Array = points.Select(v => new float3(v.x,0,v.y)).ToArray();
@@ -97,7 +101,7 @@ public class SplineCreator : MonoBehaviour
                 Vector2 normalB = Perpendicular(tangentB);
 
                 //Miter join, permet de garder une distance constante pour le width de la ligne même dans des curve
-                // Average the normals (this gives a miter direction)
+                //Average the normals (this gives a miter direction)
                 Vector2 miter = (normalA + normalB).normalized;
                 
 
@@ -105,7 +109,6 @@ public class SplineCreator : MonoBehaviour
                 float miterFactor = (dot != 0) ? width / dot : width;
                 offset = miter * miterFactor;
             }
-
             leftPoints[i] = pos + offset;
             rightPoints[i] = pos - offset;
         }
@@ -117,7 +120,6 @@ public class SplineCreator : MonoBehaviour
         endCap.points = new[] { rightPoints[sampleCount - 1], leftPoints[sampleCount - 1] };
     }
     
-    // Helper function to get a 2D perpendicular.
     Vector2 Perpendicular(Vector2 v)
     {
         return new Vector2(-v.y, v.x);

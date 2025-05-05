@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Prism : MonoBehaviour
 {
+    [field:SerializeField] public bool isDefault { get; private set; }
+
     [Tooltip("bool for prototyping purposes True = automatic, False = charged")]
     [SerializeField] private bool firingType;
 
@@ -17,9 +20,16 @@ public class Prism : MonoBehaviour
     //Or we actually combine the two prisms and average the stats and add the ray logic to the ray
     //Should check if we want to be able to de-combine the prisms after too
     [SerializeField] private Ray ray;
+    private Ray modifiableRay;
 
-    public void Shoot(Vector3 startPosition, Vector3 direction)
+    public void Init()
     {
-        ray.Cast(startPosition,direction);
+        modifiableRay = Instantiate(ray);
+    }
+
+    //Besoin d'un line renderer par ligne
+    public void Shoot(Vector3 startPosition, Vector3 direction,InstantRayRenderer lineRenderer)
+    { 
+        modifiableRay.Cast(startPosition,direction,lineRenderer);
     }
 }

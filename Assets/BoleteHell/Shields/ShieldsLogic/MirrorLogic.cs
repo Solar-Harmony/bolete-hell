@@ -1,13 +1,14 @@
+using System;
 using BulletHell.Scripts.Lines;
 using UnityEngine;
 
+
+[Serializable]
 public class MirrorLogic:LineHitLogic
 {
-    public void ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,Ray ray)
+    public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,float lightRefractiveIndice)
     {
-        Vector2 direction = Vector2.Reflect(incomingDirection, hitPoint.normal);
-        //Le float permet de ne pas recast le même point infiniment (desfois selon l'angle ça explosait de rayons)
-        ray.Cast(hitPoint.point + direction * 0.1f,direction);
+        return Vector2.Reflect(incomingDirection, hitPoint.normal);
     }
 
     public void ExecuteProjectile(Vector3 incomingDirection)

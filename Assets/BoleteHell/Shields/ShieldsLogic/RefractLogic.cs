@@ -1,17 +1,18 @@
+using System;
 using BulletHell.Scripts.Lines;
 using UnityEngine;
 
+[Serializable]
 public class RefractLogic:LineHitLogic
 {
-    private float materialRefractiveIndice = 2f;
+    [SerializeField] private float materialRefractiveIndice = 2.417f;
     
-    public void ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,Ray ray)
+    public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,float lightRefractiveIndice)
     {
-        //TODO: devrait pas pouvoir hit le meme collider plus d'une fois
-        Vector2 direction = Refract(incomingDirection, hitPoint.normal, ray.lightRefractiveIndice,
+        
+        return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice,
             materialRefractiveIndice);
-        Vector3 originPoint = hitPoint.point + direction * 0.01f;
-        ray.Cast(originPoint,direction);
+        
     }
 
     public void ExecuteProjectile(Vector3 incomingDirection)

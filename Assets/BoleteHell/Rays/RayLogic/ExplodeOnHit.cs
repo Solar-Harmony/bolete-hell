@@ -7,6 +7,6 @@ public class ExplodeOnHit:RayHitLogic
     [SerializeField] private float width;
     public override void OnHit()
     {
-        Debug.Log("test");
+        Debug.Log("Boom");
     }
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 0.2520206, g: 1, b: 0, a: 1}
   onHitLogic:
     rid: 4156091315713475036
+  shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   references:
     version: 2
     RefIds:

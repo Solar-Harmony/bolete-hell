@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplosiveRay
   m_EditorClassIdentifier: 
   <color>k__BackingField: {r: 0.98742133, g: 0.79913944, b: 0.537182, a: 1}
-  <lightRefractiveIndice>k__BackingField: 4
+  <lightRefractiveIndice>k__BackingField: 1.8
   <hitDamage>k__BackingField: 20
   logic:
     rid: 4156091385458196480

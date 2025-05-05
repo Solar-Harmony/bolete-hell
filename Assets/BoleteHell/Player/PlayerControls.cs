@@ -1,19 +1,34 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace BulletHell.Scripts
 {
     [RequireComponent(typeof(Player))]
+    //Remove all this shit and Check in the components that need to know because rn this forces me to have way too many public variables and methods in Player
     public class PlayerControls : MonoBehaviour,PlayerActions.ICombatActions
     {
         private PlayerActions _actions;
 
         private Vector3 _currentMovementValue;
         private Player player;
-        private Vector3 mousePos2D;
-        private bool isShootingRay;
-        private bool isDrawingShield;
+        public Vector3 mousePos2D;
+        public bool isShootingRay;
+        public bool isDrawingShield;
+        
+        [HideInInspector]
+        public UnityEvent<InputAction.CallbackContext> startedShooting;
+        [HideInInspector]
+        public UnityEvent<InputAction.CallbackContext> endedShooting;
+        [HideInInspector]
+        public UnityEvent<InputAction.CallbackContext> startedDrawingShield;
+        [HideInInspector]
+        public UnityEvent<InputAction.CallbackContext> endedDrawingShield;
+        [HideInInspector]
+        public UnityEvent<int> scrolled;
+        [HideInInspector]
+        public UnityEvent<int> shieldCycled;
         private void Awake()
         {
             player = GetComponent<Player>();
@@ -29,15 +44,6 @@ namespace BulletHell.Scripts
         private void Update()
         {
             transform.position += _currentMovementValue * (Time.deltaTime * player.movementSpeed);
-
-            if (isShootingRay)
-            {
-                player.Shoot(mousePos2D);
-            }
-            if (isDrawingShield)
-            {
-                player.DrawShield(mousePos2D);
-            }
         }
 
         public void OnMovement(InputAction.CallbackContext context)
@@ -56,39 +62,51 @@ namespace BulletHell.Scripts
         public void OnCycleShieldsForward(InputAction.CallbackContext context)
         {
             if(context.performed) 
-                player.CycleShields(1);
+                shieldCycled.Invoke(1);
         }
 
         public void OnCycleShieldsBackwards(InputAction.CallbackContext context)
         {
             if(context.performed) 
-                player.CycleShields(-1);
+                shieldCycled.Invoke(-1);
         }
 
         public void OnShootRay(InputAction.CallbackContext context)
         {
             if (context.started)
+            {
                 isShootingRay = true;
+                startedShooting.Invoke(context);
+            }
             else if (context.canceled)
+            {
                 isShootingRay = false;
+                endedShooting.Invoke(context);
+            }
+
+            
         }
 
         public void OnDrawShield(InputAction.CallbackContext context)
         {
             if (context.started)
+            {
                 isDrawingShield = true;
+                startedDrawingShield.Invoke(context);
+            }
+
             else if (context.canceled)
             {
-                Debug.Log("Stopped holding left click");
                 isDrawingShield = false;
-                player.FinishShield();
+                endedDrawingShield.Invoke(context);
             }
 
         }
 
         public void OnScrollWeapons(InputAction.CallbackContext context)
         {
-            player.CycleWeapons((int)context.ReadValue<Vector2>().y);
+            if(context.performed) 
+                scrolled.Invoke((int)context.ReadValue<Vector2>().y); 
         }
     }
 }

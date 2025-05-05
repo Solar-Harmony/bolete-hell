@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4ac7ceb7a5ef245a3b450cac32c1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <isDefault>k__BackingField: 1
   firingType: 0
   timeBetweenShots: 0
   chargingSpeed: 0
