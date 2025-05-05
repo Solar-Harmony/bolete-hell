@@ -1,146 +1,150 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-[RequireComponent(typeof(SplineExtrude))]
-public class SplineCreator : MonoBehaviour
+namespace Shields
 {
-    
-    SplineContainer splineContainer;
-    SplineExtrude splineExtrude;
-    MeshFilter meshFilter;
-    Spline spline;
-
-    private CompositeCollider2D composite;
-    private EdgeCollider2D leftEdge;
-    private EdgeCollider2D rightEdge;
-    public EdgeCollider2D startCap;
-    public EdgeCollider2D endCap;
-    void Awake()
+    [RequireComponent(typeof(SplineExtrude))]
+    public class SplineCreator : MonoBehaviour
     {
-        splineContainer = gameObject.GetComponent<SplineContainer>();
-        splineExtrude = gameObject.GetComponent<SplineExtrude>();
-        splineExtrude.Capped = true;
-        meshFilter = GetComponent<MeshFilter>();
-        spline = splineContainer.Spline;
-        composite = GetComponent<CompositeCollider2D>();
-        
-        //Je doit créé 2 edgeColliders enfant du Composite collider pour faire un collider2D qui suis le spline
-        GameObject leftObj = new GameObject("EdgeCollider1");
-        leftObj.transform.parent = transform;
-        leftEdge = leftObj.AddComponent<EdgeCollider2D>();
-        leftObj.layer = LayerMask.NameToLayer("FrontWall");
-        
-        GameObject rightObj = new GameObject("EdgeCollider2");
-        rightObj.transform.parent = transform;
-        rightEdge = rightObj.AddComponent<EdgeCollider2D>();
-        rightObj.layer = LayerMask.NameToLayer("BackWall");
+        public EdgeCollider2D startCap;
+        public EdgeCollider2D endCap;
 
-        
-        GameObject startObj = new GameObject("CapCollider1");
-        startObj.transform.parent = transform;
-        startCap = startObj.AddComponent<EdgeCollider2D>();
-        
-        GameObject endObj = new GameObject("CapCollider2");
-        endObj.transform.parent = transform;
-        endCap = endObj.AddComponent<EdgeCollider2D>();
-    }
+        private CompositeCollider2D _composite;
+        private EdgeCollider2D _leftEdge;
+        private MeshFilter _meshFilter;
+        private EdgeCollider2D _rightEdge;
+        private Spline _spline;
 
-    public void CreateSpline(List<Vector3> points,float width)
-    {
-        splineExtrude.Radius = width;
-        meshFilter.sharedMesh = new Mesh();
-      
+        private SplineContainer _splineContainer;
+        private SplineExtrude _splineExtrude;
 
-        float3[] float3Array = points.Select(v => new float3(v.x,0,v.y)).ToArray();
-        spline.AddRange(float3Array,TangentMode.AutoSmooth);
-        
-        splineExtrude.Rebuild();
-        
-        Create2DColliders();
-    }
-
-	private void Create2DColliders()
-    {
-        int sampleCount = (int)Mathf.Ceil(splineExtrude.SegmentsPerUnit * spline.GetLength()) ;
-        float width = 0.3f/2;
-        Vector2[] leftPoints = new Vector2[sampleCount];
-        Vector2[] rightPoints = new Vector2[sampleCount];
-        Vector3[] sampledPositions = new Vector3[sampleCount];
-
-        for (int i = 0; i < sampleCount; i++)
+        private void Awake()
         {
-            float t = (float)i / (sampleCount - 1);
-            sampledPositions[i] = splineContainer.EvaluatePosition(t);
+            _splineContainer = gameObject.GetComponent<SplineContainer>();
+            _splineExtrude = gameObject.GetComponent<SplineExtrude>();
+            _splineExtrude.Capped = true;
+            _meshFilter = GetComponent<MeshFilter>();
+            _spline = _splineContainer.Spline;
+            _composite = GetComponent<CompositeCollider2D>();
+
+            //Je doit créé 2 edgeColliders enfant du Composite collider pour faire un collider2D qui suis le spline
+            var leftObj = new GameObject("EdgeCollider1");
+            leftObj.transform.parent = transform;
+            _leftEdge = leftObj.AddComponent<EdgeCollider2D>();
+            // leftObj.layer = LayerMask.NameToLayer("FrontWall");
+
+            var rightObj = new GameObject("EdgeCollider2");
+            rightObj.transform.parent = transform;
+            _rightEdge = rightObj.AddComponent<EdgeCollider2D>();
+            // rightObj.layer = LayerMask.NameToLayer("BackWall");
+
+
+            var startObj = new GameObject("CapCollider1");
+            startObj.transform.parent = transform;
+            startCap = startObj.AddComponent<EdgeCollider2D>();
+
+            var endObj = new GameObject("CapCollider2");
+            endObj.transform.parent = transform;
+            endCap = endObj.AddComponent<EdgeCollider2D>();
         }
 
-        for (int i = 0; i < sampleCount; i++)
+        private void OnDrawGizmos()
         {
-            Vector2 pos = sampledPositions[i];
-            Vector2 offset;
-            
-            if (i == 0)
-            {
-                Vector2 tangent = ((Vector2)sampledPositions[i + 1] - (Vector2)sampledPositions[i]).normalized;
-                offset = Perpendicular(tangent) * width;
-            }
-            else if (i == sampleCount - 1)
-            {
-                Vector2 tangent = ((Vector2)sampledPositions[i] - (Vector2)sampledPositions[i - 1]).normalized;
-                offset = Perpendicular(tangent) * width;
-            }
-            else
-            {
-                // For interior points, compute two tangents and their perpendicular normals
-                Vector2 tangentA = ((Vector2)sampledPositions[i] - (Vector2)sampledPositions[i - 1]).normalized;
-                Vector2 tangentB = ((Vector2)sampledPositions[i + 1] - (Vector2)sampledPositions[i]).normalized;
-                Vector2 normalA = Perpendicular(tangentA);
-                Vector2 normalB = Perpendicular(tangentB);
+            var mf = GetComponent<MeshFilter>();
+            if (mf == null || mf.sharedMesh == null) return;
 
-                //Miter join, permet de garder une distance constante pour le width de la ligne même dans des curve
-                //Average the normals (this gives a miter direction)
-                Vector2 miter = (normalA + normalB).normalized;
-                
+            var mesh = mf.sharedMesh;
+            var vertices = mesh.vertices;
+            var normals = mesh.normals;
 
-                float dot = Vector2.Dot(miter, normalA);
-                float miterFactor = (dot != 0) ? width / dot : width;
-                offset = miter * miterFactor;
+            var t = transform;
+
+            Gizmos.color = Color.green;
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                var worldPos = t.TransformPoint(vertices[i]);
+                var worldNormal = t.TransformDirection(normals[i]);
+                Gizmos.DrawLine(worldPos, worldPos + worldNormal * 0.1f);
             }
-            leftPoints[i] = pos + offset;
-            rightPoints[i] = pos - offset;
         }
 
-        leftEdge.points = leftPoints;
-        rightEdge.points = rightPoints;
-        
-        startCap.points = new[] { leftPoints[0], rightPoints[0] };
-        endCap.points = new[] { rightPoints[sampleCount - 1], leftPoints[sampleCount - 1] };
-    }
-    
-    Vector2 Perpendicular(Vector2 v)
-    {
-        return new Vector2(-v.y, v.x);
-    }
+        public void CreateSpline(List<Vector3> points, float width)
+        {
+            _splineExtrude.Radius = width;
+            _meshFilter.sharedMesh = new Mesh();
 
-    void OnDrawGizmos() {
-        MeshFilter mf = GetComponent<MeshFilter>();
-        if (mf == null || mf.sharedMesh == null) return;
 
-        Mesh mesh = mf.sharedMesh;
-        Vector3[] vertices = mesh.vertices;
-        Vector3[] normals = mesh.normals;
+            var float3Array = points.Select(v => new float3(v.x, 0, v.y)).ToArray();
+            _spline.AddRange(float3Array);
 
-        Transform t = transform;
+            _splineExtrude.Rebuild();
 
-        Gizmos.color = Color.green;
-        for (int i = 0; i < vertices.Length; i++) {
-            Vector3 worldPos = t.TransformPoint(vertices[i]);
-            Vector3 worldNormal = t.TransformDirection(normals[i]);
-            Gizmos.DrawLine(worldPos, worldPos + worldNormal * 0.1f);
+            Create2DColliders();
+        }
+
+        private void Create2DColliders()
+        {
+            var sampleCount = (int)Mathf.Ceil(_splineExtrude.SegmentsPerUnit * _spline.GetLength());
+            var width = 0.3f / 2;
+            var leftPoints = new Vector2[sampleCount];
+            var rightPoints = new Vector2[sampleCount];
+            var sampledPositions = new Vector3[sampleCount];
+
+            for (var i = 0; i < sampleCount; i++)
+            {
+                var t = (float)i / (sampleCount - 1);
+                sampledPositions[i] = _splineContainer.EvaluatePosition(t);
+            }
+
+            for (var i = 0; i < sampleCount; i++)
+            {
+                Vector2 pos = sampledPositions[i];
+                Vector2 offset;
+
+                if (i == 0)
+                {
+                    var tangent = ((Vector2)sampledPositions[i + 1] - (Vector2)sampledPositions[i]).normalized;
+                    offset = Perpendicular(tangent) * width;
+                }
+                else if (i == sampleCount - 1)
+                {
+                    var tangent = ((Vector2)sampledPositions[i] - (Vector2)sampledPositions[i - 1]).normalized;
+                    offset = Perpendicular(tangent) * width;
+                }
+                else
+                {
+                    // For interior points, compute two tangents and their perpendicular normals
+                    var tangentA = ((Vector2)sampledPositions[i] - (Vector2)sampledPositions[i - 1]).normalized;
+                    var tangentB = ((Vector2)sampledPositions[i + 1] - (Vector2)sampledPositions[i]).normalized;
+                    var normalA = Perpendicular(tangentA);
+                    var normalB = Perpendicular(tangentB);
+
+                    //Miter join, permet de garder une distance constante pour le width de la ligne même dans des curve
+                    //Average the normals (this gives a miter direction)
+                    var miter = (normalA + normalB).normalized;
+                    
+                    var dot = Vector2.Dot(miter, normalA);
+                    var miterFactor = dot != 0 ? width / dot : width;
+                    offset = miter * miterFactor;
+                }
+
+                leftPoints[i] = pos + offset;
+                rightPoints[i] = pos - offset;
+            }
+
+            _leftEdge.points = leftPoints;
+            _rightEdge.points = rightPoints;
+
+            startCap.points = new[] { leftPoints[0], rightPoints[0] };
+            endCap.points = new[] { rightPoints[sampleCount - 1], leftPoints[sampleCount - 1] };
+        }
+
+        private Vector2 Perpendicular(Vector2 v)
+        {
+            return new Vector2(-v.y, v.x);
         }
     }
-
 }

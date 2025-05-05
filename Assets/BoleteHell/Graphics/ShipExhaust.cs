@@ -1,18 +1,14 @@
-﻿using BoleteHell.Input;
-using BoleteHell.Utils;
-using Input;
+﻿using Input;
 using UnityEngine;
 
-namespace BoleteHell.Graphics
+namespace Graphics
 {
     public class ShipExhaust : MonoBehaviour
     {
-        [SerializeField]
-        private InputController input;  
-        
-        [SerializeField]
-        private GameObject shipExhaust;
-        
+        [SerializeField] private InputController input;
+
+        [SerializeField] private GameObject shipExhaust;
+
         private void Update()
         {
             shipExhaust.SetActive(input.IsMoving);

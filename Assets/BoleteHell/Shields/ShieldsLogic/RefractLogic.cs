@@ -1,37 +1,36 @@
 using System;
-using BulletHell.Scripts.Lines;
 using UnityEngine;
 
-[Serializable]
-public class RefractLogic:LineHitLogic
+namespace Shields.ShieldsLogic
 {
-    [SerializeField] private float materialRefractiveIndice = 2.417f;
-    
-    public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,float lightRefractiveIndice)
+    [Serializable]
+    public class RefractLogic : ILineHitLogic
     {
-        
-        return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice,
-            materialRefractiveIndice);
-        
-    }
+        [SerializeField] private float materialRefractiveIndice = 2.417f;
 
-    public void ExecuteProjectile(Vector3 incomingDirection)
-    {
-        throw new System.NotImplementedException();
-    }
-    
-    private Vector2 Refract(Vector3 incidentDirection, Vector3 surfaceNormal, float refractiveIndice1,
-        float refractiveIndice2)
-    {
-        
-        float changeScale = refractiveIndice1 / refractiveIndice2;
-        float cosI = -Vector3.Dot(surfaceNormal, incidentDirection);
-        float sinT2 = changeScale * changeScale * (1 - cosI * cosI);
+        public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        {
+            return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice,
+                materialRefractiveIndice);
+        }
 
-        if (sinT2 > 1)
-            return Vector2.zero;
+        public void ExecuteProjectile(Vector3 incomingDirection)
+        {
+            throw new NotImplementedException();
+        }
 
-        float cosT = Mathf.Sqrt(1 - sinT2);
-        return changeScale * incidentDirection + (changeScale * cosI - cosT) * surfaceNormal;
+        private Vector2 Refract(Vector3 incidentDirection, Vector3 surfaceNormal, float refractiveIndex1,
+            float refractiveIndex2)
+        {
+            var changeScale = refractiveIndex1 / refractiveIndex2;
+            var cosI = -Vector3.Dot(surfaceNormal, incidentDirection);
+            var sinT2 = changeScale * changeScale * (1 - cosI * cosI);
+
+            if (sinT2 > 1)
+                return Vector2.zero;
+
+            var cosT = Mathf.Sqrt(1 - sinT2);
+            return changeScale * incidentDirection + (changeScale * cosI - cosT) * surfaceNormal;
+        }
     }
 }

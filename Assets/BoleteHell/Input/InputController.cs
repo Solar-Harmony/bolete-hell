@@ -1,24 +1,45 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Input
 {
     public class InputController : MonoBehaviour
     {
         private InputSystem_Actions _actions;
-        
+
+        public bool IsMoving => GetMovementDisplacement() != Vector2.zero;
+        public bool IsBoosting => _actions.Player.Sprint.IsPressed();
+        public bool IsShooting => _actions.Player.Shoot.IsPressed();
+        public bool IsDrawingShield => _actions.Player.DrawShield.IsPressed();
+
+        public Vector2 MousePosition => _actions.Player.MousePos2D.ReadValue<Vector2>();
+
         private void Awake()
         {
             _actions = new InputSystem_Actions();
             _actions.Enable();
+            _actions.Player.Shoot.started += ctx => OnShootStarted?.Invoke();
+            _actions.Player.Shoot.canceled += ctx => OnShootEnded?.Invoke();
+            _actions.Player.CycleNextShield.performed += ctx => OnCycleShield?.Invoke(1);
+            _actions.Player.CyclePreviousShield.performed += ctx => OnCycleShield?.Invoke(-1);
+            _actions.Player.DrawShield.started += ctx => OnShieldStart?.Invoke();
+            _actions.Player.DrawShield.canceled += ctx => OnShieldEnd?.Invoke();
+            _actions.Player.CycleWeapons.started +=
+                ctx => OnCycleWeapons?.Invoke(ctx.ReadValue<Vector2>().x > 0 ? 1 : -1);
         }
-        
+
+        public event Action OnShieldStart;
+        public event Action OnShieldEnd;
+
+        public event Action OnShootStarted;
+        public event Action OnShootEnded;
+        public event Action<int> OnCycleWeapons;
+        public event Action<int> OnCycleShield;
+
         public Vector2 GetMovementDisplacement()
         {
             return _actions.Player.Move.ReadValue<Vector2>();
         }
-        
-        public bool IsMoving => GetMovementDisplacement() != Vector2.zero;
-        public bool IsShooting => _actions.Player.Attack.triggered;
-        public bool IsBoosting => _actions.Player.Sprint.triggered;
     }
 }

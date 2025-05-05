@@ -1,12 +1,16 @@
 using System;
 using UnityEngine;
 
-[System.Serializable]
-public class ExplodeOnHit:RayHitLogic
+namespace Lasers.RayLogic
 {
-    [SerializeField] private float width;
-    public override void OnHit()
+    [Serializable]
+    public class ExplodeOnHit : RayHitLogic
     {
-        Debug.Log("Boom");
+        [SerializeField] private float width;
+
+        public override void OnHit()
+        {
+            Debug.Log("Boom");
+        }
     }
 }

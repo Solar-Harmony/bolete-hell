@@ -1,7 +1,7 @@
-﻿namespace BoleteHell.Graphics
-{
-    using UnityEngine;
+﻿using UnityEngine;
 
+namespace Graphics
+{
     public class SpriteRuntimeFragmenter : MonoBehaviour
     {
         public int fragmentsX = 4;
@@ -9,17 +9,13 @@
         public float explosionForce = 5f;
         public Material material;
 
-        [SerializeField] 
-        private SpriteRenderer sr;
+        [SerializeField] private SpriteRenderer sr;
 
-        [SerializeField] 
-        private Rigidbody2D parentRb;
+        [SerializeField] private Rigidbody2D parentRb;
 
-        [SerializeField] 
-        private GameObject explosion;
+        [SerializeField] private GameObject explosion;
 
-        [SerializeField] 
-        private GameObject fragmentPrefab;
+        [SerializeField] private GameObject fragmentPrefab;
 
         public void Fragment(Vector2 impactNormal)
         {
@@ -31,48 +27,46 @@
 
             Instantiate(explosion, transform.position, Quaternion.identity);
 
-            Sprite sprite = sr.sprite;
-            Texture2D texture = sprite.texture;
+            var sprite = sr.sprite;
+            var texture = sprite.texture;
 
             Vector2 spriteSize = sprite.bounds.size;
-            Vector2 fragmentSize = new Vector2(spriteSize.x / fragmentsX, spriteSize.y / fragmentsY);
-            Vector2 origin = (Vector2)transform.position - spriteSize / 2;
+            var fragmentSize = new Vector2(spriteSize.x / fragmentsX, spriteSize.y / fragmentsY);
+            var origin = (Vector2)transform.position - spriteSize / 2;
 
-            for (int y = 0; y < fragmentsY; y++)
+            for (var y = 0; y < fragmentsY; y++)
+            for (var x = 0; x < fragmentsX; x++)
             {
-                for (int x = 0; x < fragmentsX; x++)
+                var pos = origin + new Vector2((x + 0.5f) * fragmentSize.x, (y + 0.5f) * fragmentSize.y);
+
+                var fragment = Instantiate(fragmentPrefab);
+                fragment.transform.position = pos;
+                fragment.transform.rotation = parentRb.transform.rotation;
+                fragment.transform.Translate(0, 0, -1.0f);
+
+                var mesh = CreateQuadMesh(fragmentSize);
+                var mf = fragment.GetComponent<MeshFilter>();
+                mf.mesh = mesh;
+
+                // UV Mapping
+                var uvWidth = sprite.rect.width / texture.width;
+                var uvHeight = sprite.rect.height / texture.height;
+                var uvX = (sprite.rect.x + x * sprite.rect.width / fragmentsX) / texture.width;
+                var uvY = (sprite.rect.y + y * sprite.rect.height / fragmentsY) / texture.height;
+                mf.mesh.uv = new Vector2[]
                 {
-                    Vector2 pos = origin + new Vector2((x + 0.5f) * fragmentSize.x, (y + 0.5f) * fragmentSize.y);
+                    new(uvX, uvY),
+                    new(uvX + uvWidth / fragmentsX, uvY),
+                    new(uvX, uvY + uvHeight / fragmentsY),
+                    new(uvX + uvWidth / fragmentsX, uvY + uvHeight / fragmentsY)
+                };
 
-                    GameObject fragment = Instantiate(fragmentPrefab);
-                    fragment.transform.position = pos;
-                    fragment.transform.rotation = parentRb.transform.rotation;
-                    fragment.transform.Translate(0, 0, -1.0f);
+                var rb = fragment.GetComponent<Rigidbody2D>();
 
-                    Mesh mesh = CreateQuadMesh(fragmentSize);
-                    MeshFilter mf = fragment.GetComponent<MeshFilter>();
-                    mf.mesh = mesh;
+                var skibiid = fragment.GetComponent<CircleCollider2D>();
+                skibiid.radius = fragmentSize.x / 4;
 
-                    // UV Mapping
-                    float uvWidth = sprite.rect.width / texture.width;
-                    float uvHeight = sprite.rect.height / texture.height;
-                    float uvX = (sprite.rect.x + x * sprite.rect.width / fragmentsX) / texture.width;
-                    float uvY = (sprite.rect.y + y * sprite.rect.height / fragmentsY) / texture.height;
-                    mf.mesh.uv = new Vector2[]
-                    {
-                        new(uvX, uvY),
-                        new(uvX + uvWidth / fragmentsX, uvY),
-                        new(uvX, uvY + uvHeight / fragmentsY),
-                        new(uvX + uvWidth / fragmentsX, uvY + uvHeight / fragmentsY)
-                    };
-
-                    Rigidbody2D rb = fragment.GetComponent<Rigidbody2D>();
-
-                    CircleCollider2D skibiid = fragment.GetComponent<CircleCollider2D>();
-                    skibiid.radius = fragmentSize.x / 4;
-
-                    rb.linearVelocity = parentRb.linearVelocity + Random.insideUnitCircle * explosionForce;
-                }
+                rb.linearVelocity = parentRb.linearVelocity + Random.insideUnitCircle * explosionForce;
             }
 
             Destroy(gameObject);
@@ -80,9 +74,9 @@
 
         private Mesh CreateQuadMesh(Vector2 size)
         {
-            Mesh mesh = new Mesh();
+            var mesh = new Mesh();
 
-            Vector3[] vertices = new Vector3[4]
+            var vertices = new Vector3[4]
             {
                 new(-size.x / 2, -size.y / 2, 0),
                 new(size.x / 2, -size.y / 2, 0),
@@ -90,7 +84,7 @@
                 new(size.x / 2, size.y / 2, 0)
             };
 
-            int[] triangles = new int[6] { 0, 2, 1, 2, 3, 1 };
+            var triangles = new int[6] { 0, 2, 1, 2, 3, 1 };
 
             mesh.vertices = vertices;
             mesh.triangles = triangles;

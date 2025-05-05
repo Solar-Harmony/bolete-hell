@@ -1,20 +1,19 @@
 using System;
-using BulletHell.Scripts.Lines;
 using UnityEngine;
 
-
-[Serializable]
-public class MirrorLogic:LineHitLogic
+namespace Shields.ShieldsLogic
 {
-    public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint,float lightRefractiveIndice)
+    [Serializable]
+    public class MirrorLogic : ILineHitLogic
     {
-        return Vector2.Reflect(incomingDirection, hitPoint.normal);
-    }
+        public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        {
+            return Vector2.Reflect(incomingDirection, hitPoint.normal);
+        }
 
-    public void ExecuteProjectile(Vector3 incomingDirection)
-    {
-        throw new System.NotImplementedException();
+        public void ExecuteProjectile(Vector3 incomingDirection)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-   
 }
