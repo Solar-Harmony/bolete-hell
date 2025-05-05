@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SampleScene.meta
 guid: bb8f8f31eae075246b8018414b6dd7b3
+========
+guid: fc0b851d7ffbbfc479d6e702576893db
+>>>>>>>> origin/master:Assets/Plugins.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
