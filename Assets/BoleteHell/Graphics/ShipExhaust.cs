@@ -1,5 +1,6 @@
 ﻿using BoleteHell.Input;
 using BoleteHell.Utils;
+using Input;
 using UnityEngine;
 
 namespace BoleteHell.Graphics
@@ -7,14 +8,14 @@ namespace BoleteHell.Graphics
     public class ShipExhaust : MonoBehaviour
     {
         [SerializeField]
-        private PlayerMovement movement;    
+        private InputController input;  
         
         [SerializeField]
         private GameObject shipExhaust;
         
         private void Update()
         {
-            shipExhaust.SetActive(movement.IsMoving);
+            shipExhaust.SetActive(input.IsMoving);
         }
     }
 }

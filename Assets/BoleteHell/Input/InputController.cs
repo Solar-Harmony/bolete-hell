@@ -17,9 +17,8 @@ namespace Input
             return _actions.Player.Move.ReadValue<Vector2>();
         }
         
-        public bool IsShooting()
-        {
-            return _actions.Player.Attack.triggered;
-        }
+        public bool IsMoving => GetMovementDisplacement() != Vector2.zero;
+        public bool IsShooting => _actions.Player.Attack.triggered;
+        public bool IsBoosting => _actions.Player.Sprint.triggered;
     }
 }

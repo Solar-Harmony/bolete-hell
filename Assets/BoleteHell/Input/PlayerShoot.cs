@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace BoleteHell.Input
 {
-    // just dummy
+    /// <summary>
+    /// Temporary
+    /// </summary>
     public class PlayerShoot : MonoBehaviour
     {
         [SerializeField]
@@ -21,7 +23,7 @@ namespace BoleteHell.Input
         
         private void Update()
         {
-            if (input.IsShooting())
+            if (input.IsShooting)
             {
                 Shoot();
             }
