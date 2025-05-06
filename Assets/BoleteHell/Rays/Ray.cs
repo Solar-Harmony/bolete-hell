@@ -24,15 +24,15 @@ namespace Lasers
         private Vector3 _currentPos;
 
         //TODO: Find a way to reserve a LineRenderer from the pool until the player stops shooting / has to reload
-        public void Cast(Vector3 bulletSpawnPoint, Vector2 direction, InstantRayRenderer lineRenderer)
+        public void Cast(Vector3 bulletSpawnPoint, Vector2 direction,InstantRayRenderer lineRenderer)
         {
             _currentPos = bulletSpawnPoint;
             _rayPositions.Add(_currentPos);
             _currentDirection = direction;
 
-            for (var i = 0; i <= maxNumberOfBounces; i++)
+            for (int i = 0; i <= maxNumberOfBounces; i++)
             {
-                var hit = Physics2D.Raycast(_currentPos, _currentDirection, maxRayDistance);
+                RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,maxRayDistance);
                 if (!hit)
                 {
                     Debug.DrawRay(_currentPos, _currentDirection * 10, Color.black);
@@ -46,17 +46,18 @@ namespace Lasers
                     _currentDirection = lineHit.OnRayHitLine(_currentDirection, hit, LightRefractiveIndex);
                     _currentPos = hit.point + _currentDirection * 0.01f;
                     _rayPositions.Add(_currentPos);
+                    ;
                 }
-                // TODO: Temp logic
                 else if (hit.collider.CompareTag("Enemy"))
                 {
                     _rayPositions.Add(hit.point);
                     logic.OnHit();
                 }
             }
-
-            lineRenderer.DrawRay(_rayPositions, Color);
+        
+            lineRenderer.DrawRay(_rayPositions,Color);
             _rayPositions.Clear();
+        
         }
     }
 }

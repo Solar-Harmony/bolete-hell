@@ -32,7 +32,6 @@ namespace Prisms
             _modifiableRay = Instantiate(ray);
         }
 
-        //Besoin d'un line renderer par ligne????????????
         public void Shoot(Vector3 startPosition, Vector3 direction, InstantRayRenderer lineRenderer)
         {
             _modifiableRay.Cast(startPosition, direction, lineRenderer);

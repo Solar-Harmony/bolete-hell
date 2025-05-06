@@ -88,6 +88,7 @@ namespace Shields
         private void Create2DColliders()
         {
             var sampleCount = (int)Mathf.Ceil(_splineExtrude.SegmentsPerUnit * _spline.GetLength());
+            if (sampleCount == 0) return;
             var width = 0.3f / 2;
             var leftPoints = new Vector2[sampleCount];
             var rightPoints = new Vector2[sampleCount];
