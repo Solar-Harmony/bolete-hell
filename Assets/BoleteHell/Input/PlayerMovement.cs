@@ -37,7 +37,7 @@ namespace BoleteHell.Input
         private float maxLightIntensity = 5.0f;
 
         [SerializeField]
-        private float dodgeSpeed = 20f;
+        private float dodgeSpeed = 2f;
 
         [SerializeField]
         private float dodgeDuration = 0.2f;
@@ -49,7 +49,7 @@ namespace BoleteHell.Input
         private float stutterInterval = 0.1f;
 
         [SerializeField]
-        private int stutterCount = 4;
+        private int stutterCount = 10;
 
         [SerializeField]
         private float stutterLifetime = 0.5f;
@@ -109,10 +109,10 @@ namespace BoleteHell.Input
         {
             canDodge = false;
             isInvincible = true;
-            
+
             // Get the movement direction
             Vector2 moveDir = input.GetMovementDisplacement().normalized;
-            
+
             // If no movement input, don't dodge
             if (moveDir == Vector2.zero)
             {
@@ -120,10 +120,10 @@ namespace BoleteHell.Input
                 isInvincible = false;
                 yield break;
             }
-            
+
             // Store original position for stutter effect
             Vector3 originalPos = transform.position;
-            
+
             // Perform the dodge movement
             float elapsedTime = 0f;
             while (elapsedTime < dodgeDuration)
@@ -132,7 +132,7 @@ namespace BoleteHell.Input
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            
+
             // Create stutter effect
             for (int i = 0; i < stutterCount; i++)
             {
@@ -144,17 +144,17 @@ namespace BoleteHell.Input
                 stutterSprite.sprite = spriteRenderer.sprite;
                 stutterSprite.color = stutterColor;
                 stutterSprite.sortingOrder = spriteRenderer.sortingOrder - 1;
-                
+
                 // Destroy the copy after the specified lifetime
                 Destroy(stutterCopy, stutterLifetime);
-                
+
                 yield return new WaitForSeconds(stutterInterval);
             }
-            
+
             // Wait for invincibility to end
             yield return new WaitForSeconds(invincibilityDuration - dodgeDuration);
             isInvincible = false;
-            
+
             // Wait for remaining cooldown
             yield return new WaitForSeconds(5f - invincibilityDuration);
             canDodge = true;
