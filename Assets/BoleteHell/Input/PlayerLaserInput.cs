@@ -16,7 +16,7 @@ namespace Input
 
         private void Update()
         {
-            if (input.IsShooting) Shoot(input.MousePosition);
+            if (input.IsShooting) Shoot(input.WorldMousePosition);
         }
 
         private void OnEnable()

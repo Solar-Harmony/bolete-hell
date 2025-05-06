@@ -19,6 +19,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 4156091315713475036
       type: {class: MirrorLogic, ns: , asm: Assembly-CSharp}
-      data: 
