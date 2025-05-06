@@ -13,7 +13,7 @@ namespace Player
 
         private void Update()
         {
-            if (input.IsDrawingShield) DrawShield( input.MousePosition);
+            if (input.IsDrawingShield) DrawShield( input.WorldMousePosition);
         }
 
         private void OnEnable()

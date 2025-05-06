@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRendererObj: {fileID: 3927958405422105781, guid: ca31d1b846994724eaad83a5128f2a18, type: 3}
-  numLineRenderers: 0
+  numLineRenderers: 25
 --- !u!4 &406190230
 Transform:
   m_ObjectHideFlags: 0
@@ -2477,7 +2477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9ae17468e0499d84e7a77086bb4041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 376560047}
+  _camera: {fileID: 0}
 --- !u!4 &2059194983
 Transform:
   m_ObjectHideFlags: 0

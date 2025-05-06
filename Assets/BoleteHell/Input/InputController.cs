@@ -7,19 +7,20 @@ namespace Input
     public class InputController : MonoBehaviour
     {
         private InputSystem_Actions _actions;
-        [SerializeField] private Camera camera;
+        [SerializeField] private Camera _camera;
         
         public bool IsMoving => GetMovementDisplacement() != Vector2.zero;
         public bool IsBoosting => _actions.Player.Sprint.IsPressed();
         public bool IsShooting => _actions.Player.Shoot.IsPressed();
         public bool IsDrawingShield => _actions.Player.DrawShield.IsPressed();
 
-        public Vector2 MousePosition
+        public Vector2 MousePosition => _actions.Player.MousePos2D.ReadValue<Vector2>();
+        public Vector2 WorldMousePosition
         {
             get
             {
                 Vector2 value = _actions.Player.MousePos2D.ReadValue<Vector2>();
-                Vector3 mousePos = camera.ScreenToWorldPoint(value);
+                Vector3 mousePos = _camera.ScreenToWorldPoint(value);
                 Vector3 pos2D = new Vector3(mousePos.x, mousePos.y, 0);
                 transform.up = pos2D - transform.position;
                 return pos2D;
