@@ -36,31 +36,16 @@ namespace BoleteHell.Input
         [field: SerializeField]
         private float maxLightIntensity = 5.0f;
 
-        [SerializeField]
-        private float dodgeSpeed = 2f;
+        private Dodge dodge;
 
-        [SerializeField]
-        private float dodgeDuration = 0.2f;
-
-        [SerializeField]
-        private float invincibilityDuration = 2f;
-
-        [SerializeField]
-        private float stutterInterval = 0.1f;
-
-        [SerializeField]
-        private int stutterCount = 10;
-
-        [SerializeField]
-        private float stutterLifetime = 0.5f;
-
-        [SerializeField]
-        private Color stutterColor = new Color(1f, 1f, 1f, 0.3f);
-
-        private bool canDodge = true;
-        private bool isInvincible = false;
-        [SerializeField] SpriteRenderer spriteRenderer;
-
+        private void Awake()
+        {
+            dodge = GetComponent<Dodge>();
+            if (dodge == null)
+            {
+                Debug.LogError("Dodge component not found on the same GameObject!");
+            }
+        }
 
         private void OnGUI()
         {
@@ -70,7 +55,7 @@ namespace BoleteHell.Input
 
         private void FixedUpdate()
         {
-            Dodge();
+            dodge.Dodging();
             bool isBoosting = Keyboard.current.shiftKey.isPressed;
 
             shipExhaustLight.intensity = isBoosting ? maxLightIntensity / 2.0f : maxLightIntensity;
@@ -88,7 +73,7 @@ namespace BoleteHell.Input
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Enemy") && !isInvincible)
+            if (other.gameObject.CompareTag("Enemy")) //&& !dodge.isInvincible)
             {
                 if (health <= 0)
                     fragmenter.Fragment(other.GetContact(0).normal);
@@ -97,67 +82,5 @@ namespace BoleteHell.Input
             }
         }
 
-        private void Dodge()
-        {
-            if (input.isDodging && canDodge)
-            {
-                StartCoroutine(dodgeRoutine());
-            }
-        }
-
-        private IEnumerator dodgeRoutine()
-        {
-            canDodge = false;
-            isInvincible = true;
-
-            // Get the movement direction
-            Vector2 moveDir = input.GetMovementDisplacement().normalized;
-
-            // If no movement input, don't dodge
-            if (moveDir == Vector2.zero)
-            {
-                canDodge = true;
-                isInvincible = false;
-                yield break;
-            }
-
-            // Store original position for stutter effect
-            Vector3 originalPos = transform.position;
-
-            // Perform the dodge movement
-            float elapsedTime = 0f;
-            while (elapsedTime < dodgeDuration)
-            {
-                transform.position += (Vector3)moveDir * (dodgeSpeed * Time.deltaTime);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            // Create stutter effect
-            for (int i = 0; i < stutterCount; i++)
-            {
-                // Create a visual copy of the player
-                GameObject stutterCopy = new GameObject("DodgeStutter");
-                stutterCopy.transform.position = transform.position;
-                stutterCopy.transform.rotation = transform.rotation;
-                SpriteRenderer stutterSprite = stutterCopy.AddComponent<SpriteRenderer>();
-                stutterSprite.sprite = spriteRenderer.sprite;
-                stutterSprite.color = stutterColor;
-                stutterSprite.sortingOrder = spriteRenderer.sortingOrder - 1;
-
-                // Destroy the copy after the specified lifetime
-                Destroy(stutterCopy, stutterLifetime);
-
-                yield return new WaitForSeconds(stutterInterval);
-            }
-
-            // Wait for invincibility to end
-            yield return new WaitForSeconds(invincibilityDuration - dodgeDuration);
-            isInvincible = false;
-
-            // Wait for remaining cooldown
-            yield return new WaitForSeconds(5f - invincibilityDuration);
-            canDodge = true;
-        }
     }
 }
