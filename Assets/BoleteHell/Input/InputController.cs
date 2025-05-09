@@ -8,11 +8,13 @@ namespace Input
     {
         private InputSystem_Actions _actions;
         [SerializeField] private Camera _camera;
-        
+
         public bool IsMoving => GetMovementDisplacement() != Vector2.zero;
         public bool IsBoosting => _actions.Player.Sprint.IsPressed();
         public bool IsShooting => _actions.Player.Shoot.IsPressed();
         public bool IsDrawingShield => _actions.Player.DrawShield.IsPressed();
+
+        public bool isDodging => _actions.Player.Dodge.IsPressed();
 
         public Vector2 MousePosition => _actions.Player.MousePos2D.ReadValue<Vector2>();
         public Vector2 WorldMousePosition
