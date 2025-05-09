@@ -11,12 +11,11 @@ namespace Input
         [SerializeField] private InputController input;
 
         private readonly List<RayCannon> _equippedPrisms = new();
-        private InstantRayRenderer _lineRenderer;
         private int _selectedPrismIndex;
 
         private void Update()
         {
-            if (input.IsShooting) Shoot(input.WorldMousePosition);
+            if (input.IsShooting) Shoot();
         }
 
         private void OnEnable()
@@ -60,18 +59,17 @@ namespace Input
         {
             //Reserve a line renderer
             Debug.Log("Started shooting");
-            _lineRenderer = LineRendererPool.GetRandomAvailable();
+            GetSelectedWeapon().StartFiring();
         }
 
         private void OnShootCanceled()
         {
             //Release the line renderer
             Debug.Log("finished shooting");
-
-            LineRendererPool.Release(_lineRenderer.Id);
+            GetSelectedWeapon().FinishFiring();
         }
 
-        private void Shoot(Vector3 targetPos)
+        private void Shoot()
         {
             if (_equippedPrisms.Count == 0)
             {
@@ -79,8 +77,8 @@ namespace Input
                 return;
             }
             
-            var direction = (targetPos - bulletSpawnPoint.position).normalized;
-            _equippedPrisms[_selectedPrismIndex].Shoot(bulletSpawnPoint.position, direction, _lineRenderer);
+            Vector2 direction = transform.up;
+            GetSelectedWeapon().Shoot(bulletSpawnPoint.position, direction);
         }
     }
 }
