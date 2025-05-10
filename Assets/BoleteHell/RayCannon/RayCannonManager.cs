@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Input;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -14,7 +13,7 @@ namespace Prisms
         private const string GroupLabel = "Prisms";
         [SerializeField] private PlayerLaserInput player;
         
-        [ReadOnly] [SerializeField] private List<GameObject> prisms = new();
+        [SerializeField] private List<GameObject> prisms = new();
 
         private void Start()
         {

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Lasers;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Ray = Lasers.Ray;
 
