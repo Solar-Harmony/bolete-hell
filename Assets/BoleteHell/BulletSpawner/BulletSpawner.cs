@@ -6,46 +6,51 @@ public class BulletSpawner : MonoBehaviour
     //Made using https://thomassteffen.medium.com/burst-fire-in-unity-f2d73e025f09
 
     [SerializeField] GameObject projectile;
-    public enum pattern 
+
+    [SerializeField]
+    private float attackTimer = 100f;
+    public enum pattern
     {
         singleBullet,
         threeSpreadBullets,
         fiveBulletArc,
+        bulletHell,
     }
     public pattern bulletPattern;
 
-    [SerializeField]
-    private float timer = 100f;
-    [Header("fireRate")]
     //fire rate between individual shots
     [SerializeField]
     private float _firerateCooldown;
     //fire rate between the full burst of shots
     [SerializeField]
-    private float _firerateGroupCooldown;
+    private float _AttackCooldown;
     //adjusts the different attack frequencies
     public enum fireState
     {
         shotSingle,
         shotDouble,
-        shotTriple
+        shotTriple,
+        shotConstant
     }
     public fireState _fireState;
     //adjusted by the firestate
-    private int _MAXshotsBeforeGroupCooldown;
+    private int _MAXshotsBeforeAttackCooldown;
 
     private void StatesOfFire()
     {
         switch (_fireState)
         {
             case fireState.shotSingle:
-                _MAXshotsBeforeGroupCooldown = 1;
+                _MAXshotsBeforeAttackCooldown = 1;
                 break;
             case fireState.shotDouble:
-                _MAXshotsBeforeGroupCooldown = 2;
+                _MAXshotsBeforeAttackCooldown = 2;
                 break;
             case fireState.shotTriple:
-                _MAXshotsBeforeGroupCooldown = 3;
+                _MAXshotsBeforeAttackCooldown = 3;
+                break;
+            case fireState.shotConstant:
+                _MAXshotsBeforeAttackCooldown = 1048;
                 break;
         }
     }
@@ -53,9 +58,9 @@ public class BulletSpawner : MonoBehaviour
     private void CooldownTimer()
     {
         //if timer is greater than cooldown, fire
-        if (timer < _firerateGroupCooldown)
+        if (attackTimer < _AttackCooldown)
         {
-            timer += Time.deltaTime;
+            attackTimer += Time.deltaTime;
         }
         else
         {
@@ -65,35 +70,47 @@ public class BulletSpawner : MonoBehaviour
 
     private IEnumerator RoutineFire(float _seconds)
     {
-        for (int i = 0; i < _MAXshotsBeforeGroupCooldown; i++)
+        for (int i = 0; i < _MAXshotsBeforeAttackCooldown; i++)
         {
-            Fire();
+            Fire(i);
             yield return new WaitForSeconds(_seconds);
         }
     }
 
-
-    public void Fire()
+    // burstOrder allows the patterns to change depending on their order in a given burst, IE bulletHell crisscrossing its pattern
+    public void Fire(int burstOrder)
     {
         switch (bulletPattern)
         {
+            //Single straight shooting bullet
             case pattern.singleBullet:
-                //Single straight shooting bullet
                 Instantiate(projectile, transform.position, transform.rotation);
-                timer = 0;
+                attackTimer = 0;
                 break;
 
+            //Shotgun Spread
             case pattern.threeSpreadBullets:
                 Instantiate(projectile, transform.position, transform.rotation);
                 Instantiate(projectile, transform.position, transform.rotation*Quaternion.AngleAxis(-25, Vector3.forward));
                 Instantiate(projectile, transform.position, transform.rotation*Quaternion.AngleAxis(25, Vector3.forward));
-                timer = 0;
+                attackTimer = 0;
                 break;
 
             case pattern.fiveBulletArc:
                 Instantiate(projectile, transform.position, transform.rotation);
-                timer = 0;
+                attackTimer = 0;
                 break;
+
+            case pattern.bulletHell:
+                int radius = 0 + ((burstOrder - 1) * 15);
+                for (int i = 0; i <= 12; i++)
+                {
+                    Instantiate(projectile, transform.position, transform.rotation * Quaternion.AngleAxis(radius, Vector3.forward));
+                    radius += 30;
+                }
+                attackTimer = 0;
+                break;
+
         }
     }
 
@@ -106,7 +123,8 @@ public class BulletSpawner : MonoBehaviour
 
     public void Stop()
     {
-        timer = 100f;
+        //Setting it to 100 allows the moment it is called to fire upon seeing the player to instantly issue the fire command.
+        attackTimer = 100f;
     }
 
 }
