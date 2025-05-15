@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Lasers;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Ray = Lasers.Ray;
 
-namespace Lasers
+namespace BoleteHell.Rays
 {
     //Je voullais rendre le laserRenderer fonctionnel pour les beams et les projectiles
     [RequireComponent(typeof(LaserProjectileMovement),typeof(CapsuleCollider2D),typeof(LineRenderer))]

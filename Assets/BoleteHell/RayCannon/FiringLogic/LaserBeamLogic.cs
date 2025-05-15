@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BoleteHell.Rays;
 using Lasers;
 using Shields;
 using UnityEngine;
