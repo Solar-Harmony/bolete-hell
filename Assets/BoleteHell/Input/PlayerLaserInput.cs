@@ -57,15 +57,11 @@ namespace Input
 
         private void OnShootStarted()
         {
-            //Reserve a line renderer
-            Debug.Log("Started shooting");
             GetSelectedWeapon().StartFiring();
         }
 
         private void OnShootCanceled()
         {
-            //Release the line renderer
-            Debug.Log("finished shooting");
             GetSelectedWeapon().FinishFiring();
         }
 

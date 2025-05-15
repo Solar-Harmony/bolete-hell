@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0.216981, b: 0.216981, a: 1}
   onHitLogic:
-    rid: 4156091417314984012
+    rid: 4156091577278922896
   shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 4156091417314984012
-      type: {class: RefractLogic, ns: Shields.ShieldsLogic, asm: Assembly-CSharp}
+    - rid: 4156091577278922896
+      type: {class: RefractLogic, ns: BoleteHell.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data:
         materialRefractiveIndice: 2.417

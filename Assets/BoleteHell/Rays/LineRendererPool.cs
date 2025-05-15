@@ -3,70 +3,71 @@ using UnityEngine;
 
 namespace Lasers
 {
-    //TODO: Créé un linerenderer pour les projectile laser
-    //si je tire une projectile laser on get un ProjectileRenderer random et on lui donne une vitesse et une direction
-    //Le projectileRenderer object devrais avoir un collider et faire la logique du mur si il touche un mur (ce check la devrait être dans le mur)
-    //et faire le onHit si il touche un ennemis
-    //Ajouter un rigid body 2d au projectile object
     public class LineRendererPool : MonoBehaviour
     {
-        [SerializeField] public GameObject lineRendererObj;
-        
-        [SerializeField] private int numLineRenderers = 25;
+        [SerializeField] public GameObject lineRendererPrefab; 
 
-        private readonly List<LaserRenderer> _pool = new();
-        private List<bool> _activeRenderers;
+        [SerializeField] private int initialPoolSize = 25;
+
+        private readonly Queue<LaserRenderer> _pool = new();
 
         public static LineRendererPool Instance { get; private set; }
 
         private void Awake()
         {
-            if (Instance && Instance != this)
+            if (Instance != null && Instance != this)
+            {
                 Destroy(gameObject);
-            else
-                Instance = this;
-
-            for (var i = 0; i <= numLineRenderers; i++)
-            {
-                var obj = Instantiate(lineRendererObj, gameObject.transform);
-                obj.SetActive(false);
-                var rayRenderer = obj.GetComponent<LaserRenderer>();
-                _pool.Add(rayRenderer);
-                rayRenderer.Init(i);
-            }
-
-            _activeRenderers = new List<bool>(new bool[_pool.Count]);
-        }
-
-        public static LaserRenderer GetRandomAvailable()
-        {
-            var availableIndices = new List<int>();
-            for (var i = 0; i < Instance._activeRenderers.Count; i++)
-                if (!Instance._activeRenderers[i])
-                    availableIndices.Add(i);
-
-            if (availableIndices.Count == 0)
-            {
-                Debug.LogWarning("No linerenderer available");
-                return null;
-            }
-
-            // Choose one index at random among the available ones
-            var randomIndex = availableIndices[Random.Range(0, availableIndices.Count)];
-            Debug.Log($"Activated {Instance._pool[randomIndex].name} {randomIndex}");
-            Instance._activeRenderers[randomIndex] = true;
-            Instance._pool[randomIndex].gameObject.SetActive(true);
-            return Instance._pool[randomIndex];
-        }
-
-        public static void Release(int index)
-        {
-            if (index < 0)
                 return;
+            }
+            Instance = this;
+            InitializePool(initialPoolSize);
+        }
 
-            Debug.Log("Setting false");
-            Instance._pool[index].gameObject.SetActive(false);
-            Instance._activeRenderers[index] = false;
+        private void InitializePool(int size)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                AddObjectToPool();
+            }
+        }
+        
+        private void AddObjectToPool()
+        {
+            if (!lineRendererPrefab.GetComponent<LaserRenderer>())
+            {
+                Debug.LogError("lineRendererPrefab empty");
+                return;
+            }
+            GameObject obj = Instantiate(lineRendererPrefab, transform);
+            obj.SetActive(false);
+            LaserRenderer rayRenderer = obj.GetComponent<LaserRenderer>();
+            _pool.Enqueue(rayRenderer);
+        }
+
+        public LaserRenderer Get()
+        {
+            if (_pool.Count == 0)
+            {
+                Debug.LogWarning("Pool empty adding more");
+                AddObjectToPool();
+            }
+
+            LaserRenderer laserRenderer = _pool.Dequeue();
+            laserRenderer.gameObject.SetActive(true);
+            return laserRenderer;
+        }
+
+        public void Release(LaserRenderer laserRenderer)
+        {
+            if (laserRenderer == null)
+            {
+                Debug.LogError("Attempted to release null object");
+                return;
+            }
+
+            laserRenderer.gameObject.SetActive(false);
+            _pool.Enqueue(laserRenderer);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Prisms
         private void Start()
         {
             LoadPrisms();
+            Physics2D.queriesHitTriggers = false;
         }
 
         private void LoadPrisms()
@@ -27,11 +28,11 @@ namespace Prisms
                 Debug.Log($"instantiating {obj.name}");
                 prisms.Add(obj);
 
-                if (obj.TryGetComponent(out RayCannon prism))
-                {
-                    prism.Init();
+                if (!obj.TryGetComponent(out RayCannon prism)) return;
+                
+                prism.Init();
+                if(prism.IsDefault)
                     player.AddPrism(prism);
-                }
             }).Completed += OnLoadComplete;
         }
 

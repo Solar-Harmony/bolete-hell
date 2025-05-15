@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Lasers;
 using UnityEngine;
@@ -45,6 +46,10 @@ namespace Prisms
         {
             _modifiableRay = Instantiate(ray);
             
+            foreach (RayCannonFiringLogic rayCannonFiringLogic in firingLogics)
+            {
+                rayCannonFiringLogic.ResetData();
+            }
         }
 
         public void StartFiring()
@@ -55,14 +60,11 @@ namespace Prisms
         public void Shoot(Vector3 startPosition, Vector3 direction)
         {
             firingLogics[currentTypeIndex].Shoot(startPosition,direction);
-            //_modifiableRay.Cast(startPosition, direction, lineRenderer);
         }
 
         public void FinishFiring()
         {
             firingLogics[currentTypeIndex].FinishFiring();
         }
-
-
     }
 }

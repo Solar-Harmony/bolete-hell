@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4ac7ceb7a5ef245a3b450cac32c1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsDefault>k__BackingField: 0
+  <IsDefault>k__BackingField: 1
   firingLogics:
   - rid: 4156091427271475350
   ray: {fileID: 11400000, guid: 20af61ff56bcb2049a1508a111646940, type: 2}

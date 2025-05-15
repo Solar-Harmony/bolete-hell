@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,71 +13,69 @@ namespace Lasers
         private LineRenderer laserRenderer;
         
         private LaserProjectileMovement movement;
-        private CapsuleCollider2D collider;
+        private CapsuleCollider2D cCollider;
         private Rigidbody2D rb;
         
         private LineRendererPool _parentPool;
-        public int Id { get; private set; }
 
         private void Awake()
         {
             laserRenderer = GetComponent<LineRenderer>();
             movement = GetComponent<LaserProjectileMovement>();
-            collider = GetComponent<CapsuleCollider2D>();
+            cCollider = GetComponent<CapsuleCollider2D>();
             rb = GetComponent<Rigidbody2D>();
             
-            collider.enabled = false;
+            cCollider.enabled = false;
             movement.enabled = false;
 
         }
 
-        public void Init(int id)
+        public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
-            Id = id;
-        }
-
-        public void DrawRay(List<Vector3> positions, Color color)
-        {
+            gameObject.SetActive(true);
             laserRenderer.positionCount = positions.Count;
-            laserRenderer.SetPosition(0, positions[0]);
-
-            for (var i = 1; i < positions.Count; i++)
-            {
-                var pos = positions[i];
-                laserRenderer.SetPosition(i, pos);
-            }
+            laserRenderer.SetPositions(positions.ToArray());
             
             laserRenderer.startColor = color;
             laserRenderer.endColor = color;
+            StartCoroutine(Lifetime(lifeTime));
         }
 
-        public void SetupProjectileLaser(float laserWidth,float laserLenght,Vector2 direction,float laserSpeed)
+        public void SetupProjectileLaser(Ray ray,Vector2 direction,float laserSpeed,LaserProjectileLogic logic)
         {
-            movement.enabled = true;
-            movement.StartMovement(direction,laserSpeed);
+            laserRenderer.useWorldSpace = false;
 
-            collider.direction = CapsuleDirection2D.Vertical;
-            collider.size = new Vector2(laserWidth, laserLenght +0.15f);
-            collider.offset = new Vector2(0, laserLenght / 2);
+            movement.enabled = true;
+            movement.StartMovement(direction,laserSpeed,ray.LightRefractiveIndex);
+
+            cCollider.direction = CapsuleDirection2D.Vertical;
+            //Le plus 0.15 est un nombre magique qui permettait de fit le collider sinon il correspond pas a 100%
+            cCollider.size = new Vector2(ray.rayWidth, ray.raylength + 0.15f);
+            cCollider.offset = new Vector2(0, ray.raylength / 2);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            float offset = -90f; 
-            transform.rotation = Quaternion.Euler(0, 0, angle + offset);
-            collider.enabled = true;
+            transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
+            cCollider.enabled = true;
 
             laserRenderer.numCapVertices = 10;
-
         }
 
-
-        private void Reset()
+        private IEnumerator Lifetime(float time)
         {
-            Debug.Log($"Reseting lineRenderer {Id}");
+            yield return new WaitForSeconds(time);
+            Reset();
+        }
+
+        //Pourrais peut-être avoir un renderer pour les laserbeams et un renderer pour les projectile laser
+        public void Reset()
+        {
+            laserRenderer.useWorldSpace = true;
             laserRenderer.positionCount = 0;
             gameObject.SetActive(false);
-            collider.enabled = false;
+            cCollider.enabled = false;
             movement.enabled = false;
             rb.linearVelocity = Vector2.zero;
             laserRenderer.numCapVertices = 0;
+            LineRendererPool.Instance.Release(this);
         }
 
     }

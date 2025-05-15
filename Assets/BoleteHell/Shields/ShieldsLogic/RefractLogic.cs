@@ -1,7 +1,8 @@
 using System;
+using Shields.ShieldsLogic;
 using UnityEngine;
 
-namespace Shields.ShieldsLogic
+namespace BoleteHell.Shields.ShieldsLogic
 {
     [Serializable]
     public class RefractLogic : ILineHitLogic
@@ -10,11 +11,12 @@ namespace Shields.ShieldsLogic
 
         public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
+            Debug.Log($"incoming direction: {incomingDirection}, normal: {hitPoint.normal}" );
             return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice,
                 materialRefractiveIndice);
         }
 
-        public void ExecuteProjectile(Vector3 incomingDirection)
+        public Vector3 ExecuteProjectile(Vector3 incomingDirection)
         {
             throw new NotImplementedException();
         }
