@@ -21,12 +21,10 @@ namespace Prisms
         [Tooltip("If the weapon is unlocked by default for the player")]
         [field: SerializeField] public bool IsDefault { get; private set; }
         //Permet de changer de firinType at runtime et d'avoir des stats spécifique a chaque firing type pour un weapon
-        //Peut-être pas besoin du dictionnary
         [SerializeReference] private List<RayCannonFiringLogic> firingLogics;
         
         private int currentTypeIndex = 0;
-
-
+        
         //TODO: Add logic to be able to combine rays (not spawn two rays at the same time really make 1 ray have the effects of two different rays (buffs included))
         //maybe combining rays adds logic to the first prisms ray
         //so when you combine two rays you choose one prism in which two rays's logic is combined
@@ -46,10 +44,12 @@ namespace Prisms
         {
             _modifiableRay = Instantiate(ray);
             
+            #if UNITY_EDITOR
             foreach (RayCannonFiringLogic rayCannonFiringLogic in firingLogics)
             {
                 rayCannonFiringLogic.ResetData();
             }
+            #endif
         }
 
         public void StartFiring()

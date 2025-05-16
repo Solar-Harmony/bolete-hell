@@ -17,6 +17,8 @@ namespace BoleteHell.Rays
         private Rigidbody2D rb;
         
         private LineRendererPool _parentPool;
+        private const float AdjustedColliderLenght = 0.15f;
+
 
         private void Awake()
         {
@@ -50,7 +52,7 @@ namespace BoleteHell.Rays
 
             cCollider.direction = CapsuleDirection2D.Vertical;
             //Le plus 0.15 est un nombre magique qui permettait de fit le collider sinon il correspond pas a 100%
-            cCollider.size = new Vector2(ray.rayWidth, ray.raylength + 0.15f);
+            cCollider.size = new Vector2(ray.rayWidth, ray.raylength + AdjustedColliderLenght);
             cCollider.offset = new Vector2(0, ray.raylength / 2);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle + -90f);

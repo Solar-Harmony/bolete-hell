@@ -22,6 +22,7 @@ public abstract class RayCannonFiringLogic
     public abstract void FinishFiring();
 
     //Nécéssaire vu qu'on dirait que les données ne se font pas reset quand on quitte le play mode for some reason kms
+    
     public void ResetData()
     {
         nextShootTime = 0f;
