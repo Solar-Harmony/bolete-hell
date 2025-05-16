@@ -30,9 +30,7 @@ namespace Shields
 
 
         private readonly List<Vector3> points = new();
-
-        private int testInt;
-
+        
         private Vector3 xOffset;
 
         private void Awake()
@@ -57,7 +55,7 @@ namespace Shields
         {
             var lineGameObject = Instantiate(linePrefab);
 
-            lineGameObject.name = $"test{testInt++}";
+            lineGameObject.name = $"Spawned Shield";
             var line = lineGameObject.GetComponent<Line>();
 
             line.SetLineInfo(lineInfo);
@@ -65,17 +63,6 @@ namespace Shields
                 .CreateSpline(LineSimplifier.Simplify(points, tolerance), lineWidth);
 
             Destroy(gameObject);
-        }
-
-        //Si jamais on le change pour toujour exister dans la scene plutot que de créé un nouveau drawer chaque fois qu'on créé un preview
-        private void ResetPreviewLine()
-        {
-            points.Clear();
-            currentLineTriangles.Clear();
-            mesh.SetTriangles(currentLineTriangles, 0);
-            currentLineVertices.Clear();
-            mesh.SetVertices(currentLineVertices);
-            mesh.RecalculateNormals();
         }
 
         private void UpdateMesh()

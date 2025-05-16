@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604794fded01c8943a45fbfe5f2acd44, type: 3}
   m_Name: ReflectionShield
   m_EditorClassIdentifier: 
-  color: {r: 0.2520206, g: 1, b: 0, a: 1}
+  color: {r: 0.836478, g: 0.64971715, b: 0.64971715, a: 1}
   onHitLogic:
-    rid: 4156091315713475036
+    rid: 4156091577278922899
   shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 4156091315713475036
-      type: {class: MirrorLogic, ns: , asm: Assembly-CSharp}
+    - rid: 4156091577278922899
+      type: {class: MirrorLogic, ns: BoleteHell.Shields.ShieldsLogic, asm: Assembly-CSharp}
+      data: 

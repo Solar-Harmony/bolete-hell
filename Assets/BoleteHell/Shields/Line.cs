@@ -2,10 +2,6 @@ using UnityEngine;
 
 namespace Shields
 {
-    /// <summary>
-    ///     Script qui permet de rien faire
-    ///     jk il permet de différentier si l'objet toucher est une ligne et quoi faire selon la ligne touché
-    /// </summary>
     public class Line : MonoBehaviour
     {
         [SerializeField] private LineSO _lineInfo;

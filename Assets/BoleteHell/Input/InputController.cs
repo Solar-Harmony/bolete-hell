@@ -39,8 +39,8 @@ namespace Input
             _actions.Player.CyclePreviousShield.performed += ctx => OnCycleShield?.Invoke(-1);
             _actions.Player.DrawShield.started += ctx => OnShieldStart?.Invoke();
             _actions.Player.DrawShield.canceled += ctx => OnShieldEnd?.Invoke();
-            _actions.Player.CycleWeapons.started +=
-                ctx => OnCycleWeapons?.Invoke(ctx.ReadValue<Vector2>().x > 0 ? 1 : -1);
+            _actions.Player.CycleWeapons.performed +=
+                ctx => OnCycleWeapons?.Invoke(ctx.ReadValue<Vector2>().y > 0 ? 1 : -1);
         }
 
         public event Action OnShieldStart;

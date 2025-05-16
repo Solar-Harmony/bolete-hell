@@ -1,24 +1,30 @@
+using System;
+using System.Collections.Generic;
 using Lasers;
 using UnityEngine;
 using Ray = Lasers.Ray;
 
 namespace Prisms
 {
+    //Automatic: Plein de petit laser
+    //Charged: Charge puis tire un laser instant
+    //Constant: tire un laser de manière constante
+    public enum FiringTypes
+    {
+        Automatic,
+        Charged,
+        Constant
+    }
+
     public class RayCannon : MonoBehaviour
     {
-        [field: SerializeField] public bool isDefault { get; private set; }
-
-        [Tooltip("bool for prototyping purposes True = automatic, False = charged")] [SerializeField]
-        private bool firingType;
-
-        [SerializeField] private float timeBetweenShots;
-        [SerializeField] private float chargingSpeed;
-        [SerializeField] private float reloadTime;
-        [SerializeField] private int numBulletsPerShot;
-        [SerializeField] private float spreadAngle;
-
-        [SerializeField] private float precision;
-
+        [Tooltip("If the weapon is unlocked by default for the player")]
+        [field: SerializeField] public bool IsDefault { get; private set; }
+        //Permet de changer de firinType at runtime et d'avoir des stats spécifique a chaque firing type pour un weapon
+        [SerializeReference] private List<RayCannonFiringLogic> firingLogics;
+        
+        private int currentTypeIndex = 0;
+        
         //TODO: Add logic to be able to combine rays (not spawn two rays at the same time really make 1 ray have the effects of two different rays (buffs included))
         //maybe combining rays adds logic to the first prisms ray
         //so when you combine two rays you choose one prism in which two rays's logic is combined
@@ -27,14 +33,38 @@ namespace Prisms
         [SerializeField] private Ray ray;
         private Ray _modifiableRay;
 
+        public void SwitchFiringType()
+        {
+            if (firingLogics.Count > 1) return;
+            
+            currentTypeIndex = (currentTypeIndex + 1 + firingLogics.Count) % firingLogics.Count;
+        }
+
         public void Init()
         {
             _modifiableRay = Instantiate(ray);
+            
+            #if UNITY_EDITOR
+            foreach (RayCannonFiringLogic rayCannonFiringLogic in firingLogics)
+            {
+                rayCannonFiringLogic.ResetData();
+            }
+            #endif
         }
 
-        public void Shoot(Vector3 startPosition, Vector3 direction, InstantRayRenderer lineRenderer)
+        public void StartFiring()
         {
-            _modifiableRay.Cast(startPosition, direction, lineRenderer);
+            firingLogics[currentTypeIndex].StartFiring(_modifiableRay);
+        }
+
+        public void Shoot(Vector3 startPosition, Vector3 direction)
+        {
+            firingLogics[currentTypeIndex].Shoot(startPosition,direction);
+        }
+
+        public void FinishFiring()
+        {
+            firingLogics[currentTypeIndex].FinishFiring();
         }
     }
 }
