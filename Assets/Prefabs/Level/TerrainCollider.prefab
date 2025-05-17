@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 4884655325379900645}
   - component: {fileID: 3971186094942257169}
   - component: {fileID: 9033596059518396340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TerrainCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &9087041247693112143
 Transform:
