@@ -2549,7 +2549,8 @@ GameObject:
   - component: {fileID: 2122733043}
   - component: {fileID: 2122733042}
   - component: {fileID: 2122733044}
-  m_Layer: 0
+  - component: {fileID: 2122733045}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2588,8 +2589,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 2059194982}
-  enemyDamage: 5
-  health: 100
   fragmenter: {fileID: 2122733039}
   mainCamera: {fileID: 376560047}
   <SpeedFactor>k__BackingField: 5
@@ -2736,6 +2735,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2122733043}
   prisms: []
+--- !u!114 &2122733045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122733031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
 --- !u!1001 &7059509725607095703
 PrefabInstance:
   m_ObjectHideFlags: 0

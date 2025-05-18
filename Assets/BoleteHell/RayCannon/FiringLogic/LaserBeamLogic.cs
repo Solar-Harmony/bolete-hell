@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Rays;
+using BoleteHell.Utils;
 using Lasers;
 using Shields;
 using UnityEngine;
@@ -26,12 +27,12 @@ public class LaserBeamLogic:RayCannonFiringLogic
 
     public override void OnReset(LaserRenderer renderer)
     {
-        
+        renderer.gameObject.SetActive(false);
     }
 
     protected override void InitLaserData()
     {
-        _modifiableLaserData = ScriptableObjectCloner.CloneScriptableObject(laserData);
+        _modifiableLaserData = ObjectInstantiator.CloneScriptableObject(laserData);
     }
 
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
@@ -46,9 +47,6 @@ public class LaserBeamLogic:RayCannonFiringLogic
         LineRendererPool.Instance.Release(reservedRenderer);
     }
     
-    
-
-
     private void Cast(Vector3 bulletSpawnPoint, Vector2 direction)
     {
         _currentPos = bulletSpawnPoint;
@@ -70,9 +68,11 @@ public class LaserBeamLogic:RayCannonFiringLogic
                 OnHitShield(hit, lineHit);
             }
             //Devrait check le health component de la personne pour que ça fonctionne si on touche un ennemi ou le joueur
-            else if (hit.collider.CompareTag("Enemy"))
+            else if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
-                OnHitEnemy(hit.point);
+                OnHitEnemy(hit.point,health);
+                //Si je touche un ennemi je ne refait plus de bounces
+                break;
             }
         }
         
@@ -80,10 +80,10 @@ public class LaserBeamLogic:RayCannonFiringLogic
         _rayPositions.Clear();
     }
 
-    private void OnHitEnemy(Vector2 hitPosition)
+    private void OnHitEnemy(Vector2 hitPosition,Health health)
     {
         _rayPositions.Add(hitPosition);
-        _modifiableLaserData.logic.OnHit();
+        _modifiableLaserData.logic.OnHit(hitPosition,health);
     }
 
     private void OnHitShield(RaycastHit2D hitPoint, Line lineHit)

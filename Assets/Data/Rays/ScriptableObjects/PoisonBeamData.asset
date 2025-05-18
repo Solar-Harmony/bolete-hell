@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 758cc5073677ec24e9f9f3dd8c153ea4, type: 3}
-  m_Name: ExplosiveBeamData
+  m_Name: PoisonBeamData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.9622642, g: 0.71622354, b: 0.0030257849, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.5
+  <Color>k__BackingField: {r: 0.4780489, g: 0.8301887, b: 0.2741188, a: 1}
+  <LightRefractiveIndex>k__BackingField: 0
   <logic>k__BackingField:
-    rid: 4156091701846605902
+    rid: 4156091701846605900
   <baseDamage>k__BackingField: 10
   <maxNumberOfBounces>k__BackingField: 10
   <maxRayDistance>k__BackingField: 10
@@ -23,9 +23,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4156091701846605902
-      type: {class: ExplodeOnHit, ns: BoleteHell.Rays.RayLogic, asm: Assembly-CSharp}
-      data:
-        explosionDamage: 6
-        explosionRadius: 2
-        explosionCircle: {fileID: 1214218467118365015, guid: 67ff20a4a528d7c468a0eae636908641, type: 3}
+    - rid: 4156091701846605900
+      type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
+      data: 

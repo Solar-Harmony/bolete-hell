@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Rays;
+using BoleteHell.Utils;
 using Lasers;
 using Shields;
 using UnityEngine;
@@ -14,12 +15,10 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     [SerializeField] private float projectileLifeTime = 1.5f;
     [SerializeField] private LaserProjectileData laserData;
     private LaserProjectileData _modifiableLaserDate;
-    
-
 
     protected override void InitLaserData()
     {
-        _modifiableLaserDate = ScriptableObjectCloner.CloneScriptableObject(laserData);
+        _modifiableLaserDate = ObjectInstantiator.CloneScriptableObject(laserData);
     }
     
     public override void StartFiring()
@@ -36,7 +35,6 @@ public class LaserProjectileLogic : RayCannonFiringLogic
 
         //Créé seulement un point de début et un point de fin
         List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * _modifiableLaserDate.laserLenght };
-        //Le line renderer va être released par le projectile lui même
         LaserRenderer reservedRenderer = LineRendererPool.Instance.Get();
         reservedRenderer.transform.position = bulletSpawnPoint;
         reservedRenderer.DrawRay(positions, _modifiableLaserDate.Color, projectileLifeTime,this);
@@ -45,7 +43,6 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     
     public override void OnReset(LaserRenderer renderer)
     {
-        Debug.Log("Released projectile");
         LineRendererPool.Instance.Release(renderer);
     }
     
@@ -55,6 +52,4 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     {
         
     }
-
-
 }

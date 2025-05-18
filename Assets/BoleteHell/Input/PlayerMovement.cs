@@ -9,10 +9,6 @@ namespace Input
     {
         [SerializeField] private InputController input;
 
-        [SerializeField] private int enemyDamage = 5;
-
-        [SerializeField] private int health = 100;
-
         [SerializeField] private SpriteRuntimeFragmenter fragmenter;
 
         [SerializeField] private Camera mainCamera;
@@ -41,18 +37,18 @@ namespace Input
         private void OnGUI()
         {
             GUI.skin.label.fontSize = 32;
-            GUI.Label(new Rect(10, 10, 300, 80), "Health: " + health);
+            //GUI.Label(new Rect(10, 10, 300, 80), "Health: " + health);
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                if (health <= 0)
-                    fragmenter.Fragment(other.GetContact(0).normal);
-
-                health -= enemyDamage;
-            }
-        }
+        // private void OnCollisionEnter2D(Collision2D other)
+        // {
+        //     if (other.gameObject.CompareTag("Enemy"))
+        //     {
+        //         if (health <= 0)
+        //             fragmenter.Fragment(other.GetContact(0).normal);
+        //
+        //         health -= enemyDamage;
+        //     }
+        // }
     }
 }

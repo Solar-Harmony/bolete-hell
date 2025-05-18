@@ -30,11 +30,6 @@ namespace Prisms
         //so when you combine two rays you choose one prism in which two rays's logic is combined
         //Or we actually combine the two prisms and average the stats and add the ray logic to the ray
         //Should check if we want to be able to de-combine the prisms after too
-        
-        //TODO: Faire un script  pour les LaserBeamsData et un pour les LaserProjectileData qui vont êtres des enfant de ray et la référence
-        //sera dans les firinglogic comme ca on peut faire des data pour chaque firing type et chaque logique
-        //ce qui permet qu'un weapon qui tire des laser explosifs puisse tirer des projectile avec peu de dégat et des petit explosions
-        //et des laserBeams qui font plus de dégat et des explosions plus grosse
         public void SwitchFiringType()
         {
             if (firingLogics.Count > 1) return;
