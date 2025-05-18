@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7983226192841804506}
   - component: {fileID: 3460773093626666485}
   m_Layer: 0
-  m_Name: DefaultPrism
+  m_Name: DefaultPrism 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,13 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsDefault>k__BackingField: 1
   firingLogics:
-  - rid: 4156091427271475350
+  - rid: 4156091659538399308
+  ray: {fileID: 11400000, guid: 20af61ff56bcb2049a1508a111646940, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 4156091427271475350
-      type: {class: LaserBeamLogic, ns: , asm: Assembly-CSharp}
+    - rid: 4156091659538399308
+      type: {class: LaserProjectileLogic, ns: , asm: Assembly-CSharp}
       data:
-        chargingTime: 0.5
-        lifeTime: 0.1
-        laserData: {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
+        reloadTime: 0
+        numBulletsPerShot: 0
+        spreadAngle: 0
+        precision: 0
+        timeBetweenShots: 0.2
+        projectileSpeed: 10
+        projectileLifeTime: 1.5

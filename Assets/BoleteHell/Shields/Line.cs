@@ -4,9 +4,9 @@ namespace Shields
 {
     public class Line : MonoBehaviour
     {
-        [SerializeField] private LineSO _lineInfo;
+        [SerializeField] private ShieldData _lineInfo;
 
-        public void SetLineInfo(LineSO lineInfo)
+        public void SetLineInfo(ShieldData lineInfo)
         {
             _lineInfo = lineInfo;
         }

@@ -51,7 +51,7 @@ namespace Shields
             }
         }
 
-        public void FinishLine(LineSO lineInfo)
+        public void FinishLine(ShieldData lineInfo)
         {
             var lineGameObject = Instantiate(linePrefab);
 

@@ -12,6 +12,14 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     [SerializeField] private float timeBetweenShots = 0.2f;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private float projectileLifeTime = 1.5f;
+    [SerializeField] private LaserProjectileData laserData;
+    private LaserProjectileData _modifiableLaserDate;
+
+    protected override void InitLaserData()
+    {
+        _modifiableLaserDate = ScriptableObjectCloner.CloneScriptableObject(laserData);
+    }
+    
     //Bug: si on tire collé sur un shield le projectile passe a travers, devrais peut-être empecher de tirer si le projectile spawn dans un mur
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
     {
@@ -20,12 +28,12 @@ public class LaserProjectileLogic : RayCannonFiringLogic
         nextShootTime = Time.time + timeBetweenShots;
 
         //Créé seulement un point de début et un point de fin
-        List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * currentRay.raylength };
+        List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * laserData.laserLenght };
         //Le line renderer va être released par le projectile lui même
         LaserRenderer laser = LineRendererPool.Instance.Get();
         laser.transform.position = bulletSpawnPoint;
-        laser.DrawRay(positions, currentRay.Color, projectileLifeTime);
-        laser.SetupProjectileLaser(currentRay, direction, projectileSpeed,this);
+        laser.DrawRay(positions, laserData.Color, projectileLifeTime);
+        laser.SetupProjectileLaser(laserData, direction, projectileSpeed,this);
     }
     
     //La logique du onHit du projectile se trouve dans le LaserProjectileMovement car le collider est la.
@@ -34,4 +42,6 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     {
         
     }
+
+
 }

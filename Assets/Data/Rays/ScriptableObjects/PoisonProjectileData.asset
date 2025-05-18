@@ -9,22 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
-  m_Name: ExplosiveRay
+  m_Script: {fileID: 11500000, guid: 453011d128c594a46bbdc66487a5ad31, type: 3}
+  m_Name: PoisonProjectileData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0, g: 0.99868155, b: 1, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.33
+  <Color>k__BackingField: {r: 0.4780489, g: 0.8301887, b: 0.2741188, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.3
   <logic>k__BackingField:
-    rid: 4156091427271475351
+    rid: 4156091659538399309
+  <baseDamage>k__BackingField: 10
   <maxNumberOfBounces>k__BackingField: 10
   <maxRayDistance>k__BackingField: 10
   <rayWidth>k__BackingField: 0.2
-  <raylength>k__BackingField: 0.3
+  rayLength: 0.3
   references:
     version: 2
     RefIds:
-    - rid: 4156091427271475351
-      type: {class: ExplodeOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
-      data:
-        baseDamage: 10
-        explosionWidth: 0
+    - rid: 4156091659538399309
+      type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
+      data: 

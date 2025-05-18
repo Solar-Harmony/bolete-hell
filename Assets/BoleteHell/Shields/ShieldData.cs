@@ -6,12 +6,12 @@ namespace Shields
     /// <summary>
     ///     Classe qui permet de déterminer les informations spécifique a un shield
     /// </summary>
-    [CreateAssetMenu(fileName = "LineSO", menuName = "LineData", order = 0)]
-    public class LineSO : ScriptableObject
+    [CreateAssetMenu(fileName = "ShieldData", menuName = "Scriptable Objects/ShieldData", order = 0)]
+    public class ShieldData : ScriptableObject
     {
         [SerializeField] private Color color;
         
-        [SerializeReference] private ILineHitLogic onHitLogic;
+        [SerializeReference] private IShieldHitLogic onHitLogic;
 
         [SerializeField] private GameObject shieldPreview;
         private ShieldPreviewDrawer lineDrawer;

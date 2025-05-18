@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Lasers;
 using UnityEngine;
-using Ray = Lasers.Ray;
 
 namespace BoleteHell.Rays
 {
@@ -43,17 +42,17 @@ namespace BoleteHell.Rays
             StartCoroutine(Lifetime(lifeTime));
         }
 
-        public void SetupProjectileLaser(Ray ray,Vector2 direction,float laserSpeed,LaserProjectileLogic logic)
+        public void SetupProjectileLaser(LaserProjectileData laserData,Vector2 direction,float laserSpeed,LaserProjectileLogic logic)
         {
             laserRenderer.useWorldSpace = false;
 
             movement.enabled = true;
-            movement.StartMovement(direction,laserSpeed,ray.LightRefractiveIndex);
+            movement.StartMovement(direction,laserSpeed,laserData.LightRefractiveIndex);
 
             cCollider.direction = CapsuleDirection2D.Vertical;
             //Le plus 0.15 est un nombre magique qui permettait de fit le collider sinon il correspond pas a 100%
-            cCollider.size = new Vector2(ray.rayWidth, ray.raylength + AdjustedColliderLenght);
-            cCollider.offset = new Vector2(0, ray.raylength / 2);
+            cCollider.size = new Vector2(laserData.rayWidth, laserData.laserLenght + AdjustedColliderLenght);
+            cCollider.offset = new Vector2(0, laserData.laserLenght / 2);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
             cCollider.enabled = true;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BoleteHell.Shields.ShieldsLogic
 {
     [Serializable]
-    public class MirrorLogic : ILineHitLogic
+    public class MirrorLogic : IShieldHitLogic
     {
         public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {

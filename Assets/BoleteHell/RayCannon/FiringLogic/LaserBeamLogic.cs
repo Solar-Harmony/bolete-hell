@@ -4,21 +4,29 @@ using BoleteHell.Rays;
 using Lasers;
 using Shields;
 using UnityEngine;
-using Ray = Lasers.Ray;
 
 [Serializable]
 public class LaserBeamLogic:RayCannonFiringLogic
 {
     [SerializeField] private float chargingTime = 0.5f;
     [SerializeField] private float lifeTime = 0.1f;
+    [SerializeField] private LaserBeamData laserData;
+    private LaserBeamData _modifiableLaserData;
+    
     
     private readonly List<Vector3> _rayPositions = new();
     
     private LaserRenderer reservedRenderer;
-    public override void StartFiring(Ray ray)
+    public override void StartFiring()
     {
-        base.StartFiring(ray);
+        base.StartFiring();
         UpdateChargeTime();
+    }
+    
+    
+    protected override void InitLaserData()
+    {
+        _modifiableLaserData = ScriptableObjectCloner.CloneScriptableObject(laserData);
     }
 
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
@@ -35,21 +43,22 @@ public class LaserBeamLogic:RayCannonFiringLogic
     {
         LineRendererPool.Instance.Release(reservedRenderer);
     }
-    
-    
+
+
+
     public void Cast(Vector3 bulletSpawnPoint, Vector2 direction)
     {
         _currentPos = bulletSpawnPoint;
         _rayPositions.Add(_currentPos);
         _currentDirection = direction;
 
-        for (int i = 0; i <= currentRay.maxNumberOfBounces; i++)
+        for (int i = 0; i <= laserData.maxNumberOfBounces; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,currentRay.maxRayDistance);
+            RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,laserData.maxRayDistance);
             if (!hit)
             {
-                Debug.DrawRay(_currentPos, _currentDirection * currentRay.maxRayDistance, Color.black);
-                _rayPositions.Add((Vector2)_currentPos + _currentDirection * currentRay.maxRayDistance);
+                Debug.DrawRay(_currentPos, _currentDirection * laserData.maxRayDistance, Color.black);
+                _rayPositions.Add((Vector2)_currentPos + _currentDirection * laserData.maxRayDistance);
                 break;
             }
 
@@ -64,20 +73,20 @@ public class LaserBeamLogic:RayCannonFiringLogic
             }
         }
         
-        reservedRenderer.DrawRay(_rayPositions,currentRay.Color,lifeTime);
+        reservedRenderer.DrawRay(_rayPositions,laserData.Color,lifeTime);
         _rayPositions.Clear();
     }
 
     public void OnHitEnemy(Vector2 hitPosition)
     {
         _rayPositions.Add(hitPosition);
-        currentRay.logic.OnHit();
+        laserData.logic.OnHit();
     }
 
     public void OnHitShield(RaycastHit2D hitPoint, Line lineHit)
     {
         Debug.DrawLine(_currentPos, hitPoint.point, Color.blue);
-        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, currentRay.LightRefractiveIndex);
+        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, laserData.LightRefractiveIndex);
         _currentPos = hitPoint.point + _currentDirection * 0.01f;
         _rayPositions.Add(_currentPos);
     }
