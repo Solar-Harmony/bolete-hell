@@ -61,7 +61,7 @@ namespace Lasers
 
         public void Release(LaserRenderer laserRenderer)
         {
-            if (laserRenderer == null)
+            if (!laserRenderer)
             {
                 Debug.LogError("Attempted to release null object");
                 return;

@@ -25,6 +25,7 @@ public class LaserProjectileMovement : MonoBehaviour
    //Devrait peut-être pas être dans le script de mouvement
    private void OnTriggerEnter2D(Collider2D other)
    {
+      Debug.Log($"Touched {other.name}");
       if (!other.transform.parent) return;
       
       if (other.transform.parent.gameObject.TryGetComponent(out Line lineHit))

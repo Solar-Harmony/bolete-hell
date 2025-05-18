@@ -12,18 +12,23 @@ public class LaserBeamLogic:RayCannonFiringLogic
     [SerializeField] private float lifeTime = 0.1f;
     [SerializeField] private LaserBeamData laserData;
     private LaserBeamData _modifiableLaserData;
-    
+    private LaserRenderer reservedRenderer;
+
     
     private readonly List<Vector3> _rayPositions = new();
     
-    private LaserRenderer reservedRenderer;
     public override void StartFiring()
     {
-        base.StartFiring();
+        reservedRenderer = LineRendererPool.Instance.Get();
         UpdateChargeTime();
     }
-    
-    
+
+
+    public override void OnReset(LaserRenderer renderer)
+    {
+        
+    }
+
     protected override void InitLaserData()
     {
         _modifiableLaserData = ScriptableObjectCloner.CloneScriptableObject(laserData);
@@ -32,9 +37,6 @@ public class LaserBeamLogic:RayCannonFiringLogic
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
     {
         if (!(Time.time >= nextShootTime)) return;
-        //Devrait le reserver dans le start firing et juste utilisé le même tant qu'il tire mais faudrais fix des vchose et ça me tente pas 
-        reservedRenderer = LineRendererPool.Instance.Get();
-
         Cast(bulletSpawnPoint, direction);
         UpdateChargeTime();
     }
@@ -43,22 +45,23 @@ public class LaserBeamLogic:RayCannonFiringLogic
     {
         LineRendererPool.Instance.Release(reservedRenderer);
     }
+    
+    
 
 
-
-    public void Cast(Vector3 bulletSpawnPoint, Vector2 direction)
+    private void Cast(Vector3 bulletSpawnPoint, Vector2 direction)
     {
         _currentPos = bulletSpawnPoint;
         _rayPositions.Add(_currentPos);
         _currentDirection = direction;
 
-        for (int i = 0; i <= laserData.maxNumberOfBounces; i++)
+        for (int i = 0; i <= _modifiableLaserData.maxNumberOfBounces; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,laserData.maxRayDistance);
+            RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,_modifiableLaserData.maxRayDistance);
             if (!hit)
             {
-                Debug.DrawRay(_currentPos, _currentDirection * laserData.maxRayDistance, Color.black);
-                _rayPositions.Add((Vector2)_currentPos + _currentDirection * laserData.maxRayDistance);
+                Debug.DrawRay(_currentPos, _currentDirection * _modifiableLaserData.maxRayDistance, Color.black);
+                _rayPositions.Add((Vector2)_currentPos + _currentDirection * _modifiableLaserData.maxRayDistance);
                 break;
             }
 
@@ -73,20 +76,20 @@ public class LaserBeamLogic:RayCannonFiringLogic
             }
         }
         
-        reservedRenderer.DrawRay(_rayPositions,laserData.Color,lifeTime);
+        reservedRenderer.DrawRay(_rayPositions,_modifiableLaserData.Color,lifeTime,this);
         _rayPositions.Clear();
     }
 
-    public void OnHitEnemy(Vector2 hitPosition)
+    private void OnHitEnemy(Vector2 hitPosition)
     {
         _rayPositions.Add(hitPosition);
-        laserData.logic.OnHit();
+        _modifiableLaserData.logic.OnHit();
     }
 
-    public void OnHitShield(RaycastHit2D hitPoint, Line lineHit)
+    private void OnHitShield(RaycastHit2D hitPoint, Line lineHit)
     {
         Debug.DrawLine(_currentPos, hitPoint.point, Color.blue);
-        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, laserData.LightRefractiveIndex);
+        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, _modifiableLaserData.LightRefractiveIndex);
         _currentPos = hitPoint.point + _currentDirection * 0.01f;
         _rayPositions.Add(_currentPos);
     }
