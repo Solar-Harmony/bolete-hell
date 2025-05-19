@@ -33,6 +33,7 @@ namespace Prisms
         [SerializeField] private Ray ray;
         private Ray _modifiableRay;
 
+        // FIXME: This does not belong here. RayCannon's responsability should be to fire a ray, not to manage the firing logic.
         public void SwitchFiringType()
         {
             if (firingLogics.Count > 1) return;
@@ -40,7 +41,9 @@ namespace Prisms
             currentTypeIndex = (currentTypeIndex + 1 + firingLogics.Count) % firingLogics.Count;
         }
 
-        public void Init()
+        // FIXME: Replace your init methods with factory method + single shoot() method, otherwise it's confusing for
+        // those who use your API to guess they have to call both Init() on the cannon and StartFiring() for initializing ray in the logic.
+        public void  Init()
         {
             _modifiableRay = Instantiate(ray);
             

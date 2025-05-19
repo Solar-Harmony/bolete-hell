@@ -14,6 +14,7 @@ public abstract class RayCannonFiringLogic
     protected Vector3 _currentPos;
     protected Ray currentRay;
 
+    // FIXME: Get rid of this init method it's confusing if you forget to call it everything breaks lol
     public virtual void StartFiring(Ray ray)
     {
         currentRay = ray;

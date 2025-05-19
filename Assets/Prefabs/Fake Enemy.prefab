@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4439332687894290100}
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
+  - component: {fileID: 6934552442420647971}
+  - component: {fileID: -2734542199329630527}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -248,3 +250,45 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &6934552442420647971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4ac7ceb7a5ef245a3b450cac32c1af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsDefault>k__BackingField: 1
+  firingLogics:
+  - rid: 7787990836450951295
+  ray: {fileID: 11400000, guid: 20af61ff56bcb2049a1508a111646940, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7787990836450951295
+      type: {class: LaserProjectileLogic, ns: , asm: Assembly-CSharp}
+      data:
+        reloadTime: 0
+        numBulletsPerShot: 0
+        spreadAngle: 0
+        precision: 0
+        timeBetweenShots: 0.2
+        projectileSpeed: 10
+        projectileLifeTime: 1.5
+--- !u!114 &-2734542199329630527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
