@@ -19,6 +19,12 @@ public class LaserProjectileLogic : RayCannonFiringLogic
         
         nextShootTime = Time.time + timeBetweenShots;
 
+        if (!currentRay)
+        {
+            Debug.LogError("You forgot to call StartFiring on the RayCannonFiringLogic. Also, this is stupid. We shouldn't have to call it manually.");
+            return;
+        }
+
         //Créé seulement un point de début et un point de fin
         List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * currentRay.raylength };
         //Le line renderer va être released par le projectile lui même
