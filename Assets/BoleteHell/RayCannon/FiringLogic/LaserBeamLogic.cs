@@ -18,25 +18,22 @@ public class LaserBeamLogic:RayCannonFiringLogic
     
     private readonly List<Vector3> _rayPositions = new();
     
-    public override void StartFiring()
-    {
-        reservedRenderer = LineRendererPool.Instance.Get();
-        UpdateChargeTime();
-    }
-
-
     public override void OnReset(LaserRenderer renderer)
     {
         renderer.gameObject.SetActive(false);
     }
 
-    protected override void InitLaserData()
-    {
-        _modifiableLaserData = ObjectInstantiator.CloneScriptableObject(laserData);
-    }
-
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
     {
+        if (!_modifiableLaserData)
+        {
+            _modifiableLaserData = ObjectInstantiator.CloneScriptableObject(laserData);
+            nextShootTime = 0f;
+        }
+
+        if(!reservedRenderer)
+            reservedRenderer = LineRendererPool.Instance.Get();
+
         if (!(Time.time >= nextShootTime)) return;
         Cast(bulletSpawnPoint, direction);
         UpdateChargeTime();
@@ -63,7 +60,7 @@ public class LaserBeamLogic:RayCannonFiringLogic
                 break;
             }
 
-            if (hit.transform.gameObject.TryGetComponent(out Line lineHit))
+            if (hit.transform.gameObject.TryGetComponent(out Shield lineHit))
             {
                 OnHitShield(hit, lineHit);
             }
@@ -86,10 +83,10 @@ public class LaserBeamLogic:RayCannonFiringLogic
         _modifiableLaserData.logic.OnHit(hitPosition,health);
     }
 
-    private void OnHitShield(RaycastHit2D hitPoint, Line lineHit)
+    private void OnHitShield(RaycastHit2D hitPoint, Shield shieldHit)
     {
         Debug.DrawLine(_currentPos, hitPoint.point, Color.blue);
-        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, _modifiableLaserData.LightRefractiveIndex);
+        _currentDirection = shieldHit.OnRayHitLine(_currentDirection, hitPoint, _modifiableLaserData.LightRefractiveIndex);
         _currentPos = hitPoint.point + _currentDirection * 0.01f;
         _rayPositions.Add(_currentPos);
     }

@@ -2170,10 +2170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1777383723672622360, guid: 4b9e33f0cbcf49c4ab86c8d24246ac87, type: 3}
   attackTimer: 100
-  bulletPattern: 3
+  bulletPattern: 1
   _firerateCooldown: 0.25
   _AttackCooldown: 5
-  _fireState: 3
+  _fireState: 2
 --- !u!1 &1667073519
 GameObject:
   m_ObjectHideFlags: 0

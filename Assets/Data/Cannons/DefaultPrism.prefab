@@ -47,6 +47,7 @@ MonoBehaviour:
   <IsDefault>k__BackingField: 1
   firingLogics:
   - rid: 4156091427271475350
+  - rid: 4156091711599149056
   references:
     version: 2
     RefIds:
@@ -56,3 +57,10 @@ MonoBehaviour:
         chargingTime: 0.5
         lifeTime: 0.1
         laserData: {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
+    - rid: 4156091711599149056
+      type: {class: LaserProjectileLogic, ns: , asm: Assembly-CSharp}
+      data:
+        timeBetweenShots: 0.2
+        projectileSpeed: 10
+        projectileLifeTime: 1.5
+        laserData: {fileID: 11400000, guid: 97500fed134dc9c47b771aa12922064b, type: 2}

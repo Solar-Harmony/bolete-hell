@@ -56,7 +56,7 @@ namespace Shields
             var lineGameObject = Instantiate(linePrefab);
 
             lineGameObject.name = $"Spawned Shield";
-            var line = lineGameObject.GetComponent<Line>();
+            var line = lineGameObject.GetComponent<Shield>();
 
             line.SetLineInfo(lineInfo);
             lineGameObject.GetComponent<SplineCreator>()

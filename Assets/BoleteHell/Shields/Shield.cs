@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Shields
 {
-    public class Line : MonoBehaviour
+    public class Shield : MonoBehaviour
     {
         [SerializeField] private ShieldData _lineInfo;
 

@@ -7,31 +7,29 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 
 //TODO: Make this a general assetLoader that give the data to the right managers and objects
-namespace Prisms
+namespace BoleteHell.RayCannon
 {
     public class RayCannonManager : MonoBehaviour
     {
         private const string GroupLabel = "Prisms";
         [SerializeField] private PlayerLaserInput player;
-        
-        [ReadOnly][SerializeField] private List<GameObject> prisms = new();
+        [ReadOnly][SerializeField] private List<GameObject> rayCannons = new();
 
         private void Start()
         {
-            LoadPrisms();
+            LoadRayCannons();
             Physics2D.queriesHitTriggers = false;
         }
 
-        private void LoadPrisms()
+        private void LoadRayCannons()
         {
             Addressables.LoadAssetsAsync<GameObject>(GroupLabel, obj =>
             {
                 Debug.Log($"instantiating {obj.name}");
-                prisms.Add(obj);
+                rayCannons.Add(obj);
 
-                if (!obj.TryGetComponent(out RayCannon prism)) return;
+                if (!obj.TryGetComponent(out Prisms.RayCannon prism)) return;
                 
-                prism.Init();
                 if(prism.IsDefault)
                     player.AddPrism(prism);
             }).Completed += OnLoadComplete;

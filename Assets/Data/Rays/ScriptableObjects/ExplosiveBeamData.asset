@@ -16,7 +16,6 @@ MonoBehaviour:
   <LightRefractiveIndex>k__BackingField: 1.5
   <logic>k__BackingField:
     rid: 4156091701846605902
-  <baseDamage>k__BackingField: 10
   <maxNumberOfBounces>k__BackingField: 10
   <maxRayDistance>k__BackingField: 10
   <rayWidth>k__BackingField: 0.2
@@ -26,6 +25,7 @@ MonoBehaviour:
     - rid: 4156091701846605902
       type: {class: ExplodeOnHit, ns: BoleteHell.Rays.RayLogic, asm: Assembly-CSharp}
       data:
+        baseHitDamage: 10
         explosionDamage: 6
         explosionRadius: 2
         explosionCircle: {fileID: 1214218467118365015, guid: 67ff20a4a528d7c468a0eae636908641, type: 3}

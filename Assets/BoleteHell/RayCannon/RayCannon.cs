@@ -32,23 +32,14 @@ namespace Prisms
         //Should check if we want to be able to de-combine the prisms after too
         public void SwitchFiringType()
         {
-            if (firingLogics.Count > 1) return;
+            if (firingLogics.Count <= 1) return;
             
             currentTypeIndex = (currentTypeIndex + 1 + firingLogics.Count) % firingLogics.Count;
         }
 
-        public void Init()
-        {
-            
-            foreach (RayCannonFiringLogic rayCannonFiringLogic in firingLogics)
-            {
-                rayCannonFiringLogic.Init();
-            }
-        }
-
         public void StartFiring()
         {
-            firingLogics[currentTypeIndex].StartFiring();
+            
         }
 
         public void Shoot(Vector3 startPosition, Vector3 direction)

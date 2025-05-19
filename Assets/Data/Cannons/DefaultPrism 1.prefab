@@ -53,6 +53,6 @@ MonoBehaviour:
     - rid: 4156091701846605901
       type: {class: LaserBeamLogic, ns: , asm: Assembly-CSharp}
       data:
-        chargingTime: 0.5
-        lifeTime: 0.1
+        chargingTime: 0
+        lifeTime: 1
         laserData: {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}

@@ -16,19 +16,16 @@ public class LaserProjectileLogic : RayCannonFiringLogic
     [SerializeField] private LaserProjectileData laserData;
     private LaserProjectileData _modifiableLaserDate;
 
-    protected override void InitLaserData()
-    {
-        _modifiableLaserDate = ObjectInstantiator.CloneScriptableObject(laserData);
-    }
-    
-    public override void StartFiring()
-    {
-        
-    }
-    
     //Bug: si on tire collé sur un shield le projectile passe a travers, devrais peut-être empecher de tirer si le projectile spawn dans un mur
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
     {
+        if (!_modifiableLaserDate)
+        {
+            _modifiableLaserDate = ObjectInstantiator.CloneScriptableObject(laserData);
+            nextShootTime = 0f;
+        }
+
+        
         if (!(Time.time >= nextShootTime)) return;
         
         nextShootTime = Time.time + timeBetweenShots;

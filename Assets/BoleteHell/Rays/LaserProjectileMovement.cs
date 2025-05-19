@@ -28,7 +28,7 @@ public class LaserProjectileMovement : MonoBehaviour
       Debug.Log($"Touched {other.name}");
       if (!other.transform.parent) return;
       
-      if (other.transform.parent.gameObject.TryGetComponent(out Line lineHit))
+      if (other.transform.parent.gameObject.TryGetComponent(out Shield lineHit))
       {
          OnHitShield(lineHit);
       }
@@ -44,13 +44,13 @@ public class LaserProjectileMovement : MonoBehaviour
    }
 
    //Devrait être dans le laserProjectileLogic
-   private void OnHitShield(Line lineHit)
+   private void OnHitShield(Shield shieldHit)
    {
       RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position , currentDirection, Mathf.Infinity);
       
       if (!hit) return;
          
-      Vector3 newDirection = lineHit.OnRayHitLine(currentDirection, hit, refractiveIndex);
+      Vector3 newDirection = shieldHit.OnRayHitLine(currentDirection, hit, refractiveIndex);
       currentDirection = newDirection;
       rb.linearVelocity = currentDirection * currentSpeed;
       float angle = Mathf.Atan2(currentDirection.y, currentDirection.x) * Mathf.Rad2Deg;
