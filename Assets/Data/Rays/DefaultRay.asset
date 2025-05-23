@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.5
-  <HitDamage>k__BackingField: 0
-  logic:
-    rid: 7787990527260491853
-  maxNumberOfBounces: 10
-  maxRayDistance: 10
+  <logic>k__BackingField:
+    rid: 4156091427271475352
+  <maxNumberOfBounces>k__BackingField: 10
+  <maxRayDistance>k__BackingField: 10
+  <rayWidth>k__BackingField: 0.2
+  <raylength>k__BackingField: 0.3
   references:
     version: 2
     RefIds:
-    - rid: 7787990527260491853
+    - rid: 4156091427271475352
       type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
       data:
         baseDamage: 10
-        projectileSpeed: 20

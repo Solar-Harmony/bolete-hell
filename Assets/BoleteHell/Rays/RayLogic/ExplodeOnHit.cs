@@ -6,7 +6,7 @@ namespace Lasers.RayLogic
     [Serializable]
     public class ExplodeOnHit : RayHitLogic
     {
-        [SerializeField] private float width;
+        [SerializeField] private float explosionWidth;
 
         public override void OnHit()
         {

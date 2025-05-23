@@ -92,12 +92,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""CycleWeapons"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""a7685070-dd2c-454f-929d-f9565cd8f2b8"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""MousePos2D"",
@@ -107,6 +107,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""5c69d224-7f29-43db-8c24-217c1f0bafdc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -404,6 +413,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""MousePos2D"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72f0579d-7e48-4c52-8307-c047a5f752ec"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1000,6 +1020,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_DrawShield = m_Player.FindAction("DrawShield", throwIfNotFound: true);
         m_Player_CycleWeapons = m_Player.FindAction("CycleWeapons", throwIfNotFound: true);
         m_Player_MousePos2D = m_Player.FindAction("MousePos2D", throwIfNotFound: true);
+        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1088,6 +1109,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DrawShield;
     private readonly InputAction m_Player_CycleWeapons;
     private readonly InputAction m_Player_MousePos2D;
+    private readonly InputAction m_Player_Dodge;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1101,6 +1123,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @DrawShield => m_Wrapper.m_Player_DrawShield;
         public InputAction @CycleWeapons => m_Wrapper.m_Player_CycleWeapons;
         public InputAction @MousePos2D => m_Wrapper.m_Player_MousePos2D;
+        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1137,6 +1160,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MousePos2D.started += instance.OnMousePos2D;
             @MousePos2D.performed += instance.OnMousePos2D;
             @MousePos2D.canceled += instance.OnMousePos2D;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1168,6 +1194,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MousePos2D.started -= instance.OnMousePos2D;
             @MousePos2D.performed -= instance.OnMousePos2D;
             @MousePos2D.canceled -= instance.OnMousePos2D;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1359,6 +1388,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnDrawShield(InputAction.CallbackContext context);
         void OnCycleWeapons(InputAction.CallbackContext context);
         void OnMousePos2D(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

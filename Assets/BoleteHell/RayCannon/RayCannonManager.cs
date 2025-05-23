@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Input;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -14,11 +13,12 @@ namespace Prisms
         private const string GroupLabel = "Prisms";
         [SerializeField] private PlayerLaserInput player;
         
-        [ReadOnly] [SerializeField] private List<GameObject> prisms = new();
+        [SerializeField] private List<GameObject> prisms = new();
 
         private void Start()
         {
             LoadPrisms();
+            Physics2D.queriesHitTriggers = false;
         }
 
         private void LoadPrisms()
@@ -28,11 +28,11 @@ namespace Prisms
                 Debug.Log($"instantiating {obj.name}");
                 prisms.Add(obj);
 
-                if (obj.TryGetComponent(out RayCannon prism))
-                {
-                    prism.Init();
+                if (!obj.TryGetComponent(out RayCannon prism)) return;
+                
+                prism.Init();
+                if(prism.IsDefault)
                     player.AddPrism(prism);
-                }
             }).Completed += OnLoadComplete;
         }
 
