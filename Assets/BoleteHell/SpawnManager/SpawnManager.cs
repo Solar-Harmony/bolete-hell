@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
             targetEnemy = entries[Random.Range(0, entries.Length)]; //gamba enemy
             float cost = targetEnemy.spawnWeight; //find weight
 
-            // Accumulate weight until we can afford it / we can add a thing where spawner gets more weight with time
+            // Accumulate weight until we can afford it
             while (currentWeight < cost)
             {
                 currentWeight += weightGainPerSecond * Time.deltaTime;
@@ -44,7 +44,8 @@ public class SpawnManager : MonoBehaviour
     {
         // call spawnpoint.cs for help pls uwu
         Vector3 spawnPos = spawnPoints.GetSpawnPosition(targetEnemy);
+        GameObject prefabToSpawn = targetEnemy.normalPrefab; //reminder enemy data and spawnlist are scriptable objects not mono so fuck my life
 
-        Instantiate(targetEnemy, spawnPos, Quaternion.identity);
+        Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
     }
 }
