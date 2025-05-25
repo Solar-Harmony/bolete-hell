@@ -9,20 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 758cc5073677ec24e9f9f3dd8c153ea4, type: 3}
+  m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: PoisonBeamData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.4780489, g: 0.8301887, b: 0.2741188, a: 1}
-  <LightRefractiveIndex>k__BackingField: 0
-  <logic>k__BackingField:
-    rid: 4156091701846605900
-  <baseDamage>k__BackingField: 10
-  <maxNumberOfBounces>k__BackingField: 10
-  <maxRayDistance>k__BackingField: 10
-  <rayWidth>k__BackingField: 0.2
+  <Color>k__BackingField: {r: 0.40722924, g: 0.84276724, b: 0.32067546, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.5
+  <Logic>k__BackingField:
+    rid: 4156091727018197080
   references:
     version: 2
     RefIds:
-    - rid: 4156091701846605900
+    - rid: 4156091727018197080
       type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
-      data: 
+      data:
+        baseHitDamage: 2

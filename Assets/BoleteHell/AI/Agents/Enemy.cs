@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using Prisms;
+using BoleteHell.RayCannon;
 using UnityEngine;
 
 namespace AI.Agents
 {
-    [RequireComponent(typeof(RayCannon))]
+    [RequireComponent(typeof(RayCannonManager))]
     public class Enemy : MonoBehaviour
     {
-        private RayCannon _weapon;
+        private RayCannonManager _weapon;
         
         public void Start()
         {
-            _weapon =  GetComponent<RayCannon>();
-            _weapon.Init();
+            _weapon =  GetComponent<RayCannonManager>();
         }
 
         public void Shoot(Vector3 target)
         {
             Vector3 direction = (target - transform.position).normalized;
-            _weapon.StartFiring();
-            _weapon.Shoot(transform.position, direction);
+            _weapon.Shoot( direction);
         }
     }
 }

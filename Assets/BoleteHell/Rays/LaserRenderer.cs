@@ -9,6 +9,9 @@ namespace BoleteHell.Rays
     [RequireComponent(typeof(LaserProjectileMovement),typeof(CapsuleCollider2D),typeof(LineRenderer))]
     public class LaserRenderer : MonoBehaviour
     {
+        [field:SerializeField] public float RayWidth { get; private set; } = 0.2f;
+        //Spécifique au projectile lasers
+        [field:SerializeField]public float LaserLenght { get; private set; } = 0.3f;
         private LineRenderer _laserRenderer;
         
         private LaserProjectileMovement _movement;
@@ -42,17 +45,17 @@ namespace BoleteHell.Rays
             StartCoroutine(Lifetime(lifeTime,logic));
         }
 
-        public void SetupProjectileLaser(LaserProjectileData laserData,Vector2 direction,float laserSpeed)
+        public void SetupProjectileLaser(float refractiveIndex,Vector2 direction)
         {
             _isProjectile = true;
             _laserRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction,laserSpeed,laserData.LightRefractiveIndex);
-
+            _movement.StartMovement(direction,refractiveIndex);
+            
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
-            _capsuleCollider.size = new Vector2(laserData.rayWidth, laserData.laserLenght + AdjustedColliderLenght);
-            _capsuleCollider.offset = new Vector2(0, laserData.laserLenght / 2);
+            _capsuleCollider.size = new Vector2(RayWidth, LaserLenght + AdjustedColliderLenght);
+            _capsuleCollider.offset = new Vector2(0, LaserLenght / 2);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
             _capsuleCollider.enabled = true;

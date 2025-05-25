@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440974735414938989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2646352373222379194}
+  m_Layer: 7
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2646352373222379194
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440974735414938989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4023435176609027149}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -2.05, y: -0.39}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6982038961960877227
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,8 +49,9 @@ GameObject:
   - component: {fileID: 4439332687894290100}
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
-  - component: {fileID: 6934552442420647971}
   - component: {fileID: -2734542199329630527}
+  - component: {fileID: 6249654377470742942}
+  - component: {fileID: 2877549176397520493}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -34,7 +70,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.22723, y: 0.22723, z: 0.22723}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2646352373222379194}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -250,35 +287,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &6934552442420647971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4ac7ceb7a5ef245a3b450cac32c1af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsDefault>k__BackingField: 1
-  firingLogics:
-  - rid: 7787990836450951295
-  ray: {fileID: 11400000, guid: 20af61ff56bcb2049a1508a111646940, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 7787990836450951295
-      type: {class: LaserProjectileLogic, ns: , asm: Assembly-CSharp}
-      data:
-        reloadTime: 0
-        numBulletsPerShot: 0
-        spreadAngle: 0
-        precision: 0
-        timeBetweenShots: 0.2
-        projectileSpeed: 10
-        projectileLifeTime: 1.5
 --- !u!114 &-2734542199329630527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,4 +299,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+--- !u!114 &6249654377470742942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+--- !u!114 &2877549176397520493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPoint: {fileID: 2646352373222379194}
+  rayCannonsData:
+  - _laserDatas:
+    - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
+    _rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}

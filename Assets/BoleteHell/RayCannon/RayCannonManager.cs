@@ -1,47 +1,59 @@
 using System.Collections.Generic;
-using Input;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 
-//TODO: Make this a general assetLoader that give the data to the right managers and objects
 namespace BoleteHell.RayCannon
 {
     public class RayCannonManager : MonoBehaviour
     {
-        private const string GroupLabel = "Prisms";
-        [SerializeField] private PlayerLaserInput player;
-        [ReadOnly][SerializeField] private List<GameObject> rayCannons = new();
+        [SerializeField] private Transform bulletSpawnPoint;
+        [SerializeField] private List<RayCannon> rayCannonsData;
+        private int _selectedCannonIndex;
 
         private void Start()
         {
-            LoadRayCannons();
-            Physics2D.queriesHitTriggers = false;
-        }
-
-        private void LoadRayCannons()
-        {
-            Addressables.LoadAssetsAsync<GameObject>(GroupLabel, obj =>
+            foreach (RayCannon rayCannon in rayCannonsData)
             {
-                Debug.Log($"instantiating {obj.name}");
-                rayCannons.Add(obj);
-
-                if (!obj.TryGetComponent(out Prisms.RayCannon prism)) return;
-                
-                if(prism.IsDefault)
-                    player.AddPrism(prism);
-            }).Completed += OnLoadComplete;
+                rayCannon.Init();
+            }
         }
 
-        private void OnLoadComplete(AsyncOperationHandle<IList<GameObject>> handle)
+        public void Shoot(Vector2 direction)
         {
-            //TODO: Send prisms to the DropManager
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-                Debug.Log("All prisms instantiated successfully.");
-            else
-                Debug.LogError("Failed to load Addressables.");
+            if (rayCannonsData.Count == 0)
+            {
+                Debug.LogWarning("No raycannon equipped");
+                return;
+            }
+            
+            GetSelectedWeapon().Shoot(bulletSpawnPoint.position, direction);
+        }
+    
+        public void CycleWeapons(int value)
+        {
+            if (rayCannonsData.Count <= 1)
+            {
+                Debug.LogWarning("No weapons to cycle trough");
+                return;
+            }
+
+            _selectedCannonIndex = (_selectedCannonIndex + value + rayCannonsData.Count) % rayCannonsData.Count;
+
+            Debug.Log($"selected {GetSelectedWeapon()}");
+        }
+    
+        private RayCannon GetSelectedWeapon()
+        {
+            return rayCannonsData[_selectedCannonIndex];
+        }
+    
+        public void OnShootCanceled()
+        {
+            GetSelectedWeapon().FinishFiring();
+        }
+
+        private void OnDestroy()
+        {
+            OnShootCanceled();
         }
     }
 }

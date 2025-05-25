@@ -1,20 +1,23 @@
 using System;
+using System.Collections.Generic;
 using BoleteHell.Rays;
+using Data.Cannons;
+using Data.Rays;
 using Lasers;
 using UnityEngine;
 
-[Serializable]
 public abstract class RayCannonFiringLogic
 {
-    //[SerializeField] protected float reloadTime;
-    //[SerializeField] protected int numBulletsPerShot;
-    //[SerializeField] protected float spreadAngle;
-    //[SerializeField] protected float precision;
-    protected float nextShootTime = 0f;  
-    protected Vector2 _currentDirection;
-    protected Vector3 _currentPos;
+    protected float NextShootTime = 0f;  
+    protected Vector2 CurrentDirection;
+    protected Vector3 CurrentPos;
 
-    public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction);
+    protected RayCannonFiringLogic()
+    {
+        NextShootTime = 0f;
+    }
+    
+    public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData data,CombinedLaser laser);
     public abstract void FinishFiring();
     public abstract void OnReset(LaserRenderer renderer);
 }
