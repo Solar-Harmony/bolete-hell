@@ -3,21 +3,24 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
     public SpawnList spawnList;
+    [Tooltip("min distance in radius")]
+    public float minSpawnRadius = 5f;
+    [Tooltip("max distance in radius")]
+    public float maxSpawnRadius = 50f;
 
-    private Transform player;
-
-    private void Awake()
+    public Vector2 GetSpawnPosition(EnemyData enemyData)
     {
-        player = GameObject.FindWithTag("Player").transform; //must be changed if not using tag system
+        Vector2 dir = Random.insideUnitCircle.normalized;
+        float dist = Random.Range(minSpawnRadius, maxSpawnRadius);
+        Vector2 spawnPos = transform.position + new Vector3(dir.x * dist, 0f, dir.y * dist);
+        return spawnPos;
     }
-
-    public Vector3 GetSpawnPosition(EnemyData enemyData)
+    private void OnDrawGizmosSelected()
     {
-        Vector2 unitCircle = Random.insideUnitCircle.normalized;
-        float distance = Random.Range(enemyData.minSpawnRadius, enemyData.maxSpawnRadius);
-        Vector3 offset = new Vector3(unitCircle.x * distance, 0f, unitCircle.y * distance);
-
-        Vector3 SpawnPos = player.position + offset;
-        return SpawnPos;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, minSpawnRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, maxSpawnRadius);
     }
 }
+

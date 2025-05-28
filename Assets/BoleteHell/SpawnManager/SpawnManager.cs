@@ -5,41 +5,22 @@ public class SpawnManager : MonoBehaviour
 {
     public SpawnList spawnList;  //just a spawnlist of biome for now i havent defined how to collide with biome logic
     public SpawnPoint spawnPoints;
-    public float weightGainPerSecond = 1f;
-    private float currentWeight = 0f;
     private EnemyData targetEnemy;
+    private bool Spawning;
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(SpawnCycle());
-    }
-
-    private IEnumerator SpawnCycle()
-    {
-        while (true)
+        if (Spawning)
         {
             // gamba choose enemy and determine weight
             var entries = spawnList.allowedEnemies;
             if (entries == null || entries.Length == 0)
-                yield break;
+                return;
 
-            targetEnemy = entries[Random.Range(0, entries.Length)]; //gamba enemy
-            float cost = targetEnemy.spawnWeight; //find weight
-
-            // Accumulate weight until we can afford it
-            while (currentWeight < cost)
-            {
-                currentWeight += weightGainPerSecond * Time.deltaTime;
-                yield return null;
-            }
-
-            // spawn the target enemy
             SpawnSelectedEnemy(targetEnemy);
-
-            // Pay the money lol
-            currentWeight -= cost;
         }
     }
+
     public void SpawnSelectedEnemy(EnemyData targetEnemy)
     {
         // call spawnpoint.cs for help pls uwu

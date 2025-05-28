@@ -4,7 +4,6 @@ using UnityEngine;
 public class SpawnList : ScriptableObject
 {
     public EnemyData[] allowedEnemies;
-    public EnemyData eliteEnemy;
+    //public EnemyData eliteEnemy;
 
 }
-// PLs make an asset folder for this and organize them by biome
