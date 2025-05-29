@@ -267,6 +267,10 @@ namespace Dreamteck.Splines.Editor
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+            
+            // Solar Harmony: Put this here to prevetn exception when set from Awake
+            foldoutHeaderStyle = EditorStyles.foldout;
+            
             if (doRebuild) DoRebuild();
             serializedObject.Update();
 
@@ -343,7 +347,7 @@ namespace Dreamteck.Splines.Editor
 
         protected virtual void Awake()
         {
-            foldoutHeaderStyle = EditorStyles.foldout;
+            // foldoutHeaderStyle = EditorStyles.foldout;
 #if UNITY_2019_1_OR_NEWER
             SceneView.duringSceneGui += DuringSceneGUI;
 #endif
