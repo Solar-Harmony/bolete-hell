@@ -3,24 +3,19 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public SpawnList spawnList;
     public SpawnArea spawnAreaCoordinate;
-    private EnemyData targetEnemy;
-    private bool Spawning;
 
     public void TrySpawning()
     {
-        if (!Spawning)
-            return;
 
-        var entries = spawnList.allowedEnemies;
+        var entries = spawnAreaCoordinate.allowedEnemies;
         if (entries == null || entries.Length == 0)
             return;
 
-        SpawnSelectedEnemy(targetEnemy);
+        SpawnSelectedEnemy(spawnAreaCoordinate);
     }
 
-    public Vector2 GetSpawnPosition(EnemyData enemyData)
+    public Vector2 GetSpawnPosition(SpawnArea allowedEnemies)
     {
         Vector2 dir = Random.insideUnitCircle.normalized;
         float dist = Random.Range(spawnAreaCoordinate.minSpawnRadius, (spawnAreaCoordinate.maxSpawnRadius));
@@ -28,12 +23,11 @@ public class SpawnManager : MonoBehaviour
         return spawnPos;
     }
 
-    public void SpawnSelectedEnemy(EnemyData targetEnemy)
+    public void SpawnSelectedEnemy(SpawnArea allowedEnemies)
     {
-        // call spawnpoint.cs for help pls uwu
-        Vector3 spawnPos = GetSpawnPosition(targetEnemy);
-        GameObject prefabToSpawn = targetEnemy.normalPrefab; //reminder enemy data and spawnlist are scriptable objects not mono so fuck my life
-
+        Vector3 spawnPos = GetSpawnPosition(allowedEnemies);
+        int fml = Random.Range(0, spawnAreaCoordinate.allowedEnemies.Length);
+        GameObject prefabToSpawn = spawnAreaCoordinate.allowedEnemies[fml];
         Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
     }
 }
