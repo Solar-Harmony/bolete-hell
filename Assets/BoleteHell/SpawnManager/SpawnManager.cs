@@ -1,33 +1,41 @@
-using System.Collections;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     public SpawnArea spawnAreaCoordinate;
+    public SpawnListEnemy spawnListEnemy;
 
-    public void TrySpawning()
+    public void TrySpawning(Transform spawnPoint) 
     {
-
-        var entries = spawnAreaCoordinate.allowedEnemies;
+        var entries = spawnListEnemy.allowedEnemies;
         if (entries == null || entries.Length == 0)
             return;
 
-        SpawnSelectedEnemy(spawnAreaCoordinate);
+        SpawnSelectedEnemy(spawnListEnemy, spawnPoint);
     }
 
-    public Vector2 GetSpawnPosition(SpawnArea allowedEnemies)
+    public Vector2 GetSpawnPosition(Transform centerPoint)
     {
-        Vector2 dir = Random.insideUnitCircle.normalized;
-        float dist = Random.Range(spawnAreaCoordinate.minSpawnRadius, (spawnAreaCoordinate.maxSpawnRadius));
-        Vector2 spawnPos = transform.position + new Vector3(dir.x * dist, 0f, dir.y * dist);
-        return spawnPos;
+        Vector2 dir2D = Random.insideUnitCircle.normalized;
+
+        float dist = Random.Range(
+            spawnAreaCoordinate.minSpawnRadius,
+            spawnAreaCoordinate.maxSpawnRadius
+        );
+
+        Vector2 offset2D = dir2D * dist;
+        Vector2 center2D = new Vector2(centerPoint.position.x, centerPoint.position.y);
+
+        Vector2 fml = new Vector2(center2D.x + offset2D.x,center2D.y + offset2D.y);
+        return fml;
     }
 
-    public void SpawnSelectedEnemy(SpawnArea allowedEnemies)
+    public void SpawnSelectedEnemy(SpawnListEnemy allowedEnemies, Transform spawnPoint)
     {
-        Vector3 spawnPos = GetSpawnPosition(allowedEnemies);
-        int fml = Random.Range(0, spawnAreaCoordinate.allowedEnemies.Length);
-        GameObject prefabToSpawn = spawnAreaCoordinate.allowedEnemies[fml];
-        Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        Vector3 finalSpawnPos = GetSpawnPosition(spawnPoint);
+        int index = Random.Range(0, allowedEnemies.allowedEnemies.Length);
+        GameObject prefabToSpawn = allowedEnemies.allowedEnemies[index];
+
+        Instantiate(prefabToSpawn, finalSpawnPos, Quaternion.identity);
     }
 }

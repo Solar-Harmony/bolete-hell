@@ -1,9 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "AI/SpawnList")]
 public class SpawnArea : MonoBehaviour
 {
-    public GameObject[] allowedEnemies;
 
     [Tooltip("min distance in radius")]
     public float minSpawnRadius = 5f;
