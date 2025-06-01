@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f6623a15a88a94ba4c451f50375d7c, type: 3}
-  m_Name: Sniper
+  m_Script: {fileID: 11500000, guid: 950778f87de1e46409cbac7e739dd8b3, type: 3}
+  m_Name: BaseSniperPattern
   m_EditorClassIdentifier: 
-  firingType: 1
-  rateOfFire: 2
-  maxNumberOfBounces: 10
-  maxRayDistance: 20
+  numberOfBulletShot: 4
+  maxAngleRange: 360
+  startingRotation: 45
+  constantRotation: 10
+  burstShotCount: 1
+  fireRateCooldown: 0

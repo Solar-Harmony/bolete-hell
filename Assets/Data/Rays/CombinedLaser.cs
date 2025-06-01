@@ -9,6 +9,7 @@ namespace Data.Rays
     {
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }
+        //Va pouvoir être utilisé pour quand le laser hit un diffract shield
         private List<LaserData> _datas;
     
         public CombinedLaser(List<LaserData> datas)
@@ -55,7 +56,5 @@ namespace Data.Rays
                 data.Logic.OnHit(hitPosition,hitCharacterHealth);
             }
         }
-
-
     }
 }

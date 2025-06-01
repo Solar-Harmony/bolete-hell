@@ -18,37 +18,65 @@ namespace BoleteHell.RayCannon
         Charged,
     }
     
-    //Un peu plus chiant a créé dans l'éditeur mais peut être facilement créé from code pour les ennemis
     [Serializable]
     public class RayCannon
     {
-        [SerializeField] private List<LaserData> _laserDatas;
-        [SerializeField] private RayCannonData _rayCannonData;
+        [SerializeField] private List<LaserData> laserDatas;
+        [SerializeField] public RayCannonData rayCannonData;
+        
+        //Permet de donner des pattern vraiment basique sans avoir a créé de pattern master mais si on veut faire des pattern plus complexe
+        //et réutilisable on peut faire des pattern masters pour eux
+        [SerializeField] private bool useBulletPatternMaster;
+        [ShowIf("@!useBulletPatternMaster")]
+        [SerializeField] private List<BulletPatternData> bulletPatterns;
+        [ShowIf("useBulletPatternMaster")] 
+        [SerializeField] private BulletPatternMaster bulletPatternMaster;
+        
         private CombinedLaser _combinedLaser;
         private RayCannonFiringLogic _currentFiringLogic;
-
         public RayCannon()
         {
             
         }
         
-        public RayCannon(List<LaserData> laserDatas,RayCannonData rayCannonData)
+        //TODO: Aucune idées si la création de raycannons par code fonctionne 
+        //Pourrais être utile si on vaut faire que les ennemis on des weapon semi-random
+        //genre les sniper ennemis on un sniper mais qui peut avoir un laser different par ennemis
+        public RayCannon(List<LaserData> laserDatas,RayCannonData rayCannonData,BulletPatternMaster bulletPatternData)
         {
-            _laserDatas = laserDatas;
-            _rayCannonData = rayCannonData;
-            Init();
+            useBulletPatternMaster = true;
+            this.laserDatas = laserDatas;
+            this.rayCannonData = rayCannonData;
+            bulletPatternMaster = bulletPatternData;
+        }
+        
+        public RayCannon(List<LaserData> laserDatas,RayCannonData rayCannonData,List<BulletPatternData> bulletPatternData)
+        {
+            useBulletPatternMaster = false;
+            this.laserDatas = laserDatas;
+            this.rayCannonData = rayCannonData;
+            bulletPatterns = bulletPatternData;
         }
 
         public void Init()
         {
-            if (_laserDatas.Count == 0)
+            //TODO:
+            //cloner les laser data
+            
+            //J'ai envi d'avoir des stats différent de laser on hit selon le firing type du weapon qui l'equip
+            //Donc si on tire un laser qui explose,
+            //de base l'explosion ferais plus de dégat et serais plus gros pour les laserBeams que les projectile
+            //Peut-être avoir un Firing type enum dans le laser data qui permet de dire quel stats utiliser selon lenum
+            //Scale pas pentoute mais j'ai pas vraiment l'intention d'ajouter des type de firing
+            
+            if (laserDatas.Count == 0)
             {
                 Debug.LogWarning("No laser data provided for RayCannon!");
             }
 
-            _combinedLaser = new CombinedLaser(_laserDatas);
+            _combinedLaser = new CombinedLaser(laserDatas);
             
-            _currentFiringLogic = _rayCannonData.firingType switch
+            _currentFiringLogic = rayCannonData.firingType switch
             {
                 FiringTypes.Automatic => new LaserProjectileLogic(),
                 FiringTypes.Charged => new LaserBeamLogic(),
@@ -58,12 +86,17 @@ namespace BoleteHell.RayCannon
 
         public void Shoot(Vector3 startPosition, Vector3 direction)
         {
-            _currentFiringLogic.Shoot(startPosition,direction,_rayCannonData,_combinedLaser);
+            _currentFiringLogic.Shoot(startPosition,direction,rayCannonData,_combinedLaser);
         }
 
         public void FinishFiring()
         {
             _currentFiringLogic.FinishFiring();
+        }
+
+        public List<BulletPatternData> GetBulletPatterns()
+        {
+            return useBulletPatternMaster ? bulletPatternMaster.patterns : bulletPatterns;
         }
     }
 }

@@ -16,7 +16,6 @@ namespace BoleteHell.RayCannon
         private void Start()
         {
             LoadRayCannons();
-            Physics2D.queriesHitTriggers = false;
         }
 
         private void LoadRayCannons()

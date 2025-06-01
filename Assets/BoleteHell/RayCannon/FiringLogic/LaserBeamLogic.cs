@@ -12,33 +12,24 @@ public class LaserBeamLogic:RayCannonFiringLogic
 {
     private LaserRenderer _reservedRenderer;
     private readonly List<Vector3> _rayPositions = new();
-
+    //Modifier pour ne plus réserver un renderer et le réutiliser car ca ne fonctionne pas avec le tire de multiple laser en même temps malheureusement
+    //on a une seule instance de LaserBeamLogic donc si l'instance réserve un renderer le même va être utiliser pour tout les tires
+    //Serais possible si on informe le LaserBeamLogic du nombre de renderer a réserver 
     public override void OnReset(LaserRenderer renderer)
     {
-        renderer.gameObject.SetActive(false);
+        LineRendererPool.Instance.Release(renderer);
+        _reservedRenderer = null;
     }
 
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData rayCannonData,CombinedLaser laser)
     {
-
-        if (!_reservedRenderer)
-        {
-            _reservedRenderer = LineRendererPool.Instance.Get();
-            UpdateChargeTime(rayCannonData.timeBetweenShots);
-        }
-
-        //Debug.Log($"next shot in {Time.time - NextShootTime}");
-        if (!(Time.time >= NextShootTime)) return;
+        _reservedRenderer = LineRendererPool.Instance.Get();
+        
         Cast(bulletSpawnPoint, direction,rayCannonData,laser);
-        UpdateChargeTime(rayCannonData.timeBetweenShots);
     }
 
     public override void FinishFiring()
     {
-        if (!_reservedRenderer) return;
-        
-        LineRendererPool.Instance.Release(_reservedRenderer);
-        _reservedRenderer = null;
 
     }
     
@@ -50,7 +41,9 @@ public class LaserBeamLogic:RayCannonFiringLogic
 
         for (int i = 0; i <= rayCannonData.maxNumberOfBounces; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,rayCannonData.maxRayDistance);
+            LayerMask layerMask = ~LayerMask.GetMask("Projectile");
+
+            RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,rayCannonData.maxRayDistance,layerMask);
             if (!hit)
             {
                 //Debug.DrawRay(CurrentPos, CurrentDirection * _laserData.MaxRayDistance, Color.black);
@@ -74,10 +67,9 @@ public class LaserBeamLogic:RayCannonFiringLogic
                 _rayPositions.Add(hit.point); 
                 break;
             }
-
         }
         
-        _reservedRenderer.DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.lifeTime,this);
+        _reservedRenderer.DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
         _rayPositions.Clear();
     }
 
@@ -95,9 +87,4 @@ public class LaserBeamLogic:RayCannonFiringLogic
         _rayPositions.Add(CurrentPos);
     }
 
-    private void UpdateChargeTime(float timeBetweenShots)
-    {
-        NextShootTime = Time.time + timeBetweenShots;
-    }
-    
 }

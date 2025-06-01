@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: AutoRifle
   m_EditorClassIdentifier: 
   firingType: 0
-  timeBetweenShots: 0.3
-  lifeTime: 1.5
+  rateOfFire: 0.2
   maxNumberOfBounces: 10
   maxRayDistance: 10
-  laserData: {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}

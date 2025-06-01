@@ -5,16 +5,16 @@ public class TESTINGENEMY : MonoBehaviour
     [SerializeField] GameObject player;
 
 
-    private BulletSpawner currentSpawner;
+    private BulletPattern _currentPattern;
 
     private void Start()
     {
-        currentSpawner = GetComponentInChildren<BulletSpawner>();
+        _currentPattern = GetComponentInChildren<BulletPattern>();
     }
 
     private void Update()
     {
-        currentSpawner.Shoot();
+        //_currentPattern.Shoot();
 
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data.Rays;
 using Lasers;
 using UnityEngine;
 
@@ -31,7 +32,6 @@ namespace BoleteHell.Rays
             
             _capsuleCollider.enabled = false;
             _movement.enabled = false;
-
         }
 
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime,RayCannonFiringLogic logic)
@@ -45,13 +45,13 @@ namespace BoleteHell.Rays
             StartCoroutine(Lifetime(lifeTime,logic));
         }
 
-        public void SetupProjectileLaser(float refractiveIndex,Vector2 direction)
+        public void SetupProjectileLaser(float refractiveIndex,Vector2 direction,CombinedLaser laser)
         {
             _isProjectile = true;
             _laserRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction,refractiveIndex);
+            _movement.StartMovement(direction,refractiveIndex,laser);
             
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
             _capsuleCollider.size = new Vector2(RayWidth, LaserLenght + AdjustedColliderLenght);
@@ -72,7 +72,6 @@ namespace BoleteHell.Rays
         //Pourrais peut-être avoir un renderer pour les laserbeams et un renderer pour les projectile laser
         private void ResetLaser(RayCannonFiringLogic logic)
         {
-            //gameObject.SetActive(false);
             logic.OnReset(this);
             
             if (!_isProjectile) return;
@@ -83,8 +82,6 @@ namespace BoleteHell.Rays
             _rb.linearVelocity = Vector2.zero;
             _laserRenderer.numCapVertices = 0;
             _isProjectile = false;
-
         }
-
     }
 }

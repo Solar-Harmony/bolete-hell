@@ -16,16 +16,12 @@ public class LaserProjectileLogic : RayCannonFiringLogic
 
     public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData data,CombinedLaser laser)
     {
-        if (!(Time.time >= NextShootTime)) return;
-        
-        NextShootTime = Time.time + data.timeBetweenShots;
-
         //Créé seulement un point de début et un point de fin
         LaserRenderer reservedRenderer = LineRendererPool.Instance.Get();
         List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLenght };
         reservedRenderer.transform.position = bulletSpawnPoint;
-        reservedRenderer.DrawRay(positions, laser.CombinedColor, data.lifeTime,this);
-        reservedRenderer.SetupProjectileLaser(laser.CombinedRefractiveIndex, direction);
+        reservedRenderer.DrawRay(positions, laser.CombinedColor, data.LifeTime,this);
+        reservedRenderer.SetupProjectileLaser(laser.CombinedRefractiveIndex, direction,laser);
     }
     
     public override void OnReset(LaserRenderer renderer)

@@ -32,19 +32,19 @@ namespace BoleteHell.Rays.RayLogic
             if (hitCollidersAmount <= 0)
             {
                 Debug.Log("Explosion hit nothing");
-                return;
+                
             }
-            
-            for (int i = 0; i < hitCollidersAmount; i++)
+            else
             {
-                Collider2D hit = results[i];
-                if (hit.gameObject.TryGetComponent(out Health health))
+                for (int i = 0; i < hitCollidersAmount; i++)
                 {
+                    Collider2D hit = results[i];
+                    if (!hit.gameObject.TryGetComponent(out Health health)) continue;
+                    
                     Debug.Log($"Explosion hit {hit.name}",hit.gameObject);
                     health.TakeDamage(explosionDamage);
                 }
             }
-
             DrawVisuals(hitPosition);
         }
 

@@ -32,7 +32,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.05, y: -0.39}
+  m_AnchoredPosition: {x: -2.82, y: -0.39}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6982038961960877227
@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: -2734542199329630527}
   - component: {fileID: 6249654377470742942}
   - component: {fileID: 2877549176397520493}
+  - component: {fileID: 2835406013110666550}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -276,7 +277,7 @@ MonoBehaviour:
     interval: 0.5
     sensitivity: 10
     maximumInterval: 2
-    visualizeSensitivity: 0
+    visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
@@ -325,7 +326,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 2646352373222379194}
-  rayCannonsData:
-  - _laserDatas:
-    - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
-    _rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
+  rayCannons:
+  - rid: 4156091868789080146
+  references:
+    version: 2
+    RefIds:
+    - rid: 4156091868789080146
+      type: {class: RayCannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
+      data:
+        laserDatas:
+        - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
+        rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
+        useBulletPatternMaster: 0
+        bulletPatterns:
+        - {fileID: 11400000, guid: 433fe73d42148d7438dec63069a508c8, type: 2}
+        bulletPatternMaster: {fileID: 0}
+--- !u!114 &2835406013110666550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
