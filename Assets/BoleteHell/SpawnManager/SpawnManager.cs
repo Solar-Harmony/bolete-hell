@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public SpawnArea spawnAreaCoordinate;
-    public SpawnListEnemy spawnListEnemy;
+    public SpawnArea spawnArea;
 
     public void TrySpawning(Transform spawnPoint) 
     {
-        var entries = spawnListEnemy.allowedEnemies;
+        var entries = spawnArea.spawnListEnemy.allowedEnemies;
         if (entries == null || entries.Length == 0)
             return;
 
-        SpawnSelectedEnemy(spawnListEnemy, spawnPoint);
+        SpawnSelectedEnemy(spawnArea.spawnListEnemy, spawnPoint);
     }
 
     public Vector2 GetSpawnPosition(Transform centerPoint)
@@ -19,8 +18,8 @@ public class SpawnManager : MonoBehaviour
         Vector2 dir2D = Random.insideUnitCircle.normalized;
 
         float dist = Random.Range(
-            spawnAreaCoordinate.minSpawnRadius,
-            spawnAreaCoordinate.maxSpawnRadius
+            spawnArea.minSpawnRadius,
+            spawnArea.maxSpawnRadius
         );
 
         Vector2 offset2D = dir2D * dist;
