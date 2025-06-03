@@ -8,7 +8,7 @@ namespace Player
     public class PlayerShieldInput : MonoBehaviour
     {
         [SerializeField] private InputController input;
-        [SerializeField] private List<LineSO> currentShields = new();
+        [SerializeField] private List<ShieldData> currentShields = new();
         private int _selectedShieldIndex;
 
         private void Update()
@@ -60,7 +60,7 @@ namespace Player
             GetSelectedShield().FinishLine();
         }
 
-        private LineSO GetSelectedShield()
+        private ShieldData GetSelectedShield()
         {
             if (currentShields.Count == 0)
             {

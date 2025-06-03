@@ -20,6 +20,8 @@ namespace Shields
 
         private SplineContainer _splineContainer;
         private SplineExtrude _splineExtrude;
+        
+        private const string ShieldTag = "Shield";
 
         private void Awake()
         {
@@ -34,21 +36,22 @@ namespace Shields
             var leftObj = new GameObject("EdgeCollider1");
             leftObj.transform.parent = transform;
             _leftEdge = leftObj.AddComponent<EdgeCollider2D>();
-            // leftObj.layer = LayerMask.NameToLayer("FrontWall");
-
+            _leftEdge.tag = ShieldTag;
+            
             var rightObj = new GameObject("EdgeCollider2");
             rightObj.transform.parent = transform;
             _rightEdge = rightObj.AddComponent<EdgeCollider2D>();
-            // rightObj.layer = LayerMask.NameToLayer("BackWall");
-
+            _rightEdge.tag = ShieldTag;
 
             var startObj = new GameObject("CapCollider1");
             startObj.transform.parent = transform;
             startCap = startObj.AddComponent<EdgeCollider2D>();
+            startCap.tag = ShieldTag;
 
             var endObj = new GameObject("CapCollider2");
             endObj.transform.parent = transform;
             endCap = endObj.AddComponent<EdgeCollider2D>();
+            endCap.tag = ShieldTag;
         }
 
         private void OnDrawGizmos()

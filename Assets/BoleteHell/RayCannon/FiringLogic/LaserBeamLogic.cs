@@ -1,90 +1,81 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Rays;
+using BoleteHell.Utils;
+using Data.Cannons;
+using Data.Rays;
 using Lasers;
 using Shields;
 using UnityEngine;
-using Ray = Lasers.Ray;
 
-[Serializable]
-public class LaserBeamLogic:RayCannonFiringLogic
+public class LaserBeamLogic:FiringLogic
 {
-    [SerializeField] private float chargingTime = 0.5f;
-    [SerializeField] private float lifeTime = 0.1f;
-    
     private readonly List<Vector3> _rayPositions = new();
-    
-    private LaserRenderer reservedRenderer;
-    public override void StartFiring(Ray ray)
+    //Modifier pour ne plus réserver un renderer et le réutiliser car ca ne fonctionne pas avec le tire de multiple laser en même temps malheureusement
+    //on a une seule instance de LaserBeamLogic donc si l'instance réserve un renderer le même va être utiliser pour tout les tires
+    //Serais possible si on informe le LaserBeamLogic du nombre de renderer a réserver 
+    public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData rayCannonData,CombinedLaser laser)
     {
-        base.StartFiring(ray);
-        UpdateChargeTime();
-    }
-
-    public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction)
-    {
-        if (!(Time.time >= nextShootTime)) return;
-        //Devrait le reserver dans le start firing et juste utilisé le même tant qu'il tire mais faudrais fix des vchose et ça me tente pas 
-        reservedRenderer = LineRendererPool.Instance.Get();
-
-        Cast(bulletSpawnPoint, direction);
-        UpdateChargeTime();
+        Cast(bulletSpawnPoint, direction,rayCannonData,laser);
     }
 
     public override void FinishFiring()
     {
-        LineRendererPool.Instance.Release(reservedRenderer);
+
     }
     
-    
-    public void Cast(Vector3 bulletSpawnPoint, Vector2 direction)
+    private void Cast(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData rayCannonData,CombinedLaser laser)
     {
-        _currentPos = bulletSpawnPoint;
-        _rayPositions.Add(_currentPos);
-        _currentDirection = direction;
+        CurrentPos = bulletSpawnPoint;
+        _rayPositions.Add(CurrentPos);
+        CurrentDirection = direction;
 
-        for (int i = 0; i <= currentRay.maxNumberOfBounces; i++)
+        for (int i = 0; i <= rayCannonData.maxNumberOfBounces; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(_currentPos, _currentDirection,currentRay.maxRayDistance);
+            LayerMask layerMask = ~LayerMask.GetMask("Projectile");
+
+            RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,rayCannonData.maxRayDistance,layerMask);
             if (!hit)
             {
-                Debug.DrawRay(_currentPos, _currentDirection * currentRay.maxRayDistance, Color.black);
-                _rayPositions.Add((Vector2)_currentPos + _currentDirection * currentRay.maxRayDistance);
+                //Debug.DrawRay(CurrentPos, CurrentDirection * _laserData.MaxRayDistance, Color.black);
+                _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * rayCannonData.maxRayDistance);
                 break;
             }
 
-            if (hit.transform.gameObject.TryGetComponent(out Line lineHit))
+            if (hit.transform.gameObject.TryGetComponent(out Shield lineHit))
             {
-                OnHitShield(hit, lineHit);
+                OnHitShield(hit, lineHit,laser.CombinedRefractiveIndex);
             }
             //Devrait check le health component de la personne pour que ça fonctionne si on touche un ennemi ou le joueur
-            else if (hit.collider.CompareTag("Enemy"))
+            else if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
-                OnHitEnemy(hit.point);
+                OnHitEnemy(hit.point,health,laser);
+                //Si je touche un ennemi je ne refait plus de bounces
+                break;
+            }
+            else 
+            {
+                _rayPositions.Add(hit.point); 
+                break;
             }
         }
         
-        reservedRenderer.DrawRay(_rayPositions,currentRay.Color,lifeTime);
+        LaserRendererPool.Instance.Get().DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
         _rayPositions.Clear();
     }
 
-    public void OnHitEnemy(Vector2 hitPosition)
+    private void OnHitEnemy(Vector2 hitPosition,Health health,CombinedLaser laser)
     {
         _rayPositions.Add(hitPosition);
-        currentRay.logic.OnHit();
+        laser.CombinedEffect(hitPosition,health);
     }
 
-    public void OnHitShield(RaycastHit2D hitPoint, Line lineHit)
+    private void OnHitShield(RaycastHit2D hitPoint, Shield shieldHit,float lightRefractiveIndex)
     {
-        Debug.DrawLine(_currentPos, hitPoint.point, Color.blue);
-        _currentDirection = lineHit.OnRayHitLine(_currentDirection, hitPoint, currentRay.LightRefractiveIndex);
-        _currentPos = hitPoint.point + _currentDirection * 0.01f;
-        _rayPositions.Add(_currentPos);
-    }
-
-    private void UpdateChargeTime()
-    {
-        nextShootTime = Time.time + chargingTime;
+        Debug.DrawLine(CurrentPos, hitPoint.point, Color.blue);
+        CurrentDirection = shieldHit.OnRayHitLine(CurrentDirection, hitPoint, lightRefractiveIndex);
+        CurrentPos = hitPoint.point + CurrentDirection * 0.01f;
+        _rayPositions.Add(CurrentPos);
     }
 
 }
