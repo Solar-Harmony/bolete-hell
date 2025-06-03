@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d680c5909d1b3438b005d97987528a, type: 3}
   m_Name: SingleForwardShotMaster
   m_EditorClassIdentifier: 
-  simultaneousShots: 1
   patterns:
-  - {fileID: 11400000, guid: 433fe73d42148d7438dec63069a508c8, type: 2}
+  - numberOfBulletShot: 3
+    maxAngleRange: 45
+    startingRotation: 0
+    constantRotation: 0
+    burstShotCount: 1
+    burstShotCooldown: 0

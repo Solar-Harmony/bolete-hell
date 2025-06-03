@@ -6,12 +6,11 @@ using Data.Rays;
 using Lasers;
 using UnityEngine;
 
-public abstract class RayCannonFiringLogic
+public abstract class FiringLogic
 {
     protected Vector2 CurrentDirection;
     protected Vector3 CurrentPos;
     
     public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData data,CombinedLaser laser);
     public abstract void FinishFiring();
-    public abstract void OnReset(LaserRenderer renderer);
 }

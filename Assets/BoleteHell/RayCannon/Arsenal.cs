@@ -6,17 +6,17 @@ namespace BoleteHell.RayCannon
 {
     //Chaque RayCannonManager a son propre BulletPattern ,permet chaque a unité d'avoir son propre timer de pattern
     [RequireComponent(typeof(BulletPattern))]
-    public class RayCannonManager : MonoBehaviour
+    public class Arsenal : MonoBehaviour
     {
-        [SerializeField] private Transform bulletSpawnPoint;
-        [SerializeReference] private List<RayCannon> rayCannons;
+        [SerializeField] private Transform spawnDistance;
+        [SerializeReference] private List<Cannon> rayCannons;
         private BulletPattern _pattern;
         private int _selectedCannonIndex;
 
         private void Start()
         {
             _pattern = GetComponent<BulletPattern>();
-            foreach (RayCannon rayCannon in rayCannons)
+            foreach (Cannon rayCannon in rayCannons)
             {
                 rayCannon.Init();
             }
@@ -29,7 +29,7 @@ namespace BoleteHell.RayCannon
                 Debug.LogWarning("No raycannon equipped");
                 return;
             }
-            _pattern.Shoot(GetSelectedWeapon(),bulletSpawnPoint);
+            _pattern.Shoot(GetSelectedWeapon(),spawnDistance,direction);
             
         }
     
@@ -46,7 +46,7 @@ namespace BoleteHell.RayCannon
             Debug.Log($"selected {GetSelectedWeapon()}");
         }
     
-        public RayCannon GetSelectedWeapon()
+        public Cannon GetSelectedWeapon()
         {
             if (rayCannons[_selectedCannonIndex] != null) return rayCannons[_selectedCannonIndex];
             
@@ -59,7 +59,7 @@ namespace BoleteHell.RayCannon
             GetSelectedWeapon()?.FinishFiring();
         }
 
-        public void AddNewWeapon(RayCannon cannon)
+        public void AddNewWeapon(Cannon cannon)
         {
             cannon.Init();
             rayCannons.Add(cannon);

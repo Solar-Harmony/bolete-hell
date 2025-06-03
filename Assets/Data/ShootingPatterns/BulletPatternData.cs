@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "BulletPatternData", menuName = "Scriptable Objects/BulletPatternData")]
-public class BulletPatternData : ScriptableObject
+[Serializable]
+public class BulletPatternData
 {
     [Header("General")]
     [Tooltip("Number of bullets in a single shot")]
@@ -22,7 +23,7 @@ public class BulletPatternData : ScriptableObject
     
     [Tooltip("Number of shots in a burst")]
     [Range(1,3)]
-    public int burstShotCount;
+    public int burstShotCount = 1;
     
     [Tooltip("FireRate between individual shots in a burst")]
     public float burstShotCooldown;

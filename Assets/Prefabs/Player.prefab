@@ -216,31 +216,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 1398748979581358320}
   rayCannons:
-  - rid: 4156091868789080144
-  - rid: 4156091868789080147
+  - rid: 5246942125833584717
+  - rid: 5246942125833584719
   references:
     version: 2
     RefIds:
-    - rid: 4156091868789080144
-      type: {class: RayCannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
+    - rid: 5246942125833584717
+      type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
         rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         useBulletPatternMaster: 0
         bulletPatterns:
-        - {fileID: 11400000, guid: 433fe73d42148d7438dec63069a508c8, type: 2}
+        - rid: 5246942125833584718
         bulletPatternMaster: {fileID: 0}
-    - rid: 4156091868789080147
-      type: {class: RayCannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
+    - rid: 5246942125833584718
+      type: {class: BulletPatternData, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 4
+        maxAngleRange: 360
+        startingRotation: 45
+        constantRotation: 0
+        burstShotCount: 1
+        burstShotCooldown: 0
+    - rid: 5246942125833584719
+      type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
         rayCannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
-        useBulletPatternMaster: 1
+        useBulletPatternMaster: 0
         bulletPatterns:
-        - {fileID: 11400000, guid: 433fe73d42148d7438dec63069a508c8, type: 2}
-        bulletPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+        - rid: 5246942125833584720
+        bulletPatternMaster: {fileID: 0}
+    - rid: 5246942125833584720
+      type: {class: BulletPatternData, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 1
+        maxAngleRange: 0
+        startingRotation: 0
+        constantRotation: 0
+        burstShotCount: 1
+        burstShotCooldown: 0
 --- !u!114 &5858263315430876513
 MonoBehaviour:
   m_ObjectHideFlags: 0

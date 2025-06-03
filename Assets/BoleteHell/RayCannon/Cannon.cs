@@ -19,22 +19,26 @@ namespace BoleteHell.RayCannon
     }
     
     [Serializable]
-    public class RayCannon
+    public class Cannon
     {
+        [Required]
         [SerializeField] private List<LaserData> laserDatas;
+        [Required]
         [SerializeField] public RayCannonData rayCannonData;
         
         //Permet de donner des pattern vraiment basique sans avoir a créé de pattern master mais si on veut faire des pattern plus complexe
         //et réutilisable on peut faire des pattern masters pour eux
         [SerializeField] private bool useBulletPatternMaster;
         [ShowIf("@!useBulletPatternMaster")]
-        [SerializeField] private List<BulletPatternData> bulletPatterns;
+        [Required]
+        [SerializeReference] private List<BulletPatternData> bulletPatterns;
         [ShowIf("useBulletPatternMaster")] 
+        [Required]
         [SerializeField] private BulletPatternMaster bulletPatternMaster;
         
         private CombinedLaser _combinedLaser;
-        private RayCannonFiringLogic _currentFiringLogic;
-        public RayCannon()
+        private FiringLogic _currentFiringLogic;
+        public Cannon()
         {
             
         }
@@ -42,7 +46,7 @@ namespace BoleteHell.RayCannon
         //TODO: Aucune idées si la création de raycannons par code fonctionne 
         //Pourrais être utile si on vaut faire que les ennemis on des weapon semi-random
         //genre les sniper ennemis on un sniper mais qui peut avoir un laser different par ennemis
-        public RayCannon(List<LaserData> laserDatas,RayCannonData rayCannonData,BulletPatternMaster bulletPatternData)
+        public Cannon(List<LaserData> laserDatas,RayCannonData rayCannonData,BulletPatternMaster bulletPatternData)
         {
             useBulletPatternMaster = true;
             this.laserDatas = laserDatas;
@@ -50,7 +54,7 @@ namespace BoleteHell.RayCannon
             bulletPatternMaster = bulletPatternData;
         }
         
-        public RayCannon(List<LaserData> laserDatas,RayCannonData rayCannonData,List<BulletPatternData> bulletPatternData)
+        public Cannon(List<LaserData> laserDatas,RayCannonData rayCannonData,List<BulletPatternData> bulletPatternData)
         {
             useBulletPatternMaster = false;
             this.laserDatas = laserDatas;

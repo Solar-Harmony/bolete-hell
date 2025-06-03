@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Lasers
 {
-    public class LineRendererPool : MonoBehaviour
+    public class LaserRendererPool : MonoBehaviour
     {
         [SerializeField] public GameObject lineRendererPrefab; 
 
@@ -12,7 +12,7 @@ namespace Lasers
 
         private readonly Queue<LaserRenderer> _pool = new();
 
-        public static LineRendererPool Instance { get; private set; }
+        public static LaserRendererPool Instance { get; private set; }
 
         private void Awake()
         {

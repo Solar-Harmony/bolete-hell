@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace Input
 {
-    [RequireComponent(typeof(RayCannonManager))]
+    [RequireComponent(typeof(Arsenal))]
     public class PlayerLaserInput : MonoBehaviour
     {
         [SerializeField] private InputController input;
-        private RayCannonManager rayCannonManager;
+        private Arsenal _arsenal;
         private void Start()
         {
-            rayCannonManager = GetComponent<RayCannonManager>();
+            _arsenal = GetComponent<Arsenal>();
         }
 
         private void Update()
@@ -35,17 +35,17 @@ namespace Input
 
         private void CycleWeapons(int value)
         {
-            rayCannonManager.CycleWeapons(value);
+            _arsenal.CycleWeapons(value);
         }
 
         private void OnShootCanceled()
         {
-            rayCannonManager.OnShootCanceled();
+            _arsenal.OnShootCanceled();
         }
 
         private void Shoot()
         {
-            rayCannonManager.Shoot(transform.up);
+            _arsenal.Shoot(transform.up);
         }
     }
 }

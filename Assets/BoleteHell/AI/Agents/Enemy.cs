@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace AI.Agents
 {
-    [RequireComponent(typeof(RayCannonManager))]
+    [RequireComponent(typeof(Arsenal))]
     public class Enemy : MonoBehaviour
     {
-        private RayCannonManager _weapon;
+        private Arsenal _weapon;
         
         public void Start()
         {
-            _weapon =  GetComponent<RayCannonManager>();
+            _weapon =  GetComponent<Arsenal>();
         }
 
         public void Shoot(Vector3 target)

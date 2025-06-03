@@ -1,40 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &440974735414938989
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2646352373222379194}
-  m_Layer: 7
-  m_Name: ProjectileSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2646352373222379194
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440974735414938989}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4023435176609027149}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.82, y: -0.39}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6982038961960877227
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +37,7 @@ RectTransform:
   m_LocalScale: {x: 0.22723, y: 0.22723, z: 0.22723}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2646352373222379194}
+  - {fileID: 6872167419365447248}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -325,22 +290,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 2646352373222379194}
+  bulletSpawnPoint: {fileID: 6872167419365447248}
   rayCannons:
-  - rid: 4156091868789080146
+  - rid: 5246942125833584726
   references:
     version: 2
     RefIds:
-    - rid: 4156091868789080146
-      type: {class: RayCannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
+    - rid: 5246942125833584726
+      type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
         rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        useBulletPatternMaster: 0
-        bulletPatterns:
-        - {fileID: 11400000, guid: 433fe73d42148d7438dec63069a508c8, type: 2}
-        bulletPatternMaster: {fileID: 0}
+        useBulletPatternMaster: 1
+        bulletPatterns: []
+        bulletPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!114 &2835406013110666550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,3 +317,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7047168010642913551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6872167419365447248}
+  m_Layer: 7
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6872167419365447248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047168010642913551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4023435176609027149}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

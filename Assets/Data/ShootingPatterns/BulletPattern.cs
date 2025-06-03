@@ -7,14 +7,13 @@ using Data.Rays;
 
 public class BulletPattern:MonoBehaviour
 {
-    //TODO: Ajouter le wait timer initial exemple pour le beam il doit être charger pour commencer
-    //a tirer alors que les projectile eu sont tirer immédiatement
-    //En ce moment on est focer de wait le rateOfFire au début même pour les projectiles
-
+    //TODO: les ennemis ne sont plkus capable de tirrer vers le joueur car ils tire avec leur forward vector
+    //mais les ennemis ne se rotate pas pour toujours regarder le joueur
     private float _currentRotation;
     private float _initAttackTimer = 100f;
     private float _attackTimer = 100f;
-    private void StartShooting(RayCannon cannon, BulletPatternData pattern,Transform spawnPoint)
+    private Vector2 initDirection;
+    private void StartShooting(Cannon cannon, BulletPatternData pattern,Transform spawnPoint)
     {
         //Juste pour dire que le premier tir d'une arme peut être soit chargé ou instant
         //Normalement j'aurais juste fait une méthode de start et end pour setup des chose au premier tir
@@ -31,7 +30,7 @@ public class BulletPattern:MonoBehaviour
         if (_attackTimer < cannon.rayCannonData.rateOfFire)
         {
             //Devrait caller une méthode charge sur le weapon pour montrer l'animation de charge du weapon i guess
-            Debug.Log($"Weapon is charging. Current charge: {_attackTimer}");
+            //Debug.Log($"Weapon is charging. Current charge: {_attackTimer}");
             
             _attackTimer += Time.deltaTime;
         }
@@ -41,7 +40,7 @@ public class BulletPattern:MonoBehaviour
         }
     }
 
-    private IEnumerator RoutineFire(RayCannon cannon, BulletPatternData pattern,Transform spawnPoint)
+    private IEnumerator RoutineFire(Cannon cannon, BulletPatternData pattern,Transform spawnPoint)
     {
         for (int i = 0; i < pattern.burstShotCount; i++)
         {
@@ -50,7 +49,7 @@ public class BulletPattern:MonoBehaviour
         }
     }
 
-    private void Fire(RayCannon cannon, BulletPatternData pattern,Transform spawnPoint)
+    private void Fire(Cannon cannon, BulletPatternData pattern,Transform spawnPoint)
     {
         float spawnDistance = Vector3.Distance(transform.position, spawnPoint.position);
         _currentRotation += pattern.constantRotation;
@@ -73,7 +72,7 @@ public class BulletPattern:MonoBehaviour
 
         Quaternion rotation2D = Quaternion.Euler(0, 0, currentAngle + pattern.startingRotation + _currentRotation);
             
-        direction = rotation2D * spawnPoint.up;
+        direction = rotation2D * initDirection;
         spawnPosition = (Vector2)transform.position + (direction.normalized * spawnDistance);
     }
 
@@ -95,13 +94,14 @@ public class BulletPattern:MonoBehaviour
     }
 
     //Raycannon Pourras être changer pour une généralisation des weapons
-    public void Shoot(RayCannon cannon,Transform spawnPosition)
+    public void Shoot(Cannon cannon,Transform spawnPosition,Vector2 initialDirection)
     {
         List<BulletPatternData> patterns = cannon.GetBulletPatterns();
         //TODO: ajouter une manière de faire que les pattern sont soit simultané ou consécutifs
         //si simultané un call de fire passe a travers tous les patterns
         //sinon un call de fire fait un pattern et le prochain call fait le pattern suivant
         //Doit fonctionner avec le patternMaster ou la liste de patterns
+        initDirection = initialDirection;
         foreach (BulletPatternData pattern in patterns)
         {
             StartShooting(cannon,pattern,spawnPosition);
