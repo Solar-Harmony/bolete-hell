@@ -12,7 +12,6 @@ namespace BoleteHell.Utils
     {
         public Color color;
 
-        private MaterialPropertyBlock _propertyBlock;
         private MeshRenderer _meshRenderer;
         
         private static readonly int ColorId = Shader.PropertyToID("_BaseColor");
@@ -20,7 +19,6 @@ namespace BoleteHell.Utils
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
-            _propertyBlock = new MaterialPropertyBlock();
         }
 
         private void Start()
@@ -32,19 +30,16 @@ namespace BoleteHell.Utils
         private void OnValidate()
         {
             _meshRenderer ??= GetComponent<MeshRenderer>();
-            _propertyBlock ??= new MaterialPropertyBlock();
-    
             UpdateMaterialProperties();
         }
 #endif
 
         private void UpdateMaterialProperties()
         {
-            if (_propertyBlock == null)
-                return;
-            
-            _propertyBlock.SetColor(ColorId, color);
-            _meshRenderer.SetPropertyBlock(_propertyBlock);
+            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            _meshRenderer.GetPropertyBlock(propertyBlock);
+            propertyBlock.SetColor(ColorId, color);
+            _meshRenderer.SetPropertyBlock(propertyBlock);
         }
     }
 }
