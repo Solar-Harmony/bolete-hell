@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6627328919865755733}
   m_Layer: 0
   m_Name: Shield 2D
-  m_TagString: Line
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

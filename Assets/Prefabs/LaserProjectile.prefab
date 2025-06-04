@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 603156091332464328}
   - component: {fileID: 5939598210464091570}
   - component: {fileID: 5689235021807510393}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LaserProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49361f827cb2b5843bf8f165fd6f60cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <RayWidth>k__BackingField: 0.2
+  <LaserLenght>k__BackingField: 0.3
 --- !u!120 &8214742768466675644
 LineRenderer:
   serializedVersion: 2
@@ -192,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4040297d302da144d8d28e7072c90641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileSpeed: 10
 --- !u!70 &5689235021807510393
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

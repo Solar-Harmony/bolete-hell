@@ -1,58 +1,66 @@
 using System;
+using Data.Rays;
 using Shields;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class LaserProjectileMovement : MonoBehaviour
 {
-   private Rigidbody2D rb;
-   private Vector3 currentDirection;
-   private float refractiveIndex;
-   private float currentSpeed;
+   [SerializeField] private float projectileSpeed = 10f;
+   private Rigidbody2D _rb;
+   private Vector3 _currentDirection;
+   private float _refractiveIndex;
+   private CombinedLaser _laser;
    private void Awake()
    {
-      rb = GetComponent<Rigidbody2D>();
+      _rb = GetComponent<Rigidbody2D>();
    }
 
-   public void StartMovement(Vector2 direction, float speed,float lightRefractiveIndex )
+   public void StartMovement(Vector2 direction, float lightRefractiveIndex,CombinedLaser laser)
    {
-      currentDirection = direction;
-      currentSpeed = speed;
-      refractiveIndex = lightRefractiveIndex;
-      rb.linearVelocity = currentDirection * currentSpeed;
+      Debug.Log("Started movement");
+      _currentDirection = direction;
+      _refractiveIndex = lightRefractiveIndex;
+      _rb.linearVelocity = _currentDirection * projectileSpeed;
+      _laser = laser;
    }
 
    //Devrait peut-être pas être dans le script de mouvement
    private void OnTriggerEnter2D(Collider2D other)
    {
-      if (!other.transform.parent) return;
-      
-      if (other.transform.parent.gameObject.TryGetComponent(out Line lineHit))
+      Debug.Log($"hit {other.name}");
+      if (other.transform.CompareTag("Shield"))
       {
-         OnHitShield(lineHit);
+         if (other.transform.parent.gameObject.TryGetComponent(out Shield lineHit))
+         {
+            OnHitShield(lineHit);
+         }
       }
-      else if (other.CompareTag("Enemy"))
+      else if (other.transform.gameObject.TryGetComponent(out Health health))
       {
-         OnHitEnemy(other.gameObject);
+         OnHitEnemy(transform.position,health);
       }
    }
 
-   private void OnHitEnemy(GameObject enemy)
+   private void OnHitEnemy(Vector2 position,Health health)
    {
-      Debug.Log($"Hit {enemy.name}");
+      _laser.CombinedEffect(position,health);
    }
 
    //Devrait être dans le laserProjectileLogic
-   private void OnHitShield(Line lineHit)
+   private void OnHitShield(Shield shieldHit)
    {
-      RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position , currentDirection, Mathf.Infinity);
+      LayerMask layerMask = ~LayerMask.GetMask("Projectile");
+      RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position , _currentDirection, Mathf.Infinity,layerMask);
+
+      Debug.Log($"Raycast hit: {hit.collider?.name ?? "nothing"} at position {hit.point}");
       
       if (!hit) return;
          
-      Vector3 newDirection = lineHit.OnRayHitLine(currentDirection, hit, refractiveIndex);
-      currentDirection = newDirection;
-      rb.linearVelocity = currentDirection * currentSpeed;
-      float angle = Mathf.Atan2(currentDirection.y, currentDirection.x) * Mathf.Rad2Deg;
+      Vector3 newDirection = shieldHit.OnRayHitLine(_currentDirection, hit, _refractiveIndex);
+      _currentDirection = newDirection;
+      _rb.linearVelocity = _currentDirection * projectileSpeed;
+      float angle = Mathf.Atan2(_currentDirection.y, _currentDirection.x) * Mathf.Rad2Deg;
       transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
    }
 }

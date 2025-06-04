@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BoleteHell.Shields.ShieldsLogic
 {
     [Serializable]
-    public class RefractLogic : ILineHitLogic
+    public class RefractLogic : IShieldHitLogic
     {
         [SerializeField] private float materialRefractiveIndice = 2.417f;
 

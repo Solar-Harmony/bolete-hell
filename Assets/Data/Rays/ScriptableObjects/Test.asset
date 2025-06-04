@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  <Color>k__BackingField: {r: 0.9811321, g: 0.1388393, b: 0.1388393, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.1
+  <Logic>k__BackingField:
+    rid: 4156091727018197079
+  references:
+    version: 2
+    RefIds:
+    - rid: 4156091727018197079
+      type: {class: ExplodeOnHit, ns: BoleteHell.Rays.RayLogic, asm: Assembly-CSharp}
+      data:
+        baseHitDamage: 0
+        explosionDamage: 0
+        explosionRadius: 0
+        explosionCircle: {fileID: 1214218467118365015, guid: 67ff20a4a528d7c468a0eae636908641, type: 3}
