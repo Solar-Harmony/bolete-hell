@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 
-namespace BoleteHell.Utils.Editor
+namespace Utils.SDF
 {
+    // TODO: This is vibe-coded w/ ChatGPT. It works okay but it's a very naive approach lol
+    //       Ideally we'd rewrite this with William's help to run on GPU with compute shader
     public static class SDFGeneratorImpl
     {
         /// <summary>
@@ -370,3 +373,4 @@ namespace BoleteHell.Utils.Editor
         }
     }
 }
+#endif

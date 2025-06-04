@@ -125,7 +125,7 @@
                 // fake ambient occlusion around the edges
                 float ao = saturate(0.5 - dist * 0.5); // Adjust the factor as needed for desired effect
                 main.rgb = lerp(main.rgb, _AltColor, ao);
-                main.a = sdf.a; // Use the alpha channel from the SDF texture
+                main.a = dist; // Use the alpha channel from the SDF texture
                 // main.rgb *= main.a; // Premultiply alpha
 
                 return  main;
