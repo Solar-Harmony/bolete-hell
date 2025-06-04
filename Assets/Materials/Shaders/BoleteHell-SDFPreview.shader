@@ -1,9 +1,10 @@
-﻿Shader "Bolete Hell/SDF"
+﻿// Template for making procedural 2D shaders, is fed an SDF texture, and compatible with URP 2D lighting
+Shader "Bolete Hell/Base Template"
 {
     Properties
     {
         _BaseColor("Base Color", Color) = (1,1,1,1)
-        _AltColor("Base Color", Color) = (0.5,0.5,0.5,1)
+        _AltColor("Accent Color", Color) = (0.5,0.5,0.5,1)
         _SDF("SDF Texture", 2D) = "white" {}
         _NormalMap("Normal Map", 2D) = "bump" {}
         _ZWrite("ZWrite", Float) = 0
@@ -56,22 +57,12 @@
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/LightingUtility.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
-
-            // declare the base color
-
+            
             TEXTURE2D(_SDF);
             SAMPLER(sampler_SDF);
-            
-//            TEXTURE2D(_MainTex);
-//            SAMPLER(sampler_MainTex);
-//            UNITY_TEXTURE_STREAMING_DEBUG_VARS_FOR_TEX(_MainTex);
-
-//            TEXTURE2D(_MaskTex);
-//            SAMPLER(sampler_MaskTex);
 
             // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
             CBUFFER_START(UnityPerMaterial)
-//                half4 _Color;
                 half4 _BaseColor;
                 half3 _AltColor;
             CBUFFER_END
@@ -118,17 +109,8 @@
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                half4 main = i.color * _BaseColor;
-                half4 sdf = SAMPLE_TEXTURE2D(_SDF, sampler_SDF, i.uv);
-                float dist = sdf.r; // Assuming the SDF texture's red channel contains the distance value
-
-                // fake ambient occlusion around the edges
-                float ao = saturate(0.5 - dist * 0.5); // Adjust the factor as needed for desired effect
-                main.rgb = lerp(main.rgb, _AltColor, ao);
-                main.a = dist; // Use the alpha channel from the SDF texture
-                // main.rgb *= main.a; // Premultiply alpha
-
-                return  main;
+                const half4 sdf = SAMPLE_TEXTURE2D(_SDF, sampler_SDF, i.uv);
+                return sdf.r;
             }
             ENDHLSL
         }
@@ -248,14 +230,9 @@
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-//            TEXTURE2D(_MainTex);
-//            SAMPLER(sampler_MainTex);
-//            UNITY_TEXTURE_STREAMING_DEBUG_VARS_FOR_TEX(_MainTex);
-
             // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
             CBUFFER_START( UnityPerMaterial )
                 half4 _BaseColor;
-//                half4 _Color;
             CBUFFER_END
 
             Varyings UnlitVertex(Attributes attributes)
@@ -272,14 +249,12 @@
                 o.positionWS = TransformObjectToWorld(attributes.positionOS);
                 #endif
                 o.uv = attributes.uv;
-//                o.color = attributes.color * _Color * unity_SpriteColor;
-                o.color = attributes.color; // ignore the unity_SpriteColor thing
+                o.color = attributes.color;
                 return o;
             }
 
             float4 UnlitFragment(Varyings i) : SV_Target
             {
-//                float4 mainTex = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 float4 mainTex = i.color * _BaseColor;
 
                 #if defined(DEBUG_DISPLAY)

@@ -1,4 +1,4 @@
-﻿Shader "Bolete Hell/Skibidi-Fortnite"
+﻿Shader "Bolete Hell/Voronoi"
 {
     Properties
     {
