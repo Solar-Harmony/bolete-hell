@@ -8,7 +8,7 @@ public class SpawnArea : MonoBehaviour
     [Tooltip("max distance in radius")]
     public float maxSpawnRadius = 50f;
     [Tooltip("Type of enemy list (can be organzied by biome later)")]
-    public SpawnListEnemy spawnListEnemy;
+    public SpawnList spawnList;
 
 
     private void OnDrawGizmosSelected()
