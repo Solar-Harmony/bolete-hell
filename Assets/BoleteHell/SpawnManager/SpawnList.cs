@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "AI/SpawnList")]
+[CreateAssetMenu(menuName = "Belete-Hell/AI/SpawnList")]
 public class SpawnList : ScriptableObject
 {
     public GameObject[] allowedEnemies;
