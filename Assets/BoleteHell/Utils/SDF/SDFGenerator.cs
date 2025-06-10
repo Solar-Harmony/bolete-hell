@@ -20,7 +20,7 @@ namespace Utils.SDF
 
         private MeshRenderer _meshRenderer;
 
-        private void Awake()
+        private void OnEnable()
         {
 #if UNITY_EDITOR
             AutoRefreshOnSplineEdit();

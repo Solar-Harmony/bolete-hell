@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Utils.SDF
@@ -7,11 +8,27 @@ namespace Utils.SDF
     //       Ideally we'd rewrite this with William's help to run on GPU with compute shader
     public static class SDFGeneratorImpl
     {
+        class Results
+        {
+            public float[,] signedDist;
+            public int texWidth;
+            public int texHeight;
+        }
+
+        class SDFParams
+        {
+            public int baseResolution;
+            public float padding; 
+            public int blurRadius; 
+            public bool subsample;
+        }
+        
         /// <summary>
         /// Generates a 2D signed-distance-field (SDF) Texture2D from an arbitrary 2D mesh,
         /// using a CPU-based two-pass Euclidean distance transform for exact results, 
         /// with optional sub-pixel rasterization and uniform padding around the mesh bounds.
         /// </summary>
+        /// <param name="sdfTexture"></param>
         /// <param name="mesh">A Mesh whose vertices lie in the XY plane (Z = 0).</param>
         /// <param name="baseResolution">
         /// Number of pixels along the longest side of the (padded) mesh’s axis-aligned bounds. 
@@ -26,7 +43,7 @@ namespace Utils.SDF
         /// <returns>
         /// A Texture2D in RFloat format: the red channel stores signed distances (negative inside, positive outside).
         /// </returns>
-        public static Texture2D GenerateSDF(
+        public static async Task<Texture2D> GenerateSDF(
             Mesh mesh,
             int baseResolution,
             float padding,
@@ -36,12 +53,46 @@ namespace Utils.SDF
         {
             // 1. Project mesh vertices to 2D
             Vector3[] verts3D = mesh.vertices;
+            Bounds originalBounds = mesh.bounds;
+            int[] tris = mesh.triangles;
+
+            return await Task.Run(() => GenerateSDFAsync(verts3D, originalBounds, tris, baseResolution, padding, blurRadius,
+                subsample)).ContinueWith(sdf =>
+            {
+                Results results = sdf.Result;
+                Texture2D sdfTex = new Texture2D(results.texWidth, results.texHeight, TextureFormat.RFloat, false, true);
+                sdfTex.wrapMode   = TextureWrapMode.Clamp;
+                sdfTex.filterMode = FilterMode.Bilinear;
+
+                for (int py = 0; py < results.texHeight; py++)
+                {
+                    for (int px = 0; px < results.texWidth; px++)
+                    {
+                        float d = results.signedDist[px, py];
+                        sdfTex.SetPixel(px, py, new Color(d, 0f, 0f, 0f));
+                    }
+                }
+                
+                sdfTex.Apply();
+                return sdfTex;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private static Results GenerateSDFAsync(
+            Vector3[] verts3D, 
+            Bounds originalBounds, 
+            int[] tris,
+            int baseResolution,
+            float padding,
+            int blurRadius,
+            bool subsample
+        )
+        {
             Vector2[] verts2D = new Vector2[verts3D.Length];
             for (int i = 0; i < verts3D.Length; i++)
                 verts2D[i] = new Vector2(verts3D[i].x, verts3D[i].y);
 
             // 2. Compute axis-aligned bounding box (AABB) in local space, then add padding
-            Bounds originalBounds = mesh.bounds;
             Vector2 min = new Vector2(originalBounds.min.x, originalBounds.min.y);
             Vector2 max = new Vector2(originalBounds.max.x, originalBounds.max.y);
             min.x -= padding;
@@ -71,7 +122,6 @@ namespace Utils.SDF
 
             // 5. Rasterize mesh into a binary mask, with optional 2×2 subsampling
             bool[,] maskInside = new bool[texWidth, texHeight];
-            int[] tris = mesh.triangles;
 
             // Precompute triangle data for faster point-in-triangle calls
             (Vector2 a, Vector2 b, Vector2 c)[] triData = new (Vector2, Vector2, Vector2)[tris.Length / 3];
@@ -91,7 +141,7 @@ namespace Utils.SDF
                     new Vector2( 0.25f, -0.25f),
                     new Vector2(-0.25f,  0.25f),
                     new Vector2( 0.25f,  0.25f)
-                  }
+                }
                 : new Vector2[] { Vector2.zero };
 
             for (int py = 0; py < texHeight; py++)
@@ -177,22 +227,12 @@ namespace Utils.SDF
             // 10. Apply Gaussian blur to smooth the SDF
             GaussianBlur2D(signedDist, texWidth, texHeight, blurRadius, 1.0f);
 
-            // 10. Pack into an RFloat Texture2D
-            Texture2D sdfTex = new Texture2D(texWidth, texHeight, TextureFormat.RFloat, false, true);
-            sdfTex.wrapMode   = TextureWrapMode.Clamp;
-            sdfTex.filterMode = FilterMode.Bilinear;
-
-            for (int py = 0; py < texHeight; py++)
+            return new Results
             {
-                for (int px = 0; px < texWidth; px++)
-                {
-                    float d = signedDist[px, py];
-                    sdfTex.SetPixel(px, py, new Color(d, 0f, 0f, 0f));
-                }
-            }
-            sdfTex.Apply();
-
-            return sdfTex;
+                signedDist = signedDist,
+                texWidth   = texWidth,
+                texHeight  = texHeight
+            };
         }
 
         /// <summary>

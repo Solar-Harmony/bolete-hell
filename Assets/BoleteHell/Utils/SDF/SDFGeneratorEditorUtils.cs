@@ -1,5 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Dreamteck.Splines;
 using UnityEditor;
@@ -13,6 +15,8 @@ namespace Utils.SDF
     {
         private const string BasePath = "Assets/SDFTextureCache";
         
+        // TODO: onRebuild is called too often. Should add divergence in Dreamteck to expose a better event for
+        //       spline edits that actually change the mesh.
         private void AutoRefreshOnSplineEdit()
         {
             SplineComputer splineComputer = GetComponent<SplineComputer>();
@@ -31,32 +35,45 @@ namespace Utils.SDF
             ApplyToMaterial();
         }
 
-        public void GenerateSDF()
+        public async void GenerateSDF()
         {
-            Mesh mesh = GetComponent<MeshFilter>()?.sharedMesh;
-            if (!mesh)
+            try
             {
-                Debug.LogError("No MeshFilter found or no mesh assigned.");
-                return;
-            }
+                Mesh mesh = GetComponent<MeshFilter>()?.sharedMesh;
+                if (!mesh)
+                {
+                    Debug.LogError("No MeshFilter found or no mesh assigned.");
+                    return;
+                }
                 
-            if (baseResolution <= 0)
-            {
-                Debug.LogError("Base resolution must be greater than zero.");
-                return;
-            }
+                if (baseResolution <= 0)
+                {
+                    Debug.LogError("Base resolution must be greater than zero.");
+                    return;
+                }
 
-            Texture2D sdf = SDFGeneratorImpl.GenerateSDF(mesh, baseResolution, padding, blurRadius, useSubsampling);
-            if (!sdf)
-            {
-                Debug.LogError("Failed to generate SDF texture.");
-                return;
-            }
+                Texture2D sdf = await SDFGeneratorImpl.GenerateSDF(mesh, baseResolution, padding, blurRadius, useSubsampling);
+                if (!sdf)
+                {
+                    Debug.LogError("Failed to generate SDF texture.");
+                    return;
+                }
             
-            SaveAsset(sdf);
-            sdfTexture = sdf;
-            ApplyToMaterial();
+                StartCoroutine(DeferSaveAsset(sdf));
+                sdfTexture = sdf; 
+                ApplyToMaterial();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error generating SDF texture: {ex.Message}");
+            }
         }
+        
+        private IEnumerator DeferSaveAsset(Texture2D texture)
+        {
+            yield return null; // Wait for the next frame
+            SaveAsset(texture);
+        }         
 
         private void SaveAsset(Texture2D texture)
         {

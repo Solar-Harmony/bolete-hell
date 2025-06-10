@@ -21,6 +21,7 @@ Shader "Bolete Hell/Base Template"
 
         Pass
         {
+            Name "CombinedShapeLight"
             Tags { "LightMode" = "Universal2D" }
 
             HLSLPROGRAM
@@ -87,11 +88,7 @@ Shader "Bolete Hell/Base Template"
             {
                 Varyings o = (Varyings)0;
                 UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                UNITY_SKINNED_VERTEX_COMPUTE(v);
-
-                float4 spriteProps = (-1, -1, 1, 1); // hardcode this because i think this is set by sprite renderer?
-                v.positionOS = UnityFlipSprite(v.positionOS, spriteProps.xy);
+                
                 o.positionCS = TransformObjectToHClip(v.positionOS);
                 #if defined(DEBUG_DISPLAY)
                 o.positionWS = TransformObjectToWorld(v.positionOS);
@@ -109,23 +106,26 @@ Shader "Bolete Hell/Base Template"
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                half4 main = i.color * _BaseColor;
                 half4 sdf = SAMPLE_TEXTURE2D(_SDF, sampler_SDF, i.uv);
-                float dist = sdf.r; // Assuming the SDF texture's red channel contains the distance value
+                float dist = sdf.r;
+                
+                half4 main = i.color * _BaseColor * (1 - dist);
+                
+                SurfaceData2D surfaceData;
+                InputData2D inputData;
 
-                // fake ambient occlusion around the edges
-                float ao = saturate(0.5 - dist * 0.5); // Adjust the factor as needed for desired effect
-                main.rgb = lerp(main.rgb, _AltColor, ao);
-                main.a = dist; // Use the alpha channel from the SDF texture
-                // main.rgb *= main.a; // Premultiply alpha
+                const half4 mask = half4(1, 1, 1, 1);
+                InitializeSurfaceData(main.rgb, main.a, mask, surfaceData);
+                InitializeInputData(i.uv, i.lightingUV, inputData);
 
-                return  main;
+                return CombinedShapeLightShared(surfaceData, inputData);
             }
             ENDHLSL
         }
 
         Pass
         {
+            Name "Normals"
             ZWrite Off
 
             Tags { "LightMode" = "NormalsRendering"}
@@ -168,7 +168,7 @@ Shader "Bolete Hell/Base Template"
             // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
             CBUFFER_START( UnityPerMaterial )
                 half4 _BaseColor;
-                // half4 _Color;
+                half4 _AltColor;
             CBUFFER_END
 
             Varyings NormalsRenderingVertex(Attributes attributes)
@@ -178,7 +178,7 @@ Shader "Bolete Hell/Base Template"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 UNITY_SKINNED_VERTEX_COMPUTE(attributes);
 
-                float4 spriteProps = (-1, -1, 1, 1); // hardcode this because i think this is set by sprite renderer?
+                float4 spriteProps = float4(-1, -1, 1, 1); // hardcode this because i think this is set by sprite renderer?
                 attributes.positionOS = UnityFlipSprite(attributes.positionOS, spriteProps.xy);
                 o.positionCS = TransformObjectToHClip(attributes.positionOS);
                 o.uv = attributes.uv;
@@ -202,89 +202,89 @@ Shader "Bolete Hell/Base Template"
             ENDHLSL
         }
 
-        Pass
-        {
-            Tags { "LightMode" = "UniversalForward" "Queue"="Transparent" "RenderType"="Transparent"}
-
-            HLSLPROGRAM
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/Core2D.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
-            #if defined(DEBUG_DISPLAY)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Debug/Debugging2D.hlsl"
-            #endif
-
-            #pragma vertex UnlitVertex
-            #pragma fragment UnlitFragment
-
-            #pragma multi_compile _ DEBUG_DISPLAY SKINNED_SPRITE
-
-            struct Attributes
-            {
-                float3 positionOS   : POSITION;
-                float4 color        : COLOR;
-                float2 uv           : TEXCOORD0;
-                UNITY_SKINNED_VERTEX_INPUTS
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            struct Varyings
-            {
-                float4  positionCS      : SV_POSITION;
-                float4  color           : COLOR;
-                float2  uv              : TEXCOORD0;
-                #if defined(DEBUG_DISPLAY)
-                float3  positionWS  : TEXCOORD2;
-                #endif
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
-            CBUFFER_START( UnityPerMaterial )
-                half4 _BaseColor;
-            CBUFFER_END
-
-            Varyings UnlitVertex(Attributes attributes)
-            {
-                Varyings o = (Varyings)0;
-                UNITY_SETUP_INSTANCE_ID(attributes);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                UNITY_SKINNED_VERTEX_COMPUTE(attributes);
-
-                float4 spriteProps = (-1, -1, 1, 1); // hardcode this because i think this is set by sprite renderer?
-                attributes.positionOS = UnityFlipSprite( attributes.positionOS, spriteProps.xy);
-                o.positionCS = TransformObjectToHClip(attributes.positionOS);
-                #if defined(DEBUG_DISPLAY)
-                o.positionWS = TransformObjectToWorld(attributes.positionOS);
-                #endif
-                o.uv = attributes.uv;
-                o.color = attributes.color;
-                return o;
-            }
-
-            float4 UnlitFragment(Varyings i) : SV_Target
-            {
-                float4 mainTex = i.color * _BaseColor;
-
-                #if defined(DEBUG_DISPLAY)
-                SurfaceData2D surfaceData;
-                InputData2D inputData;
-                half4 debugColor = 0;
-
-                InitializeSurfaceData(mainTex.rgb, mainTex.a, surfaceData);
-                InitializeInputData(i.uv, inputData);
-//                SETUP_DEBUG_TEXTURE_DATA_2D_NO_TS(inputData, i.positionWS, i.positionCS, _MainTex);
-
-                if(CanDebugOverrideOutputColor(surfaceData, inputData, debugColor))
-                {
-                    return debugColor;
-                }
-                #endif
-
-                return mainTex;
-            }
-            ENDHLSL
-        }
+//        Pass
+//        {
+//            Tags { "LightMode" = "UniversalForward" "Queue"="Transparent" "RenderType"="Transparent"}
+//
+//            HLSLPROGRAM
+//            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+//            #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/Core2D.hlsl"
+//            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
+//            #if defined(DEBUG_DISPLAY)
+//            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Debug/Debugging2D.hlsl"
+//            #endif
+//
+//            #pragma vertex UnlitVertex
+//            #pragma fragment UnlitFragment
+//
+//            #pragma multi_compile _ DEBUG_DISPLAY SKINNED_SPRITE
+//
+//            struct Attributes
+//            {
+//                float3 positionOS   : POSITION;
+//                float4 color        : COLOR;
+//                float2 uv           : TEXCOORD0;
+//                UNITY_SKINNED_VERTEX_INPUTS
+//                UNITY_VERTEX_INPUT_INSTANCE_ID
+//            };
+//
+//            struct Varyings
+//            {
+//                float4  positionCS      : SV_POSITION;
+//                float4  color           : COLOR;
+//                float2  uv              : TEXCOORD0;
+//                #if defined(DEBUG_DISPLAY)
+//                float3  positionWS  : TEXCOORD2;
+//                #endif
+//                UNITY_VERTEX_OUTPUT_STEREO
+//            };
+//
+//            // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
+//            CBUFFER_START( UnityPerMaterial )
+//                half4 _BaseColor;
+//            CBUFFER_END
+//
+//            Varyings UnlitVertex(Attributes attributes)
+//            {
+//                Varyings o = (Varyings)0;
+//                UNITY_SETUP_INSTANCE_ID(attributes);
+//                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+//                UNITY_SKINNED_VERTEX_COMPUTE(attributes);
+//
+//                float4 spriteProps = (-1, -1, 1, 1); // hardcode this because i think this is set by sprite renderer?
+//                attributes.positionOS = UnityFlipSprite( attributes.positionOS, spriteProps.xy);
+//                o.positionCS = TransformObjectToHClip(attributes.positionOS);
+//                #if defined(DEBUG_DISPLAY)
+//                o.positionWS = TransformObjectToWorld(attributes.positionOS);
+//                #endif
+//                o.uv = attributes.uv;
+//                o.color = attributes.color;
+//                return o;
+//            }
+//
+//            float4 UnlitFragment(Varyings i) : SV_Target
+//            {
+//                float4 mainTex = i.color * _BaseColor;
+//
+//                #if defined(DEBUG_DISPLAY)
+//                SurfaceData2D surfaceData;
+//                InputData2D inputData;
+//                half4 debugColor = 0;
+//
+//                InitializeSurfaceData(mainTex.rgb, mainTex.a, surfaceData);
+//                InitializeInputData(i.uv, inputData);
+////                SETUP_DEBUG_TEXTURE_DATA_2D_NO_TS(inputData, i.positionWS, i.positionCS, _MainTex);
+//
+//                if(CanDebugOverrideOutputColor(surfaceData, inputData, debugColor))
+//                {
+//                    return debugColor;
+//                }
+//                #endif
+//
+//                return mainTex;
+//            }
+//            ENDHLSL
+//        }
     }
 
     Fallback "Sprites/Default"
