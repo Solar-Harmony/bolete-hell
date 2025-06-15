@@ -32,24 +32,30 @@ namespace Shields
             _spline = _splineContainer.Spline;
             _composite = GetComponent<CompositeCollider2D>();
 
-            //Je doit créé 2 edgeColliders enfant du Composite collider pour faire un collider2D qui suis le spline
+            // Je dois créer 2 edgeColliders enfant du Composite collider pour faire un collider2D qui suit le spline
+            LayerMask shieldLayer = LayerMask.NameToLayer("Shield");
+
             var leftObj = new GameObject("EdgeCollider1");
             leftObj.transform.parent = transform;
+            leftObj.layer = shieldLayer;
             _leftEdge = leftObj.AddComponent<EdgeCollider2D>();
             _leftEdge.tag = ShieldTag;
             
             var rightObj = new GameObject("EdgeCollider2");
             rightObj.transform.parent = transform;
+            rightObj.layer = shieldLayer;
             _rightEdge = rightObj.AddComponent<EdgeCollider2D>();
             _rightEdge.tag = ShieldTag;
 
             var startObj = new GameObject("CapCollider1");
             startObj.transform.parent = transform;
+            startObj.layer = shieldLayer;
             startCap = startObj.AddComponent<EdgeCollider2D>();
             startCap.tag = ShieldTag;
 
             var endObj = new GameObject("CapCollider2");
             endObj.transform.parent = transform;
+            endObj.layer = shieldLayer;
             endCap = endObj.AddComponent<EdgeCollider2D>();
             endCap.tag = ShieldTag;
         }
