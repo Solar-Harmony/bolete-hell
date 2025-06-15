@@ -1,4 +1,5 @@
 using System;
+using _BoleteHell.Code.AI;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
@@ -33,25 +34,29 @@ namespace AI.Actions
 
         protected override Status OnUpdate()
         {
-            if (Agent.Value == null || Target.Value == null) 
+            GameObject agent = Agent.Value;
+            GameObject target = Target.Value;
+            
+            if (!agent || !target) 
                 return Status.Failure;
             
-            if (_pathfinder == null)
+            if (!(_pathfinder ??= Agent.Value.GetComponent<AIPath>()))
             {
-                _pathfinder = Agent.Value.GetComponent<AIPath>();
-                if (_pathfinder == null)
-                {
-                    Debug.LogError("AIPath component not found on the agent.");
-                    return Status.Failure;
-                }
+                Debug.LogError("AIPath component not found on the agent.");
+                return Status.Failure;
             }
-            
+
             _pathfinder.maxSpeed = MaxSpeed.Value;
             _pathfinder.endReachedDistance = Range;
             _pathfinder.destination = Target.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
-            return _pathfinder.reachedDestination ? Status.Success : Status.Running;
+            bool bHasLineOfSight = AIUtils.HasLineOfSight(agent, target, 1000); // TODO: use range value in agent
+            if (bHasLineOfSight)
+            {
+                _pathfinder.maxSpeed = 0.0f; // stop moving if we have line of sight
+            }
+            return _pathfinder.reachedDestination || bHasLineOfSight ? Status.Success : Status.Running;
         }
 
         protected override void OnEnd()
