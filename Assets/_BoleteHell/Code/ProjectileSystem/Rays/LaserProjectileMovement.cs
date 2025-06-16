@@ -1,4 +1,5 @@
 using System;
+using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using Data.Rays;
 using Shields;
 using UnityEngine;
@@ -15,8 +16,16 @@ public class LaserProjectileMovement : MonoBehaviour
    {
       _rb = GetComponent<Rigidbody2D>();
    }
+   
+   public void SetDirection(Vector2 direction)
+   {
+      _currentDirection = direction;
+      _rb.linearVelocity = _currentDirection * projectileSpeed;
+      float angle = Mathf.Atan2(_currentDirection.y, _currentDirection.x) * Mathf.Rad2Deg;
+      transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
+   }
 
-   public void StartMovement(Vector2 direction, float lightRefractiveIndex,CombinedLaser laser)
+   public void StartMovement(Vector2 direction, float lightRefractiveIndex, CombinedLaser laser)
    {
       Debug.Log("Started movement");
       _currentDirection = direction;
@@ -29,23 +38,33 @@ public class LaserProjectileMovement : MonoBehaviour
    private void OnTriggerEnter2D(Collider2D other)
    {
       Debug.Log($"hit {other.name}");
-      if (other.transform.CompareTag("Shield"))
+      // if (other.transform.CompareTag("Shield"))
+      // {
+      //    if (other.transform.parent.gameObject.TryGetComponent(out Shield lineHit))
+      //    {
+      //       OnHitShield(lineHit);
+      //    }
+      // }
+      // else if (other.transform.gameObject.TryGetComponent(out Health health))
+      // {
+      //    OnHitEnemy(transform.position,health);
+      // }
+      
+      IHitHandler handler = other.GetComponent<IHitHandler>() 
+                            ?? other.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
+      if (handler == null)
       {
-         if (other.transform.parent.gameObject.TryGetComponent(out Shield lineHit))
-         {
-            OnHitShield(lineHit);
-         }
+         Debug.LogWarning($"No IHitHandler found on {other.name}. Ignored hit.");
+         return;
       }
-      else if (other.transform.gameObject.TryGetComponent(out Health health))
-      {
-         OnHitEnemy(transform.position,health);
-      }
+      IHitHandler.Context context = new(gameObject, transform.position, _currentDirection, _laser);
+      handler.OnHit(context);
    }
 
-   private void OnHitEnemy(Vector2 position,Health health)
-   {
-      _laser.CombinedEffect(position,health);
-   }
+   // private void OnHitEnemy(Vector2 position,Health health)
+   // {
+   //    _laser.CombinedEffect(position,health);
+   // }
 
    //Devrait être dans le laserProjectileLogic
    private void OnHitShield(Shield shieldHit)
