@@ -1,4 +1,5 @@
 using System;
+using _BoleteHell.Code.AI;
 using Unity.Behavior;
 using UnityEngine;
 
@@ -12,14 +13,7 @@ public partial class HasLineOfSightCondition : Condition
 
     public override bool IsTrue()
     {
-        if (Self.Value == null || Agent.Value == null)
-            return false;
-        
-        Vector3 direction = Agent.Value.transform.position - Self.Value.transform.position;
-        LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy");
-        RaycastHit2D hit = Physics2D.Raycast(Self.Value.transform.position, direction.normalized, ViewRange.Value, layerMask);
-
-        return hit.collider.gameObject == Agent.Value;
+        return AIUtils.HasLineOfSight(Self.Value, Agent.Value, ViewRange.Value);
     }
 
     public override void OnStart()

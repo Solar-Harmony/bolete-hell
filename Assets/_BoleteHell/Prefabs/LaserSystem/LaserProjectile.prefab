@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <RayWidth>k__BackingField: 0.2
-  <LaserLenght>k__BackingField: 0.3
+  <LaserLength>k__BackingField: 0.3
 --- !u!120 &8214742768466675644
 LineRenderer:
   serializedVersion: 2
