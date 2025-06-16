@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using _BoleteHell.Code.Character;
 using BoleteHell.Utils;
-using Lasers.RayLogic;
 using UnityEngine;
 
-namespace BoleteHell.Rays.RayLogic
+namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
 {
     [Serializable]
     public class ExplodeOnHit : RayHitLogic
@@ -19,7 +19,7 @@ namespace BoleteHell.Rays.RayLogic
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
         
 
-        public override void OnHit(Vector2 hitPosition,Health hitCharacterHealth)
+        public override void OnHit(Vector2 hitPosition, Health hitCharacterHealth)
         {
             hitCharacterHealth.TakeDamage(baseHitDamage);
             

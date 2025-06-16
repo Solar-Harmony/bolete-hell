@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _BoleteHell.Code.Character;
 using BoleteHell.Rays;
 using BoleteHell.Utils;
 using Data.Cannons;

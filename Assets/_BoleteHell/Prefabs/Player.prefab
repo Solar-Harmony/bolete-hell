@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 8996502958423220439}
   - component: {fileID: 57039783232871073}
   - component: {fileID: 5858263315430876513}
+  - component: {fileID: -1328553601057004564}
+  - component: {fileID: -367178336612045634}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -122,8 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 0}
-  fragmenter: {fileID: 8263891264860297146}
-  mainCamera: {fileID: 0}
   <SpeedFactor>k__BackingField: 5
   shipExhaustLight: {fileID: 2755423188508139861}
   maxLightIntensity: 4
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 25
 --- !u!114 &57039783232871073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +270,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1328553601057004564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-367178336612045634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620760ddc4214ec6b73512a1bd423c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &885100575828019646

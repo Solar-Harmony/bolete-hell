@@ -8,11 +8,7 @@ namespace Input
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private InputController input;
-
-        [SerializeField] private SpriteRuntimeFragmenter fragmenter;
-
-        [SerializeField] private Camera mainCamera;
-
+        
         [field: SerializeField] public float SpeedFactor { get; private set; } = 1.0f;
 
         [SerializeField] private Light2D shipExhaustLight;
@@ -33,22 +29,5 @@ namespace Input
             var angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
-
-        private void OnGUI()
-        {
-            GUI.skin.label.fontSize = 32;
-            //GUI.Label(new Rect(10, 10, 300, 80), "Health: " + health);
-        }
-
-        // private void OnCollisionEnter2D(Collision2D other)
-        // {
-        //     if (other.gameObject.CompareTag("Enemy"))
-        //     {
-        //         if (health <= 0)
-        //             fragmenter.Fragment(other.GetContact(0).normal);
-        //
-        //         health -= enemyDamage;
-        //     }
-        // }
     }
 }

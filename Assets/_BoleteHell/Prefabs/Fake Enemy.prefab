@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2835406013110666550}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
+  - component: {fileID: -6471801952280679534}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -344,6 +345,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.15
+--- !u!114 &-6471801952280679534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7047168010642913551
 GameObject:
   m_ObjectHideFlags: 0

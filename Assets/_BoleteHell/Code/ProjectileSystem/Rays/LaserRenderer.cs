@@ -51,7 +51,7 @@ namespace BoleteHell.Rays
             _lineRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction,refractiveIndex,laser);
+            _movement.StartMovement(direction, laser);
             
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
             _capsuleCollider.size = new Vector2(RayWidth, LaserLength + AdjustedColliderLenght);

@@ -1,11 +1,12 @@
-﻿using _BoleteHell.Code.ProjectileSystem.HitHandler;
+﻿using _BoleteHell.Code.Character;
+using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using Data.Rays;
 using UnityEngine;
 
 namespace _BoleteHell.Code.Player
 {
     [RequireComponent(typeof(Health))]
-    public class PlayerHitHandler : MonoBehaviour, IHitHandler
+    public class CharacterHitHandler : MonoBehaviour, IHitHandler
     {
         public void OnHit(IHitHandler.Context ctx)
         {
