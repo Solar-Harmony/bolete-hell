@@ -17,8 +17,6 @@ namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
         [SerializeField] private GameObject explosionCircle;
         
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
-        
-
         public override void OnHit(Vector2 hitPosition, Health hitCharacterHealth)
         {
             hitCharacterHealth.TakeDamage(baseHitDamage);

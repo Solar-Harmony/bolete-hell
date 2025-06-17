@@ -32,16 +32,16 @@ public class LaserProjectileMovement : MonoBehaviour
       _laser = laser;
    }
 
-   //Devrait peut-être pas être dans le script de mouvement
    private void OnTriggerEnter2D(Collider2D other)
    {
       IHitHandler handler = other.GetComponent<IHitHandler>() 
                             ?? other.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
       if (handler == null)
       {
-         Debug.LogWarning($"No IHitHandler found on {other.name}. Ignored hit.");
+         Debug.LogWarning($"No hit handler found on {other.name}.");
          return;
       }
+      
       IHitHandler.Context context = new(gameObject, transform.position, _currentDirection, _laser);
       handler.OnHit(context);
    }

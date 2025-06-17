@@ -1,9 +1,7 @@
-﻿using System;
-using _BoleteHell.Code.Character;
-using Graphics;
+﻿using Graphics;
 using UnityEngine;
 
-namespace _BoleteHell.Code.Player
+namespace _BoleteHell.Code.Character
 {
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRuntimeFragmenter))]
@@ -17,7 +15,7 @@ namespace _BoleteHell.Code.Player
             _health.OnDeath += () =>
             {
                 var fragmenter = GetComponent<SpriteRuntimeFragmenter>();
-                fragmenter.Fragment(Vector3.zero); // TODO: find way to retrieve normal...
+                fragmenter.Fragment();
             };
         }
 

@@ -1,18 +1,33 @@
 using System.Collections;
 using _BoleteHell.Code.Character;
 using _BoleteHell.Code.ProjectileSystem.Rays.RayLogic;
+using _BoleteHell.Code.Utils;
 using UnityEngine;
 
 namespace Lasers.RayLogic
 {
+    // TODO: As of now, effect can stack. We need a status effect system to handle effects on characters properly.
     public class PoisonOnHit : RayHitLogic
     {
-        //will need a position and the hit characters stats script so i can modify it
+        [SerializeField] private float poisonDuration = 5.0f;
+        [SerializeField] private int poisonDamage = 2;
+        [SerializeField] [Min(0.5f)] private float poisonTickInterval = 1.0f;
+        
         public override void OnHit(Vector2 hitPosition, Health hitCharacterHealth)
         {
-            //Physics2D.OverlapCircle()
             hitCharacterHealth.TakeDamage(baseHitDamage);
-            // TODO: Add poison effectto the character 
+            GlobalCoroutine.Launch(PoisonEffect(hitCharacterHealth));
+        }
+        
+        private IEnumerator PoisonEffect(Health hitCharacterHealth)
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < poisonDuration)
+            {
+                hitCharacterHealth.TakeDamage(poisonDamage);
+                elapsedTime += 1f;
+                yield return new WaitForSeconds(poisonTickInterval);
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace _BoleteHell.Code.Character
     
         public event Action OnDeath;
 
-        void Start()
+        private void Start()
         {
             CurrentHealth = maxHealth;
         }
@@ -20,10 +20,12 @@ namespace _BoleteHell.Code.Character
         public void TakeDamage(int damageAmount)
         {
             CurrentHealth -= damageAmount;
-            Debug.Log($"{gameObject.name} has {CurrentHealth} hp (-{damageAmount})");
-        
+
             if (CurrentHealth <= 0)
+            {
                 OnDeath?.Invoke();
+                OnDeath = null;
+            }
         }
 
         public void GainHealth(int healAmount)
