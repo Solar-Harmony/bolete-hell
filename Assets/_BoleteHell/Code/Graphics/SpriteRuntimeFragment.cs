@@ -2,8 +2,6 @@
 
 namespace Graphics
 {
-    [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(Rigidbody2D))]
     public class SpriteRuntimeFragmenter : MonoBehaviour
     {
         public int fragmentsX = 4;

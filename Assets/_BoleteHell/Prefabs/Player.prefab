@@ -156,7 +156,6 @@ MonoBehaviour:
   fragmentsX: 2
   fragmentsY: 2
   explosionForce: 1
-  material: {fileID: 2100000, guid: f1f2d2b840a7926448554ea74f136f41, type: 2}
   sr: {fileID: 8887576795586774717}
   parentRb: {fileID: 4327110905113141562}
   explosion: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
