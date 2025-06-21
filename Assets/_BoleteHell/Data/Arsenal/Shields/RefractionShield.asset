@@ -22,4 +22,4 @@ MonoBehaviour:
     - rid: 4156091577278922896
       type: {class: RefractLogic, ns: BoleteHell.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data:
-        materialRefractiveIndice: 2.417
+        materialRefractiveIndice: 2.1

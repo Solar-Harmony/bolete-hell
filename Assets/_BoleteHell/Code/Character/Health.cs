@@ -5,8 +5,8 @@ namespace _BoleteHell.Code.Character
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] 
-        private int maxHealth = 50;
+        [field: SerializeField] 
+        public int MaxHealth { get; private set; } = 50;
     
         public int CurrentHealth { get; private set; }
     
@@ -14,7 +14,7 @@ namespace _BoleteHell.Code.Character
 
         private void Start()
         {
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
         }
 
         public void TakeDamage(int damageAmount)
@@ -30,7 +30,7 @@ namespace _BoleteHell.Code.Character
 
         public void GainHealth(int healAmount)
         {
-            CurrentHealth = Mathf.Clamp(CurrentHealth += healAmount, CurrentHealth, maxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth += healAmount, CurrentHealth, MaxHealth);
             Debug.Log($"{gameObject.name} gained {healAmount} hp \n and now has {CurrentHealth} hp");
         }
     }

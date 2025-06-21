@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _BoleteHell.Code.Character;
 using BoleteHell.Utils;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
 {
@@ -54,8 +55,12 @@ namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
                 return;
             }
 
-            explosionCircle.transform.localScale = new Vector3(explosionRadius*2, explosionRadius*2, 1);
-            ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle,hitPosition,0.1f);
+            if (explosionCircle.TryGetComponent(out Light2D light))
+            {
+                light.pointLightOuterRadius = explosionRadius;
+            }
+            
+            ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle, hitPosition, 0.1f);
         }
     }
 }

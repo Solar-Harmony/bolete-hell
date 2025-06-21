@@ -3,6 +3,7 @@ using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using Data.Rays;
 using Shields;
 using UnityEngine;
+using Utils;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class LaserProjectileMovement : MonoBehaviour
@@ -41,10 +42,6 @@ public class LaserProjectileMovement : MonoBehaviour
       if (other.gameObject == _instigator)
          return;
       
-      // ignore hits with other projectiles (for now)
-      if (other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
-         return;
-      
       IHitHandler handler = other.GetComponent<IHitHandler>() 
                             ?? other.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
       if (handler == null)
@@ -52,5 +49,10 @@ public class LaserProjectileMovement : MonoBehaviour
       
       IHitHandler.Context context = new(gameObject, transform.position, _currentDirection, _laser);
       handler.OnHit(context);
+   }
+
+   public void DestroyProjectile()
+   {
+      Destroy(this.gameObject);
    }
 }

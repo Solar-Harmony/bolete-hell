@@ -56,7 +56,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9803254034568238}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 25
+  <MaxHealth>k__BackingField: 50
 --- !u!114 &57039783232871073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 0}
+  spawnDistance: {fileID: 1398748979581358320}
   rayCannons:
   - rid: 5246942125833584717
   - rid: 5246942125833584719
@@ -238,7 +238,7 @@ MonoBehaviour:
         maxAngleRange: 360
         startingRotation: 45
         constantRotation: 0
-        burstShotCount: 1
+        burstShotCount: 3
         burstShotCooldown: 0
     - rid: 5246942125833584719
       type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
@@ -295,6 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvincible: 0
+  explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
 --- !u!1 &885100575828019646
 GameObject:
   m_ObjectHideFlags: 0

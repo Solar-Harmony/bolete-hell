@@ -13,9 +13,9 @@ namespace _BoleteHell.Code.AI
             Vector3 direction = agent.transform.position - self.transform.position;
             LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy", "Projectile", "Shield");
             
-            // TODO: Use circle cast for accounting for laser width
-            RaycastHit2D hit = Physics2D.Raycast(self.transform.position, direction.normalized, viewRange, layerMask);
-            return hit.collider.gameObject == agent;
+            // RaycastHit2D hit = Physics2D.Raycast(self.transform.position, direction.normalized, viewRange, layerMask);
+            RaycastHit2D hit = Physics2D.CircleCast(self.transform.position, 0.17f, direction.normalized, viewRange, layerMask);
+            return hit.collider && hit.collider.gameObject == agent;
         }
 
         /// <summary>

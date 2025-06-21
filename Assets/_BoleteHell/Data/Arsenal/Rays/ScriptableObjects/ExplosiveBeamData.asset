@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplosiveBeamData
   m_EditorClassIdentifier: 
   <Color>k__BackingField: {r: 0.9245283, g: 0.6069777, b: 0.07268285, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.3
+  <LightRefractiveIndex>k__BackingField: 1.9
   <Logic>k__BackingField:
     rid: 7223670814694965325
   references:
@@ -24,5 +24,5 @@ MonoBehaviour:
       data:
         baseHitDamage: 5
         explosionDamage: 10
-        explosionRadius: 25
-        explosionCircle: {fileID: 3630927025689623885, guid: d9e97f95c5fb4db4eb91bc519ac838cb, type: 3}
+        explosionRadius: 1
+        explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}

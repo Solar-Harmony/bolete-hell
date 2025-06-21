@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -8370527189509674810}
   - component: {fileID: 3315598625102643069}
   - component: {fileID: -7915685957190950961}
+  - component: {fileID: 5437693159795558763}
   m_Layer: 6
   m_Name: LevelObstacle
   m_TagString: Untagged
@@ -764,3 +765,15 @@ MonoBehaviour:
     - rid: 7787991051153965133
       type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &5437693159795558763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080979106228210044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769b1a2652f446658b67568caf51e0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

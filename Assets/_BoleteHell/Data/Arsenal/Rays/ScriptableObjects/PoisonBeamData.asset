@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: PoisonBeamData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.40722924, g: 0.84276724, b: 0.32067546, a: 1}
+  <Color>k__BackingField: {r: 0.24232547, g: 0.82210237, b: 0.12741467, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.5
   <Logic>k__BackingField:
     rid: 4156091727018197080
@@ -23,3 +23,6 @@ MonoBehaviour:
       type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
       data:
         baseHitDamage: 2
+        poisonDuration: 5
+        poisonDamage: 2
+        poisonTickInterval: 1
