@@ -14,7 +14,7 @@ namespace BoleteHell.Rays
         //Spécifique au projectile lasers
         [field:SerializeField]public float LaserLength { get; private set; } = 0.3f;
         private LineRenderer _lineRenderer;
-        
+
         private LaserProjectileMovement _movement;
         private CapsuleCollider2D _capsuleCollider;
         private Rigidbody2D _rb;
@@ -45,13 +45,13 @@ namespace BoleteHell.Rays
             StartCoroutine(Lifetime(lifeTime,logic));
         }
 
-        public void SetupProjectileLaser(float refractiveIndex,Vector2 direction,CombinedLaser laser)
+        public void SetupProjectileLaser(Vector2 direction, CombinedLaser laser, GameObject instigator = null)
         {
             _isProjectile = true;
             _lineRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction, laser);
+            _movement.StartMovement(direction, laser, instigator);
             
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
             _capsuleCollider.size = new Vector2(RayWidth, LaserLength + AdjustedColliderLenght);

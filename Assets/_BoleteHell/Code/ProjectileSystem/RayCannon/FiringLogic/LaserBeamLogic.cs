@@ -9,13 +9,13 @@ using Lasers;
 using Shields;
 using UnityEngine;
 
-public class LaserBeamLogic:FiringLogic
+public class LaserBeamLogic : FiringLogic
 {
     private readonly List<Vector3> _rayPositions = new();
     //Modifier pour ne plus réserver un renderer et le réutiliser car ca ne fonctionne pas avec le tire de multiple laser en même temps malheureusement
     //on a une seule instance de LaserBeamLogic donc si l'instance réserve un renderer le même va être utiliser pour tout les tires
     //Serais possible si on informe le LaserBeamLogic du nombre de renderer a réserver 
-    public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData rayCannonData,CombinedLaser laser)
+    public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, RayCannonData rayCannonData, CombinedLaser laser, GameObject instigator = null)
     {
         Cast(bulletSpawnPoint, direction,rayCannonData,laser);
     }
@@ -25,7 +25,7 @@ public class LaserBeamLogic:FiringLogic
 
     }
     
-    private void Cast(Vector3 bulletSpawnPoint, Vector2 direction,RayCannonData rayCannonData,CombinedLaser laser)
+    private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, RayCannonData rayCannonData, CombinedLaser laser)
     {
         CurrentPos = bulletSpawnPoint;
         _rayPositions.Add(CurrentPos);

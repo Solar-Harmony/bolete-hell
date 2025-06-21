@@ -29,8 +29,8 @@ namespace BoleteHell.RayCannon
                 Debug.LogWarning("No raycannon equipped");
                 return;
             }
-            _pattern.Shoot(GetSelectedWeapon(),spawnDistance,direction);
-            
+
+            _pattern.Shoot(GetSelectedWeapon(), spawnDistance, direction);
         }
     
         public void CycleWeapons(int value)

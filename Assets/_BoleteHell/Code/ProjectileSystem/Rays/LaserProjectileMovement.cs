@@ -11,6 +11,7 @@ public class LaserProjectileMovement : MonoBehaviour
    private Rigidbody2D _rb;
    private Vector3 _currentDirection;
    private CombinedLaser _laser;
+   private GameObject _instigator;
    private void Awake()
    {
       _rb = GetComponent<Rigidbody2D>();
@@ -24,23 +25,29 @@ public class LaserProjectileMovement : MonoBehaviour
       transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
    }
 
-   public void StartMovement(Vector2 direction, CombinedLaser laser)
+   public void StartMovement(Vector2 direction, CombinedLaser laser, GameObject instigator = null)
    {
-      Debug.Log("Started movement");
+      _instigator = instigator;
       _currentDirection = direction;
       _rb.linearVelocity = _currentDirection * projectileSpeed;
       _laser = laser;
    }
 
+   // TODO: This should prolly be made into a generic hit handler, for bullets as well
    private void OnTriggerEnter2D(Collider2D other)
    {
+      // always ignore hits with the instigator (for now)
+      if (other.gameObject == _instigator)
+         return;
+      
+      // ignore hits with other projectiles (for now)
+      if (other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
+         return;
+      
       IHitHandler handler = other.GetComponent<IHitHandler>() 
                             ?? other.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
       if (handler == null)
-      {
-         Debug.LogWarning($"No hit handler found on {other.name}.");
          return;
-      }
       
       IHitHandler.Context context = new(gameObject, transform.position, _currentDirection, _laser);
       handler.OnHit(context);
