@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class LaserProjectileMovement : MonoBehaviour
 {
-   [SerializeField] private float projectileSpeed = 10f;
+   private float _projectileSpeed;
    private Rigidbody2D _rb;
    private Vector3 _currentDirection;
    private CombinedLaser _laser;
@@ -20,17 +20,18 @@ public class LaserProjectileMovement : MonoBehaviour
    public void SetDirection(Vector2 direction)
    {
       _currentDirection = direction;
-      _rb.linearVelocity = _currentDirection * projectileSpeed;
+      _rb.linearVelocity = _currentDirection * _projectileSpeed;
       float angle = Mathf.Atan2(_currentDirection.y, _currentDirection.x) * Mathf.Rad2Deg;
       transform.rotation = Quaternion.Euler(0, 0, angle + -90f);
    }
 
-   public void StartMovement(Vector2 direction, CombinedLaser laser, GameObject instigator = null)
+   public void StartMovement(Vector2 direction, float speed, CombinedLaser laser, GameObject instigator = null)
    {
-      _instigator = instigator;
       _currentDirection = direction;
-      _rb.linearVelocity = _currentDirection * projectileSpeed;
+      _projectileSpeed = speed;
       _laser = laser;
+      _instigator = instigator;
+      _rb.linearVelocity = _currentDirection * _projectileSpeed;
    }
 
    // TODO: This should prolly be made into a generic hit handler, for bullets as well

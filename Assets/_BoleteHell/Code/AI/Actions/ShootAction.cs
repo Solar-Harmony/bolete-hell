@@ -1,5 +1,8 @@
 using System;
+using _BoleteHell.Code.AI;
 using AI.Agents;
+using BoleteHell.RayCannon;
+using Pathfinding;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
@@ -26,7 +29,13 @@ public partial class ShootAction : Action
             return Status.Failure;
         }
         
-        enemy.Shoot(Target.Value.transform.position);
+        Vector2 selfPosition = Self.Value.transform.position;
+        Vector2 selfVelocity = Self.Value.GetComponent<AIPath>().desiredVelocity;
+        Vector2 targetPosition = Target.Value.transform.position;
+        Vector2 targetVelocity = Target.Value.GetComponent<Rigidbody2D>().linearVelocity;
+        float projectileSpeed = enemy.GetProjectileSpeed();
+        AIUtils.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
+        enemy.Shoot(direction);
         
         return Status.Running;
     }

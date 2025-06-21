@@ -21,7 +21,7 @@ public class LaserProjectileLogic : FiringLogic
         List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
         reservedRenderer.transform.position = bulletSpawnPoint;
         reservedRenderer.DrawRay(positions, laser.CombinedColor, data.LifeTime,this);
-        reservedRenderer.SetupProjectileLaser(direction, laser, instigator);
+        reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed, laser, instigator);
     }
     
     //La logique du onHit du projectile se trouve dans le LaserProjectileMovement car le collider est la.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using BoleteHell.RayCannon;
+using Data.Cannons;
 using Data.Rays;
 using UnityEngine;
 
@@ -17,10 +18,15 @@ namespace AI.Agents
             _weapon =  GetComponent<Arsenal>();
         }
 
-        public void Shoot(Vector3 target)
+        public void Shoot(Vector3 direction)
         {
-            Vector3 direction = (target - transform.position).normalized;
             _weapon.Shoot( direction);
+        }
+        
+        // TODO: Not the best place for this but I dont know lol
+        public float GetProjectileSpeed()
+        {
+            return _weapon.GetSelectedWeapon().rayCannonData.projectileSpeed;
         }
     }
 }
