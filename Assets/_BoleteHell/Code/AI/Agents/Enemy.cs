@@ -23,7 +23,6 @@ namespace AI.Agents
             _weapon.Shoot( direction);
         }
         
-        // TODO: Not the best place for this but I dont know lol
         public float GetProjectileSpeed()
         {
             if (!_weapon) return 0.0f;
