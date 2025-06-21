@@ -6,14 +6,16 @@ namespace _BoleteHell.Code.ProjectileSystem.HitHandler
     {
         public class Context
         {
-            public GameObject Source { get; }
+            public GameObject Instigator { get; }
+            public GameObject Projectile { get; }
             public Vector2 Position { get; }
             public Vector2 Direction { get; }
             public IProjectileData Data { get; }
             
-            public Context(GameObject source, Vector2 position, Vector2 direction, IProjectileData data)
+            public Context(GameObject instigator, GameObject projectile, Vector2 position, Vector2 direction, IProjectileData data)
             {
-                Source = source;
+                Instigator = instigator;
+                Projectile = projectile;
                 Position = position;
                 Direction = direction;
                 Data = data;

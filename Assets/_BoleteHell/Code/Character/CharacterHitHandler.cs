@@ -19,6 +19,10 @@ namespace _BoleteHell.Code.Player
         {
             if (isInvincible) 
                 return;
+
+            // todo: make a proper factions system
+            if (ctx.Instigator.gameObject.CompareTag(gameObject.tag))
+                return;
             
             if (explosionCircle.TryGetComponent(out Light2D light2D))
             {

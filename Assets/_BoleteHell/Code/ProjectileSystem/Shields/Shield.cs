@@ -30,7 +30,7 @@ namespace Shields
       
             if (!hit) return;
          
-            if (!ctx.Source.TryGetComponent(out LaserProjectileMovement projectile))
+            if (!ctx.Projectile.TryGetComponent(out LaserProjectileMovement projectile))
             {
                 Debug.LogWarning($"Source of hit is not a LaserProjectileMovement. Ignored hit.");
                 return;

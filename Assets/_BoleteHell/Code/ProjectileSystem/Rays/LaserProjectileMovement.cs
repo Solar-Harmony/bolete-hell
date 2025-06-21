@@ -47,7 +47,7 @@ public class LaserProjectileMovement : MonoBehaviour
       if (handler == null)
          return;
       
-      IHitHandler.Context context = new(gameObject, transform.position, _currentDirection, _laser);
+      IHitHandler.Context context = new(_instigator, gameObject, transform.position, _currentDirection, _laser);
       handler.OnHit(context);
    }
 
