@@ -20,15 +20,15 @@ namespace _BoleteHell.Code.Player
             if (isInvincible) 
                 return;
 
-            // todo: make a proper factions system
-            if (ctx.Instigator.gameObject.CompareTag(gameObject.tag))
+            // TODO: make a proper factions system
+            if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
                 return;
             
             if (explosionCircle.TryGetComponent(out Light2D light2D))
             {
                 light2D.pointLightOuterRadius = 0.5f;
+                ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle, ctx.Position, 0.1f);
             }
-            ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle, ctx.Position, 0.1f);
             
             if (ctx.Data is not CombinedLaser laser)
             {
