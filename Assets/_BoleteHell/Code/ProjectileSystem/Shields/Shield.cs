@@ -21,29 +21,26 @@ namespace Shields
             return _lineInfo.OnRayHit(incomingDirection, hitPoint, lightRefractiveIndice);
         }
 
-        public void OnHit(IHitHandler.Context ctx)
+        public IHitHandler.Output OnHit(IHitHandler.Context ctx)
         {
             LayerMask layerMask = ~LayerMask.GetMask("Projectile");
-            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position , ctx.Direction, Mathf.Infinity,layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, ctx.Direction, Mathf.Infinity,layerMask);
 
             Debug.Log($"Raycast hit: {hit.collider?.name ?? "nothing"} at position {hit.point}");
-      
-            if (!hit) return;
-         
-            if (!ctx.Projectile.TryGetComponent(out LaserProjectileMovement projectile))
+
+            if (!hit)
             {
-                Debug.LogWarning($"Source of hit is not a LaserProjectileMovement. Ignored hit.");
-                return;
+                return new IHitHandler.Output(ctx);
             }
             
             if (ctx.Data is not CombinedLaser laser)
             {
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
-                return;
+                return new IHitHandler.Output(ctx);
             }
             
             Vector3 newDirection = OnRayHitLine(ctx.Direction, hit, laser.CombinedRefractiveIndex);
-            projectile.SetDirection(newDirection);
+            return new IHitHandler.Output(ctx) { Direction = newDirection };
         }
     }
 }

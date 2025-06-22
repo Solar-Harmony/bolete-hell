@@ -15,14 +15,14 @@ namespace _BoleteHell.Code.Player
         public bool isInvincible = false;
         public GameObject explosionCircle;
 
-        public void OnHit(IHitHandler.Context ctx)
+        public IHitHandler.Output OnHit(IHitHandler.Context ctx)
         {
-            if (isInvincible) 
-                return;
+            if (isInvincible)
+                return new IHitHandler.Output(ctx);
 
             // TODO: make a proper factions system
             if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
-                return;
+                return new IHitHandler.Output(ctx);
             
             if (explosionCircle.TryGetComponent(out Light2D light2D))
             {
@@ -33,11 +33,13 @@ namespace _BoleteHell.Code.Player
             if (ctx.Data is not CombinedLaser laser)
             {
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
-                return;
+                return new IHitHandler.Output(ctx);
             }
         
             Health health = GetComponent<Health>();
             laser.CombinedEffect(ctx.Position, health);
+
+            return new IHitHandler.Output(ctx);
         }
     }
 }

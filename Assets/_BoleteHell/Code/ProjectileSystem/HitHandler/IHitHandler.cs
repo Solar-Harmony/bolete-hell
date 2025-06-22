@@ -4,24 +4,33 @@ namespace _BoleteHell.Code.ProjectileSystem.HitHandler
 {
     public interface IHitHandler
     {
-        public class Context
+        public record Context
+        (
+            GameObject HitObject,
+            GameObject Instigator,
+            GameObject Projectile,
+            Vector2 Position,
+            Vector2 Direction,
+            IProjectileData Data
+        );
+
+        public record Output(Vector2 Position, Vector2 Direction)
         {
-            public GameObject Instigator { get; }
-            public GameObject Projectile { get; }
-            public Vector2 Position { get; }
-            public Vector2 Direction { get; }
-            public IProjectileData Data { get; }
-            
-            public Context(GameObject instigator, GameObject projectile, Vector2 position, Vector2 direction, IProjectileData data)
-            {
-                Instigator = instigator;
-                Projectile = projectile;
-                Position = position;
-                Direction = direction;
-                Data = data;
-            }
+            public Output(Context ctx) : this(ctx.Position, ctx.Direction) {}
         }
 
-        void OnHit(Context ctx);
+        Output OnHit(Context ctx);
+
+        public static Output TryHandleHit(Context ctx)
+        {
+            // always ignore hits with the instigator (for now)
+            if (ctx.HitObject == ctx.Instigator)
+                return new Output(ctx);
+
+            IHitHandler handler = ctx.HitObject.GetComponent<IHitHandler>()
+                                  ?? ctx.HitObject.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
+
+            return handler?.OnHit(ctx);
+        }
     }
 }

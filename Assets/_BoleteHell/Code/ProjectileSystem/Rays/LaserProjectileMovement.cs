@@ -38,19 +38,13 @@ public class LaserProjectileMovement : MonoBehaviour
    // TODO: This should prolly be made into a generic hit handler, for bullets as well
    private void OnTriggerEnter2D(Collider2D other)
    {
-      // always ignore hits with the instigator (for now)
-      if (other.gameObject == _instigator)
-         return;
-      
-      IHitHandler handler = other.GetComponent<IHitHandler>() 
-                            ?? other.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
-      if (handler == null)
-         return;
-      
-      IHitHandler.Context context = new(_instigator, gameObject, transform.position, _currentDirection, _laser);
-      handler.OnHit(context);
+      IHitHandler.Context context = new(other.gameObject, _instigator, gameObject, transform.position, _currentDirection, _laser);
+      IHitHandler.Output output = IHitHandler.TryHandleHit(context);
+      if (output != null)
+      {
+         SetDirection(output.Direction);
+      }
    }
-
    public void DestroyProjectile()
    {
       Destroy(this.gameObject);

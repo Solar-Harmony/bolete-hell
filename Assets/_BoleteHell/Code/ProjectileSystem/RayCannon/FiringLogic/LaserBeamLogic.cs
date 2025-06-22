@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _BoleteHell.Code.Character;
+using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using BoleteHell.Rays;
 using BoleteHell.Utils;
 using Data.Cannons;
@@ -24,7 +25,7 @@ public class LaserBeamLogic : FiringLogic
     {
 
     }
-    
+     
     private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, RayCannonData rayCannonData, CombinedLaser laser)
     {
         CurrentPos = bulletSpawnPoint;
@@ -38,27 +39,34 @@ public class LaserBeamLogic : FiringLogic
             RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,rayCannonData.maxRayDistance,layerMask);
             if (!hit)
             {
-                //Debug.DrawRay(CurrentPos, CurrentDirection * _laserData.MaxRayDistance, Color.black);
                 _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * rayCannonData.maxRayDistance);
                 break;
             }
-
-            if (hit.transform.gameObject.TryGetComponent(out Shield lineHit))
+            
+            IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laser);
+            IHitHandler.Output output = IHitHandler.TryHandleHit(context);
+            if (output != null)
             {
-                OnHitShield(hit, lineHit,laser.CombinedRefractiveIndex);
+                CurrentDirection = output.Direction;
+                CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+                _rayPositions.Add(CurrentPos);
             }
-            //Devrait check le health component de la personne pour que ça fonctionne si on touche un ennemi ou le joueur
-            else if (hit.transform.gameObject.TryGetComponent(out Health health))
-            {
-                OnHitEnemy(hit.point,health,laser);
-                //Si je touche un ennemi je ne refait plus de bounces
-                break;
-            }
-            else 
-            {
-                _rayPositions.Add(hit.point); 
-                break;
-            }
+            // if (hit.transform.gameObject.TryGetComponent(out Shield lineHit))
+            // {
+            //     OnHitShield(hit, lineHit,laser.CombinedRefractiveIndex);
+            // }
+            // //Devrait check le health component de la personne pour que ça fonctionne si on touche un ennemi ou le joueur
+            // else if (hit.transform.gameObject.TryGetComponent(out Health health))
+            // {
+            //     OnHitEnemy(hit.point,health,laser);
+            //     //Si je touche un ennemi je ne refait plus de bounces
+            //     break;
+            // }
+            // else 
+            // {
+            //     _rayPositions.Add(hit.point); 
+            //     break;
+            // }
         }
         
         LaserRendererPool.Instance.Get().DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
