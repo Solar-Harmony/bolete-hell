@@ -25,7 +25,8 @@ namespace Shields
         public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
         {
             LayerMask layerMask = ~LayerMask.GetMask("Projectile");
-            RaycastHit2D hit = Physics2D.Raycast(ctx.Projectile.transform.position, ctx.Direction, Mathf.Infinity, layerMask);            // debug draw the hit
+            //Changé pour la Position comme ça le laserbeam fonctionne puisqu'il n'a pas de gameobject
+            RaycastHit2D hit = Physics2D.Raycast(ctx.Position, ctx.Direction, Mathf.Infinity, layerMask);            // debug draw the hit
             Debug.DrawRay(hit.point, -ctx.Direction * 5, Color.yellow, 1f);
             Debug.DrawRay(hit.point, hit.normal * 5, Color.green, 1f);
 
