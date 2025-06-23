@@ -1,19 +1,15 @@
-using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.RayCannon;
-using Data.Rays;
 
-public class BulletPattern:MonoBehaviour
+public class BulletPattern : MonoBehaviour
 {
-    //TODO: les ennemis ne sont plkus capable de tirrer vers le joueur car ils tire avec leur forward vector
-    //mais les ennemis ne se rotate pas pour toujours regarder le joueur
     private float _currentRotation;
     private float _initAttackTimer = 100f;
     private float _attackTimer = 100f;
     private Vector2 initDirection;
-    private void StartShooting(Cannon cannon, BulletPatternData pattern,Transform spawnPoint)
+    private void StartShooting(Cannon cannon, BulletPatternData pattern, Transform spawnPoint)
     {
         //Juste pour dire que le premier tir d'une arme peut être soit chargé ou instant
         //Normalement j'aurais juste fait une méthode de start et end pour setup des chose au premier tir
@@ -59,7 +55,7 @@ public class BulletPattern:MonoBehaviour
         for (int i = 0; i < pattern.numberOfBulletShot; i++)
         {
             SetupBulletPosition(pattern, spawnPoint, i, maxSideAngle, spawnDistance,out Vector2 direction, out Vector2 spawnPosition);
-            cannon.Shoot(spawnPosition, direction.normalized);
+            cannon.Shoot(spawnPosition, direction.normalized, this.gameObject);
         }
 
         _attackTimer = 0f;
@@ -94,7 +90,7 @@ public class BulletPattern:MonoBehaviour
     }
 
     //Raycannon Pourras être changer pour une généralisation des weapons
-    public void Shoot(Cannon cannon,Transform spawnPosition,Vector2 initialDirection)
+    public void Shoot(Cannon cannon, Transform spawnPosition, Vector2 initialDirection)
     {
         List<BulletPatternData> patterns = cannon.GetBulletPatterns();
         //TODO: ajouter une manière de faire que les pattern sont soit simultané ou consécutifs

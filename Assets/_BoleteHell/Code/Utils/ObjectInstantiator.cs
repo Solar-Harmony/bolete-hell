@@ -16,7 +16,6 @@ namespace BoleteHell.Utils
             return clone;
         }
     
-    
         public static void InstantiateObjectForAmountOfTime(GameObject obj,Vector2 position, float time)
         {
             GameObject instantiatedObj = Instantiate(obj,position,Quaternion.identity);

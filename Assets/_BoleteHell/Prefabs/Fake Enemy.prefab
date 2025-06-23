@@ -19,6 +19,9 @@ GameObject:
   - component: {fileID: 2835406013110666550}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
+  - component: {fileID: -6471801952280679534}
+  - component: {fileID: -6447312373861107801}
+  - component: {fileID: 514989806390564487}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -303,7 +306,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -344,6 +347,51 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.15
+--- !u!114 &-6471801952280679534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInvincible: 0
+  explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+--- !u!114 &-6447312373861107801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddee55567d13400db8d57664362bb54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentsX: 4
+  fragmentsY: 4
+  explosionForce: 5
+  sr: {fileID: 4735358013702089654}
+  parentRb: {fileID: 7099119133421844960}
+  explosion: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+  fragmentPrefab: {fileID: 1189808845491370352, guid: d5a22d646b9169a459f18522ee6a533b, type: 3}
+--- !u!114 &514989806390564487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013647b62cf849059338abd864dfd497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7047168010642913551
 GameObject:
   m_ObjectHideFlags: 0

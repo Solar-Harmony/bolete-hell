@@ -7,24 +7,14 @@ namespace Graphics
         public int fragmentsX = 4;
         public int fragmentsY = 4;
         public float explosionForce = 5f;
-        public Material material;
 
         [SerializeField] private SpriteRenderer sr;
-
         [SerializeField] private Rigidbody2D parentRb;
-
         [SerializeField] private GameObject explosion;
-
         [SerializeField] private GameObject fragmentPrefab;
 
-        public void Fragment(Vector2 impactNormal)
+        public void Fragment()
         {
-            if (sr == null || parentRb == null)
-            {
-                Debug.LogError("SpriteRenderer or Rigidbody2D is not assigned.");
-                return;
-            }
-
             Instantiate(explosion, transform.position, Quaternion.identity);
 
             var sprite = sr.sprite;
@@ -48,7 +38,6 @@ namespace Graphics
                 var mf = fragment.GetComponent<MeshFilter>();
                 mf.mesh = mesh;
 
-                // UV Mapping
                 var uvWidth = sprite.rect.width / texture.width;
                 var uvHeight = sprite.rect.height / texture.height;
                 var uvX = (sprite.rect.x + x * sprite.rect.width / fragmentsX) / texture.width;
@@ -60,15 +49,15 @@ namespace Graphics
                     new(uvX, uvY + uvHeight / fragmentsY),
                     new(uvX + uvWidth / fragmentsX, uvY + uvHeight / fragmentsY)
                 };
+                
+                var circleCollider = fragment.GetComponent<CircleCollider2D>();
+                circleCollider.radius = fragmentSize.x / 4;
 
                 var rb = fragment.GetComponent<Rigidbody2D>();
-
-                var skibiid = fragment.GetComponent<CircleCollider2D>();
-                skibiid.radius = fragmentSize.x / 4;
-
                 rb.linearVelocity = parentRb.linearVelocity + Random.insideUnitCircle * explosionForce;
             }
 
+            gameObject.SetActive(false);
             Destroy(gameObject);
         }
 
@@ -76,7 +65,7 @@ namespace Graphics
         {
             var mesh = new Mesh();
 
-            var vertices = new Vector3[4]
+            var vertices = new Vector3[]
             {
                 new(-size.x / 2, -size.y / 2, 0),
                 new(size.x / 2, -size.y / 2, 0),
@@ -88,7 +77,6 @@ namespace Graphics
 
             mesh.vertices = vertices;
             mesh.triangles = triangles;
-            // mesh.RecalculateNormals();
 
             return mesh;
         }

@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using _BoleteHell.Code.Character;
+using _BoleteHell.Code.Player;
+using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using Lasers;
 using UnityEngine;
 
 namespace Data.Rays
 {
-    public class CombinedLaser
+    public class CombinedLaser : IProjectileData
     {
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }

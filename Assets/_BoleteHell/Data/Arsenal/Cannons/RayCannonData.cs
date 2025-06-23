@@ -15,6 +15,8 @@ namespace Data.Cannons
         [Tooltip("Time between each shot")]
         [SerializeField] public float rateOfFire;
         
+        [SerializeField] public float projectileSpeed = 10f;
+        
         //Lifetime of the projectile/beam
         public float LifeTime {
             get

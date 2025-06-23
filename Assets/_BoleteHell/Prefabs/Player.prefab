@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 8996502958423220439}
   - component: {fileID: 57039783232871073}
   - component: {fileID: 5858263315430876513}
+  - component: {fileID: -2775713761536112375}
+  - component: {fileID: 5759033307222867121}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -122,8 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 0}
-  fragmenter: {fileID: 8263891264860297146}
-  mainCamera: {fileID: 0}
   <SpeedFactor>k__BackingField: 5
   shipExhaustLight: {fileID: 2755423188508139861}
   maxLightIntensity: 4
@@ -156,7 +156,6 @@ MonoBehaviour:
   fragmentsX: 2
   fragmentsY: 2
   explosionForce: 1
-  material: {fileID: 2100000, guid: f1f2d2b840a7926448554ea74f136f41, type: 2}
   sr: {fileID: 8887576795586774717}
   parentRb: {fileID: 4327110905113141562}
   explosion: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
@@ -202,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  <MaxHealth>k__BackingField: 50
 --- !u!114 &57039783232871073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 0}
+  spawnDistance: {fileID: 1398748979581358320}
   rayCannons:
   - rid: 5246942125833584717
   - rid: 5246942125833584719
@@ -239,7 +238,7 @@ MonoBehaviour:
         maxAngleRange: 360
         startingRotation: 45
         constantRotation: 0
-        burstShotCount: 1
+        burstShotCount: 3
         burstShotCooldown: 0
     - rid: 5246942125833584719
       type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
@@ -272,6 +271,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2775713761536112375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620760ddc4214ec6b73512a1bd423c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5759033307222867121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInvincible: 0
+  explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
 --- !u!1 &885100575828019646
 GameObject:
   m_ObjectHideFlags: 0
