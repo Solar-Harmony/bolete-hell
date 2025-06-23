@@ -25,6 +25,7 @@ public abstract class FiringLogic : IHitHandler
         {
             if (response.RequestDestroy)
             {
+                //TODO:Devrait pas détruire les renderer et plutot release le renderer dans le pool
                 Object.Destroy(ctx.Projectile);
             }
             

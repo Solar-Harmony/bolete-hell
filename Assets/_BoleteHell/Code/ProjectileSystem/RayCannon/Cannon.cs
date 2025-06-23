@@ -38,6 +38,11 @@ namespace BoleteHell.RayCannon
         
         private CombinedLaser _combinedLaser;
         private FiringLogic _currentFiringLogic;
+        //Nécéssaire pour la création des Cannon a partir de l'éditeur
+        public Cannon()
+        {
+
+        }
         
         //TODO: Aucune idées si la création de raycannons par code fonctionne 
         //Pourrais être utile si on vaut faire que les ennemis on des weapon semi-random
