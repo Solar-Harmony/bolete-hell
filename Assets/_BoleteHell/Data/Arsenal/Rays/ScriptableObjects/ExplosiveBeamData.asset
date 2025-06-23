@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplosiveBeamData
   m_EditorClassIdentifier: 
   <Color>k__BackingField: {r: 0.9245283, g: 0.6069777, b: 0.07268285, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.9
+  <LightRefractiveIndex>k__BackingField: 1.7
   <Logic>k__BackingField:
     rid: 7223670814694965325
   references:

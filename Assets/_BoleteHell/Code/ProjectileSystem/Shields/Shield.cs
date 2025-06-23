@@ -1,3 +1,4 @@
+using System;
 using _BoleteHell.Code.ProjectileSystem.HitHandler;
 using Data.Rays;
 using UnityEngine;
@@ -6,41 +7,43 @@ namespace Shields
 {
     public class Shield : MonoBehaviour, IHitHandler
     {
-        [SerializeField] private ShieldData _lineInfo;
+        [SerializeField] private ShieldData lineInfo;
 
-        public void SetLineInfo(ShieldData lineInfo)
+        public void SetLineInfo(ShieldData info)
         {
-            _lineInfo = lineInfo;
+            lineInfo = info;
         }
 
-        public Vector3 OnRayHitLine(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        private Vector2 OnRayHitLine(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
-            if (_lineInfo.Equals(null))
+            if (lineInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
 
-            return _lineInfo.OnRayHit(incomingDirection, hitPoint, lightRefractiveIndice);
+            return lineInfo.OnRayHit(incomingDirection, hitPoint, lightRefractiveIndice);
         }
 
-        public IHitHandler.Output OnHit(IHitHandler.Context ctx)
+        public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
         {
             LayerMask layerMask = ~LayerMask.GetMask("Projectile");
-            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, ctx.Direction, Mathf.Infinity,layerMask);
-
-            Debug.Log($"Raycast hit: {hit.collider?.name ?? "nothing"} at position {hit.point}");
+            RaycastHit2D hit = Physics2D.Raycast(ctx.Projectile.transform.position, ctx.Direction, Mathf.Infinity,layerMask);
+            // debug draw the hit
+            Debug.DrawRay(hit.point, -ctx.Direction * 5, Color.yellow, 1f);
+            Debug.DrawRay(hit.point, hit.normal * 5, Color.green, 1f);
 
             if (!hit)
             {
-                return new IHitHandler.Output(ctx);
+                return;
             }
             
             if (ctx.Data is not CombinedLaser laser)
             {
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
-                return new IHitHandler.Output(ctx);
+                return;
             }
             
             Vector3 newDirection = OnRayHitLine(ctx.Direction, hit, laser.CombinedRefractiveIndex);
-            return new IHitHandler.Output(ctx) { Direction = newDirection };
+            Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
+            callback?.Invoke(new IHitHandler.Response(ctx) { Direction = newDirection });
         }
     }
 }

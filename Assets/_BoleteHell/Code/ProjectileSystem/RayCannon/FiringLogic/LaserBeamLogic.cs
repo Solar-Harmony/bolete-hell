@@ -44,47 +44,15 @@ public class LaserBeamLogic : FiringLogic
             }
             
             IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laser);
-            IHitHandler.Output output = IHitHandler.TryHandleHit(context);
-            if (output != null)
+            IHitHandler.TryHandleHit(context, altered =>
             {
-                CurrentDirection = output.Direction;
+                CurrentDirection = altered.Direction;
                 CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
                 _rayPositions.Add(CurrentPos);
-            }
-            // if (hit.transform.gameObject.TryGetComponent(out Shield lineHit))
-            // {
-            //     OnHitShield(hit, lineHit,laser.CombinedRefractiveIndex);
-            // }
-            // //Devrait check le health component de la personne pour que ça fonctionne si on touche un ennemi ou le joueur
-            // else if (hit.transform.gameObject.TryGetComponent(out Health health))
-            // {
-            //     OnHitEnemy(hit.point,health,laser);
-            //     //Si je touche un ennemi je ne refait plus de bounces
-            //     break;
-            // }
-            // else 
-            // {
-            //     _rayPositions.Add(hit.point); 
-            //     break;
-            // }
+            });
         }
         
         LaserRendererPool.Instance.Get().DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
         _rayPositions.Clear();
     }
-
-    private void OnHitEnemy(Vector2 hitPosition,Health health,CombinedLaser laser)
-    {
-        _rayPositions.Add(hitPosition);
-        laser.CombinedEffect(hitPosition,health);
-    }
-
-    private void OnHitShield(RaycastHit2D hitPoint, Shield shieldHit,float lightRefractiveIndex)
-    {
-        Debug.DrawLine(CurrentPos, hitPoint.point, Color.blue);
-        CurrentDirection = shieldHit.OnRayHitLine(CurrentDirection, hitPoint, lightRefractiveIndex);
-        CurrentPos = hitPoint.point + CurrentDirection * 0.01f;
-        _rayPositions.Add(CurrentPos);
-    }
-
 }

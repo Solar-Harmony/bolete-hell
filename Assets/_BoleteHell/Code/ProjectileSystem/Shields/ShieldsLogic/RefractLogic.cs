@@ -9,11 +9,9 @@ namespace BoleteHell.Shields.ShieldsLogic
     {
         [SerializeField] private float materialRefractiveIndice = 2.417f;
 
-        public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        public Vector2 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
-            Debug.Log($"incoming direction: {incomingDirection}, normal: {hitPoint.normal}" );
-            return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice,
-                materialRefractiveIndice);
+            return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice, materialRefractiveIndice);
         }
 
         public Vector3 ExecuteProjectile(Vector3 incomingDirection)
@@ -21,11 +19,11 @@ namespace BoleteHell.Shields.ShieldsLogic
             throw new NotImplementedException();
         }
 
-        private Vector2 Refract(Vector3 incidentDirection, Vector3 surfaceNormal, float refractiveIndex1,
+        private Vector2 Refract(Vector2 incidentDirection, Vector2 surfaceNormal, float refractiveIndex1,
             float refractiveIndex2)
         {
             var changeScale = refractiveIndex1 / refractiveIndex2;
-            var cosI = -Vector3.Dot(surfaceNormal, incidentDirection);
+            var cosI = -Vector2.Dot(surfaceNormal, incidentDirection);
             var sinT2 = changeScale * changeScale * (1 - cosI * cosI);
 
             if (sinT2 > 1)

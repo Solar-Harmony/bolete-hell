@@ -17,8 +17,8 @@ public class LaserProjectileMovement : MonoBehaviour
    {
       _rb = GetComponent<Rigidbody2D>();
    }
-   
-   public void SetDirection(Vector2 direction)
+
+   private void SetDirection(Vector2 direction)
    {
       _currentDirection = direction;
       _rb.linearVelocity = _currentDirection * _projectileSpeed;
@@ -35,18 +35,29 @@ public class LaserProjectileMovement : MonoBehaviour
       _rb.linearVelocity = _currentDirection * _projectileSpeed;
    }
 
-   // TODO: This should prolly be made into a generic hit handler, for bullets as well
+   private bool _isColliding = false;
+   
    private void OnTriggerEnter2D(Collider2D other)
    {
+      if (_isColliding)
+         return;
+      
+      _isColliding = true;
+      
       IHitHandler.Context context = new(other.gameObject, _instigator, gameObject, transform.position, _currentDirection, _laser);
-      IHitHandler.Output output = IHitHandler.TryHandleHit(context);
-      if (output != null)
+      IHitHandler.TryHandleHit(context, resp =>
       {
-         SetDirection(output.Direction);
-      }
+         SetDirection(resp.Direction);
+      
+         if (resp.RequestDestroy)
+         {
+            Destroy(gameObject);
+         }
+      });
    }
-   public void DestroyProjectile()
+   
+   private void OnTriggerExit2D(Collider2D other)
    {
-      Destroy(this.gameObject);
+      _isColliding = false;
    }
 }

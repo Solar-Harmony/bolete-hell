@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _BoleteHell.Code.ProjectileSystem.HitHandler
 {
@@ -14,23 +15,27 @@ namespace _BoleteHell.Code.ProjectileSystem.HitHandler
             IProjectileData Data
         );
 
-        public record Output(Vector2 Position, Vector2 Direction)
+        public record Response(
+            Vector2 Position, 
+            Vector2 Direction,
+            bool RequestDestroy
+        )
         {
-            public Output(Context ctx) : this(ctx.Position, ctx.Direction) {}
+            public Response(Context ctx) : this(ctx.Position, ctx.Direction, false) {}
         }
 
-        Output OnHit(Context ctx);
+        public void OnHit(Context ctx, Action<Response> callback = null);
 
-        public static Output TryHandleHit(Context ctx)
+        public static void TryHandleHit(Context ctx, Action<Response> callback = null)
         {
             // always ignore hits with the instigator (for now)
             if (ctx.HitObject == ctx.Instigator)
-                return new Output(ctx);
+                return;
 
             IHitHandler handler = ctx.HitObject.GetComponent<IHitHandler>()
                                   ?? ctx.HitObject.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
 
-            return handler?.OnHit(ctx);
+            handler?.OnHit(ctx, callback);
         }
     }
 }

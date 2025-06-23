@@ -32,7 +32,7 @@ namespace Shields
             lineDrawer.FinishLine(this);
         }
 
-        public Vector3 OnRayHit(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        public Vector2 OnRayHit(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
             return onHitLogic.ExecuteRay(incomingDirection, hitPoint, lightRefractiveIndice);
         }

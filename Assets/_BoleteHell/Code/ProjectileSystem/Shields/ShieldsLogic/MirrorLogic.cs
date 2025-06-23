@@ -7,7 +7,7 @@ namespace BoleteHell.Shields.ShieldsLogic
     [Serializable]
     public class MirrorLogic : IShieldHitLogic
     {
-        public Vector3 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        public Vector2 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
             Debug.Log($"incoming direction: {incomingDirection}, normal: {hitPoint.normal}" );
 
