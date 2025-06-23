@@ -44,7 +44,7 @@ public class LaserBeamLogic : FiringLogic
             }
             
             IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laser);
-            IHitHandler.TryHandleHit(context, altered =>
+            OnHit(context, altered =>
             {
                 CurrentDirection = altered.Direction;
                 CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau

@@ -45,13 +45,13 @@ namespace BoleteHell.Rays
             StartCoroutine(Lifetime(lifeTime,logic));
         }
 
-        public void SetupProjectileLaser(Vector2 direction, float speed, CombinedLaser laser, GameObject instigator = null)
+        public LaserProjectileMovement SetupProjectileLaser(Vector2 direction, float speed)
         {
             _isProjectile = true;
             _lineRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction, speed, laser, instigator);
+            _movement.StartMovement(direction, speed);
             
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
             _capsuleCollider.size = new Vector2(RayWidth, LaserLength + AdjustedColliderLenght);
@@ -61,6 +61,8 @@ namespace BoleteHell.Rays
             _capsuleCollider.enabled = true;
 
             _lineRenderer.numCapVertices = 10;
+
+            return _movement;
         }
 
         private IEnumerator Lifetime(float time,FiringLogic logic)

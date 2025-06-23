@@ -25,8 +25,7 @@ namespace Shields
         public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
         {
             LayerMask layerMask = ~LayerMask.GetMask("Projectile");
-            RaycastHit2D hit = Physics2D.Raycast(ctx.Projectile.transform.position, ctx.Direction, Mathf.Infinity,layerMask);
-            // debug draw the hit
+            RaycastHit2D hit = Physics2D.Raycast(ctx.Projectile.transform.position, ctx.Direction, Mathf.Infinity, layerMask);            // debug draw the hit
             Debug.DrawRay(hit.point, -ctx.Direction * 5, Color.yellow, 1f);
             Debug.DrawRay(hit.point, hit.normal * 5, Color.green, 1f);
 
