@@ -43,7 +43,7 @@ public class LaserBeamLogic : FiringLogic
                 break;
             }
             
-            IHitHandler.Context context = new(hit.collider.gameObject, null, null,renderer, CurrentPos, CurrentDirection, laser);
+            IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laser);
             OnHit(context, altered =>
             {
                 CurrentDirection = altered.Direction;

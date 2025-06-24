@@ -27,7 +27,15 @@ public abstract class FiringLogic : IHitHandler
         {
             if (response.RequestDestroy)
             {
-                Despawn(ctx.renderer);
+                LaserRenderer renderer = ctx.Projectile.GetComponent<LaserRenderer>();
+                if (renderer)
+                {
+                    LaserRendererPool.Instance.Release(renderer);
+                }
+                else
+                {
+                    Object.Destroy(ctx.Projectile);
+                }
             }
             
             callback?.Invoke(response);
