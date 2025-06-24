@@ -1,7 +1,9 @@
 using System;
 using _BoleteHell.Code.ProjectileSystem.HitHandler;
+using BoleteHell.Rays;
 using Data.Cannons;
 using Data.Rays;
+using Lasers;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -25,11 +27,20 @@ public abstract class FiringLogic : IHitHandler
         {
             if (response.RequestDestroy)
             {
-                Object.Destroy(ctx.Projectile);
+                LaserRenderer renderer = ctx.Projectile.GetComponent<LaserRenderer>();
+                if (renderer)
+                {
+                    LaserRendererPool.Instance.Release(renderer);
+                }
+                else
+                {
+                    Object.Destroy(ctx.Projectile);
+                }
             }
             
             callback?.Invoke(response);
         });
     }
+    
     public abstract void FinishFiring();
 }

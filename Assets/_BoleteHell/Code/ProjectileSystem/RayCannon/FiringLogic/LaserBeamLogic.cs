@@ -31,7 +31,7 @@ public class LaserBeamLogic : FiringLogic
         CurrentPos = bulletSpawnPoint;
         _rayPositions.Add(CurrentPos);
         CurrentDirection = direction;
-
+        LaserRenderer renderer = LaserRendererPool.Instance.Get();
         for (int i = 0; i <= rayCannonData.maxNumberOfBounces; i++)
         {
             LayerMask layerMask = ~LayerMask.GetMask("Projectile");
@@ -52,7 +52,7 @@ public class LaserBeamLogic : FiringLogic
             });
         }
         
-        LaserRendererPool.Instance.Get().DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
+        renderer.DrawRay(_rayPositions,laser.CombinedColor,rayCannonData.LifeTime,this);
         _rayPositions.Clear();
     }
 }

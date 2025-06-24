@@ -1,4 +1,5 @@
 ﻿using System;
+using BoleteHell.Rays;
 using UnityEngine;
 
 namespace _BoleteHell.Code.ProjectileSystem.HitHandler
