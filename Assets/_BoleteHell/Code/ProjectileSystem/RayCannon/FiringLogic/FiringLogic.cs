@@ -42,11 +42,5 @@ public abstract class FiringLogic : IHitHandler
         });
     }
     
-    //TODO: changer ca pour être une généralisation des renderer pas spécifiquement le LaserRenderer
-    private void Despawn(LaserRenderer renderer)
-    {
-        LaserRendererPool.Instance.Release(renderer);
-    }
-    
     public abstract void FinishFiring();
 }
