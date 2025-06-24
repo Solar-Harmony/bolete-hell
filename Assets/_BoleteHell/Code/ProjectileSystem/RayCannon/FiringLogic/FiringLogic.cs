@@ -1,7 +1,9 @@
 using System;
 using _BoleteHell.Code.ProjectileSystem.HitHandler;
+using BoleteHell.Rays;
 using Data.Cannons;
 using Data.Rays;
+using Lasers;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -25,12 +27,18 @@ public abstract class FiringLogic : IHitHandler
         {
             if (response.RequestDestroy)
             {
-                //TODO:Devrait pas détruire les renderer et plutot release le renderer dans le pool
-                Object.Destroy(ctx.Projectile);
+                Despawn(ctx.renderer);
             }
             
             callback?.Invoke(response);
         });
     }
+    
+    //TODO: changer ca pour être une généralisation des renderer pas spécifiquement le LaserRenderer
+    private void Despawn(LaserRenderer renderer)
+    {
+        LaserRendererPool.Instance.Release(renderer);
+    }
+    
     public abstract void FinishFiring();
 }

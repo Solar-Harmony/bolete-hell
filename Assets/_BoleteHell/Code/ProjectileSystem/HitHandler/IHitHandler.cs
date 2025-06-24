@@ -1,4 +1,5 @@
 ﻿using System;
+using BoleteHell.Rays;
 using UnityEngine;
 
 namespace _BoleteHell.Code.ProjectileSystem.HitHandler
@@ -10,6 +11,7 @@ namespace _BoleteHell.Code.ProjectileSystem.HitHandler
             GameObject HitObject,
             GameObject Instigator,
             GameObject Projectile,
+            LaserRenderer renderer,
             Vector2 Position,
             Vector2 Direction,
             IProjectileData Data

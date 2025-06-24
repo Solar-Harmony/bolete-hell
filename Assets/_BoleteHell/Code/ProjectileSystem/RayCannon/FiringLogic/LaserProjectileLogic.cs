@@ -22,7 +22,7 @@ public class LaserProjectileLogic : FiringLogic
         var projectile = reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed);
         projectile.OnCollide +=  (hit) =>
         {
-            IHitHandler.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laser);
+            IHitHandler.Context context = new(hit.gameObject, instigator, projectile.gameObject,reservedRenderer, projectile.gameObject.transform.position, direction, laser);
             OnHit(context, resp =>
             {
                 projectile.SetDirection(resp.Direction);
