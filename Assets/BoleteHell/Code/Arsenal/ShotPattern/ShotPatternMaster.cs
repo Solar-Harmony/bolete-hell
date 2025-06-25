@@ -4,9 +4,7 @@ using UnityEngine;
 
 //Permet de jumeller plusieurs patterns ensemble et de les sauvegarder
 [CreateAssetMenu(fileName = "BulletPatternMaster", menuName = "Scriptable Objects/BulletPatternMaster")]
-public class BulletPatternMaster : ScriptableObject
+public class ShotPatternMaster : ScriptableObject
 {
-    //[SerializeField] public bool simultaneousShots;
-    
-    [SerializeField] public List<BulletPatternData> patterns;
+    [SerializeField] public List<ShotPatternData> patterns;
 }

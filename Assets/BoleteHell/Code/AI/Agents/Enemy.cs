@@ -26,7 +26,7 @@ namespace AI.Agents
         public float GetProjectileSpeed()
         {
             if (!_weapon) return 0.0f;
-            return _weapon.GetSelectedWeapon().rayCannonData.projectileSpeed;
+            return _weapon.GetSelectedWeapon().cannonData.projectileSpeed;
         }
     }
 }

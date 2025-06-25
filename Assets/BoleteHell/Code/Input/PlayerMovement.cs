@@ -9,24 +9,27 @@ namespace Input
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private InputController input;
+        [SerializeField] 
+        private InputController input;
         
-        [field: SerializeField] public float SpeedFactor { get; private set; } = 1.0f;
-
-        [SerializeField] private Light2D shipExhaustLight;
-
-        [field: SerializeField] private float maxLightIntensity = 5.0f;
+        [field: SerializeField] 
+        public float SpeedFactor { get; private set; } = 1.0f;
+        
+        [field: SerializeField] 
+        private float maxLightIntensity = 5.0f;
 
         private Rigidbody2D _rb;
+        private Light2D _shipExhaustLight;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _shipExhaustLight = GetComponentInChildren<Light2D>();
         }
 
         private void FixedUpdate()
         {
-            shipExhaustLight.intensity = input.IsBoosting ? maxLightIntensity / 2.0f : maxLightIntensity;
+            _shipExhaustLight.intensity = input.IsBoosting ? maxLightIntensity / 2.0f : maxLightIntensity;
 
             var inputDir = input.GetMovementDisplacement().normalized;
             var speed = input.IsBoosting ? 2.0f * SpeedFactor : SpeedFactor;

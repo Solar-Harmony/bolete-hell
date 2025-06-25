@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 //TODO: Make this a general assetLoader that give the data to the right managers and objects
 namespace BoleteHell.RayCannon
 {
-    public class RayCannonLoader : MonoBehaviour
+    public class CannonLoader : MonoBehaviour
     {
         private const string GroupLabel = "Prisms";
         [SerializeField] private PlayerLaserInput player;

@@ -38,7 +38,7 @@ RectTransform:
   m_GameObject: {fileID: 6982038961960877227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6872167419365447248}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  <MaxHealth>k__BackingField: 15
 --- !u!114 &2877549176397520493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,10 +268,20 @@ MonoBehaviour:
       data:
         laserDatas:
         - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
-        rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        useBulletPatternMaster: 1
-        bulletPatterns: []
-        bulletPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
+        usePatternMaster: 0
+        bulletPatterns:
+        - rid: 7223671015644069968
+        shotPatternMaster: {fileID: 0}
+    - rid: 7223671015644069968
+      type: {class: ShotPatternData, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 3
+        maxAngleRange: 0
+        startingRotation: 0
+        constantRotation: 0
+        burstShotCount: 2
+        burstShotCooldown: 0.1
 --- !u!114 &2835406013110666550
 MonoBehaviour:
   m_ObjectHideFlags: 0

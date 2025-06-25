@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [Serializable]
-public class BulletPatternData
+public class ShotPatternData
 {
     [Header("General")]
     [Tooltip("Number of bullets in a single shot")]

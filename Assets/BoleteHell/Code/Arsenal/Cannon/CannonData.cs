@@ -9,7 +9,7 @@ namespace Data.Cannons
     //Mais le fait de garder le firingType séparer du BulletPatternData permet d'utiliser le même BulletPatternData pour n'importe quel type de projectile
     //Sans avoir a faire un BulletPatternData par type
     [CreateAssetMenu(fileName = "RayCannonData", menuName = "Scriptable Objects/RayCannonData")]
-    public class RayCannonData : ScriptableObject
+    public class CannonData : ScriptableObject
     { 
         [SerializeField] public FiringTypes firingType;
         [Tooltip("Time between each shot")]

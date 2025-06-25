@@ -125,7 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 0}
   <SpeedFactor>k__BackingField: 5
-  shipExhaustLight: {fileID: 2755423188508139861}
   maxLightIntensity: 4
 --- !u!114 &938295390074202206
 MonoBehaviour:
@@ -201,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 50
+  <MaxHealth>k__BackingField: 100
 --- !u!114 &57039783232871073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,34 +225,34 @@ MonoBehaviour:
       data:
         laserDatas:
         - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
-        rayCannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        useBulletPatternMaster: 0
+        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
+        usePatternMaster: 1
         bulletPatterns:
-        - rid: 5246942125833584718
-        bulletPatternMaster: {fileID: 0}
-    - rid: 5246942125833584718
-      type: {class: BulletPatternData, ns: , asm: Assembly-CSharp}
-      data:
-        numberOfBulletShot: 4
-        maxAngleRange: 360
-        startingRotation: 45
-        constantRotation: 0
-        burstShotCount: 3
-        burstShotCooldown: 0
+        - rid: 7223671015644069966
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
     - rid: 5246942125833584719
       type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
-        rayCannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
-        useBulletPatternMaster: 0
+        cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+        usePatternMaster: 1
         bulletPatterns:
-        - rid: 5246942125833584720
-        bulletPatternMaster: {fileID: 0}
-    - rid: 5246942125833584720
-      type: {class: BulletPatternData, ns: , asm: Assembly-CSharp}
+        - rid: 7223671015644069967
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    - rid: 7223671015644069966
+      type: {class: ShotPatternData, ns: , asm: Assembly-CSharp}
       data:
-        numberOfBulletShot: 1
+        numberOfBulletShot: 0
+        maxAngleRange: 0
+        startingRotation: 0
+        constantRotation: 0
+        burstShotCount: 1
+        burstShotCooldown: 0
+    - rid: 7223671015644069967
+      type: {class: ShotPatternData, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 0
         maxAngleRange: 0
         startingRotation: 0
         constantRotation: 0
@@ -1109,7 +1108,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8326809350107579061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 

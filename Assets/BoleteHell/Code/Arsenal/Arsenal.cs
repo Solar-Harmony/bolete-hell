@@ -5,17 +5,17 @@ using UnityEngine.Serialization;
 namespace BoleteHell.RayCannon
 {
     //Chaque RayCannonManager a son propre BulletPattern ,permet chaque a unité d'avoir son propre timer de pattern
-    [RequireComponent(typeof(BulletPattern))]
+    [RequireComponent(typeof(ShotPattern))]
     public class Arsenal : MonoBehaviour
     {
         [SerializeField] private Transform spawnDistance;
         [SerializeReference] private List<Cannon> rayCannons;
-        private BulletPattern _pattern;
+        private ShotPattern _pattern;
         private int _selectedCannonIndex;
 
         private void Start()
         {
-            _pattern = GetComponent<BulletPattern>();
+            _pattern = GetComponent<ShotPattern>();
             foreach (Cannon rayCannon in rayCannons)
             {
                 rayCannon.Init();

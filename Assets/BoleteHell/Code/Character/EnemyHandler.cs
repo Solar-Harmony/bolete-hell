@@ -8,10 +8,11 @@ namespace _BoleteHell.Code.Character
     public class EnemyHandler : MonoBehaviour
     {
         private Health _health;
-        public Camera mainCamera;
+        private Camera _mainCamera;
         
         private void Awake()
         {
+            _mainCamera = Camera.main;
             _health = GetComponent<Health>();
             _health.OnDeath += () =>
             {
@@ -23,7 +24,7 @@ namespace _BoleteHell.Code.Character
         private void OnGUI()
         {
             Vector2 position = new Vector2(transform.position.x, transform.position.y + GetComponent<SpriteRenderer>().bounds.size.y * 0.5f);
-            Vector2 ss = mainCamera.WorldToScreenPoint(position);
+            Vector2 ss = _mainCamera.WorldToScreenPoint(position);
             ss.y = Screen.height - ss.y;
             Rect rect = new(ss, new Vector2(100, 50));
             GUI.skin.label.fontSize = 24;

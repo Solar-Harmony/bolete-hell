@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace Data.Rays
 {
-    public class CombinedLaser : IProjectileData
+    public class LaserCombo : IProjectileData
     {
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }
         //Va pouvoir être utilisé pour quand le laser hit un diffract shield
         private List<LaserData> _datas;
     
-        public CombinedLaser(List<LaserData> datas)
+        public LaserCombo(List<LaserData> datas)
         {
             _datas = datas;
             if (datas.Count == 1)

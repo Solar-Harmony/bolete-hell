@@ -12,7 +12,7 @@ public abstract class FiringLogic : IHitHandler
     protected Vector2 CurrentDirection;
     protected Vector3 CurrentPos;
     
-    public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, RayCannonData data, CombinedLaser laser, GameObject instigator = null);
+    public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, GameObject instigator = null);
     public virtual void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
     {
         // always ignore hits with the instigator (for now)

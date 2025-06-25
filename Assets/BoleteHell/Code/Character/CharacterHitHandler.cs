@@ -30,7 +30,7 @@ namespace _BoleteHell.Code.Player
                 ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle, ctx.Position, 0.1f);
             }
             
-            if (ctx.Data is not CombinedLaser laser)
+            if (ctx.Data is not LaserCombo laser)
             {
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
                 return;
