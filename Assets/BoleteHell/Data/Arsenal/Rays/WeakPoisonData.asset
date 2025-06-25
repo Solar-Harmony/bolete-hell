@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: WeakPoisonData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.44852537, g: 0.72506726, b: 0.59996265, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.5
+  <Color>k__BackingField: {r: 0.4475476, g: 0.57254905, b: 0.23529412, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.44
   <Logic>k__BackingField:
-    rid: 7223670942548885581
+    rid: 7223671017346170997
   references:
     version: 2
     RefIds:
-    - rid: 7223670942548885581
-      type: {class: PoisonOnHit, ns: Lasers.RayLogic, asm: Assembly-CSharp}
+    - rid: 7223671017346170997
+      type: {class: PoisonOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
-        baseHitDamage: 1
+        baseHitDamage: 0
         poisonDuration: 6
         poisonDamage: 1
         poisonTickInterval: 1

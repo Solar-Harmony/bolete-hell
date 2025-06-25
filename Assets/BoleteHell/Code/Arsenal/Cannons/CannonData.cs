@@ -1,14 +1,13 @@
 using System;
-using BoleteHell.RayCannon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Data.Cannons
+namespace BoleteHell.Code.Arsenal.Cannons
 {
     //Peut-être déplacer l'information dans les bulletPatterns directement
     //Mais le fait de garder le firingType séparer du BulletPatternData permet d'utiliser le même BulletPatternData pour n'importe quel type de projectile
     //Sans avoir a faire un BulletPatternData par type
-    [CreateAssetMenu(fileName = "RayCannonData", menuName = "Scriptable Objects/RayCannonData")]
+    [CreateAssetMenu(fileName = "CannonData", menuName = "BoleteHell/Arsenal/Cannon", order = -100)]
     public class CannonData : ScriptableObject
     { 
         [SerializeField] public FiringTypes firingType;

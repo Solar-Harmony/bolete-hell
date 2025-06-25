@@ -1,13 +1,11 @@
 using System;
-using _BoleteHell.Code.AI;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Action = Unity.Behavior.Action;
 
-namespace AI.Actions
+namespace BoleteHell.Code.AI.Actions
 {
     [Serializable]
     [GeneratePropertyBag]

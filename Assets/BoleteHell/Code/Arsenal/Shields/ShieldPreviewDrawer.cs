@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Shields
+namespace BoleteHell.Code.Arsenal.Shields
 {
     //Déssine le preview de la ligne que le joueur déssine
     [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]

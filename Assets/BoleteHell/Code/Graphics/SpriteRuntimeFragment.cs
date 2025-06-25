@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Graphics
+namespace BoleteHell.Code.Graphics
 {
     public class SpriteRuntimeFragmenter : MonoBehaviour
     {

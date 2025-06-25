@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using _BoleteHell.Code.Character;
-using _BoleteHell.Code.Player;
-using _BoleteHell.Code.ProjectileSystem.HitHandler;
-using Lasers;
+using BoleteHell.Code.Arsenal.HitHandler;
+using BoleteHell.Code.Character;
 using UnityEngine;
 
-namespace Data.Rays
+namespace BoleteHell.Code.Arsenal.RayData
 {
     public class LaserCombo : IProjectileData
     {

@@ -1,10 +1,7 @@
-﻿using System;
-using Graphics;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace Input
+namespace BoleteHell.Code.Input
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour

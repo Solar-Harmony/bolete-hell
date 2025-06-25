@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0.836478, g: 0.64971715, b: 0.64971715, a: 1}
   onHitLogic:
-    rid: 4156091577278922899
+    rid: 7223671015644069985
   shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 4156091577278922899
-      type: {class: MirrorLogic, ns: BoleteHell.Shields.ShieldsLogic, asm: Assembly-CSharp}
+    - rid: 7223671015644069985
+      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data: 

@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Data.Cannons;
-using Data.Rays;
-using Lasers;
+using BoleteHell.Code.Arsenal.FiringLogic;
+using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Arsenal.ShotPatterns;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace BoleteHell.RayCannon
+namespace BoleteHell.Code.Arsenal.Cannons
 {
     //Automatic: Plein de petit laser
     //Charged: Charge puis tire un laser instant
@@ -32,19 +31,19 @@ namespace BoleteHell.RayCannon
         [SerializeField] 
         private bool usePatternMaster;
         
-        [Required] [SerializeReference] [ShowIf("@!usePatternMaster")] 
+        [SerializeReference] [ShowIf("@!usePatternMaster")] 
+        [ValidateInput("@bulletPatterns.Count > 0", "At least one pattern is required.")] 
         private List<ShotPatternData> bulletPatterns;
         
         [Required] [SerializeField] [ShowIf("usePatternMaster")]
         private ShotPatternMaster shotPatternMaster;
         
         private LaserCombo _laserCombo;
-        private FiringLogic _currentFiringLogic;
+        private FiringLogic.FiringLogic _currentFiringLogic;
         
         //Nécéssaire pour la création des Cannon a partir de l'éditeur
         public Cannon()
         {
-
         }
         
         //TODO: Aucune idées si la création de raycannons par code fonctionne 

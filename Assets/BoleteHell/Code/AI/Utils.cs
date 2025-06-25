@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _BoleteHell.Code.AI
+namespace BoleteHell.Code.AI
 {
     // TODO: Move somewhere better
     public static class AIUtils

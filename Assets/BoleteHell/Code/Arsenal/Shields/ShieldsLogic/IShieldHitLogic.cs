@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Shields.ShieldsLogic
+namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
 {
     public interface IShieldHitLogic
     {

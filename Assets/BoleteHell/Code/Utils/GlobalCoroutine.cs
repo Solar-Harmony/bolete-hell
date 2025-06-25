@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace _BoleteHell.Code.Utils
+namespace BoleteHell.Code.Utils
 {
     public class GlobalCoroutine : MonoBehaviour
     {

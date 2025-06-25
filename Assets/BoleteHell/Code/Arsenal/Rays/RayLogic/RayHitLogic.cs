@@ -1,8 +1,8 @@
 using System;
-using _BoleteHell.Code.Character;
+using BoleteHell.Code.Character;
 using UnityEngine;
 
-namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
+namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     [Serializable]
     public abstract class RayHitLogic

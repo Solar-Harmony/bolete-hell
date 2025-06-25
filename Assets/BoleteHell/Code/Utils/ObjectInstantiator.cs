@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoleteHell.Utils
+namespace BoleteHell.Code.Utils
 {
     public class ObjectInstantiator : MonoBehaviour
     {

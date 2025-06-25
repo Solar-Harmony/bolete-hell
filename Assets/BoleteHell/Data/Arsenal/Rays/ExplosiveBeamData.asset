@@ -12,17 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: ExplosiveBeamData
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.9245283, g: 0.6069777, b: 0.07268285, a: 1}
-  <LightRefractiveIndex>k__BackingField: 1.7
+  <Color>k__BackingField: {r: 0.8706199, g: 0.5814159, b: 0.19594803, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
-    rid: 7223670814694965325
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 7223670814694965325
-      type: {class: ExplodeOnHit, ns: _BoleteHell.Code.ProjectileSystem.Rays.RayLogic, asm: Assembly-CSharp}
-      data:
-        baseHitDamage: 5
-        explosionDamage: 10
-        explosionRadius: 1
-        explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+    - rid: -2
+      type: {class: , ns: , asm: }

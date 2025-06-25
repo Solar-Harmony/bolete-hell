@@ -120,7 +120,6 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 7787990485024374974
   - rid: 7787990485024374975
-  - rid: 7787990485024375128
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -142,14 +141,6 @@ MonoBehaviour:
           m_Value1: 11301596354734271912
         Name: Player
         m_Value: {fileID: 0}
-    - rid: 7787990485024375128
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 15773120027252329004
-          m_Value1: 11206748315764213848
-        Name: Out Projectile
-        m_Value: {fileID: 3163627902893264428, guid: cba8f38bcba9e744894640fdabb8775c, type: 3}
 --- !u!114 &4991494843151904680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,30 +249,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 6872167419365447248}
-  rayCannons:
-  - rid: 5246942125833584726
+  cannons:
+  - rid: 7223671017346170967
   references:
     version: 2
     RefIds:
-    - rid: 5246942125833584726
-      type: {class: Cannon, ns: BoleteHell.RayCannon, asm: Assembly-CSharp}
+    - rid: 7223671017346170967
+      type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
+        - {fileID: 11400000, guid: c8c00254d32e0214f8bb8c04853b85d3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        usePatternMaster: 0
-        bulletPatterns:
-        - rid: 7223671015644069968
-        shotPatternMaster: {fileID: 0}
-    - rid: 7223671015644069968
-      type: {class: ShotPatternData, ns: , asm: Assembly-CSharp}
-      data:
-        numberOfBulletShot: 3
-        maxAngleRange: 0
-        startingRotation: 0
-        constantRotation: 0
-        burstShotCount: 2
-        burstShotCooldown: 0.1
+        usePatternMaster: 1
+        bulletPatterns: []
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!114 &2835406013110666550
 MonoBehaviour:
   m_ObjectHideFlags: 0

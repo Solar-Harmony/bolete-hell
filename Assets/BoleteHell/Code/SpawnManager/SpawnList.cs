@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BoleteHell/AI/SpawnList")]
-public class SpawnList : ScriptableObject
+namespace BoleteHell.Code.SpawnManager
 {
-    public GameObject[] allowedEnemies;
+    [CreateAssetMenu(menuName = "BoleteHell/AI/Spawn List")]
+    public class SpawnList : ScriptableObject
+    {
+        public GameObject[] allowedEnemies;
+    }
 }

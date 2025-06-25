@@ -1,10 +1,9 @@
 using System.Collections;
-using _BoleteHell.Code.Character;
-using _BoleteHell.Code.ProjectileSystem.Rays.RayLogic;
-using _BoleteHell.Code.Utils;
+using BoleteHell.Code.Character;
+using BoleteHell.Code.Utils;
 using UnityEngine;
 
-namespace Lasers.RayLogic
+namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     // TODO: As of now, effect can stack. We need a status effect system to handle effects on characters properly.
     public class PoisonOnHit : RayHitLogic

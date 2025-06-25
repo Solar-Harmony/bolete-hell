@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using BoleteHell.Rays;
 using UnityEngine;
 
-namespace Lasers
+namespace BoleteHell.Code.Arsenal.Rays
 {
     public class LaserRendererPool : MonoBehaviour
     {

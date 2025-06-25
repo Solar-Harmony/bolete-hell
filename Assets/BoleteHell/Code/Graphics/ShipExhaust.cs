@@ -1,7 +1,7 @@
-﻿using Input;
+﻿using BoleteHell.Code.Input;
 using UnityEngine;
 
-namespace Graphics
+namespace BoleteHell.Code.Graphics
 {
     public class ShipExhaust : MonoBehaviour
     {

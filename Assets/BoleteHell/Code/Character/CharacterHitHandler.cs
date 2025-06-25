@@ -1,13 +1,11 @@
 ﻿using System;
-using _BoleteHell.Code.Character;
-using _BoleteHell.Code.ProjectileSystem.HitHandler;
-using BoleteHell.Utils;
-using Data.Rays;
+using BoleteHell.Code.Arsenal.HitHandler;
+using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Utils;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.Universal;
 
-namespace _BoleteHell.Code.Player
+namespace BoleteHell.Code.Character
 {
     [RequireComponent(typeof(Health))]
     public class CharacterHitHandler : MonoBehaviour, IHitHandler

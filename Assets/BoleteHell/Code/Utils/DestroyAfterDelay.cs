@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Utils
+namespace BoleteHell.Code.Utils
 {
     public class DestroyAfterDelay : MonoBehaviour
     {

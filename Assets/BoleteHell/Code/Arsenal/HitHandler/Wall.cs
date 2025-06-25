@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _BoleteHell.Code.ProjectileSystem.HitHandler
+namespace BoleteHell.Code.Arsenal.HitHandler
 {
     public class Wall : MonoBehaviour, IHitHandler
     {

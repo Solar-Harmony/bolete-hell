@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using _BoleteHell.Code.ProjectileSystem.HitHandler;
-using BoleteHell.RayCannon;
-using Data.Cannons;
-using Data.Rays;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace AI.Agents
+namespace BoleteHell.Code.AI.Agents
 {
-    [RequireComponent(typeof(Arsenal))]
+    [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : MonoBehaviour
     {
-        private Arsenal _weapon;
+        private Arsenal.Arsenal _weapon;
         
         public void Start()
         {
-            _weapon =  GetComponent<Arsenal>();
+            _weapon =  GetComponent<Arsenal.Arsenal>();
         }
 
         public void Shoot(Vector3 direction)

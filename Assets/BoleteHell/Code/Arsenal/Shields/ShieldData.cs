@@ -1,19 +1,24 @@
-using Shields.ShieldsLogic;
+using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Shields
+namespace BoleteHell.Code.Arsenal.Shields
 {
     /// <summary>
     ///     Classe qui permet de déterminer les informations spécifique a un shield
     /// </summary>
-    [CreateAssetMenu(fileName = "ShieldData", menuName = "Scriptable Objects/ShieldData", order = 0)]
+    [CreateAssetMenu(fileName = "ShieldData", menuName = "BoleteHell/Arsenal/Shield Data")]
     public class ShieldData : ScriptableObject
     {
-        [SerializeField] private Color color;
+        [SerializeField] 
+        private Color color;
         
-        [SerializeReference] private IShieldHitLogic onHitLogic;
+        [Required] [SerializeReference] 
+        private IShieldHitLogic onHitLogic;
 
-        [SerializeField] private GameObject shieldPreview;
+        [SerializeField] 
+        private GameObject shieldPreview;
+        
         private ShieldPreviewDrawer lineDrawer;
         
         public void StartLine()

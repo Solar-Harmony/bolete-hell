@@ -1,9 +1,9 @@
 using System;
-using _BoleteHell.Code.ProjectileSystem.HitHandler;
-using Data.Rays;
+using BoleteHell.Code.Arsenal.HitHandler;
+using BoleteHell.Code.Arsenal.RayData;
 using UnityEngine;
 
-namespace Shields
+namespace BoleteHell.Code.Arsenal.Shields
 {
     public class Shield : MonoBehaviour, IHitHandler
     {

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Input;
+using BoleteHell.Code.Input;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 //TODO: Make this a general assetLoader that give the data to the right managers and objects
-namespace BoleteHell.RayCannon
+namespace BoleteHell.Code.Arsenal.Cannons
 {
     public class CannonLoader : MonoBehaviour
     {

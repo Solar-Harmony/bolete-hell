@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Data.Rays;
-using Lasers;
 using UnityEngine;
 
-namespace BoleteHell.Rays
+namespace BoleteHell.Code.Arsenal.Rays
 {
     //Je voullais rendre le laserRenderer fonctionnel pour les beams et les projectiles
     [RequireComponent(typeof(LaserProjectileMovement),typeof(CapsuleCollider2D),typeof(LineRenderer))]
@@ -34,7 +32,7 @@ namespace BoleteHell.Rays
             _movement.enabled = false;
         }
 
-        public void DrawRay(List<Vector3> positions, Color color, float lifeTime,FiringLogic logic)
+        public void DrawRay(List<Vector3> positions, Color color, float lifeTime,FiringLogic.FiringLogic logic)
         {
             gameObject.SetActive(true);
             _lineRenderer.positionCount = positions.Count;
@@ -65,14 +63,14 @@ namespace BoleteHell.Rays
             return _movement;
         }
 
-        private IEnumerator Lifetime(float time,FiringLogic logic)
+        private IEnumerator Lifetime(float time,FiringLogic.FiringLogic logic)
         {
             yield return new WaitForSeconds(time);
             ResetLaser(logic);
         }
 
         //Pourrais peut-être avoir un renderer pour les laserbeams et un renderer pour les projectile laser
-        private void ResetLaser(FiringLogic logic)
+        private void ResetLaser(FiringLogic.FiringLogic logic)
         {
             LaserRendererPool.Instance.Release(this);
             

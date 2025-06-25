@@ -1,9 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
-namespace Utils
+namespace BoleteHell.Code.Utils
 {
     // Useful class for testing lighting when LD
     public class LightFollowCursor : MonoBehaviour

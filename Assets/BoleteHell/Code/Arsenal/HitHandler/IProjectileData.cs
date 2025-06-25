@@ -1,4 +1,4 @@
-﻿namespace _BoleteHell.Code.ProjectileSystem.HitHandler
+﻿namespace BoleteHell.Code.Arsenal.HitHandler
 {
     public interface IProjectileData
     {

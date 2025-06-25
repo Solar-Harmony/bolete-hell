@@ -1,7 +1,7 @@
-﻿using Graphics;
+﻿using BoleteHell.Code.Graphics;
 using UnityEngine;
 
-namespace _BoleteHell.Code.Character
+namespace BoleteHell.Code.Character
 {
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRuntimeFragmenter))]

@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace BoleteHell.Utils
+namespace BoleteHell.Code.Utils
 {
     /// <summary>
     /// Sets per-object material property.

@@ -1,8 +1,7 @@
 using System;
-using Shields.ShieldsLogic;
 using UnityEngine;
 
-namespace BoleteHell.Shields.ShieldsLogic
+namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
 {
     [Serializable]
     public class RefractLogic : IShieldHitLogic

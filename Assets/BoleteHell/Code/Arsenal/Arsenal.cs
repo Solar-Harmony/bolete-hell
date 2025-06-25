@@ -1,22 +1,22 @@
 using System.Collections.Generic;
+using BoleteHell.Code.Arsenal.ShotPatterns;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace BoleteHell.RayCannon
+namespace BoleteHell.Code.Arsenal
 {
     //Chaque RayCannonManager a son propre BulletPattern ,permet chaque a unité d'avoir son propre timer de pattern
     [RequireComponent(typeof(ShotPattern))]
     public class Arsenal : MonoBehaviour
     {
         [SerializeField] private Transform spawnDistance;
-        [SerializeReference] private List<Cannon> rayCannons;
+        [SerializeReference] private List<Cannons.Cannon> cannons;
         private ShotPattern _pattern;
         private int _selectedCannonIndex;
 
         private void Start()
         {
             _pattern = GetComponent<ShotPattern>();
-            foreach (Cannon rayCannon in rayCannons)
+            foreach (Cannons.Cannon rayCannon in cannons)
             {
                 rayCannon.Init();
             }
@@ -24,7 +24,7 @@ namespace BoleteHell.RayCannon
 
         public void Shoot(Vector2 direction)
         {
-            if (rayCannons.Count == 0)
+            if (cannons.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
                 return;
@@ -35,20 +35,20 @@ namespace BoleteHell.RayCannon
     
         public void CycleWeapons(int value)
         {
-            if (rayCannons.Count <= 1)
+            if (cannons.Count <= 1)
             {
                 Debug.LogWarning("No weapons to cycle trough");
                 return;
             }
 
-            _selectedCannonIndex = (_selectedCannonIndex + value + rayCannons.Count) % rayCannons.Count;
+            _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
 
             Debug.Log($"selected {GetSelectedWeapon()}");
         }
     
-        public Cannon GetSelectedWeapon()
+        public Cannons.Cannon GetSelectedWeapon()
         {
-            if (rayCannons[_selectedCannonIndex] != null) return rayCannons[_selectedCannonIndex];
+            if (cannons[_selectedCannonIndex] != null) return cannons[_selectedCannonIndex];
             
             Debug.LogWarning("No weapons equipped");
             return null;
@@ -59,10 +59,10 @@ namespace BoleteHell.RayCannon
             GetSelectedWeapon()?.FinishFiring();
         }
 
-        public void AddNewWeapon(Cannon cannon)
+        public void AddNewWeapon(Cannons.Cannon cannon)
         {
             cannon.Init();
-            rayCannons.Add(cannon);
+            cannons.Add(cannon);
         }
 
         private void OnDestroy()

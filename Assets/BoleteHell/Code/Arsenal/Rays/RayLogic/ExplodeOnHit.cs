@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using _BoleteHell.Code.Character;
-using BoleteHell.Utils;
+using BoleteHell.Code.Character;
+using BoleteHell.Code.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace _BoleteHell.Code.ProjectileSystem.Rays.RayLogic
+namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     [Serializable]
     public class ExplodeOnHit : RayHitLogic

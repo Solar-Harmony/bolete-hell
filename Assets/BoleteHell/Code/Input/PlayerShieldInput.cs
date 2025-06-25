@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Input;
-using Shields;
+using BoleteHell.Code.Arsenal.Shields;
 using UnityEngine;
 
-namespace Player
+namespace BoleteHell.Code.Input
 {
     public class PlayerShieldInput : MonoBehaviour
     {

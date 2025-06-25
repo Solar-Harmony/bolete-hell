@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using BoleteHell.RayCannon;
-using Lasers;
 using UnityEngine;
 
-namespace Input
+namespace BoleteHell.Code.Input
 {
-    [RequireComponent(typeof(Arsenal))]
+    [RequireComponent(typeof(Arsenal.Arsenal))]
     public class PlayerLaserInput : MonoBehaviour
     {
         [SerializeField] private InputController input;
-        private Arsenal _arsenal;
+        private Arsenal.Arsenal _arsenal;
         private void Start()
         {
-            _arsenal = GetComponent<Arsenal>();
+            _arsenal = GetComponent<Arsenal.Arsenal>();
         }
 
         private void Update()

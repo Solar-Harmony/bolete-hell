@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _BoleteHell.Code.Character
+namespace BoleteHell.Code.Character
 {
     public class Health : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace Shields
+namespace BoleteHell.Code.Arsenal.Shields
 {
     [RequireComponent(typeof(SplineExtrude))]
     public class SplineCreator : MonoBehaviour
