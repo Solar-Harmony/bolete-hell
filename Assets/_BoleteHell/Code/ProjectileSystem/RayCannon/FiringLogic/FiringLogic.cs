@@ -22,12 +22,11 @@ public abstract class FiringLogic : IHitHandler
         IHitHandler handler = ctx.HitObject.GetComponent<IHitHandler>()
                               ?? ctx.HitObject.GetComponentInParent<IHitHandler>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
 
-        // TODO: I think this is kind of scuffed lol
         handler?.OnHit(ctx, response =>
         {
             if (response.RequestDestroy)
             {
-                LaserRenderer renderer = ctx.Projectile.GetComponent<LaserRenderer>();
+                LaserRenderer renderer = ctx.Projectile?.GetComponent<LaserRenderer>();
                 if (renderer)
                 {
                     LaserRendererPool.Instance.Release(renderer);
