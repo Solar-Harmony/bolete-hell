@@ -236,8 +236,18 @@ MonoBehaviour:
         - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
         cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
         usePatternMaster: 1
-        bulletPatterns: []
+        bulletPatterns:
+        - rid: 7223671017346170999
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    - rid: 7223671017346170999
+      type: {class: ShotPatternData, ns: BoleteHell.Code.Arsenal.ShotPatterns, asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 0
+        maxAngleRange: 0
+        startingRotation: 0
+        constantRotation: 0
+        burstShotCount: 3
+        burstShotCooldown: 0.3
 --- !u!114 &5858263315430876513
 MonoBehaviour:
   m_ObjectHideFlags: 0

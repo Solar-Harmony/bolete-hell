@@ -21,6 +21,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Prisms
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59244fc31f1dc4d4bbdfa20befa63312
+    m_Address: Assets/Data/Cannons/AutoRifle.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prisms
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c81601ba72b684468b1230d6797782c
+    m_Address: Assets/Data/Cannons/Sniper.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prisms
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 71060155f32653a4a8b6d55ef00659a7, type: 2}
   m_SchemaSet:

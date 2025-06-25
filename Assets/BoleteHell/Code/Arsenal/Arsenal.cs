@@ -43,7 +43,7 @@ namespace BoleteHell.Code.Arsenal
 
             _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
 
-            Debug.Log($"selected {GetSelectedWeapon()}");
+            Debug.Log($"selected {GetSelectedWeapon().cannonData.name}");
         }
     
         public Cannons.Cannon GetSelectedWeapon()
