@@ -15,7 +15,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             LaserRenderer reservedRenderer = LaserRendererPool.Instance.Get();
             List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
             reservedRenderer.transform.position = bulletSpawnPoint;
-            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.LifeTime,this);
+            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.LifeTime);
             var projectile = reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed);
             projectile.OnCollide +=  (hit) =>
             {
