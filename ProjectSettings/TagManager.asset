@@ -16,9 +16,9 @@ TagManager:
   - Obstacle
   - PlayerEnemy
   - Unit
-  - Projectile
+  - IgnoreProjectile
   - Shield
-  - ShipPiece
+  - 
   - 
   - 
   - 
