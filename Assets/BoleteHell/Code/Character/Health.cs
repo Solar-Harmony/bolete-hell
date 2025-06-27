@@ -7,6 +7,7 @@ namespace BoleteHell.Code.Character
     {
         [SerializeField]
         private bool isInvincible = false;
+        
         [field: SerializeField] 
         public int MaxHealth { get; private set; } = 50;
     
