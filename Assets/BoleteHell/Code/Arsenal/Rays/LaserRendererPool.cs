@@ -40,6 +40,7 @@ namespace BoleteHell.Code.Arsenal.Rays
                 return;
             }
             GameObject obj = Instantiate(lineRendererPrefab, transform);
+            obj.name = $"LaserRenderer {_pool.Count}";
             obj.SetActive(false);
             LaserRenderer rayRenderer = obj.GetComponent<LaserRenderer>();
             _pool.Enqueue(rayRenderer);
@@ -65,7 +66,9 @@ namespace BoleteHell.Code.Arsenal.Rays
                 Debug.LogError("Attempted to release null object");
                 return;
             }
-
+            
+            //Empeche un laserRenderer de se faire enqueue plusieur fois si il se fait re-release avant d'avoir été dequeued first
+            if (_pool.Contains(laserRenderer)) return;
             laserRenderer.gameObject.SetActive(false);
             _pool.Enqueue(laserRenderer);
         }

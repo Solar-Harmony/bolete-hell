@@ -37,7 +37,7 @@ namespace BoleteHell.Code.Arsenal.Rays
       {
          if (_isColliding)
             return;
-      
+         
          _isColliding = true;
       
          OnCollide?.Invoke(other);

@@ -30,11 +30,11 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     LaserRenderer renderer = ctx.Projectile?.GetComponent<LaserRenderer>();
                     if (renderer)
                     {
-                        LaserRendererPool.Instance.Release(renderer);
+                        ctx.Projectile.gameObject.GetComponent<LaserRenderer>().ResetLaser();
                     }
                     else
                     {
-                        Object.Destroy(ctx.Projectile);
+                        Object.Destroy(ctx.Projectile); 
                     }
                 }
             

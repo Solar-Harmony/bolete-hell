@@ -29,9 +29,10 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
             LaserRenderer renderer = LaserRendererPool.Instance.Get();
+
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {
-                LayerMask layerMask = ~LayerMask.GetMask("Projectile");
+                LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
 
                 RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,cannonData.maxRayDistance,layerMask);
                 if (!hit)
@@ -39,7 +40,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * cannonData.maxRayDistance);
                     break;
                 }
-            
+
                 IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
@@ -48,8 +49,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     _rayPositions.Add(CurrentPos);
                 });
             }
-        
-            renderer.DrawRay(_rayPositions,laserCombo.CombinedColor,cannonData.LifeTime,this);
+            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.LifeTime);
             _rayPositions.Clear();
         }
     }

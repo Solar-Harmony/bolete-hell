@@ -10,14 +10,10 @@ namespace BoleteHell.Code.Character
     [RequireComponent(typeof(Health))]
     public class CharacterHitHandler : MonoBehaviour, IHitHandler
     {
-        public bool isInvincible = false;
         public GameObject explosionCircle;
 
         public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
         {
-            if (isInvincible)
-                return;
-
             // TODO: make a proper factions system
             if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
                 return;
@@ -36,7 +32,7 @@ namespace BoleteHell.Code.Character
         
             Health health = GetComponent<Health>();
             laser.CombinedEffect(ctx.Position, health);
-            callback?.Invoke(new IHitHandler.Response(ctx));
+            callback?.Invoke(new IHitHandler.Response(ctx){RequestDestroy = true});
         }
     }
 }

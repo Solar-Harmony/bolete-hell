@@ -32,7 +32,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void DrawRay(List<Vector3> positions, Color color, float lifeTime,FiringLogic.FiringLogic logic)
+        public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
             gameObject.SetActive(true);
             _lineRenderer.positionCount = positions.Count;
@@ -40,7 +40,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             
             _lineRenderer.startColor = color;
             _lineRenderer.endColor = color;
-            StartCoroutine(Lifetime(lifeTime,logic));
+            StartCoroutine(Lifetime(lifeTime));
         }
 
         public LaserProjectileMovement SetupProjectileLaser(Vector2 direction, float speed)
@@ -63,14 +63,14 @@ namespace BoleteHell.Code.Arsenal.Rays
             return _movement;
         }
 
-        private IEnumerator Lifetime(float time,FiringLogic.FiringLogic logic)
+        private IEnumerator Lifetime(float time)
         {
             yield return new WaitForSeconds(time);
-            ResetLaser(logic);
+            ResetLaser();
         }
 
         //Pourrais peut-être avoir un renderer pour les laserbeams et un renderer pour les projectile laser
-        private void ResetLaser(FiringLogic.FiringLogic logic)
+        public void ResetLaser()
         {
             LaserRendererPool.Instance.Release(this);
             

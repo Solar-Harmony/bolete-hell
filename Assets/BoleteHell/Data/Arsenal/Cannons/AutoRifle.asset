@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firingType: 0
   rateOfFire: 0.2
+  projectileSpeed: 5
   maxNumberOfBounces: 10
   maxRayDistance: 10

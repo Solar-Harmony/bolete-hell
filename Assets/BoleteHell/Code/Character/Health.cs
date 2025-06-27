@@ -5,6 +5,9 @@ namespace BoleteHell.Code.Character
 {
     public class Health : MonoBehaviour
     {
+        [SerializeField]
+        private bool isInvincible = false;
+        
         [field: SerializeField] 
         public int MaxHealth { get; private set; } = 50;
     
@@ -19,6 +22,7 @@ namespace BoleteHell.Code.Character
 
         public void TakeDamage(int damageAmount)
         {
+            if (isInvincible) return;
             CurrentHealth -= damageAmount;
 
             if (CurrentHealth <= 0)
