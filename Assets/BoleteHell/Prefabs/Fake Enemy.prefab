@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2835406013110666550}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
-  - component: {fileID: -8478781904443764673}
+  - component: {fileID: 8131877402109793878}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -309,7 +309,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.15
---- !u!114 &-8478781904443764673
+--- !u!114 &8131877402109793878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,7 +331,7 @@ MonoBehaviour:
     <fragmentPrefab>k__BackingField: {fileID: 1189808845491370352, guid: d5a22d646b9169a459f18522ee6a533b, type: 3}
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
-    <explosionForce>k__BackingField: 1
+    <explosionForce>k__BackingField: 10
   hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
 --- !u!1 &7047168010642913551
 GameObject:
