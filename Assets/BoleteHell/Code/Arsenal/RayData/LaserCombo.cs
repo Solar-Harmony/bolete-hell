@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Character;
+using BoleteHell.Code.Gameplay.Health;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.RayData
@@ -50,7 +51,7 @@ namespace BoleteHell.Code.Arsenal.RayData
             return total / refractiveIndices.Count;
         }
 
-        public void CombinedEffect(Vector2 hitPosition,Health hitCharacterHealth)
+        public void CombinedEffect(Vector2 hitPosition, IHealth hitCharacterHealth)
         {
             foreach (LaserData data in _datas)
             {

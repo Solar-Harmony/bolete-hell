@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Character;
+using BoleteHell.Code.Gameplay.Health;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -18,7 +19,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         [SerializeField] private GameObject explosionCircle;
         
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
-        public override void OnHit(Vector2 hitPosition, Health hitCharacterHealth)
+        public override void OnHit(Vector2 hitPosition, IHealth hitCharacterHealth)
         {
             hitCharacterHealth.TakeDamage(baseHitDamage);
             

@@ -11,7 +11,7 @@ namespace BoleteHell.Code.AI
                 return false;
         
             Vector3 direction = agent.transform.position - self.transform.position;
-            LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy", "Projectile", "Shield");
+            LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy", "IgnoreProjectile", "Shield");
             
             RaycastHit2D hit = Physics2D.CircleCast(self.transform.position, 0.17f, direction.normalized, viewRange, layerMask);
             return hit.collider && hit.collider.gameObject == agent;

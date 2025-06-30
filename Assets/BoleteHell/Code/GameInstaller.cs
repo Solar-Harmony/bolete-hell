@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using BoleteHell.Code.Gameplay.Destructible;
+using Zenject;
 
 namespace BoleteHell.Code
 {
@@ -6,6 +7,7 @@ namespace BoleteHell.Code
     {
         public override void InstallBindings()
         {
+            Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             
         }
     }
