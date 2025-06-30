@@ -4,16 +4,16 @@ namespace BoleteHell.Code.Gameplay.Destructible
 {
     public class SpriteFragmenter : ISpriteFragmenter
     {
-        public void Fragment(Vector2 position, SpriteFragmentConfig config)
+        public void Fragment(Transform transform, SpriteFragmentConfig config)
         {
-            Object.Instantiate(config.explosion, position, Quaternion.identity);
+            Object.Instantiate(config.explosion, transform.position, Quaternion.identity);
 
             var sprite = config.sr.sprite;
             var texture = sprite.texture;
 
             Vector2 spriteSize = sprite.bounds.size;
             var fragmentSize = new Vector2(spriteSize.x / config.fragmentsX, spriteSize.y / config.fragmentsY);
-            var origin = position - spriteSize / 2;
+            var origin = (Vector2)transform.position - spriteSize / 2;
 
             for (var y = 0; y < config.fragmentsY; y++)
             for (var x = 0; x < config.fragmentsX; x++)
@@ -24,11 +24,15 @@ namespace BoleteHell.Code.Gameplay.Destructible
                 fragment.transform.position = pos;
                 fragment.transform.rotation = config.parentRb.transform.rotation;
                 fragment.transform.Translate(0, 0, -1.0f);
+                
+                var renderer = fragment.GetComponent<Renderer>();
+                renderer.material.mainTexture = sprite.texture;
+                fragment.transform.localScale = transform.localScale;
 
                 var mesh = CreateQuadMesh(fragmentSize);
                 var mf = fragment.GetComponent<MeshFilter>();
                 mf.mesh = mesh;
-
+                
                 var uvWidth = sprite.rect.width / texture.width;
                 var uvHeight = sprite.rect.height / texture.height;
                 var uvX = (sprite.rect.x + x * sprite.rect.width / config.fragmentsX) / texture.width;
@@ -61,7 +65,7 @@ namespace BoleteHell.Code.Gameplay.Destructible
                 new(size.x / 2, size.y / 2, 0)
             };
 
-            var triangles = new int[6] { 0, 2, 1, 2, 3, 1 };
+            var triangles = new[] { 0, 2, 1, 2, 3, 1 };
 
             mesh.vertices = vertices;
             mesh.triangles = triangles;

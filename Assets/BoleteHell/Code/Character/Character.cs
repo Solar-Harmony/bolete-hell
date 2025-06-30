@@ -28,7 +28,7 @@ namespace BoleteHell.Code.Character
         {
             health.OnDeath += () =>
             {
-                _spriteFragmenter.Fragment(transform.position, spriteFragmentConfig);
+                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             };
