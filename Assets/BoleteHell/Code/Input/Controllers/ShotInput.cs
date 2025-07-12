@@ -1,11 +1,14 @@
 using UnityEngine;
+using Zenject;
 
-namespace BoleteHell.Code.Input
+namespace BoleteHell.Code.Input.Controllers
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
-    public class PlayerLaserInput : MonoBehaviour
+    public class ShotInput : MonoBehaviour
     {
-        [SerializeField] private InputController input;
+        [Inject] 
+        private IInputDispatcher input;
+        
         private Arsenal.Arsenal _arsenal;
         private void Start()
         {
@@ -14,18 +17,18 @@ namespace BoleteHell.Code.Input
 
         private void Update()
         {
-            if (input.IsShooting) Shoot();
+            if (input.IsChargingShot) Shoot();
         }
 
         private void OnEnable()
         {
-            input.OnShootEnded += OnShootCanceled;
+            input.OnShoot += OnShootCanceled;
             input.OnCycleWeapons += CycleWeapons;
         }
 
         private void OnDisable()
         {
-            input.OnShootEnded -= OnShootCanceled;
+            input.OnShoot -= OnShootCanceled;
             input.OnCycleWeapons -= CycleWeapons;
         }
 

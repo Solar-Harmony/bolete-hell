@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Input;
+using BoleteHell.Code.Input.Controllers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -10,7 +11,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
     public class CannonLoader : MonoBehaviour
     {
         private const string GroupLabel = "Prisms";
-        [SerializeField] private PlayerLaserInput player;
+        [SerializeField] private ShotInput player;
         [SerializeField] private List<GameObject> rayCannons = new();
  
         private void Start()

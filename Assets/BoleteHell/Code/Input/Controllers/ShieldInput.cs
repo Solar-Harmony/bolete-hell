@@ -1,18 +1,23 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Shields;
 using UnityEngine;
+using Zenject;
 
-namespace BoleteHell.Code.Input
+namespace BoleteHell.Code.Input.Controllers
 {
-    public class PlayerShieldInput : MonoBehaviour
+    public class ShieldInput : MonoBehaviour
     {
-        [SerializeField] private InputController input;
-        [SerializeField] private List<ShieldData> currentShields = new();
+        [Inject] 
+        private IInputDispatcher input;
+        
+        [SerializeField] 
+        private List<ShieldData> currentShields = new();
+        
         private int _selectedShieldIndex;
 
         private void Update()
         {
-            if (input.IsDrawingShield) DrawShield( input.WorldMousePosition);
+            if (input.IsDrawingShield) DrawShield(input.WorldMousePosition);
         }
 
         private void OnEnable()
@@ -39,9 +44,6 @@ namespace BoleteHell.Code.Input
             }
 
             _selectedShieldIndex = (_selectedShieldIndex + value + currentShields.Count) % currentShields.Count;
-
-            Debug.Log($"selected {GetSelectedShield().name}");
-            //TODO: trigger le changement du ui
         }
 
         private void StartShield()

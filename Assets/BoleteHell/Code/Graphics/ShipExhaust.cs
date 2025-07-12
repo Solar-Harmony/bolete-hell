@@ -1,13 +1,16 @@
 ﻿using BoleteHell.Code.Input;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Graphics
 {
     public class ShipExhaust : MonoBehaviour
     {
-        [SerializeField] private InputController input;
+        [Inject] 
+        private IInputDispatcher input;
 
-        [SerializeField] private GameObject shipExhaust;
+        [SerializeField] 
+        private GameObject shipExhaust;
 
         private void Update()
         {

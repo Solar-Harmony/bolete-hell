@@ -1,25 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
-namespace BoleteHell.Code.Input
+namespace BoleteHell.Code.Input.Controllers
 {
-    public class Dodge : MonoBehaviour
+    public class DodgeInput : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             Dodging();
-
         }
 
-        [SerializeField] private PlayerMovement playerMovement;
-        [SerializeField] private InputController input;
+        [SerializeField] 
+        private MovementInput movementInput;
+        
+        [Inject] 
+        private IInputDispatcher input;
 
         [SerializeField]
         private float dodgeSpeed = 2f;
@@ -49,8 +45,8 @@ namespace BoleteHell.Code.Input
 
         public void Dodging()
         {
-            Debug.Log($"Dodge check - isDodging: {input.isDodging}, canDodge: {canDodge}");
-            if (input.isDodging && canDodge)
+            Debug.Log($"Dodge check - isDodging: {input.IsDodging}, canDodge: {canDodge}");
+            if (input.IsDodging && canDodge)
             {
                 StartCoroutine(dodgingRoutine());
                 Debug.Log("Dodge started");
@@ -63,7 +59,7 @@ namespace BoleteHell.Code.Input
             isInvincible = true;
 
             // Get the movement direction from PlayerMovement's current input
-            Vector2 moveDir = input.GetMovementDisplacement().normalized;
+            Vector2 moveDir = input.MovementDisplacement.normalized;
 
             // If no movement input, don't dodge
             if (moveDir == Vector2.zero)

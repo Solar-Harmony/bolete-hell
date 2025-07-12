@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Zenject;
 
-namespace BoleteHell.Code.Input
+namespace BoleteHell.Code.Input.Controllers
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerMovement : MonoBehaviour
+    public class MovementInput : MonoBehaviour
     {
-        [SerializeField] 
-        private InputController input;
+        [Inject] 
+        private IInputDispatcher input;
         
         [field: SerializeField] 
         public float SpeedFactor { get; private set; } = 1.0f;
@@ -28,7 +29,7 @@ namespace BoleteHell.Code.Input
         {
             _shipExhaustLight.intensity = input.IsBoosting ? maxLightIntensity / 2.0f : maxLightIntensity;
 
-            var inputDir = input.GetMovementDisplacement().normalized;
+            var inputDir = input.MovementDisplacement.normalized;
             var speed = input.IsBoosting ? 2.0f * SpeedFactor : SpeedFactor;
             Vector2 newPosition = transform.position + (Vector3)inputDir * (speed * Time.fixedDeltaTime);
 
