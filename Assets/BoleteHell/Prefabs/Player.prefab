@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e67ed0cdfc4adfb985ea9f001c78e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpeedFactor>k__BackingField: 3
+  <SpeedFactor>k__BackingField: 5
   maxLightIntensity: 5
 --- !u!114 &8833217652067245739
 MonoBehaviour:
