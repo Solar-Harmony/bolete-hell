@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BoleteHell.Code.Utils;
+using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Destructible
 {
@@ -19,37 +20,39 @@ namespace BoleteHell.Code.Gameplay.Destructible
             for (var x = 0; x < config.fragmentsX; x++)
             {
                 var pos = origin + new Vector2((x + 0.5f) * fragmentSize.x, (y + 0.5f) * fragmentSize.y);
-
-                var fragment = Object.Instantiate(config.fragmentPrefab);
-                fragment.transform.position = pos;
-                fragment.transform.rotation = config.parentRb.transform.rotation;
-                fragment.transform.Translate(0, 0, -1.0f);
-                
-                var renderer = fragment.GetComponent<Renderer>();
-                renderer.material.mainTexture = sprite.texture;
-                fragment.transform.localScale = transform.localScale;
-
-                var mesh = CreateQuadMesh(fragmentSize);
-                var mf = fragment.GetComponent<MeshFilter>();
-                mf.mesh = mesh;
-                
-                var uvWidth = sprite.rect.width / texture.width;
-                var uvHeight = sprite.rect.height / texture.height;
-                var uvX = (sprite.rect.x + x * sprite.rect.width / config.fragmentsX) / texture.width;
-                var uvY = (sprite.rect.y + y * sprite.rect.height / config.fragmentsY) / texture.height;
-                mf.mesh.uv = new Vector2[]
+                ObjectInstantiator.InstantiateThenDestroyLater(config.fragmentPrefab, pos, Quaternion.identity, 4.0f, fragment =>
                 {
-                    new(uvX, uvY),
-                    new(uvX + uvWidth / config.fragmentsX, uvY),
-                    new(uvX, uvY + uvHeight / config.fragmentsY),
-                    new(uvX + uvWidth / config.fragmentsX, uvY + uvHeight / config.fragmentsY)
-                };
-                
-                var circleCollider = fragment.GetComponent<CircleCollider2D>();
-                circleCollider.radius = fragmentSize.x / 4;
+                    // TODO: should just be done in the fragment prefab probably
+                    fragment.transform.position = pos;
+                    fragment.transform.rotation = config.parentRb.transform.rotation;
+                    fragment.transform.Translate(0, 0, -1.0f);
+            
+                    var renderer = fragment.GetComponent<Renderer>();
+                    renderer.material.mainTexture = sprite.texture;
+                    fragment.transform.localScale = transform.localScale;
 
-                var rb = fragment.GetComponent<Rigidbody2D>();
-                rb.linearVelocity = config.parentRb.linearVelocity + Random.insideUnitCircle * config.explosionForce;
+                    var mesh = CreateQuadMesh(fragmentSize);
+                    var mf = fragment.GetComponent<MeshFilter>();
+                    mf.mesh = mesh;
+            
+                    var uvWidth = sprite.rect.width / texture.width;
+                    var uvHeight = sprite.rect.height / texture.height;
+                    var uvX = (sprite.rect.x + x * sprite.rect.width / config.fragmentsX) / texture.width;
+                    var uvY = (sprite.rect.y + y * sprite.rect.height / config.fragmentsY) / texture.height;
+                    mf.mesh.uv = new Vector2[]
+                    {
+                        new(uvX, uvY),
+                        new(uvX + uvWidth / config.fragmentsX, uvY),
+                        new(uvX, uvY + uvHeight / config.fragmentsY),
+                        new(uvX + uvWidth / config.fragmentsX, uvY + uvHeight / config.fragmentsY)
+                    };
+            
+                    var circleCollider = fragment.GetComponent<CircleCollider2D>();
+                    circleCollider.radius = fragmentSize.x / 4;
+
+                    var rb = fragment.GetComponent<Rigidbody2D>();
+                    rb.linearVelocity = config.parentRb.linearVelocity + Random.insideUnitCircle * config.explosionForce;
+                });
             }
         }
 
@@ -71,11 +74,6 @@ namespace BoleteHell.Code.Gameplay.Destructible
             mesh.triangles = triangles;
 
             return mesh;
-        }
-
-        public void Fragment(System.Numerics.Vector2 position, SpriteFragmentConfig config)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

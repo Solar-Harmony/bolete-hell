@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace BoleteHell.Code.Utils
@@ -16,10 +17,20 @@ namespace BoleteHell.Code.Utils
             return clone;
         }
     
+        [Obsolete("Fuck you")]
         public static void InstantiateObjectForAmountOfTime(GameObject obj,Vector2 position, float time)
         {
             GameObject instantiatedObj = Instantiate(obj,position,Quaternion.identity);
             Destroy(instantiatedObj, time); 
+        }
+        
+        public static void InstantiateThenDestroyLater(GameObject prefab, Vector2 position, Quaternion rotation, float timeToDestroy, Action<GameObject> initCallback = null)
+        {
+            Debug.Assert(timeToDestroy >= 0.0f);
+            
+            GameObject obj = Instantiate(prefab, position, rotation);
+            initCallback?.Invoke(obj);
+            Destroy(obj, timeToDestroy); 
         }
     }
 }
