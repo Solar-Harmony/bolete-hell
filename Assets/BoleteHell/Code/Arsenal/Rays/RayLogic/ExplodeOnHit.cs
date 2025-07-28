@@ -5,22 +5,27 @@ using BoleteHell.Code.Gameplay.Health;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     [Serializable]
-    public class ExplodeOnHit : RayHitLogic
+    public class ExplodeOnHit : RayHitLogic, IRequestManualInject
     {
-        
         [SerializeField] private int explosionDamage;
         
         [SerializeField] private float explosionRadius;
 
         [SerializeField] private GameObject explosionCircle;
         
+        [Inject]
+        private IObjectInstantiator _instantiator;
+
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
         public override void OnHit(Vector2 hitPosition, IHealth hitCharacterHealth)
         {
+            ((IRequestManualInject)this).InjectDependencies();
+            
             hitCharacterHealth.TakeDamage(baseHitDamage);
             
             ContactFilter2D filter = new ContactFilter2D();
@@ -61,7 +66,9 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
                 light.pointLightOuterRadius = explosionRadius;
             }
             
-            ObjectInstantiator.InstantiateObjectForAmountOfTime(explosionCircle, hitPosition, 0.1f);
+            _instantiator.InstantiateThenDestroyLater(explosionCircle, hitPosition, Quaternion.identity, 0.1f);
         }
+
+        bool IRequestManualInject.IsInjected { get; set; }
     }
 }

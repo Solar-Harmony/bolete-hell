@@ -23,6 +23,9 @@ namespace BoleteHell.Code.Character
         
         [Inject]
         private ISpriteFragmenter _spriteFragmenter;
+
+        [Inject]
+        private IObjectInstantiator _instantiator;
         
         protected virtual void Awake()
         {
@@ -43,7 +46,7 @@ namespace BoleteHell.Code.Character
             if (hitFeedbackEffect.TryGetComponent(out Light2D light2D))
             {
                 light2D.pointLightOuterRadius = 0.5f;
-                ObjectInstantiator.InstantiateObjectForAmountOfTime(hitFeedbackEffect, ctx.Position, 0.1f);
+                _instantiator.InstantiateThenDestroyLater(hitFeedbackEffect, ctx.Position, Quaternion.identity, 0.1f);
             }
             
             if (ctx.Data is not LaserCombo laser)

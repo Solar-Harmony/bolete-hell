@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-namespace BoleteHell.Code.AI
+namespace BoleteHell.Code.Utils
 {
-    // TODO: Move somewhere better
-    public static class AIUtils
+    public class TargetingUtils : ITargetingUtils
     {
-        public static bool HasLineOfSight(GameObject self, GameObject agent, float viewRange)
+        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange)
         {
             if (!self || !agent)
                 return false;
@@ -28,7 +27,7 @@ namespace BoleteHell.Code.AI
         /// <param name="targetPosition"></param>
         /// <param name="targetVelocity"></param>
         /// <returns>Whether the projectile is able to hit the target.</returns>
-        public static bool SuggestProjectileDirection(out Vector2 projectileDir, float projectileSpeed, Vector2 selfPosition, Vector2 selfVelocity, Vector2 targetPosition, Vector2 targetVelocity)
+        public bool SuggestProjectileDirection(out Vector2 projectileDir, float projectileSpeed, Vector2 selfPosition, Vector2 selfVelocity, Vector2 targetPosition, Vector2 targetVelocity)
         {
             Vector2 relativePosition = targetPosition - selfPosition;
             Vector2 relativeVelocity = targetVelocity - selfVelocity;

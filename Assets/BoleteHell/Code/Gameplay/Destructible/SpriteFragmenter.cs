@@ -1,10 +1,16 @@
 ﻿using BoleteHell.Code.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Destructible
 {
+    [UsedImplicitly]
     public class SpriteFragmenter : ISpriteFragmenter
     {
+        [Inject]
+        private IObjectInstantiator _instantiator;
+        
         public void Fragment(Transform transform, SpriteFragmentConfig config)
         {
             Object.Instantiate(config.explosion, transform.position, Quaternion.identity);
@@ -20,7 +26,7 @@ namespace BoleteHell.Code.Gameplay.Destructible
             for (var x = 0; x < config.fragmentsX; x++)
             {
                 var pos = origin + new Vector2((x + 0.5f) * fragmentSize.x, (y + 0.5f) * fragmentSize.y);
-                ObjectInstantiator.InstantiateThenDestroyLater(config.fragmentPrefab, pos, Quaternion.identity, 4.0f, fragment =>
+                _instantiator.InstantiateThenDestroyLater(config.fragmentPrefab, pos, Quaternion.identity, 4.0f, fragment =>
                 {
                     // TODO: should just be done in the fragment prefab probably
                     fragment.transform.position = pos;

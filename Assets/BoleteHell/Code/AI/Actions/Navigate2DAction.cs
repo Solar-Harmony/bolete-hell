@@ -1,9 +1,11 @@
 using System;
+using BoleteHell.Code.AI.Boilerplate;
+using BoleteHell.Code.Utils;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Action = Unity.Behavior.Action;
+using Zenject;
 
 namespace BoleteHell.Code.AI.Actions
 {
@@ -16,7 +18,7 @@ namespace BoleteHell.Code.AI.Actions
         icon: "Assets/Art/Cursor.png",
         category: "Bolete Hell",
         id: "ab42fd85c68c2ece114cb2058a607833")]
-    public class Navigate2DAction : Action
+    public class Navigate2DAction : BoleteAction
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
@@ -24,8 +26,11 @@ namespace BoleteHell.Code.AI.Actions
         [SerializeReference] public BlackboardVariable<float> MaxSpeed;
         
         private AIPath _pathfinder;
+        
+        [Inject]
+        private ITargetingUtils _targeting;
 
-        protected override Status OnStart()
+        protected override Status OnStartImpl()
         {
             return Status.Running;
         }
@@ -49,7 +54,7 @@ namespace BoleteHell.Code.AI.Actions
             _pathfinder.destination = Target.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
-            bool bHasLineOfSight = AIUtils.HasLineOfSight(agent, target, 1000); // TODO: use range value in agent
+            bool bHasLineOfSight = _targeting.HasLineOfSight(agent, target, 1000); // TODO: use range value in agent
             if (bHasLineOfSight)
             {
                 _pathfinder.maxSpeed = 0.0f; // stop moving if we have line of sight
