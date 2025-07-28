@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9193952522759182308}
   - component: {fileID: -1216011986330753547}
   - component: {fileID: -8983292440959597263}
-  - component: {fileID: 324232194524981324}
+  - component: {fileID: 6761519341813951933}
   m_Layer: 9
   m_Name: SpriteFragment
   m_TagString: Untagged
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &324232194524981324
+--- !u!114 &6761519341813951933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,7 +161,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1189808845491370352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f4629b37ce04d239f04259b9acf9e9d, type: 3}
+  m_Script: {fileID: 11500000, guid: ce58624a98c6490f81f421e634d2b681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 5

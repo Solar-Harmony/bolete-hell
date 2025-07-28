@@ -3,6 +3,7 @@ using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.Health;
+using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -23,9 +24,9 @@ namespace BoleteHell.Code.Character
         
         [Inject]
         private ISpriteFragmenter _spriteFragmenter;
-
+        
         [Inject]
-        private IObjectInstantiator _instantiator;
+        private TransientLight.Pool _explosionVFXPool;
         
         protected virtual void Awake()
         {
@@ -43,11 +44,7 @@ namespace BoleteHell.Code.Character
             if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
                 return;
             
-            if (hitFeedbackEffect.TryGetComponent(out Light2D light2D))
-            {
-                light2D.pointLightOuterRadius = 0.5f;
-                _instantiator.InstantiateThenDestroyLater(hitFeedbackEffect, ctx.Position, Quaternion.identity, 0.1f);
-            }
+            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
             
             if (ctx.Data is not LaserCombo laser)
             {

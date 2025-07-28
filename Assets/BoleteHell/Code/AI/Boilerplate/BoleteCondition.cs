@@ -11,6 +11,6 @@
 
         public abstract bool IsTrueImpl();
 
-        bool IRequestManualInject.IsInjected { get; set; }
+        bool IRequestManualInject.IsInjected { get; set; } = false;
     }
 }

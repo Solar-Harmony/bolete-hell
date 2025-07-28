@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Character;
 using BoleteHell.Code.Gameplay.Health;
+using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -17,9 +18,9 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         [SerializeField] private float explosionRadius;
 
         [SerializeField] private GameObject explosionCircle;
-        
+ 
         [Inject]
-        private IObjectInstantiator _instantiator;
+        private TransientLight.Pool _explosionVFXPool;
 
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
         public override void OnHit(Vector2 hitPosition, IHealth hitCharacterHealth)
@@ -37,7 +38,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             if (hitCollidersAmount <= 0)
             {
                 Debug.Log("Explosion hit nothing");
-                
             }
             else
             {
@@ -60,15 +60,10 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
                 Debug.LogWarning("Explosion hit missing its explosion visual effect");
                 return;
             }
-
-            if (explosionCircle.TryGetComponent(out Light2D light))
-            {
-                light.pointLightOuterRadius = explosionRadius;
-            }
-            
-            _instantiator.InstantiateThenDestroyLater(explosionCircle, hitPosition, Quaternion.identity, 0.1f);
+         
+            _explosionVFXPool.Spawn(hitPosition, explosionRadius, 0.1f);
         }
 
-        bool IRequestManualInject.IsInjected { get; set; }
+        bool IRequestManualInject.IsInjected { get; set; } = false;
     }
 }

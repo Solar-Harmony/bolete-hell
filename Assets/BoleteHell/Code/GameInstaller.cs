@@ -1,4 +1,5 @@
 ﻿using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Code.Utils;
 using UnityEngine;
@@ -29,6 +30,12 @@ namespace BoleteHell.Code
     {
         internal static DiContainer staticContainer;
         
+        [SerializeField]
+        private GameObject spriteFragmentPrefab;
+        
+        [SerializeField]
+        private GameObject transientLightPrefab;
+        
         public override void InstallBindings()
         {
             staticContainer = Container;
@@ -41,6 +48,20 @@ namespace BoleteHell.Code
 
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
+            
+            Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
+                .WithInitialSize(10)
+                .WithMaxSize(50)
+                .ExpandByOneAtATime()
+                .FromComponentInNewPrefab(transientLightPrefab)
+                .UnderTransformGroup("TransientLights");
+
+            Container.BindMemoryPool<SpriteFragment, SpriteFragment.Pool>()
+                .WithInitialSize(30)
+                .WithMaxSize(250)
+                .ExpandByDoubling()
+                .FromComponentInNewPrefab(spriteFragmentPrefab)
+                .UnderTransformGroup("SpriteFragments");
         }
     }
 }

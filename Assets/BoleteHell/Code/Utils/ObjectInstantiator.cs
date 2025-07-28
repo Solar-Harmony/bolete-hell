@@ -1,17 +1,15 @@
 using System;
+using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
+using Zenject;
 using Object = UnityEngine.Object;
 
 namespace BoleteHell.Code.Utils
 {
+    [UsedImplicitly]
     public class ObjectInstantiator : IObjectInstantiator
     {
-        /// <summary>
-        /// Allows cloning of ScriptableObjects in classes that are not MonoBehaviours.
-        /// </summary>
-        /// <param name="original"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public T CloneScriptableObject<T>(T original) where T : ScriptableObject
         {
             if (!original)
@@ -22,7 +20,7 @@ namespace BoleteHell.Code.Utils
             T clone = Object.Instantiate(original);
             return clone;
         }
-
+        
         public void InstantiateThenDestroyLater(GameObject prefab, Vector2 position, Quaternion rotation, float timeToDestroy, Action<GameObject> initCallback = null)
         {
             Debug.Assert(timeToDestroy >= 0.0f);
@@ -30,6 +28,18 @@ namespace BoleteHell.Code.Utils
             GameObject obj = Object.Instantiate(prefab, position, rotation);
             initCallback?.Invoke(obj);
             Object.Destroy(obj, timeToDestroy); 
+        }
+        
+        public void DespawnLater(IMemoryPool pool, object item, float delay)
+        {
+            Debug.Assert(delay >= 0.0f);
+            GlobalCoroutine.Launch(WaitThenReturnToPool(pool, item, delay));
+        }
+        
+        private static IEnumerator WaitThenReturnToPool(IMemoryPool pool, object item, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            pool.Despawn(item);
         }
     }
 }

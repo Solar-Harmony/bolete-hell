@@ -15,9 +15,6 @@ namespace BoleteHell.Code.Gameplay.Destructible
         
         [field: SerializeField] 
         public GameObject explosion { get; private set; }
-        
-        [field: SerializeField] 
-        public GameObject fragmentPrefab { get; private set; }
 
         [Header("Explosion settings")]
         [field: SerializeField] 

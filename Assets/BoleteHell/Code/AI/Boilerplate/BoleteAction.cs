@@ -16,6 +16,6 @@ namespace BoleteHell.Code.AI.Boilerplate
             return Status.Running;
         }
 
-        bool IRequestManualInject.IsInjected { get; set; }
+        bool IRequestManualInject.IsInjected { get; set; } = false;
     }
 }
