@@ -28,14 +28,17 @@ namespace BoleteHell.Code
     
     public class GameInstaller : MonoInstaller
     {
+        // TODO: This should not be internal lol
         internal static DiContainer staticContainer;
         
+        // TODO: This can be moved to per service settings
         [SerializeField]
         private GameObject spriteFragmentPrefab;
         
         [SerializeField]
         private GameObject transientLightPrefab;
         
+        // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
             staticContainer = Container;
@@ -48,6 +51,7 @@ namespace BoleteHell.Code
 
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
+            Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnNewGameObject().AsSingle();
             
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)

@@ -23,10 +23,8 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         private TransientLight.Pool _explosionVFXPool;
 
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
-        public override void OnHit(Vector2 hitPosition, IHealth hitCharacterHealth)
+        public override void OnHitImpl(Vector2 hitPosition, IHealth hitCharacterHealth)
         {
-            ((IRequestManualInject)this).InjectDependencies();
-            
             hitCharacterHealth.TakeDamage(baseHitDamage);
             
             ContactFilter2D filter = new ContactFilter2D();
@@ -63,7 +61,5 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
          
             _explosionVFXPool.Spawn(hitPosition, explosionRadius, 0.1f);
         }
-
-        bool IRequestManualInject.IsInjected { get; set; } = false;
     }
 }

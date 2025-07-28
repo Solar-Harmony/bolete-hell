@@ -10,6 +10,9 @@ namespace BoleteHell.Code.Utils
     [UsedImplicitly]
     public class ObjectInstantiator : IObjectInstantiator
     {
+        [Inject]
+        private IGlobalCoroutine _coroutine;
+        
         public T CloneScriptableObject<T>(T original) where T : ScriptableObject
         {
             if (!original)
@@ -33,7 +36,7 @@ namespace BoleteHell.Code.Utils
         public void DespawnLater(IMemoryPool pool, object item, float delay)
         {
             Debug.Assert(delay >= 0.0f);
-            GlobalCoroutine.Launch(WaitThenReturnToPool(pool, item, delay));
+            _coroutine.Launch(WaitThenReturnToPool(pool, item, delay));
         }
         
         private static IEnumerator WaitThenReturnToPool(IMemoryPool pool, object item, float delay)

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BoleteHell.Code.Gameplay.Health
 {
     [Serializable]
-    public class Health : IHealth, IHandlePostInit
+    public class Health : IHealth, ISerializationCallbackReceiver
     {
         [field: SerializeField]
         public bool IsInvincible { get; private set; } = false;
@@ -30,7 +30,12 @@ namespace BoleteHell.Code.Gameplay.Health
                 OnDeath = null;
             }
         }
-        
+
+        public void OnBeforeSerialize()
+        {
+            
+        }
+
         public void OnAfterDeserialize()
         {
             CurrentHealth = MaxHealth;
