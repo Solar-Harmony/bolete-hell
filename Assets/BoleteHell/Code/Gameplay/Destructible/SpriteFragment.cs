@@ -61,7 +61,7 @@ namespace BoleteHell.Code.Gameplay.Destructible
 
         public void OnDespawned()
         {
-            
+
         }
         
         private static Mesh CreateQuadMesh(Vector2 size)
