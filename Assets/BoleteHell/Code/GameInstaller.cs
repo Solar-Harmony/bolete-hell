@@ -18,8 +18,8 @@ namespace BoleteHell.Code
         
         public void InjectDependencies()
         {
-            if (IsInjected)
-                return;
+            // if (IsInjected)
+            //     return; 
             
             GameInstaller.staticContainer?.Inject(this);
             IsInjected = true;
@@ -43,15 +43,15 @@ namespace BoleteHell.Code
         {
             staticContainer = Container;
             
-            Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
             
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputDispatcher>().AsSingle();
 
+            Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
-            Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnNewGameObject().AsSingle();
+            Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
             
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)
