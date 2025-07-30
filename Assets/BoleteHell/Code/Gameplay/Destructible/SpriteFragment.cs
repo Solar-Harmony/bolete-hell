@@ -1,7 +1,9 @@
-﻿using BoleteHell.Code.Utils;
+﻿using System;
+using BoleteHell.Code.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace BoleteHell.Code.Gameplay.Destructible
 {
@@ -19,6 +21,8 @@ namespace BoleteHell.Code.Gameplay.Destructible
     public class SpriteFragment : MonoBehaviour, IPoolable<Vector2, SpriteFragmentConfig, SpriteFragmentParams>
     {
         private float _timeToDestroy;
+        
+        private event Action OnInitialized;
         
         public void OnSpawned(Vector2 position, SpriteFragmentConfig config, SpriteFragmentParams parameters)
         {
@@ -56,7 +60,7 @@ namespace BoleteHell.Code.Gameplay.Destructible
             
             _timeToDestroy = parameters.timeToDestroy;
             
-            gameObject.SetActive(true);
+            OnInitialized?.Invoke();
         }
 
         public void OnDespawned()
@@ -92,8 +96,11 @@ namespace BoleteHell.Code.Gameplay.Destructible
             
             protected override void OnSpawned(SpriteFragment item)
             {
-                base.OnSpawned(item);
-                _instantiator.DespawnLater(this, item, item._timeToDestroy);
+                item.OnInitialized += () =>
+                {
+                    item.OnInitialized -= item.OnDespawned;
+                    _instantiator.DespawnLater(this, item, item._timeToDestroy);
+                };
             }
         }
     }
