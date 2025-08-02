@@ -17,7 +17,7 @@ namespace BoleteHell.Code.Gameplay.Character
         Health IDamageable.Health => health;
         
         public Vector2 Position => transform.position;
-        
+
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
         
