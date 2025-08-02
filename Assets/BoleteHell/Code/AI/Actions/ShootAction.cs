@@ -39,7 +39,9 @@ namespace BoleteHell.Code.AI.Actions
             Vector2 selfPosition = Self.Value.transform.position;
             Vector2 selfVelocity = Self.Value.GetComponent<AIPath>().desiredVelocity;
             Vector2 targetPosition = Target.Value.transform.position;
-            Vector2 targetVelocity = Target.Value.GetComponent<Rigidbody2D>().linearVelocity;
+            Vector2 targetVelocity = Target.Value.TryGetComponent(out Rigidbody2D rb)
+                ? rb.linearVelocity
+                : Vector2.zero;
             float projectileSpeed = enemy.GetProjectileSpeed();
             _targeting.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
             enemy.Shoot(direction);

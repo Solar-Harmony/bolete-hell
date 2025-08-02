@@ -60,10 +60,13 @@ namespace BoleteHell.Code.Gameplay.Character
         
             laser.CombinedEffect(ctx.Position, this);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroy = true });
-            
-            ParticleSystem.MainModule mainModule = _fire.main;
-            float alpha =  1 - (health.CurrentHealth / (float)health.MaxHealth);
-            mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
+
+            if (_fire)
+            {
+                ParticleSystem.MainModule mainModule = _fire.main;
+                float alpha =  1 - (health.CurrentHealth / (float)health.MaxHealth);
+                mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
+            }
         }
     }
 }

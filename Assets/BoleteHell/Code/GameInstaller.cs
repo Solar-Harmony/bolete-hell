@@ -60,6 +60,7 @@ namespace BoleteHell.Code
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
             Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
+            Container.Bind<IDirector>().To<Director>().AsSingle();
             
             Container.Bind<VictoryScreen>()
                 .FromComponentInNewPrefabResource("UI/VictoryScreen")
