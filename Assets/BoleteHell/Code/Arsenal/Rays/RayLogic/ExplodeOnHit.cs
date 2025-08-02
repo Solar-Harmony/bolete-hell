@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Character;
 using BoleteHell.Code.Gameplay.Health;
 using BoleteHell.Code.Graphics;
-using BoleteHell.Code.Utils;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     [Serializable]
-    public class ExplodeOnHit : RayHitLogic, IRequestManualInject
+    public class ExplodeOnHit : RayHitLogic
     {
         [SerializeField] private int explosionDamage;
         
@@ -31,24 +28,20 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             filter.SetLayerMask(LayerMask.GetMask("Unit"));
             List<Collider2D> results = new List<Collider2D>();
 
-            int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius,filter,results);
-            
-            if (hitCollidersAmount <= 0)
-            {
-                Debug.Log("Explosion hit nothing");
-            }
-            else
-            {
-                for (int i = 0; i < hitCollidersAmount; i++)
-                {
-                    Collider2D hit = results[i];
-                    if (!hit.gameObject.TryGetComponent(out Health health)) continue;
-                    
-                    Debug.Log($"Explosion hit {hit.name}",hit.gameObject);
-                    health.TakeDamage(explosionDamage);
-                }
-            }
             DrawVisuals(hitPosition);
+            
+            int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius,filter,results);
+            if (hitCollidersAmount <= 0)
+                return;
+
+            for (int i = 0; i < hitCollidersAmount; i++)
+            {
+                Collider2D hit = results[i];
+                if (!hit.gameObject.TryGetComponent(out Character.Character character)) 
+                    continue;
+                    
+                character.health.TakeDamage(explosionDamage);
+            }
         }
 
         private void DrawVisuals(Vector2 hitPosition)

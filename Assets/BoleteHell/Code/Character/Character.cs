@@ -4,9 +4,7 @@ using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.Health;
 using BoleteHell.Code.Graphics;
-using BoleteHell.Code.Utils;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace BoleteHell.Code.Character
@@ -14,7 +12,7 @@ namespace BoleteHell.Code.Character
     public abstract class Character : MonoBehaviour, IHitHandler
     {
         [SerializeField]
-        protected Health health;
+        public Health health;
         
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;

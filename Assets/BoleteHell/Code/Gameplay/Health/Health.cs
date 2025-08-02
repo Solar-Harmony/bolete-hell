@@ -1,5 +1,4 @@
 using System;
-using BoleteHell.Code.Utils;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Health

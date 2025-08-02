@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using Zenject;
 
 namespace BoleteHell.Code.Utils
 {
@@ -10,7 +11,7 @@ namespace BoleteHell.Code.Utils
         [SerializeField]
         private Light2D _light;
         
-        [SerializeField]
+        [Inject]
         private Camera _mainCamera;
         
         private void Update()
