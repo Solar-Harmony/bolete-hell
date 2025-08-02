@@ -1,22 +1,29 @@
 using System;
-using BoleteHell.Code.AI.Agents;
+using BoleteHell.Code.AI.Boilerplate;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Utils;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Action = Unity.Behavior.Action;
+using Zenject;
 
 namespace BoleteHell.Code.AI.Actions
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Shoot", story: "[Self] shoots at [Target]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
-    public partial class ShootAction : Action
+    public partial class ShootAction : BoleteAction
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
+        
+        [Inject]
+        private ITargetingUtils _targeting;
     
-        protected override Status OnStart()
+        protected override Status OnStartImpl()
         {
+            ((IRequestManualInject)this).InjectDependencies();
+
             if (Self.Value == null || Target.Value == null)
             {
                 Debug.LogError("Self or Target is null");
@@ -34,7 +41,7 @@ namespace BoleteHell.Code.AI.Actions
             Vector2 targetPosition = Target.Value.transform.position;
             Vector2 targetVelocity = Target.Value.GetComponent<Rigidbody2D>().linearVelocity;
             float projectileSpeed = enemy.GetProjectileSpeed();
-            AIUtils.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
+            _targeting.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
             enemy.Shoot(direction);
         
             return Status.Running;

@@ -3,27 +3,11 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Utils
 {
-    public class GlobalCoroutine : MonoBehaviour
+    public class GlobalCoroutine : MonoBehaviour, IGlobalCoroutine
     {
-        private static GlobalCoroutine _instance;
-        private static GlobalCoroutine Instance
+        public Coroutine Launch(IEnumerator routine)
         {
-            get
-            {
-                if (_instance) 
-                    return _instance;
-                
-                var obj = new GameObject("CoroutineRunner");
-                _instance = obj.AddComponent<GlobalCoroutine>();
-                DontDestroyOnLoad(obj);
-                
-                return _instance;
-            }
-        }
-        
-        public static Coroutine Launch(IEnumerator routine)
-        {
-            return Instance.StartCoroutine(routine);
+            return StartCoroutine(routine);
         }
     }
 }

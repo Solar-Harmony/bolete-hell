@@ -1,7 +1,8 @@
 using System.Collections;
-using BoleteHell.Code.Character;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Utils;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
@@ -11,19 +12,22 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         [SerializeField] private float poisonDuration = 5.0f;
         [SerializeField] private int poisonDamage = 2;
         [SerializeField] [Min(0.5f)] private float poisonTickInterval = 1.0f;
+
+        [Inject]
+        private IGlobalCoroutine _coroutine;
         
-        public override void OnHit(Vector2 hitPosition, Health hitCharacterHealth)
+        public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth)
         {
-            hitCharacterHealth.TakeDamage(baseHitDamage);
-            GlobalCoroutine.Launch(PoisonEffect(hitCharacterHealth));
+            hitCharacterHealth.Health.TakeDamage(baseHitDamage);
+            _coroutine.Launch(PoisonEffect(hitCharacterHealth));
         }
         
-        private IEnumerator PoisonEffect(Health hitCharacterHealth)
+        private IEnumerator PoisonEffect(IDamageable hitCharacterHealth)
         {
             float elapsedTime = 0f;
             while (elapsedTime < poisonDuration)
             {
-                hitCharacterHealth.TakeDamage(poisonDamage);
+                hitCharacterHealth.Health.TakeDamage(poisonDamage);
                 elapsedTime += 1f;
                 yield return new WaitForSeconds(poisonTickInterval);
             }

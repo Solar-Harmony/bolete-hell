@@ -1,25 +1,48 @@
+using System;
+using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
+using Zenject;
+using Object = UnityEngine.Object;
 
 namespace BoleteHell.Code.Utils
 {
-    public class ObjectInstantiator : MonoBehaviour
+    [UsedImplicitly]
+    public class ObjectInstantiator : IObjectInstantiator
     {
-        //Permet de cloner des scriptableObjects dans des classes qui ne sont pas des monobehaviour
-        public static T CloneScriptableObject<T>(T original) where T : ScriptableObject
+        [Inject]
+        private IGlobalCoroutine _coroutine;
+        
+        public T CloneScriptableObject<T>(T original) where T : ScriptableObject
         {
             if (!original)
             {
                 Debug.LogError("Tried to clone a null object");
             }
 
-            T clone = Instantiate(original);
+            T clone = Object.Instantiate(original);
             return clone;
         }
-    
-        public static void InstantiateObjectForAmountOfTime(GameObject obj,Vector2 position, float time)
+        
+        public void InstantiateThenDestroyLater(GameObject prefab, Vector2 position, Quaternion rotation, float timeToDestroy, Action<GameObject> initCallback = null)
         {
-            GameObject instantiatedObj = Instantiate(obj,position,Quaternion.identity);
-            Destroy(instantiatedObj, time); 
+            Debug.Assert(timeToDestroy >= 0.0f);
+            
+            GameObject obj = Object.Instantiate(prefab, position, rotation);
+            initCallback?.Invoke(obj);
+            Object.Destroy(obj, timeToDestroy); 
+        }
+        
+        public void DespawnLater(IMemoryPool pool, object item, float delay)
+        {
+            Debug.Assert(delay >= 0.0f);
+            _coroutine.Launch(WaitThenReturnToPool(pool, item, delay));
+        }
+        
+        private static IEnumerator WaitThenReturnToPool(IMemoryPool pool, object item, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            pool.Despawn(item);
         }
     }
 }

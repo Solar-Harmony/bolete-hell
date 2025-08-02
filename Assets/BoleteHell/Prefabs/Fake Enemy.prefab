@@ -13,15 +13,11 @@ GameObject:
   - component: {fileID: -1013660803743876877}
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
-  - component: {fileID: -2734542199329630527}
-  - component: {fileID: 6249654377470742942}
   - component: {fileID: 2877549176397520493}
   - component: {fileID: 2835406013110666550}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
-  - component: {fileID: -6471801952280679534}
-  - component: {fileID: -6447312373861107801}
-  - component: {fileID: 514989806390564487}
+  - component: {fileID: 8131877402109793878}
   m_Layer: 7
   m_Name: Fake Enemy
   m_TagString: Enemy
@@ -211,31 +207,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &-2734542199329630527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6249654377470742942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 15
 --- !u!114 &2877549176397520493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,7 +309,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.15
---- !u!114 &-6471801952280679534
+--- !u!114 &8131877402109793878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -347,42 +318,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6982038961960877227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3689d85f4e7a4c67b83804d2b9c3eebb, type: 3}
+  m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInvincible: 0
-  explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
---- !u!114 &-6447312373861107801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddee55567d13400db8d57664362bb54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fragmentsX: 4
-  fragmentsY: 4
-  explosionForce: 5
-  sr: {fileID: 4735358013702089654}
-  parentRb: {fileID: 7099119133421844960}
-  explosion: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
-  fragmentPrefab: {fileID: 1189808845491370352, guid: d5a22d646b9169a459f18522ee6a533b, type: 3}
---- !u!114 &514989806390564487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013647b62cf849059338abd864dfd497, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  health:
+    <IsInvincible>k__BackingField: 0
+    <MaxHealth>k__BackingField: 15
+  spriteFragmentConfig:
+    <sr>k__BackingField: {fileID: 4735358013702089654}
+    <parentRb>k__BackingField: {fileID: 7099119133421844960}
+    <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+    <fragmentPrefab>k__BackingField: {fileID: 1189808845491370352, guid: d5a22d646b9169a459f18522ee6a533b, type: 3}
+    <fragmentsX>k__BackingField: 4
+    <fragmentsY>k__BackingField: 4
+    <explosionForce>k__BackingField: 10
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
 --- !u!1 &7047168010642913551
 GameObject:
   m_ObjectHideFlags: 0
