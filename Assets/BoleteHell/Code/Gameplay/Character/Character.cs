@@ -4,6 +4,7 @@ using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -28,6 +29,8 @@ namespace BoleteHell.Code.Gameplay.Character
         
         [Inject]
         private TransientLight.Pool _explosionVFXPool;
+
+        private ParticleSystem _fire;
         
         protected virtual void Awake()
         {
@@ -37,6 +40,7 @@ namespace BoleteHell.Code.Gameplay.Character
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             };
+            _fire = GetComponentInChildren<ParticleSystem>();
         }
         
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
@@ -56,6 +60,10 @@ namespace BoleteHell.Code.Gameplay.Character
         
             laser.CombinedEffect(ctx.Position, this);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroy = true });
+            
+            ParticleSystem.MainModule mainModule = _fire.main;
+            float alpha = health.CurrentHealth / (float)health.MaxHealth;
+            mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
         }
     }
 }
