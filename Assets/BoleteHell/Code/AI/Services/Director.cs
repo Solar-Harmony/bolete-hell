@@ -8,12 +8,12 @@ namespace BoleteHell.Code.AI.Services
     public class Director : IDirector
     {
         [Inject(Id = "Player")]
-        private ICharacter _player;
+        private ISceneObject _player;
 
         [Inject]
         private IBaseService _bases;
         
-        public ICharacter FindTarget(Character self)
+        public ISceneObject FindTarget(Character self)
         {
             Base closestBase = _bases.GetClosestBase(self.Position, out float distanceToClosestBase);
             if (!closestBase)

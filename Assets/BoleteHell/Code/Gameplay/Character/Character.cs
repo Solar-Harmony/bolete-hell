@@ -9,7 +9,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, ITargetable, ICharacter
+    public abstract class Character : MonoBehaviour, ITargetable, ISceneObject
     {
         [SerializeField]
         public Health health;

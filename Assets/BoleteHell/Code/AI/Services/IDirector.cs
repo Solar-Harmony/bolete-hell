@@ -4,6 +4,6 @@ namespace BoleteHell.Code.AI.Services
 {
     public interface IDirector
     {
-        ICharacter FindTarget(Character self);
+        ISceneObject FindTarget(Character self);
     }
 }

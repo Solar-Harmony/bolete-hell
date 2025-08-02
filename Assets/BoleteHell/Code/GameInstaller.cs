@@ -2,8 +2,10 @@
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
+using BoleteHell.Code.UI;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;
@@ -55,6 +57,13 @@ namespace BoleteHell.Code
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
             Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
+            
+            Container.Bind<VictoryScreen>()
+                .FromComponentInNewPrefabResource("UI/VictoryScreen")
+                .UnderTransformGroup("UI")
+                .AsSingle()
+                .NonLazy();
             
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)
@@ -74,7 +83,7 @@ namespace BoleteHell.Code
             var player = FindFirstObjectByType<Player>();
             Debug.Assert(player);
             Container
-                .Bind<ICharacter>()
+                .Bind<ISceneObject>()
                 .WithId("Player")
                 .FromInstance(player);
             

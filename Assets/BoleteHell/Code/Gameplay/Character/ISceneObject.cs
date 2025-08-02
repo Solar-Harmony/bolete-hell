@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public interface ICharacter : IDamageable
+    public interface ISceneObject : IDamageable
     {
         Vector2 Position { get; }
     }

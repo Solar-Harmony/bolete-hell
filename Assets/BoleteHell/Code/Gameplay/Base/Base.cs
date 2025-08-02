@@ -7,7 +7,7 @@ using UnityEngine;
 namespace BoleteHell.Code.Gameplay.Base
 {
     [RequireComponent(typeof(Renderer))]
-    public class Base : MonoBehaviour, ITargetable, ICharacter
+    public class Base : MonoBehaviour, ITargetable, ISceneObject
     {
         public Vector2 Position => transform.position;
         public Health Health { get; } = new();
