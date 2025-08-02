@@ -27,8 +27,26 @@ namespace BoleteHell.Code.Gameplay.Base
         {
             health.OnDeath += () =>
             {
+                ShowDeathVFX();
                 _bases.NotifyBaseDied(this);
             };
+        }
+        
+        public Sprite deathSprite;
+
+        private void ShowDeathVFX()
+        {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer)
+            {
+                spriteRenderer.sprite = deathSprite;
+            }
+            
+            var showOnDeath = transform.Find("ShowOnDeath");
+            if (showOnDeath)
+            {
+                showOnDeath.gameObject.SetActive(true);
+            }
         }
 
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)

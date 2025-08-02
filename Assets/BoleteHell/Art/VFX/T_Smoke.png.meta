@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: d949aa8326485324cac31b92e1fae7a7
+guid: 91230aec05795fc46bc3a300e7d3b506
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9148753318000507938
-    second: TempBase_0
+      213: 8871883853177478242
+    second: nebula-overlay-color-free-png_0
+  - first:
+      213: 917723051590850641
+    second: nebula-overlay-color-free-png_1
+  - first:
+      213: -2358790096431842777
+    second: nebula-overlay-color-free-png_2
+  - first:
+      213: -662037596749861586
+    second: nebula-overlay-color-free-png_3
+  - first:
+      213: -565257070436006796
+    second: nebula-overlay-color-free-png_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TempBase_0
+      name: nebula-overlay-color-free-png_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 38
-        width: 1023
-        height: 1029
+        x: 104
+        y: 182
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 22cb819aba6e6fe70800000000000000
-      internalID: 9148753318000507938
+      spriteID: 26cda25fb534f1b70800000000000000
+      internalID: 8871883853177478242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nebula-overlay-color-free-png_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 194
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 158924cc0486cbc00800000000000000
+      internalID: 917723051590850641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nebula-overlay-color-free-png_2
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 82
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72a787a97e4e34fd0800000000000000
+      internalID: -2358790096431842777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nebula-overlay-color-free-png_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 91
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2d65c93058ffc6f0800000000000000
+      internalID: -662037596749861586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nebula-overlay-color-free-png_4
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 0
+        width: 187
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47442e570bdc728f0800000000000000
+      internalID: -565257070436006796
       vertices: []
       indices: 
       edges: []
@@ -138,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TempBase_0: 9148753318000507938
+      nebula-overlay-color-free-png_0: 8871883853177478242
+      nebula-overlay-color-free-png_1: 917723051590850641
+      nebula-overlay-color-free-png_2: -2358790096431842777
+      nebula-overlay-color-free-png_3: -662037596749861586
+      nebula-overlay-color-free-png_4: -565257070436006796
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
