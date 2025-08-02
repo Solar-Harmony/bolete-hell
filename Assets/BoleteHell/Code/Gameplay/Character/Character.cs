@@ -62,7 +62,7 @@ namespace BoleteHell.Code.Gameplay.Character
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroy = true });
             
             ParticleSystem.MainModule mainModule = _fire.main;
-            float alpha = health.CurrentHealth / (float)health.MaxHealth;
+            float alpha =  1 - (health.CurrentHealth / (float)health.MaxHealth);
             mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
         }
     }
