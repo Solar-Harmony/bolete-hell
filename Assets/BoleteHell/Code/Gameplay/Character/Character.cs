@@ -9,11 +9,13 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, ITargetable, IDamageable
+    public abstract class Character : MonoBehaviour, ITargetable, ICharacter
     {
         [SerializeField]
         public Health health;
         Health IDamageable.Health => health;
+        
+        public Vector2 Position => transform.position;
         
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;

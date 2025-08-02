@@ -1,4 +1,7 @@
-﻿using BoleteHell.Code.Gameplay.Destructible;
+﻿using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Gameplay.Base;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Code.Utils;
@@ -66,6 +69,16 @@ namespace BoleteHell.Code
                 .ExpandByDoubling()
                 .FromComponentInNewPrefab(spriteFragmentPrefab)
                 .UnderTransformGroup("SpriteFragments");
+            
+            // temp
+            var player = FindFirstObjectByType<Player>();
+            Debug.Assert(player);
+            Container
+                .Bind<ICharacter>()
+                .WithId("Player")
+                .FromInstance(player);
+            
+            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
         }
     }
 }
