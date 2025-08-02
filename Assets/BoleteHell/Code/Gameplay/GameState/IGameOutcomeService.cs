@@ -9,9 +9,9 @@ namespace BoleteHell.Code.Gameplay.GameState
     public interface IGameOutcomeService
     {
         event Action OnVictory;
-        event Action OnDefeat;
+        event Action<string> OnDefeat;
         
         void TriggerVictory();
-        void TriggerDefeat();
+        void TriggerDefeat(string reason);
     }
 }

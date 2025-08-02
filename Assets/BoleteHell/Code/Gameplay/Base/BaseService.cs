@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoleteHell.Code.Gameplay.GameState;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Base
 {
@@ -8,6 +10,19 @@ namespace BoleteHell.Code.Gameplay.Base
     {
         // lazy load only once
         public List<Base> Bases => _cache ??= new List<Base>(Object.FindObjectsByType<Base>(FindObjectsSortMode.None));
+
+        [Inject]
+        private IGameOutcomeService _outcome; 
+        
+        public void NotifyBaseDied(Base theBase)
+        {
+            Bases.Remove(theBase);
+            
+            if (Bases.Count == 0)
+            {
+                _outcome.TriggerDefeat("All your bases were destroyed");
+            }
+        }
         
         public Base GetClosestBase(Vector2 pos, out float distance)
         {

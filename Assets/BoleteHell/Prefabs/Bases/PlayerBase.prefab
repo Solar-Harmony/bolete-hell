@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 524279898148356461}
   - component: {fileID: 8326415044824130976}
   - component: {fileID: 6390688878367942992}
+  - component: {fileID: 2564544298301446155}
   m_Layer: 0
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -178,3 +179,18 @@ MonoBehaviour:
     - rid: 8651057589725954128
       type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &2564544298301446155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0b5eddece24cac86be511792c78f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    <IsInvincible>k__BackingField: 0
+    <MaxHealth>k__BackingField: 50

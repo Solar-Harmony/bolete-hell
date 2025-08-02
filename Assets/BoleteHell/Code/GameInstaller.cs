@@ -3,6 +3,7 @@ using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
+using BoleteHell.Code.Gameplay.Input;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Code.UI;
@@ -52,6 +53,7 @@ namespace BoleteHell.Code
             
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputDispatcher>().AsSingle();
+            Container.Bind<IInputState>().To<InputState>().AsSingle();
 
             Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();

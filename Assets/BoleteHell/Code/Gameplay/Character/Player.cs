@@ -14,7 +14,7 @@ namespace BoleteHell.Code.Gameplay.Character
             base.Awake();
             health.OnDeath += () =>
             {
-                _outcome.TriggerDefeat();
+                _outcome.TriggerDefeat("You have died");
             };
         }
         

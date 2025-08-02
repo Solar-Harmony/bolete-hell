@@ -18,14 +18,15 @@ namespace BoleteHell.Code.UI
             _root = GetComponent<UIDocument>().rootVisualElement;
             Hide();
             
-            _gameOutcomeService.OnVictory += () => Show("You win!");
-            _gameOutcomeService.OnDefeat  += () => Show("You lose!");
+            _gameOutcomeService.OnVictory += () => Show("You win!", "Congratulations!");
+            _gameOutcomeService.OnDefeat  += reason => Show("You lose!", reason);
         }
         
-        private void Show(string text) 
+        private void Show(string text, string subtext) 
         {
             _root.style.display = DisplayStyle.Flex;
             _root.Q<Label>("Text").text = GetDefeatText();
+            _root.Q<Label>("SubText").text = subtext;
         }
         
         private void Hide()
@@ -33,7 +34,7 @@ namespace BoleteHell.Code.UI
             _root.style.display = DisplayStyle.None;
         }
         
-        private string[] _defeatTexts = 
+        private readonly string[] _defeatTexts = 
         {
             "L RIZZ",
             "RIP BOZO GET BETTER",
