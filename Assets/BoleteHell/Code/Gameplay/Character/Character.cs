@@ -1,18 +1,19 @@
 ﻿using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Destructible;
-using BoleteHell.Code.Gameplay.Health;
 using BoleteHell.Code.Graphics;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Character
+namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, IHitHandler
+    public abstract class Character : MonoBehaviour, IHitHandler, IDamageable
     {
         [SerializeField]
         public Health health;
+        Health IDamageable.Health => health;
         
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
@@ -51,7 +52,7 @@ namespace BoleteHell.Code.Character
                 return;
             }
         
-            laser.CombinedEffect(ctx.Position, health); // TODO: Should we really pass health here
+            laser.CombinedEffect(ctx.Position, this);
             callback?.Invoke(new IHitHandler.Response(ctx){ RequestDestroy = true });
         }
     }

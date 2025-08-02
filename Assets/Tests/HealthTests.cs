@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Health;
+﻿using BoleteHell.Code.Gameplay.Damage;
 using NUnit.Framework;
 
 namespace Tests

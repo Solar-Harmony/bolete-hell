@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BoleteHell.Code.Character
+namespace BoleteHell.Code.Gameplay.Character
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character

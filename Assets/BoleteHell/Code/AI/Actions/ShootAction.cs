@@ -1,13 +1,12 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
-using BoleteHell.Code.Character;
+using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Utils;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
 using Zenject;
-using Action = Unity.Behavior.Action;
 
 namespace BoleteHell.Code.AI.Actions
 {

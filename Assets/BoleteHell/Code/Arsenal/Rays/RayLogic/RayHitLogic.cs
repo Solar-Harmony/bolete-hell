@@ -1,6 +1,5 @@
 using System;
-using BoleteHell.Code.Character;
-using BoleteHell.Code.Gameplay.Health;
+using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
@@ -14,12 +13,12 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 
         //Au lieu de health on pourrais avoir un component de stats en général comme ça les tir pourrait affecter le stat qu'il veut directement
         //(réduire le mouvement, reduire l'attaque wtv)
-        public void OnHit(Vector2 hitPosition, IHealth hitCharacterHealth)
+        public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth)
         {
             ((IRequestManualInject)this).InjectDependencies();
             OnHitImpl(hitPosition, hitCharacterHealth);
         }
 
-        public abstract void OnHitImpl(Vector2 hitPosition, IHealth hitCharacterHealth);
+        public abstract void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth);
     }
 }

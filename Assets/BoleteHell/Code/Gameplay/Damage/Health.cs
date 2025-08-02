@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace BoleteHell.Code.Gameplay.Health
+namespace BoleteHell.Code.Gameplay.Damage
 {
     [Serializable]
-    public class Health : IHealth, ISerializationCallbackReceiver
+    public class Health : ISerializationCallbackReceiver
     {
         [field: SerializeField]
         public bool IsInvincible { get; private set; } = false;

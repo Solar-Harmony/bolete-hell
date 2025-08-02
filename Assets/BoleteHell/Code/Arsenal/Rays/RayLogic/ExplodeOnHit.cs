@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Health;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using UnityEngine;
 using Zenject;
@@ -20,9 +21,9 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         private TransientLight.Pool _explosionVFXPool;
 
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
-        public override void OnHitImpl(Vector2 hitPosition, IHealth hitCharacterHealth)
+        public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth)
         {
-            hitCharacterHealth.TakeDamage(baseHitDamage);
+            hitCharacterHealth.Health.TakeDamage(baseHitDamage);
             
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Unit"));
@@ -37,7 +38,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             for (int i = 0; i < hitCollidersAmount; i++)
             {
                 Collider2D hit = results[i];
-                if (!hit.gameObject.TryGetComponent(out Character.Character character)) 
+                if (!hit.gameObject.TryGetComponent(out Character character)) 
                     continue;
                     
                 character.health.TakeDamage(explosionDamage);
