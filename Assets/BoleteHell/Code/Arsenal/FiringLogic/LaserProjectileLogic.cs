@@ -19,7 +19,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             var projectile = reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed);
             projectile.OnCollide +=  (hit) =>
             {
-                IHitHandler.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laserCombo);
+                ITargetable.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laserCombo);
                 OnHit(context, resp =>
                 {
                     projectile.SetDirection(resp.Direction);

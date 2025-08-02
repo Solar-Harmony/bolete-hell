@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.HitHandler
 {
-    public interface IHitHandler
+    public interface ITargetable
     {
         public record Context
         (

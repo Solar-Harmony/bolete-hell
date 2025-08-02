@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.HitHandler
 {
-    public class Wall : MonoBehaviour, IHitHandler
+    public class Wall : MonoBehaviour, ITargetable
     {
-        public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
+        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            callback?.Invoke(new IHitHandler.Response(ctx) { RequestDestroy = true });
+            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroy = true });
         }
     }
 }

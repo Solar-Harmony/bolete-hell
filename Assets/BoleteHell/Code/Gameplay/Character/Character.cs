@@ -9,7 +9,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, IHitHandler, IDamageable
+    public abstract class Character : MonoBehaviour, ITargetable, IDamageable
     {
         [SerializeField]
         public Health health;
@@ -37,7 +37,7 @@ namespace BoleteHell.Code.Gameplay.Character
             };
         }
         
-        public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
+        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             // TODO: make a proper factions system
             if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
@@ -53,7 +53,7 @@ namespace BoleteHell.Code.Gameplay.Character
             }
         
             laser.CombinedEffect(ctx.Position, this);
-            callback?.Invoke(new IHitHandler.Response(ctx){ RequestDestroy = true });
+            callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroy = true });
         }
     }
 }

@@ -41,7 +41,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     break;
                 }
 
-                IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
+                ITargetable.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;
