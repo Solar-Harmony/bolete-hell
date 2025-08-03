@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.ShotPatterns;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal
@@ -8,15 +10,28 @@ namespace BoleteHell.Code.Arsenal
     [RequireComponent(typeof(ShotPattern))]
     public class Arsenal : MonoBehaviour
     {
-        [SerializeField] private Transform spawnDistance;
-        [SerializeReference] private List<Cannons.Cannon> cannons;
+        [ShowInInspector, LabelText("Custom Spawn Origin")]
+        [SerializeField] 
+        private Transform spawnDistance;
+        
+        [SerializeField]
+        [Min(0)]
+        private float spawnRadius = 5.0f;
+        
+        [SerializeReference] private List<Cannon> cannons;
         private ShotPattern _pattern;
         private int _selectedCannonIndex;
+        
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(spawnDistance ? spawnDistance.position : transform.position, spawnRadius);
+        }
 
         private void Start()
         {
             _pattern = GetComponent<ShotPattern>();
-            foreach (Cannons.Cannon rayCannon in cannons)
+            foreach (Cannon rayCannon in cannons)
             {
                 rayCannon.Init();
             }
@@ -30,7 +45,10 @@ namespace BoleteHell.Code.Arsenal
                 return;
             }
 
-            _pattern.Shoot(GetSelectedWeapon(), spawnDistance, direction);
+            // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
+            Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
+            Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
+            _pattern.Shoot(GetSelectedWeapon(), spawnPosition, direction);
         }
     
         public void CycleWeapons(int value)
@@ -46,12 +64,20 @@ namespace BoleteHell.Code.Arsenal
             Debug.Log($"selected {GetSelectedWeapon().cannonData.name}");
         }
     
-        public Cannons.Cannon GetSelectedWeapon()
+        public Cannon GetSelectedWeapon()
         {
-            if (cannons[_selectedCannonIndex] != null) return cannons[_selectedCannonIndex];
+            if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannons.Count)
+            {
+                return null;
+            }
+
+            if (cannons[_selectedCannonIndex] == null)
+            {
+                Debug.LogWarning("No weapons equipped");
+                return null;
+            }
             
-            Debug.LogWarning("No weapons equipped");
-            return null;
+            return cannons[_selectedCannonIndex];
         }
     
         public void OnShootCanceled()
@@ -59,7 +85,7 @@ namespace BoleteHell.Code.Arsenal
             GetSelectedWeapon()?.FinishFiring();
         }
 
-        public void AddNewWeapon(Cannons.Cannon cannon)
+        public void AddNewWeapon(Cannon cannon)
         {
             cannon.Init();
             cannons.Add(cannon);

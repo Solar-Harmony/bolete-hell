@@ -134,7 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 1398748979581358320}
+  spawnDistance: {fileID: 0}
+  spawnRadius: 0.49
   cannons:
   - rid: 7223671017346170964
   - rid: 7223671017346170965
