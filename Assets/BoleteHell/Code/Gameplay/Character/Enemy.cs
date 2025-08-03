@@ -14,18 +14,19 @@ namespace BoleteHell.Code.Gameplay.Character
         [Inject]
         private IGameOutcomeService _outcome;
 
+        private BehaviorGraphAgent _agent;
+
         protected override void Awake()
         {
             base.Awake(); // TODO: I hate this so much
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
+            _agent = GetComponent<BehaviorGraphAgent>();
             
             _outcome.OnDefeat += reason =>
             {
-                if (TryGetComponent(out BehaviorGraphAgent graph))
-                {
-                    graph.enabled = false;
-                }
+                _agent.Graph.End();
+                _agent.enabled = false;
             };
         }
         
