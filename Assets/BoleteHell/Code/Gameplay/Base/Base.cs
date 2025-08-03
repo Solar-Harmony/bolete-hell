@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Graphics;
+using Unity.Behavior;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Base
 {
     [RequireComponent(typeof(Renderer))]
+    [RequireComponent(typeof(BehaviorGraphAgent))]
     public class Base : MonoBehaviour, ITargetable, ISceneObject
     {
         public Vector2 Position => transform.position;
@@ -22,6 +26,11 @@ namespace BoleteHell.Code.Gameplay.Base
 
         [Inject]
         private IBaseService _bases;
+        
+        [Inject]
+        private TransientLight.Pool _explosionVFXPool;
+
+        private BlackboardReference _blackboard;
 
         private void Awake()
         {
@@ -30,6 +39,7 @@ namespace BoleteHell.Code.Gameplay.Base
                 ShowDeathVFX();
                 _bases.NotifyBaseDied(this);
             };
+            _blackboard = GetComponent<BehaviorGraphAgent>().BlackboardReference;
         }
         
         public Sprite deathSprite;
@@ -55,7 +65,39 @@ namespace BoleteHell.Code.Gameplay.Base
                 return;
         
             laser.CombinedEffect(ctx.Position, this);
-            callback?.Invoke(new ITargetable.Response(ctx));
+            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroy = true });
+
+            if (ctx.Instigator)
+            {
+                _blackboard.SetVariableValue<GameObject>("Target", ctx.Instigator);
+                if (_deaggroCoroutine != null)
+                {
+                    StopCoroutine(_deaggroCoroutine);
+                }
+                _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
+            }
+            
+            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
+        }
+        
+        private Coroutine _deaggroCoroutine;
+        
+        private IEnumerator DeaggroAfterDelay()
+        {
+            yield return new WaitForSeconds(1.0f);
+            _blackboard.GetVariableValue<GameObject>("Target", out var target);
+            
+            if (target && target.TryGetComponent(out Character.Character character))
+            {
+                if (character.health.IsDead)
+                {
+                    _blackboard.SetVariableValue<GameObject>("Target", null);
+                }
+            }
+            else
+            {
+                yield return null;
+            }
         }
         
         private void OnGUI()

@@ -1,7 +1,6 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
-using BoleteHell.Code.Gameplay.Character;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
@@ -30,21 +29,22 @@ namespace BoleteHell.Code.AI.Actions
                 return Status.Failure;
             }
         
-            if (!Self.Value.TryGetComponent(out Enemy enemy))
+            // TODO: make arsenal config only and have shooting service
+            if (!Self.Value.TryGetComponent(out Arsenal.Arsenal arsenal))
             {
-                Debug.LogError("Self is not an enemy");
+                Debug.LogError("Self has no arsenal");
                 return Status.Failure;
             }
-        
+            
             Vector2 selfPosition = Self.Value.transform.position;
-            Vector2 selfVelocity = Self.Value.GetComponent<AIPath>().desiredVelocity;
+            Vector2 selfVelocity = Self.Value.GetComponent<AIPath>()?.desiredVelocity ?? Vector2.zero;
             Vector2 targetPosition = Target.Value.transform.position;
             Vector2 targetVelocity = Target.Value.TryGetComponent(out Rigidbody2D rb)
                 ? rb.linearVelocity
                 : Vector2.zero;
-            float projectileSpeed = enemy.GetProjectileSpeed();
+            float projectileSpeed = arsenal.GetProjectileSpeed();
             _targeting.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
-            enemy.Shoot(direction);
+            arsenal.Shoot(direction);
         
             return Status.Running;
         }

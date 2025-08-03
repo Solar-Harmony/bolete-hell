@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
-  spawnRadius: 0.49
+  spawnRadius: 0.71
   cannons:
   - rid: 7223671017346170964
   - rid: 7223671017346170965
@@ -146,7 +146,7 @@ MonoBehaviour:
       type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
+        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []

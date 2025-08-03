@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 2564544298301446155}
   - component: {fileID: 7187284345731585114}
   - component: {fileID: -7706689365234032475}
+  - component: {fileID: 728234813211920058}
   m_Layer: 6
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -287,12 +288,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 3254317764152869805}
+  spawnDistance: {fileID: 0}
   spawnRadius: 1.19
-  cannons: []
+  cannons:
+  - rid: 8651057624823103641
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8651057624823103641
+      type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+      data:
+        laserDatas:
+        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+        cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+        usePatternMaster: 1
+        bulletPatterns: []
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+--- !u!114 &728234813211920058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: 8485693057347280529, guid: 96e97b07dfd681847b7aa82fcd2885ce, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 8651057624823103839
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 8651057624823103839
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 8563693215699855702}
 --- !u!1001 &1193320144923651803
 PrefabInstance:
   m_ObjectHideFlags: 0

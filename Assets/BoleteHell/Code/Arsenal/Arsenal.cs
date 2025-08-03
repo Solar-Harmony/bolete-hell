@@ -18,7 +18,9 @@ namespace BoleteHell.Code.Arsenal
         [Min(0)]
         private float spawnRadius = 5.0f;
         
-        [SerializeReference] private List<Cannon> cannons;
+        [SerializeReference] [HideReferenceObjectPicker] 
+        private List<Cannon> cannons;
+        
         private ShotPattern _pattern;
         private int _selectedCannonIndex;
         
@@ -49,6 +51,17 @@ namespace BoleteHell.Code.Arsenal
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
             _pattern.Shoot(GetSelectedWeapon(), spawnPosition, direction);
+        }
+        
+        public float GetProjectileSpeed()
+        {
+            if (cannons.Count == 0)
+            {
+                Debug.LogWarning("No raycannon equipped");
+                return 0.0f;
+            }
+
+            return GetSelectedWeapon().cannonData.projectileSpeed;
         }
     
         public void CycleWeapons(int value)

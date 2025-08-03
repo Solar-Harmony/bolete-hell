@@ -30,17 +30,6 @@ namespace BoleteHell.Code.Gameplay.Character
             };
         }
         
-        public void Shoot(Vector3 direction)
-        {
-            _weapon.Shoot( direction);
-        }
-        
-        public float GetProjectileSpeed()
-        {
-            if (!_weapon) return 0.0f;
-            return _weapon.GetSelectedWeapon().cannonData.projectileSpeed;
-        }
-        
         private void OnGUI()
         {
             Vector2 position = new Vector2(transform.position.x, transform.position.y + GetComponent<SpriteRenderer>().bounds.size.y * 0.5f);

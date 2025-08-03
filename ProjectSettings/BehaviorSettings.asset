@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GraphOwnerName: Self
-  m_AutoSaveLastSaveLocation: 1
-  m_SaveFolder: BoleteHell/AI/Actions
+  m_AutoSaveLastSaveLocation: 0
+  m_SaveFolder: BoleteHell/Code/AI/
   m_UseSeparateSaveFolders: 0
   m_SaveFolderAction: 
   m_SaveFolderModifier: 
