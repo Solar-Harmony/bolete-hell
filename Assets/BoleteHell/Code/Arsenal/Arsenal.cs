@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.ShotPatterns;
@@ -60,8 +61,14 @@ namespace BoleteHell.Code.Arsenal
                 Debug.LogWarning("No raycannon equipped");
                 return 0.0f;
             }
-
-            return GetSelectedWeapon().cannonData.projectileSpeed;
+            
+            CannonData data = GetSelectedWeapon().cannonData;
+            return data.firingType switch
+            {
+                FiringTypes.Automatic => data.projectileSpeed,
+                FiringTypes.Charged => data.rateOfFire,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     
         public void CycleWeapons(int value)

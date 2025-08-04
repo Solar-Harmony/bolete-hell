@@ -10,38 +10,42 @@ namespace BoleteHell.Code.Arsenal.Cannons
     [CreateAssetMenu(fileName = "CannonData", menuName = "BoleteHell/Arsenal/Cannon", order = -100)]
     public class CannonData : ScriptableObject
     { 
-        [SerializeField] public FiringTypes firingType;
-        [Tooltip("Time between each shot")]
-        [SerializeField] public float rateOfFire;
+        [SerializeField] 
+        public FiringTypes firingType;
         
-        [SerializeField] public float projectileSpeed = 10f;
+        [SerializeField] [Tooltip("Time between each shot")] [Min(0)]
+        public float rateOfFire;
         
-        //Lifetime of the projectile/beam
-        public float LifeTime {
-            get
-            {
-                return firingType switch
-                {
-                    FiringTypes.Automatic => 2f,
-                    FiringTypes.Charged => 0.1f,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-            }
-        }
-        public bool WaitBeforeFiring {
-            get
-            {
-                return firingType switch
-                {
-                    FiringTypes.Automatic => false,
-                    FiringTypes.Charged => true,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-            }
-        }
+        // TODO: This is meaningless for Beam projectiles
+        [SerializeField] [Unit(Units.MetersPerSecond)]
+        public float projectileSpeed = 10.0f;
         
-        [SerializeField] public int maxNumberOfBounces = 10;
-        [ShowIf("firingType",FiringTypes.Charged)]
-        [SerializeField] public float maxRayDistance = 10;
+        [SerializeField] [Min(0)]
+        public int maxNumberOfBounces = 10;
+        
+        [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Unit(Units.Meter)] [Min(0)]
+        public float maxRayDistance = 10;
+        
+        [SerializeField]
+        private bool useCustomLifetime = false;
+        
+        [SerializeField] [ShowIf(nameof(useCustomLifetime))] [Unit(Units.Second)] [Min(0)]
+        private float lifetime = 5.0f;
+        
+        // TODO: I feel like we could move these 2 properties, since they're specific
+        // to the FiringLogic they might be better placed there instead of branching everywhere
+        public float Lifetime => useCustomLifetime ? lifetime : firingType switch
+        {
+            FiringTypes.Automatic => 20.0f,
+            FiringTypes.Charged => 0.1f,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        public bool WaitBeforeFiring => firingType switch
+        {
+            FiringTypes.Automatic => false,
+            FiringTypes.Charged => true,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

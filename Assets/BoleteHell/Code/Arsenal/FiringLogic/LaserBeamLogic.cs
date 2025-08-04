@@ -58,7 +58,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 if (shouldBreak)
                     break;
             }
-            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.LifeTime);
+            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
             _rayPositions.Clear();
         }
     }
