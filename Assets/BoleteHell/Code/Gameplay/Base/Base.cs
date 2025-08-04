@@ -65,7 +65,7 @@ namespace BoleteHell.Code.Gameplay.Base
                 return;
         
             laser.CombinedEffect(ctx.Position, this);
-            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroy = true });
+            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
 
             if (ctx.Instigator)
             {

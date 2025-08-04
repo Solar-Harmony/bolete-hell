@@ -7,7 +7,7 @@ namespace BoleteHell.Code.Arsenal.HitHandler
     {
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroy = true });
+            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
         }
     }
 }

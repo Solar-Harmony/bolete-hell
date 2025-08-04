@@ -18,7 +18,7 @@ namespace BoleteHell.Code.Arsenal.HitHandler
         public record Response(
             Vector2 Position, 
             Vector2 Direction,
-            bool RequestDestroy
+            bool RequestDestroyProjectile
         )
         {
             public Response(Context ctx) : this(ctx.Position, ctx.Direction, false) {}

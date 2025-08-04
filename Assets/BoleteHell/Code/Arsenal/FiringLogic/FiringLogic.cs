@@ -25,7 +25,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
 
             handler?.OnHit(ctx, response =>
             {
-                if (response.RequestDestroy)
+                if (response.RequestDestroyProjectile)
                 {
                     LaserRenderer renderer = ctx.Projectile?.GetComponent<LaserRenderer>();
                     if (renderer)
