@@ -1,6 +1,6 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
-using BoleteHell.Code.Utils;
+using BoleteHell.Code.AI.Services;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;

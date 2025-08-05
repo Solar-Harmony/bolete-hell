@@ -135,7 +135,7 @@ MonoBehaviour:
         GUID:
           m_Value0: 584690581055839469
           m_Value1: 11301596354734271912
-        Name: Player
+        Name: CurrentTarget
         m_Value: {fileID: 0}
 --- !u!114 &4991494843151904680
 MonoBehaviour:
@@ -219,7 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 6872167419365447248}
+  spawnDistance: {fileID: 0}
+  spawnRadius: 0.79
   cannons:
   - rid: 7223671017346170967
   references:
@@ -229,7 +230,7 @@ MonoBehaviour:
       type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: c8c00254d32e0214f8bb8c04853b85d3, type: 2}
+        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
@@ -328,7 +329,6 @@ MonoBehaviour:
     <sr>k__BackingField: {fileID: 4735358013702089654}
     <parentRb>k__BackingField: {fileID: 7099119133421844960}
     <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
-    <fragmentPrefab>k__BackingField: {fileID: 1189808845491370352, guid: d5a22d646b9169a459f18522ee6a533b, type: 3}
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 10

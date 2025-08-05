@@ -15,15 +15,17 @@ namespace BoleteHell.Code.Gameplay.Damage
         public int CurrentHealth { get; private set; }
     
         public event Action OnDeath;
+        
+        public bool IsDead => CurrentHealth <= 0;
 
         public void TakeDamage(int damageAmount)
         {
-            if (IsInvincible)
+            if (IsInvincible || IsDead)
                 return;
             
-            CurrentHealth -= damageAmount;
+            CurrentHealth = Math.Max(0, CurrentHealth - damageAmount);
 
-            if (CurrentHealth <= 0)
+            if (IsDead)
             {
                 OnDeath?.Invoke();
                 OnDeath = null;

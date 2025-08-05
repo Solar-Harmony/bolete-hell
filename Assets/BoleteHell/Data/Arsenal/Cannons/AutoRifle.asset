@@ -17,3 +17,5 @@ MonoBehaviour:
   projectileSpeed: 5
   maxNumberOfBounces: 10
   maxRayDistance: 10
+  useCustomLifetime: 0
+  lifetime: 11.57

@@ -11,7 +11,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         private float _initAttackTimer = 100f;
         private float _attackTimer = 100f;
         private Vector2 initDirection;
-        private void StartShooting(Cannon cannon, ShotPatternData pattern, Transform spawnPoint)
+        private void StartShooting(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
         {
             //Juste pour dire que le premier tir d'une arme peut être soit chargé ou instant
             //Normalement j'aurais juste fait une méthode de start et end pour setup des chose au premier tir
@@ -34,22 +34,22 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             }
             else
             {
-                StartCoroutine(RoutineFire(cannon,pattern,spawnPoint));
+                StartCoroutine(RoutineFire(cannon, pattern, spawnPoint));
             }
         }
 
-        private IEnumerator RoutineFire(Cannons.Cannon cannon, ShotPatternData pattern,Transform spawnPoint)
+        private IEnumerator RoutineFire(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
         {
             for (int i = 0; i < pattern.burstShotCount; i++)
             {
-                Fire(cannon,pattern,spawnPoint);
+                Fire(cannon, pattern, spawnPoint);
                 yield return new WaitForSeconds(pattern.burstShotCooldown);
             }
         }
 
-        private void Fire(Cannons.Cannon cannon, ShotPatternData pattern,Transform spawnPoint)
+        private void Fire(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
         {
-            float spawnDistance = Vector3.Distance(transform.position, spawnPoint.position);
+            float spawnDistance = Vector3.Distance(transform.position, spawnPoint);
             _currentRotation += pattern.constantRotation;
             //Angle maximal d'un coté
             int maxSideAngle = pattern.maxAngleRange / 2;
@@ -63,7 +63,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             _attackTimer = 0f;
         }
 
-        private void SetupBulletPosition(ShotPatternData pattern, Transform spawnPoint, int i, int maxSideAngle,
+        private void SetupBulletPosition(ShotPatternData pattern, Vector2 spawnPoint, int i, int maxSideAngle,
             float spawnDistance,out Vector2 direction, out Vector2 spawnPosition)
         {
             float currentAngle = SetBulletAngle(pattern.numberOfBulletShot, i, maxSideAngle);
@@ -91,8 +91,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             return currentAngle;
         }
 
-        //Raycannon Pourras être changer pour une généralisation des weapons
-        public void Shoot(Cannons.Cannon cannon, Transform spawnPosition, Vector2 initialDirection)
+        public void Shoot(Cannon cannon, Vector2 spawnPosition, Vector2 initialDirection)
         {
             List<ShotPatternData> patterns = cannon.GetBulletPatterns();
             //TODO: ajouter une manière de faire que les pattern sont soit simultané ou consécutifs
@@ -102,7 +101,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             initDirection = initialDirection;
             foreach (ShotPatternData pattern in patterns)
             {
-                StartShooting(cannon,pattern,spawnPosition);
+                StartShooting(cannon, pattern, spawnPosition);
             }
         }
     }

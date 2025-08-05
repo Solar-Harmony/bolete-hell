@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using BoleteHell.Code.Gameplay.GameState;
+using Unity.Behavior;
+using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
@@ -8,22 +11,23 @@ namespace BoleteHell.Code.Gameplay.Character
         private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
 
+        [Inject]
+        private IGameOutcomeService _outcome;
+
+        private BehaviorGraphAgent _agent;
+
         protected override void Awake()
         {
             base.Awake(); // TODO: I hate this so much
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
-        }
-        
-        public void Shoot(Vector3 direction)
-        {
-            _weapon.Shoot( direction);
-        }
-        
-        public float GetProjectileSpeed()
-        {
-            if (!_weapon) return 0.0f;
-            return _weapon.GetSelectedWeapon().cannonData.projectileSpeed;
+            _agent = GetComponent<BehaviorGraphAgent>();
+            
+            _outcome.OnDefeat += reason =>
+            {
+                _agent.Graph.End();
+                _agent.enabled = false;
+            };
         }
         
         private void OnGUI()

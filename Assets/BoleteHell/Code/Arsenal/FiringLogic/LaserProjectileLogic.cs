@@ -15,11 +15,11 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             LaserRenderer reservedRenderer = LaserRendererPool.Instance.Get();
             List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
             reservedRenderer.transform.position = bulletSpawnPoint;
-            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.LifeTime);
+            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime);
             var projectile = reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed);
             projectile.OnCollide +=  (hit) =>
             {
-                IHitHandler.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laserCombo);
+                ITargetable.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laserCombo);
                 OnHit(context, resp =>
                 {
                     projectile.SetDirection(resp.Direction);

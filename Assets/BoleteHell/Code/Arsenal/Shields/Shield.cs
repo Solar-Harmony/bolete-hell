@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
-    public class Shield : MonoBehaviour, IHitHandler
+    public class Shield : MonoBehaviour, ITargetable
     {
         [SerializeField] private ShieldData lineInfo;
 
@@ -22,7 +22,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             return lineInfo.OnRayHit(incomingDirection, hitPoint, lightRefractiveIndice);
         }
 
-        public void OnHit(IHitHandler.Context ctx, Action<IHitHandler.Response> callback = null)
+        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
             RaycastHit2D hit = Physics2D.Raycast(ctx.Position, ctx.Direction, Mathf.Infinity, layerMask);            // debug draw the hit
@@ -42,7 +42,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             
             Vector3 newDirection = OnRayHitLine(ctx.Direction, hit, laser.CombinedRefractiveIndex);
             Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
-            callback?.Invoke(new IHitHandler.Response(ctx) { Direction = newDirection });
+            callback?.Invoke(new ITargetable.Response(ctx) { Direction = newDirection });
         }
     }
 }

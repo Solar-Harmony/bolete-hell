@@ -41,15 +41,24 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     break;
                 }
 
-                IHitHandler.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
+                bool shouldBreak = false;
+                ITargetable.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;
                     CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
                     _rayPositions.Add(CurrentPos);
+
+                    if (altered.RequestDestroyProjectile)
+                    {
+                        shouldBreak = true;
+                    }
                 });
+
+                if (shouldBreak)
+                    break;
             }
-            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.LifeTime);
+            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
             _rayPositions.Clear();
         }
     }

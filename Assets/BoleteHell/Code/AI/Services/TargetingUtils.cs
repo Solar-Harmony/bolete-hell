@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Code.AI.Services
 {
     public class TargetingUtils : ITargetingUtils
     {
