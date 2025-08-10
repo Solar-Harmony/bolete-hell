@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
+    // TODO: Use a similar pattern to the status effects to avoid injection in hit logics
     [Serializable]
     public abstract class RayHitLogic : IRequestManualInject
     {

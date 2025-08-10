@@ -31,7 +31,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] 
         private bool usePatternMaster;
         
-        [SerializeReference] [ShowIf("@!usePatternMaster")] 
+        [SerializeReference] [ShowIf("@!usePatternMaster")] [HideReferenceObjectPicker] 
         [ValidateInput("@bulletPatterns.Count > 0", "At least one pattern is required.")] 
         private List<ShotPatternData> bulletPatterns;
         

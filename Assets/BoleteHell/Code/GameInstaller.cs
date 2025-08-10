@@ -1,6 +1,8 @@
-﻿using BoleteHell.Code.AI.Services;
+﻿using System.Linq;
+using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Gameplay.Input;
@@ -8,6 +10,7 @@ using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Code.UI;
 using BoleteHell.Code.Utils;
+using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 
@@ -44,6 +47,9 @@ namespace BoleteHell.Code
         [SerializeField]
         private GameObject transientLightPrefab;
         
+        // TODO: Split this into multiple installers
+        // This will require splitting out code into modules though
+        // Which is a good thing but it's also cancer to do at first lol
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
@@ -58,7 +64,7 @@ namespace BoleteHell.Code
             Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
-            Container.Bind<IGlobalCoroutine>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
             Container.Bind<IDirector>().To<Director>().AsSingle();
             
@@ -68,6 +74,24 @@ namespace BoleteHell.Code
                 .AsSingle()
                 .NonLazy();
             
+            BindMemoryPools();
+
+            // temp
+            var player = FindFirstObjectByType<Player>();
+            Debug.Assert(player);
+            Container
+                .Bind<ISceneObject>()
+                .WithId("Player")
+                .FromInstance(player);
+            
+            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
+
+            BindStatusEffects();
+            Container.BindInterfacesTo<StatusEffectService>().AsSingle();
+        }
+
+        private void BindMemoryPools()
+        {
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)
                 .WithMaxSize(50)
@@ -81,16 +105,17 @@ namespace BoleteHell.Code
                 .ExpandByDoubling()
                 .FromComponentInNewPrefab(spriteFragmentPrefab)
                 .UnderTransformGroup("SpriteFragments");
-            
-            // temp
-            var player = FindFirstObjectByType<Player>();
-            Debug.Assert(player);
-            Container
-                .Bind<ISceneObject>()
-                .WithId("Player")
-                .FromInstance(player);
-            
-            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
+        }
+
+        private void BindStatusEffects()
+        {
+            typeof(IStatusEffect).Assembly
+                .GetTypes()
+                .Where(t => typeof(IStatusEffect).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
+                .ForEach(type =>
+                {
+                    Container.Bind<IStatusEffect>().To(type).AsSingle();
+                });
         }
     }
 }

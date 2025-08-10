@@ -39,7 +39,7 @@ public class SDFRenderPassFeature : ScriptableRendererFeature
                 // Eg:
                 // builder.UseTexture(sourceTexture);
                 // TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, cameraData.cameraTargetDescriptor, "Destination Texture", false);
-                
+
                 // This sets the render target of the pass to the active color texture. Change it to your own render target as needed.
                 builder.SetRenderAttachment(resourceData.activeColorTexture, 0);
 

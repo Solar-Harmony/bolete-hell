@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -687021765542443590}
   - component: {fileID: 8131877402109793878}
   m_Layer: 7
-  m_Name: Fake Enemy
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
