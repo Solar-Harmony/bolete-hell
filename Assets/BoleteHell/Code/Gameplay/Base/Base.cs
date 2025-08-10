@@ -38,6 +38,7 @@ namespace BoleteHell.Code.Gameplay.Base
             {
                 ShowDeathVFX();
                 _bases.NotifyBaseDied(this);
+                GetComponent<BehaviorGraphAgent>().enabled = false;
             };
             _blackboard = GetComponent<BehaviorGraphAgent>().BlackboardReference;
         }
