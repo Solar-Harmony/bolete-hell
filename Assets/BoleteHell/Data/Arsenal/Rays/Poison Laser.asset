@@ -30,4 +30,4 @@ MonoBehaviour:
       data:
         tickInterval: 1
         duration: 5
-        damageEachTick: 10
+        damageEachTick: 2

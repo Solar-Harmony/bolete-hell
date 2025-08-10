@@ -22,6 +22,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                 Config = config,
                 Target = target
             };
+            _activeEffects.Remove(instance);
             _activeEffects.Add(instance);
         }
 

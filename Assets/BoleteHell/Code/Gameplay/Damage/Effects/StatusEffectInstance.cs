@@ -5,7 +5,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
     public class StatusEffectInstance
     {
-        public float StartTime { get; private set; }
+        public float StartTime { get; set; }
         public float EndTime { get; init; }
         public IStatusEffect Effect { get; init; }
         public StatusEffectConfig Config { get; init; }
