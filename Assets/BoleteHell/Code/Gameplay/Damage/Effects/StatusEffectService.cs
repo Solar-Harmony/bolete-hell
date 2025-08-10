@@ -28,13 +28,13 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
 
         public void Tick()
         {
-            var activeEffectsCopy = _activeEffects.ToHashSet();
-            foreach (var instance in activeEffectsCopy)
+            List<StatusEffectInstance> markedForRemoval = new();
+            foreach (var instance in _activeEffects)
             {
                 float time = Time.time;
                 if (instance.IsExpired(time))
                 {
-                    _activeEffects.Remove(instance);
+                    markedForRemoval.Add(instance);
                     continue;
                 }
 
@@ -43,6 +43,11 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                     instance.Effect.Apply(instance.Target, instance.Config);
                     instance.UpdateTime(time);
                 }
+            }
+            
+            foreach (var instance in markedForRemoval)
+            {
+                _activeEffects.Remove(instance);
             }
         }
     }

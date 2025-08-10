@@ -37,9 +37,6 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
             if (x is null || y is null) 
                 return false;
             
-            if (x.GetType() != y.GetType()) 
-                return false;
-            
             return Equals(x.Effect, y.Effect) && Equals(x.Target, y.Target);
         }
 
