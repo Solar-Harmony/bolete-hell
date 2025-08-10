@@ -1,5 +1,4 @@
 ﻿using BoleteHell.Code.Utils;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Zenject;
@@ -29,7 +28,7 @@ namespace BoleteHell.Code.Graphics
         {
         }
         
-        [UsedImplicitly]
+        // Vector2 position, float radius, float timeToDestroy
         public class Pool : MonoPoolableMemoryPool<Vector2, float, float, TransientLight>
         {
             [Inject]

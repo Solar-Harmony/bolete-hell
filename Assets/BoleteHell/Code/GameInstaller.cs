@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Audio;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage.Effects;
@@ -88,6 +89,8 @@ namespace BoleteHell.Code
 
             BindStatusEffects();
             Container.BindInterfacesTo<StatusEffectService>().AsSingle();
+            
+            Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
         }
 
         private void BindMemoryPools()

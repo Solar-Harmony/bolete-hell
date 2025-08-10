@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: d61a877ad74f6ba49a07f20d77ae41df
   m_currentHash:
     serializedVersion: 2
-    Hash: d4736b4b172197275de9cf223ee48247
+    Hash: c5b4dd3db1a575daad0ae7b294552ab7
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
     - default
     - Prisms
     - RequestZenjectForSO
+    - AudioClip
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4495dddc72cc8b94597450a303b7e999, type: 2}

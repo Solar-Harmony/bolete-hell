@@ -2,14 +2,14 @@
 {
     public interface IStatusEffect
     {
-        bool CanApply(IDamageable target, StatusEffectConfig config);
-        void Apply(IDamageable target, StatusEffectConfig config);
+        bool CanApply(object target, StatusEffectConfig config);
+        void Apply(object target, StatusEffectConfig config);
     }
     
     public interface IStatusEffect<in T> : IStatusEffect where T : StatusEffectConfig
     {
-        void Apply(IDamageable target, T config);
-        void IStatusEffect.Apply(IDamageable target, StatusEffectConfig config) => Apply(target, (T)config);
-        bool IStatusEffect.CanApply(IDamageable target, StatusEffectConfig config) => config is T;
+        void Apply(object target, T config);
+        void IStatusEffect.Apply(object target, StatusEffectConfig config) => Apply(target, (T)config);
+        bool IStatusEffect.CanApply(object target, StatusEffectConfig config) => config is T;
     }
 }

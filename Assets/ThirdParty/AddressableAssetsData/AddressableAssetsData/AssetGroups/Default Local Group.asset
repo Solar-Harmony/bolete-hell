@@ -16,19 +16,25 @@ MonoBehaviour:
   m_GUID: d61a877ad74f6ba49a07f20d77ae41df
   m_SerializeEntries:
   - m_GUID: 2fbda5954ee341fcbee8854857b5a335
-    m_Address: Assets/Data/Cannons
+    m_Address: Cannons
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prisms
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 59244fc31f1dc4d4bbdfa20befa63312
-    m_Address: Assets/Data/Cannons/AutoRifle.asset
+    m_Address: AutoRifle
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prisms
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e7b7c59167261b4b85022810fe80deb
+    m_Address: sfx_poison
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c81601ba72b684468b1230d6797782c
-    m_Address: Assets/Data/Cannons/Sniper.asset
+    m_Address: Sniper
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prisms
