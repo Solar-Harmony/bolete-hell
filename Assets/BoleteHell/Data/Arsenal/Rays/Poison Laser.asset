@@ -28,6 +28,8 @@ MonoBehaviour:
     - rid: 8651057760533741659
       type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
+        numTicks: 5
+        initialDelay: 0
         tickInterval: 1
-        duration: 5
+        isPermanent: 0
         damageEachTick: 2

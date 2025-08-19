@@ -36,5 +36,10 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
                 _transientLightPool.Spawn(sceneObject.Position, 1.2f, 0.5f);
             }
         }
+
+        // TODO: We shouldn't have to implement this if we don't use it (interface segregation)
+        public void Unapply(object target, PoisonStatusEffectConfig config)
+        {
+        }
     }
 }

@@ -5,49 +5,52 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
-    public class StatusEffectService : IStatusEffectService
+    public class StatusEffectService : IStatusEffectService, ITickable
     {
         [Inject]
         private List<IStatusEffect> _effects;
 
-        private readonly HashSet<StatusEffectInstance> _activeEffects = new(new StatusEffectInstanceComparer());
+        private readonly SortedSet<ScheduledStatusEffect> _activeEffects = new(new ScheduledStatusEffectComparer()); 
         
         public void AddStatusEffect<T>(IDamageable target, T config) where T : StatusEffectConfig
         {
             var effect = _effects.Single(e => e.CanApply(target, config));
-            var instance = new StatusEffectInstance
+
+            // apply one shot effects
+            if (config.numTicks == 1 && config.initialDelay == 0.0f)
             {
-                EndTime = Time.time + config.duration,
-                Effect = effect,
-                Config = config,
-                Target = target
-            };
+                effect.Apply(target, config);
+                return;
+            }
+            
+            // queue for application
+            var instance = new ScheduledStatusEffect(effect, config, target);
             _activeEffects.Remove(instance);
             _activeEffects.Add(instance);
         }
 
         public void Tick()
         {
-            List<StatusEffectInstance> markedForRemoval = new();
-            foreach (var instance in _activeEffects)
+            float currentTime = Time.time;
+            while (_activeEffects.Count > 0)
             {
-                float time = Time.time;
-                if (instance.IsExpired(time))
+                ScheduledStatusEffect effect = _activeEffects.Min; // earliest scheduled effect
+                
+                if (currentTime < effect.ScheduledTime)
                 {
-                    markedForRemoval.Add(instance);
-                    continue;
+                    break;
                 }
-
-                if (instance.ShouldApply(time))
+                
+                _activeEffects.Remove(effect);
+                
+                if (effect.ApplyIfNeeded(currentTime))
                 {
-                    instance.Effect.Apply(instance.Target, instance.Config);
-                    instance.UpdateTime(time);
+                    _activeEffects.Add(effect);// reschedule
                 }
-            }
-            
-            foreach (var instance in markedForRemoval)
-            {
-                _activeEffects.Remove(instance);
+                else
+                {
+                    effect.UnapplyIfNeeded(); // unapply if not permanent
+                }
             }
         }
     }
