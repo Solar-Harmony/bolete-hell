@@ -24,12 +24,12 @@ MonoBehaviour:
       data:
         baseHitDamage: 0
         statusEffectConfig:
-          rid: 8651057760533741659
-    - rid: 8651057760533741659
-      type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+          rid: 8651057971708297332
+    - rid: 8651057971708297332
+      type: {class: TempPoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
+        isTransient: 1
         numTicks: 5
         initialDelay: 0
         tickInterval: 1
-        isPermanent: 0
-        damageEachTick: 2
+        damageEachTick: 1

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
-    public class ScheduledStatusEffect
+    public class StatusEffectInstance
     {
         // When we should next apply the effect
         public float ScheduledTime { get; private set; }
@@ -13,7 +12,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         private readonly StatusEffectConfig _config;
         private readonly IDamageable _target;
 
-        public ScheduledStatusEffect(IStatusEffect effect, StatusEffectConfig config, IDamageable target)
+        public StatusEffectInstance(IStatusEffect effect, StatusEffectConfig config, IDamageable target)
         {
             _effect = effect;
             _config = config;
@@ -39,29 +38,15 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         
         public void UnapplyIfNeeded()
         {
-            if (!_config.isPermanent)
+            if (_config.isTransient && _effect is ITransientStatusEffect temporaryEffect)
             {
-                _effect.Unapply(_target, _config);
+                for (int i = 0; i < _config.numTicks; i++)
+                {
+                    temporaryEffect.Unapply(_target, _config);
+                }
             }
         }
 
         private bool IsExpired() => _ticksLeft <= 0;
-    }
-
-    public class ScheduledStatusEffectComparer : IComparer<ScheduledStatusEffect>
-    {
-        public int Compare(ScheduledStatusEffect x, ScheduledStatusEffect y)
-        {
-            if (ReferenceEquals(x, y)) 
-                return 0;
-            
-            if (y is null) 
-                return 1;
-            
-            if (x is null) 
-                return -1;
-            
-            return x.ScheduledTime.CompareTo(y.ScheduledTime);
-        }
     }
 }

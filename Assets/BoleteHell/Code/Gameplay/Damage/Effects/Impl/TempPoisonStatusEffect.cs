@@ -8,13 +8,13 @@ using Zenject;
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
     [Serializable]
-    public sealed class PoisonStatusEffectConfig : StatusEffectConfig
+    public sealed class TempPoisonStatusEffectConfig : StatusEffectConfig
     {
         [MinValue(1)]
         public int damageEachTick = 10;
     }
     
-    public sealed class PoisonStatusEffect : IStatusEffect<PoisonStatusEffectConfig>
+    public sealed class TempPoisonStatusEffect : ITransientStatusEffect<TempPoisonStatusEffectConfig>
     {
         [Inject]
         private TransientLight.Pool _transientLightPool;
@@ -22,7 +22,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
         [Inject]
         private IAudioPlayer _audioPlayer;
         
-        public void Apply(object target, PoisonStatusEffectConfig config)
+        public void Apply(object target, TempPoisonStatusEffectConfig config)
         {
             if (target is IDamageable damageable)
             {
@@ -34,6 +34,14 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
                 _audioPlayer.PlaySoundAsync("sfx_poison", sceneObject.Position);
                 // TODO: Support custom colors
                 _transientLightPool.Spawn(sceneObject.Position, 1.2f, 0.5f);
+            }
+        }
+
+        public void Unapply(object target, TempPoisonStatusEffectConfig config)
+        {
+            if (target is IDamageable damageable)
+            {
+                damageable.Health.TakeDamage(-config.damageEachTick);
             }
         }
     }
