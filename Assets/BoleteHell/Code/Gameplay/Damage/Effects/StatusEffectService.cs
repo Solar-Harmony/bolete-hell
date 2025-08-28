@@ -24,7 +24,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
 
         public void AddStatusEffect<T>(IStatusEffectTarget target, T config) where T : StatusEffectConfig
         {
-            var effect = _effects.Single(e => e.ConfigType == config.GetType());
+            IStatusEffect effect = _effects.Single(e => e.ConfigType == config.GetType());
 
             if (!effect.CanApply(target, config))
             {
