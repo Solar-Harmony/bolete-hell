@@ -12,9 +12,24 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
 
         private readonly SortedSet<StatusEffectInstance> _activeEffects = new(new StatusEffectInstanceComparer());
 
-        public void AddStatusEffect<T>(IDamageable target, T config) where T : StatusEffectConfig
+        public IReadOnlyList<IStatusEffect> GetStatusEffects()
         {
-            var effect = _effects.Single(e => e.CanApply(target, config));
+            return _effects;
+        }
+
+        public IReadOnlyCollection<StatusEffectInstance> GetActiveStatusEffects()
+        {
+            return _activeEffects;
+        }
+
+        public void AddStatusEffect<T>(IStatusEffectTarget target, T config) where T : StatusEffectConfig
+        {
+            var effect = _effects.Single(e => e.ConfigType == config.GetType());
+
+            if (!effect.CanApply(target, config))
+            {
+                return;
+            }
 
             // apply one shot effects
             if (config.numTicks == 1 && config.initialDelay == 0.0f)
@@ -25,8 +40,42 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
 
             // queue for application
             var instance = new StatusEffectInstance(effect, config, target);
-            _activeEffects.Remove(instance);
-            _activeEffects.Add(instance);
+
+            var effectCopies = _activeEffects.Where(e => e.IsSameAs(instance)).ToList();
+            if (effectCopies.Any())
+            {
+                switch (config.stackBehavior)
+                {
+                    case StatusEffectStackBehavior.Ignore:
+                        return;
+                    case StatusEffectStackBehavior.Replace replace:
+                    {
+                        if (MatchesCondition(config, replace.condition, effectCopies))
+                        {
+                            _activeEffects.RemoveWhere(e => e.IsSameAs(instance));
+                            _activeEffects.Add(instance);
+                        }
+
+                        break;
+                    }
+                    case StatusEffectStackBehavior.Stacking stacking:
+                    {
+                        if (effectCopies.Count > stacking.maxStacks)
+                            break;
+                        
+                        if (MatchesCondition(config, stacking.condition, effectCopies))
+                        {
+                            _activeEffects.Add(instance);
+                        }
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                _activeEffects.Add(instance);
+            }
         }
 
         public void Tick()
@@ -40,7 +89,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                 {
                     break;
                 }
-
+                
                 _activeEffects.Remove(effect);
 
                 if (effect.ApplyIfNeeded(currentTime))
@@ -52,6 +101,17 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                     effect.UnapplyIfNeeded(); // unapply if not permanent
                 }
             }
+        }
+
+        private bool MatchesCondition(StatusEffectConfig config, StatusEffectStackCondition condition, IEnumerable<StatusEffectInstance> effectStack)
+        {
+            return condition switch
+            {
+                StatusEffectStackCondition.Always => true,
+                StatusEffectStackCondition.OnlyIfBetter => effectStack.All(e => e.config.IsWeakerThan(config)),
+                StatusEffectStackCondition.OnlyIfWorse => effectStack.All(e => e.config.IsStrongerThan(config)),
+                _ => false
+            };
         }
     }
 }

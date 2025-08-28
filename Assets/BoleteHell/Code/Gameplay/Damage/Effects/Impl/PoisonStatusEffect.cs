@@ -21,8 +21,13 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
         
         [Inject]
         private IAudioPlayer _audioPlayer;
-        
-        public void Apply(object target, PoisonStatusEffectConfig config)
+
+        public bool CanApply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
+        {
+            return target is IDamageable;
+        }
+
+        public void Apply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
         {
             if (target is IDamageable damageable)
             {
@@ -32,8 +37,15 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
             if (target is ISceneObject sceneObject)
             {
                 _audioPlayer.PlaySoundAsync("sfx_poison", sceneObject.Position);
-                // TODO: Support custom colors
                 _transientLightPool.Spawn(sceneObject.Position, 1.2f, 0.5f);
+            }
+        }
+
+        public void Unapply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
+        {
+            if (target is IDamageable damageable)
+            {
+                damageable.Health.TakeDamage(-config.damageEachTick);
             }
         }
     }

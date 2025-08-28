@@ -1,8 +1,11 @@
-﻿namespace BoleteHell.Code.Gameplay.Damage.Effects
+﻿using System.Collections.Generic;
+
+namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
     public interface IStatusEffectService
     {
-        void AddStatusEffect<T>(IDamageable target, T config) where T : StatusEffectConfig;
+        IReadOnlyList<IStatusEffect> GetStatusEffects();
+        IReadOnlyCollection<StatusEffectInstance> GetActiveStatusEffects();
+        void AddStatusEffect<T>(IStatusEffectTarget target, T config) where T : StatusEffectConfig;
     }
 }
-

@@ -14,10 +14,14 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         [Inject]
         private IStatusEffectService _statusEffectService;
         
-        public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth)
+        public override void OnHitImpl(Vector2 hitPosition, IDamageable victim)
         {
-            hitCharacterHealth.Health.TakeDamage(baseHitDamage);
-            _statusEffectService.AddStatusEffect(hitCharacterHealth, statusEffectConfig);
+            victim.Health.TakeDamage(baseHitDamage);
+
+            if (victim is IStatusEffectTarget target)
+            {
+                _statusEffectService.AddStatusEffect(target, statusEffectConfig);
+            }
         }
     }
 }

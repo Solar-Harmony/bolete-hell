@@ -28,6 +28,7 @@ namespace BoleteHell.Code
         
         public void InjectDependencies()
         {
+            // TODO: I dont remember why this is commented lmao
             // if (IsInjected)
             //     return; 
             

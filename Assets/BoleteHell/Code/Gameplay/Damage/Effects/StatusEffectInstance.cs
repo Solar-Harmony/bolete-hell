@@ -9,13 +9,22 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         
         private int _ticksLeft;
         private readonly IStatusEffect _effect;
-        private readonly StatusEffectConfig _config;
-        private readonly IDamageable _target;
+        public readonly StatusEffectConfig config;
+        private readonly IStatusEffectTarget _target;
 
-        public StatusEffectInstance(IStatusEffect effect, StatusEffectConfig config, IDamageable target)
+        // Public properties for debugger access
+        public IStatusEffect Effect => _effect;
+        public IStatusEffectTarget Target => _target;
+        public int TicksLeft => _ticksLeft;
+        public string EffectName => _effect.GetType().Name;
+        public string TargetName => _target?.ToString() ?? "Unknown";
+        public float TimeRemaining => Mathf.Max(0f, ScheduledTime - Time.time);
+        public bool IsExpired => _ticksLeft <= 0;
+
+        public StatusEffectInstance(IStatusEffect effect, StatusEffectConfig config, IStatusEffectTarget target)
         {
             _effect = effect;
-            _config = config;
+            this.config = config;
             _target = target;
             _ticksLeft = config.numTicks;
             ScheduledTime = Time.time + config.initialDelay;
@@ -23,30 +32,35 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         
         public bool ApplyIfNeeded(float currentTime)
         {
-            if (IsExpired())
+            if (IsExpired)
                 return false; // Effect has expired, don't reschedule
 
             if (currentTime < ScheduledTime)
                 return false; // Not time to apply yet
             
-            _effect.Apply(_target, _config);
-            ScheduledTime = currentTime + _config.tickInterval;
+            _effect.Apply(_target, config);
+            ScheduledTime = currentTime + config.tickInterval;
             _ticksLeft--;
             
-            return !IsExpired(); // Return true if there are more ticks left, false if expired
+            return !IsExpired; // Return true if there are more ticks left, false if expired
         }
         
         public void UnapplyIfNeeded()
         {
-            if (_config.isTransient && _effect is ITransientStatusEffect temporaryEffect)
+            if (config.isTransient)
             {
-                for (int i = 0; i < _config.numTicks; i++)
+                for (int i = 0; i < config.numTicks; i++)
                 {
-                    temporaryEffect.Unapply(_target, _config);
+                    _effect.Unapply(_target, config);
                 }
             }
         }
 
-        private bool IsExpired() => _ticksLeft <= 0;
+        public bool IsSameAs(StatusEffectInstance other)
+        {
+            return _effect == other._effect && 
+                   _target == other._target && 
+                   config == other.config;
+        }
     }
 }
