@@ -89,7 +89,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
 
         public void Shoot(Vector3 startPosition, Vector3 direction, GameObject instigator = null)
         {
-            _currentFiringLogic?.Shoot(startPosition,direction, cannonData, _laserCombo, instigator);
+            _currentFiringLogic?.Shoot(startPosition, direction, cannonData, _laserCombo, instigator);
         }
 
         public void FinishFiring()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
@@ -10,8 +11,27 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         private float _currentRotation;
         private float _initAttackTimer = 100f;
         private float _attackTimer = 100f;
+        private float _chargeTimer;
         private Vector2 initDirection;
-        private void StartShooting(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
+
+        private Cannon currentCannon;
+        private bool canShoot;
+
+        private void Update()
+        {
+            if (currentCannon == null)
+                return;
+            if (_attackTimer < currentCannon.cannonData.rateOfFire)
+            {
+                _attackTimer += Time.deltaTime;
+            }
+            else
+            {
+                canShoot = true;
+            }
+        }
+
+        private void StartShooting(ShotPatternData pattern, Vector2 spawnPoint)
         {
             //Juste pour dire que le premier tir d'une arme peut être soit chargé ou instant
             //Normalement j'aurais juste fait une méthode de start et end pour setup des chose au premier tir
@@ -19,35 +39,29 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         
             if (Mathf.Approximately(_attackTimer, _initAttackTimer)) 
             {
-                if (cannon.cannonData.WaitBeforeFiring)
+                if (currentCannon.cannonData.WaitBeforeFiring)
                 {
+                    //TODO: ajouter un timer pour le charge time
                     _attackTimer = 0f; 
                 }
             }
-
-            if (_attackTimer < cannon.cannonData.rateOfFire)
-            {
-                //Devrait caller une méthode charge sur le weapon pour montrer l'animation de charge du weapon i guess
-                //Debug.Log($"Weapon is charging. Current charge: {_attackTimer}");
             
-                _attackTimer += Time.deltaTime;
-            }
-            else
+            if (canShoot)
             {
-                StartCoroutine(RoutineFire(cannon, pattern, spawnPoint));
+                StartCoroutine(RoutineFire(pattern, spawnPoint));
             }
         }
 
-        private IEnumerator RoutineFire(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
+        private IEnumerator RoutineFire(ShotPatternData pattern, Vector2 spawnPoint)
         {
             for (int i = 0; i < pattern.burstShotCount; i++)
             {
-                Fire(cannon, pattern, spawnPoint);
+                Fire(pattern, spawnPoint);
                 yield return new WaitForSeconds(pattern.burstShotCooldown);
             }
         }
 
-        private void Fire(Cannon cannon, ShotPatternData pattern, Vector2 spawnPoint)
+        private void Fire(ShotPatternData pattern, Vector2 spawnPoint)
         {
             float spawnDistance = Vector3.Distance(transform.position, spawnPoint);
             _currentRotation += pattern.constantRotation;
@@ -56,14 +70,15 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         
             for (int i = 0; i < pattern.numberOfBulletShot; i++)
             {
-                SetupBulletPosition(pattern, spawnPoint, i, maxSideAngle, spawnDistance,out Vector2 direction, out Vector2 spawnPosition);
-                cannon.Shoot(spawnPosition, direction.normalized, this.gameObject);
+                SetupBulletPosition(pattern, i, maxSideAngle, spawnDistance, out Vector2 direction, out Vector2 spawnPosition);
+                currentCannon.Shoot(spawnPosition, direction.normalized, this.gameObject);
             }
 
             _attackTimer = 0f;
+            canShoot = false;
         }
 
-        private void SetupBulletPosition(ShotPatternData pattern, Vector2 spawnPoint, int i, int maxSideAngle,
+        private void SetupBulletPosition(ShotPatternData pattern, int i, int maxSideAngle,
             float spawnDistance,out Vector2 direction, out Vector2 spawnPosition)
         {
             float currentAngle = SetBulletAngle(pattern.numberOfBulletShot, i, maxSideAngle);
@@ -93,6 +108,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
 
         public void Shoot(Cannon cannon, Vector2 spawnPosition, Vector2 initialDirection)
         {
+            currentCannon = cannon;
             List<ShotPatternData> patterns = cannon.GetBulletPatterns();
             //TODO: ajouter une manière de faire que les pattern sont soit simultané ou consécutifs
             //si simultané un call de fire passe a travers tous les patterns
@@ -101,7 +117,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             initDirection = initialDirection;
             foreach (ShotPatternData pattern in patterns)
             {
-                StartShooting(cannon, pattern, spawnPosition);
+                StartShooting(pattern, spawnPosition);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         //Serais possible si on informe le LaserBeamLogic du nombre de renderer a réserver 
         public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, GameObject instigator = null)
         {
-            Cast(bulletSpawnPoint, direction,cannonData,laserCombo);
+            Cast(bulletSpawnPoint, direction, cannonData, laserCombo, instigator);
         }
 
         public override void FinishFiring()
@@ -23,7 +23,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
 
         }
      
-        private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo)
+        private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, GameObject instigator)
         {
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
@@ -34,7 +34,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             {
                 LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
 
-                RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection,cannonData.maxRayDistance,layerMask);
+                RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection, cannonData.maxRayDistance, layerMask);
                 if (!hit)
                 {
                     _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * cannonData.maxRayDistance);
@@ -42,7 +42,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 }
 
                 bool shouldBreak = false;
-                ITargetable.Context context = new(hit.collider.gameObject, null, null, CurrentPos, CurrentDirection, laserCombo);
+                ITargetable.Context context = new(hit.collider.gameObject, instigator, null, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;

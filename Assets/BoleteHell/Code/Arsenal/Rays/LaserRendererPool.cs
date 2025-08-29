@@ -8,9 +8,9 @@ namespace BoleteHell.Code.Arsenal.Rays
         [SerializeField] public GameObject lineRendererPrefab; 
 
         [SerializeField] private int initialPoolSize = 25;
+         private int currentPoolSize;
 
         private readonly Queue<LaserRenderer> _pool = new();
-
         public static LaserRendererPool Instance { get; private set; }
 
         private void Awake()
@@ -26,6 +26,7 @@ namespace BoleteHell.Code.Arsenal.Rays
 
         private void InitializePool(int size)
         {
+            currentPoolSize = size;
             for (int i = 0; i < size; i++)
             {
                 AddObjectToPool();
@@ -51,7 +52,12 @@ namespace BoleteHell.Code.Arsenal.Rays
             if (_pool.Count == 0)
             {
                 Debug.LogWarning("Pool empty adding more");
-                AddObjectToPool();
+                for (int i = 0; i < currentPoolSize; i++)
+                {
+                    AddObjectToPool();
+                }
+
+                currentPoolSize *= 2;
             }
 
             LaserRenderer laserRenderer = _pool.Dequeue();
