@@ -17,7 +17,7 @@ namespace BoleteHell.Code.Gameplay.Damage
     
         public event Action OnDeath;
 
-        public static UnityEvent<GameObject, int> onDamaged; ////NIng
+        public static UnityAction<GameObject, int> onDamaged; ////NIng basically event
 
         public bool IsDead => CurrentHealth <= 0;
 
@@ -27,6 +27,7 @@ namespace BoleteHell.Code.Gameplay.Damage
                 return;
             
             CurrentHealth = Math.Max(0, CurrentHealth - damageAmount);
+            onDamaged?.Invoke(null, damageAmount); ////NIngstuff
 
             if (IsDead)
             {

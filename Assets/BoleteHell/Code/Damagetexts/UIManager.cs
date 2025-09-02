@@ -1,12 +1,28 @@
 using UnityEngine;
 using Zenject;
 using TMPro;
+using BoleteHell.Code.Gameplay.Damage;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject damagetextPrefab;
 
-    public Canvas gameCanvas; 
+    public Canvas gameCanvas;
+
+    public void Awake()
+    {
+        gameCanvas = FindFirstObjectByType<Canvas>();
+    }
+
+    private void OnEnable()
+    {
+        Health.onDamaged += (CharacterTookDamage);
+    }
+
+    private void OnDisable()
+    {
+        Health.onDamaged -= (CharacterTookDamage);
+    }
 
     public void CharacterTookDamage(GameObject character, int damageAmount)
     {
