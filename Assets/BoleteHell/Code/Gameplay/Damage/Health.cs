@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BoleteHell.Code.Gameplay.Damage
 {
@@ -15,7 +16,9 @@ namespace BoleteHell.Code.Gameplay.Damage
         public int CurrentHealth { get; private set; }
     
         public event Action OnDeath;
-        
+
+        public static UnityEvent<GameObject, int> onDamaged; ////NIng
+
         public bool IsDead => CurrentHealth <= 0;
 
         public void TakeDamage(int damageAmount)
