@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firingType: 1
   rateOfFire: 2
+  projectileSpeed: 10
   maxNumberOfBounces: 10
   maxRayDistance: 20
+  useCustomLifetime: 0
+  lifetime: 5
+  chargeTime: 0.5

@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.FiringLogic;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.ShotPatterns;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
@@ -18,7 +21,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
     }
     
     [Serializable]
-    public class Cannon
+    public class Cannon:IRequestManualInject
     {
         [ValidateInput("@laserDatas.Count > 0", "Must have at least one laser data.")] [SerializeField]
         private List<LaserData> laserDatas;
@@ -40,7 +43,21 @@ namespace BoleteHell.Code.Arsenal.Cannons
         
         private LaserCombo _laserCombo;
         private FiringLogic.FiringLogic _currentFiringLogic;
+
+        private ShotPattern pattern = new ();
         
+        //Nécéssaire pour calculer la rotation du pattern et peut être utilisé si on veut des éffet sur le N-ieme tir
+        private int shotCount;
+        private float _attackTimer = 100f;
+        private float _chargeTimer;
+        private bool canShoot;
+        private bool isCharged;
+        
+        [Inject]
+        private IGlobalCoroutine _coroutine;
+
+        private bool _isInjected;
+
         //Nécéssaire pour la création des Cannon a partir de l'éditeur
         public Cannon()
         {
@@ -49,7 +66,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         //TODO: Aucune idées si la création de raycannons par code fonctionne 
         //Pourrais être utile si on vaut faire que les ennemis on des weapon semi-random
         //genre les sniper ennemis on un sniper mais qui peut avoir un laser different par ennemis
-        public Cannon(List<LaserData> laserDatas,CannonData cannonData,ShotPatternMaster shotPatternData)
+        public Cannon(List<LaserData> laserDatas, CannonData cannonData, ShotPatternMaster shotPatternData)
         {
             usePatternMaster = true;
             this.laserDatas = laserDatas;
@@ -57,7 +74,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             shotPatternMaster = shotPatternData;
         }
         
-        public Cannon(List<LaserData> laserDatas,CannonData cannonData,List<ShotPatternData> bulletPatternData)
+        public Cannon(List<LaserData> laserDatas, CannonData cannonData, List<ShotPatternData> bulletPatternData)
         {
             usePatternMaster = false;
             this.laserDatas = laserDatas;
@@ -74,6 +91,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
             // Donc si on tire un laser qui explose, l'explosion ferait de base plus de dégât et serais plus grosse pour les laserBeams que les projectiles.
             // Peut-être devrions-nous avoir un enum FiringType dans le laser data qui permet de dire quel stats utiliser selon l'enum
             // Ça ne scale pas pantoute mais j'ai pas vraiment l'intention d'ajouter d'autres type de firing.
+            
+            ((IRequestManualInject)this).InjectDependencies();
+            
             if (laserDatas.Count == 0)
                 return;
 
@@ -85,21 +105,101 @@ namespace BoleteHell.Code.Arsenal.Cannons
                 FiringTypes.Charged => new LaserBeamLogic(),
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+            isCharged = !cannonData.WaitBeforeFiring;
         }
 
-        public void Shoot(Vector3 startPosition, Vector3 direction, GameObject instigator = null)
+        public void Tick()
         {
-            _currentFiringLogic?.Shoot(startPosition, direction, cannonData, _laserCombo, instigator);
+            if (!canShoot)
+            {
+                UpdateAttackTimer();
+            }
+        }
+
+        
+
+        public void TryShoot(Vector3 startPosition, Vector3 direction, GameObject instigator = null)
+        {
+            if (!canShoot) return;
+            
+            if (!isCharged)
+            {
+                ChargeShot();
+                return;
+            }
+
+            
+            FireProjectiles(startPosition, direction, instigator);
+        }
+
+        private void FireProjectiles(Vector3 startPosition, Vector3 direction, GameObject instigator)
+        {
+            foreach (ShotPatternData patternData in GetBulletPatterns())
+            {
+                List<ProjectileLaunchData> projectiles = pattern.Fire(patternData, startPosition, direction, instigator, shotCount);
+
+                for (int i = 0; i < patternData.burstShotCount; i++)
+                {
+                    _coroutine.Launch(RoutineFire(projectiles, patternData, instigator));
+                }
+            }
+            
+            shotCount++;
+            canShoot = false;
+            isCharged = false;
+            _attackTimer = 0f;
+            _chargeTimer = 0f;
+        }
+
+        private void UpdateAttackTimer()
+        {
+            if(_attackTimer < cannonData.rateOfFire)
+            {
+                _attackTimer += Time.deltaTime;
+            }
+            else
+            {
+                canShoot = true;
+            }
+        }
+
+        private void ChargeShot()
+        {
+            if (_chargeTimer < cannonData.chargeTime)
+            {
+                _chargeTimer += Time.deltaTime;
+            }
+            else
+            {
+                isCharged = true;
+            }
+        }
+
+        private IEnumerator RoutineFire(List<ProjectileLaunchData> projectileLaunchData, ShotPatternData  patternData, GameObject instigator)
+        {
+            foreach (ProjectileLaunchData launchData in projectileLaunchData)
+            {
+                _currentFiringLogic?.Shoot(launchData.StartPosition, launchData.Direction, cannonData, _laserCombo, instigator);
+            }
+            yield return new WaitForSeconds(patternData.burstShotCooldown);
         }
 
         public void FinishFiring()
         {
+            _chargeTimer = 0;
             _currentFiringLogic?.FinishFiring();
         }
 
         public List<ShotPatternData> GetBulletPatterns()
         {
             return usePatternMaster ? shotPatternMaster.patterns : bulletPatterns;
+        }
+
+        bool IRequestManualInject.IsInjected
+        {
+            get => _isInjected;
+            set => _isInjected = value;
         }
     }
 }

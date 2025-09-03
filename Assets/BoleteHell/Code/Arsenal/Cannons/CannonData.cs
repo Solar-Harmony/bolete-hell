@@ -32,6 +32,8 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] [ShowIf(nameof(useCustomLifetime))] [Unit(Units.Second)] [Min(0)]
         private float lifetime = 5.0f;
         
+        [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Tooltip("Time for the shot to be charged")] [Unit(Units.Second)] [Min(0)]
+        public float chargeTime;
         // TODO: I feel like we could move these 2 properties, since they're specific
         // to the FiringLogic they might be better placed there instead of branching everywhere
         public float Lifetime => useCustomLifetime ? lifetime : firingType switch
@@ -47,5 +49,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             FiringTypes.Charged => true,
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        
     }
 }

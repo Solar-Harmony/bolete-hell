@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6227788247584861831}
   - component: {fileID: 938295390074202206}
   - component: {fileID: 57039783232871073}
-  - component: {fileID: 5858263315430876513}
   - component: {fileID: -2775713761536112375}
   - component: {fileID: -6850370767394821370}
   - component: {fileID: 8833217652067245739}
@@ -170,18 +169,6 @@ MonoBehaviour:
         constantRotation: 0
         burstShotCount: 3
         burstShotCooldown: 0.3
---- !u!114 &5858263315430876513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9803254034568238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-2775713761536112375
 MonoBehaviour:
   m_ObjectHideFlags: 0
