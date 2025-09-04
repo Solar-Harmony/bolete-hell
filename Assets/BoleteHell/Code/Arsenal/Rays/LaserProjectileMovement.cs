@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BoleteHell.Code.Arsenal.Rays
 {
@@ -16,7 +17,7 @@ namespace BoleteHell.Code.Arsenal.Rays
          _rb = GetComponent<Rigidbody2D>();
       }
 
-      public event Action<Collider2D> OnCollide;
+      public UnityEvent<Collider2D> OnCollide;
    
       public void StartMovement(Vector2 direction, float speed)
       {
