@@ -1,0 +1,125 @@
+# When you have gitlab.sync.[entity].enabled: true, entities will be synced FROM GitLab to GitHub
+gitlab:
+  enabled: false
+  host: 'https://depot.dinf.usherbrooke.ca/' # Optional, defaults to gitlab.com
+  projectId: 4193
+  sync:
+    # 🔴 CRITICAL: Foundation for all sync operations (enabled by default)
+    branches:
+      enabled: false
+      protected: true
+      pattern: '*'
+      historySync:
+        enabled: true # Always enabled - required for proper timeline sync
+        strategy: 'merge-timelines'
+        createMergeCommits: true
+        mergeMessage: 'Sync: Merge timeline from {source} to {target}'
+      botBranches:
+        strategy: 'delete-orphaned' # 'delete-orphaned' | 'sync' | 'skip'
+        patterns: [] # Empty = use defaults, populated = override defaults entirely
+
+    # 🟡 HIGH: Core sync features - most users want these (enabled by default)
+    tags:
+      enabled: true # Auto-enabled if releases are enabled
+      divergentCommitStrategy: 'skip'
+      pattern: '*'
+
+    releases:
+      enabled: false
+      divergentCommitStrategy: 'skip'
+      latestReleaseStrategy: 'point-to-latest'
+      skipPreReleases: false
+      pattern: '*'
+      includeAssets: true
+
+    # 🟠 MEDIUM: Social features - can be noisy (disabled by default)
+    pullRequests:
+      enabled: false # Changed: Can be overwhelming, user choice
+      autoMerge: false
+      # Labels: Automatically syncs all original labels + adds 'synced' label
+      comments:
+        enabled: false # 🔵 LOW: Very noisy, advanced feature
+        attribution:
+          includeAuthor: true
+          includeTimestamp: true
+          includeSourceLink: true
+          format: 'quoted' # quoted | inline | minimal
+        handleUpdates: true
+        preserveFormatting: true
+        syncReplies: true
+
+    issues:
+      enabled: false # Changed: Can be very noisy, user choice
+      # Labels: Automatically syncs all original labels + adds 'synced' label
+      comments:
+        enabled: false # 🔵 LOW: Very noisy, advanced feature
+        attribution:
+          includeAuthor: true
+          includeTimestamp: true
+          includeSourceLink: true
+          format: 'quoted' # quoted | inline | minimal
+        handleUpdates: true
+        preserveFormatting: true
+        syncReplies: true
+
+# When you have github.sync.[entity].enabled: true, entities will be synced FROM GitHub to GitLab
+github:
+  enabled: true
+  sync:
+    # 🔴 CRITICAL: Foundation for all sync operations (enabled by default)
+    branches:
+      enabled: false
+      protected: true
+      pattern: '*'
+      historySync:
+        enabled: true # Always enabled - required for proper timeline sync
+        strategy: 'merge-timelines'
+        createMergeCommits: true
+        mergeMessage: 'Sync: Merge timeline from {source} to {target}'
+      botBranches:
+        strategy: 'delete-orphaned' # 'delete-orphaned' | 'sync' | 'skip'
+        patterns: [] # Empty = use defaults, populated = override defaults entirely
+
+    # 🟡 HIGH: Core sync features - most users want these (enabled by default)
+    tags:
+      enabled: true # Auto-enabled if releases are enabled
+      divergentCommitStrategy: 'skip'
+      pattern: '*'
+
+    releases:
+      enabled: false
+      divergentCommitStrategy: 'skip'
+      latestReleaseStrategy: 'point-to-latest'
+      skipPreReleases: false
+      pattern: '*'
+      includeAssets: true
+
+    # 🟠 MEDIUM: Social features - can be noisy (disabled by default)
+    pullRequests:
+      enabled: true
+      autoMerge: false
+      # Labels: Automatically syncs all original labels + adds 'synced' label
+      comments:
+        enabled: false # 🔵 LOW: Very noisy, advanced feature
+        attribution:
+          includeAuthor: true
+          includeTimestamp: true
+          includeSourceLink: true
+          format: 'quoted' # quoted | inline | minimal
+        handleUpdates: true
+        preserveFormatting: true
+        syncReplies: true
+
+    issues:
+      enabled: true
+      # Labels: Automatically syncs all original labels + adds 'synced' label
+      comments:
+        enabled: true
+        attribution:
+          includeAuthor: true
+          includeTimestamp: true
+          includeSourceLink: true
+          format: 'quoted' # quoted | inline | minimal
+        handleUpdates: true
+        preserveFormatting: true
+        syncReplies: true
