@@ -117,7 +117,7 @@ namespace BoleteHell.Code
                 .GetTypes()
                 .Where(t => typeof(IStatusEffect).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
                 .ForEach(type =>
-                {
+                { 
                     Container.Bind<IStatusEffect>().To(type).AsSingle();
                 });
         }

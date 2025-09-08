@@ -45,18 +45,37 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<StatusEffectDebugger>("Bolete Hell Status Effects");
-            ((IRequestManualInject)window).InjectDependencies();
-            
-            EditorApplication.playModeStateChanged += state =>
-            {
-                if (state == PlayModeStateChange.EnteredPlayMode)
-                {
-                    ((IRequestManualInject)window).InjectDependencies();
-                }
-            };
-            
+            window.TryInjectDependencies();
         }
 
+        private void OnEnable()
+        {
+            // Re-register the event handler each time the window is enabled
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        }
+
+        private void OnDisable()
+        {
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        }
+
+        private void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredPlayMode)
+            {
+                TryInjectDependencies();
+            }
+        }
+
+        private void TryInjectDependencies()
+        {
+            if (!Application.isPlaying)
+                return;
+
+            ((IRequestManualInject)this).InjectDependencies();
+        }
+        
         private void RegisterColumns(out Column sortColumn)
         {
             const float effectNameWidth = 150f;
@@ -89,9 +108,17 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
                 return;
             }
 
+            // Always try to inject if service is null and we're playing
             if (_statusEffectService == null)
             {
-                ((IRequestManualInject)this).InjectDependencies();
+                TryInjectDependencies();
+            }
+
+            // If still null after injection attempt, show error
+            if (_statusEffectService == null)
+            {
+                EditorGUILayout.HelpBox("Status Effect Service is not available. Make sure the game is running and dependencies are properly configured.", MessageType.Warning);
+                return;
             }
             
             DrawFilters();

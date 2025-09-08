@@ -14,7 +14,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
         public int damageEachTick = 10;
 
         protected override StatusEffectComparison Compare(StatusEffectConfig other)
-        {
+        { 
             if (other is not PoisonStatusEffectConfig otherPoison) 
                 return StatusEffectComparison.CannotCompare;
 

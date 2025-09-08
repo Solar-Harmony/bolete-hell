@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
-    public class StatusEffectService : IStatusEffectService, ITickable
+    public class StatusEffectService : IStatusEffectService, ITickable, IDisposable
     {
         [Inject]
         private List<IStatusEffect> _effects;
@@ -103,7 +104,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
             }
         }
 
-        private bool MatchesCondition(StatusEffectConfig config, StatusEffectStackCondition condition, IEnumerable<StatusEffectInstance> effectStack)
+        private static bool MatchesCondition(StatusEffectConfig config, StatusEffectStackCondition condition, IEnumerable<StatusEffectInstance> effectStack)
         {
             return condition switch
             {
@@ -112,6 +113,11 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                 StatusEffectStackCondition.OnlyIfWorse => effectStack.All(e => e.config.IsStrongerThan(config)),
                 _ => false
             };
+        }
+
+        public void Dispose()
+        {
+            _activeEffects.Clear();
         }
     }
 }
