@@ -19,6 +19,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 420089345060110432
+      type: {class: StatusEffectStackBehavior/Replace, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        condition: 2
     - rid: 8651057760533741568
       type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
@@ -28,13 +32,10 @@ MonoBehaviour:
     - rid: 8651058191220867157
       type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
-        isTransient: 1
+        isTransient: 0
         numTicks: 5
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 8651058191220867199
-        damageEachTick: 1
-    - rid: 8651058191220867199
-      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data: 
+          rid: 420089345060110432
+        damageEachTick: 2

@@ -12,6 +12,23 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
     {
         [MinValue(1)]
         public int damageEachTick = 10;
+
+        protected override StatusEffectComparison Compare(StatusEffectConfig other)
+        {
+            if (other is not PoisonStatusEffectConfig otherPoison) 
+                return StatusEffectComparison.CannotCompare;
+
+            var potency = damageEachTick * duration;
+            var otherPotency = otherPoison.damageEachTick * otherPoison.duration;
+            
+            if (potency > otherPotency)
+                return StatusEffectComparison.Stronger;
+            
+            if (potency < otherPotency)
+                return StatusEffectComparison.Weaker;
+            
+            return StatusEffectComparison.Equal;
+        }
     }
     
     public sealed class PoisonStatusEffect : IStatusEffect<PoisonStatusEffectConfig>
@@ -34,7 +51,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
                 damageable.Health.TakeDamage(config.damageEachTick);
             }
 
-            if (target is ISceneObject sceneObject)
+            if (target is ISceneObject sceneObject) 
             {
                 _audioPlayer.PlaySoundAsync("sfx_poison", sceneObject.Position);
                 _transientLightPool.Spawn(sceneObject.Position, 1.2f, 0.5f);

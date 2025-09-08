@@ -39,19 +39,41 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         [ShowInInspector, HideLabel, ReadOnly]
         private string info => $"This status effect will last {duration}s";
 
-        public virtual bool IsStrongerThan(StatusEffectConfig other)
+        protected virtual StatusEffectComparison Compare(StatusEffectConfig other)
         {
-            return duration > other.duration;
+            if (GetType() != other?.GetType())
+                return StatusEffectComparison.CannotCompare;
+            
+            if (duration > other.duration)
+                return StatusEffectComparison.Stronger;
+            
+            if (Mathf.Approximately(duration, other.duration))
+                return StatusEffectComparison.Equal;
+            
+            return StatusEffectComparison.Weaker;
+        }
+        
+        public bool IsStrongerThan(StatusEffectConfig other)
+        {
+            return Compare(other) == StatusEffectComparison.Stronger;
         }
 
-        public virtual bool IsEquallyPowerfulAs(StatusEffectConfig other)
+        public bool IsEquallyPowerfulAs(StatusEffectConfig other)
         {
-            return Mathf.Approximately(duration, other.duration);
+            return Compare(other) == StatusEffectComparison.Equal;
         }
 
         public bool IsWeakerThan(StatusEffectConfig other)
         {
-            return !IsStrongerThan(other) && !IsEquallyPowerfulAs(other);
+            return Compare(other) == StatusEffectComparison.Weaker;
         }
+    }
+
+    public enum StatusEffectComparison
+    {
+        CannotCompare,
+        Stronger,
+        Equal,
+        Weaker,
     }
 }
