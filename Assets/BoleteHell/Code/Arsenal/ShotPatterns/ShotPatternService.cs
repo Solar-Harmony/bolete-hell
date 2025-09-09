@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.ShotPatterns
 {
-    public class ShotPattern
+    public class ShotPatternService : IShotPatternService
     {
-        public List<ShotLaunchParams> Fire(ShotPatternData pattern, ShotLaunchParams parameters, int shotCount)
+        public List<ShotLaunchParams> ComputeSpawnPoints(ShotPatternData pattern, ShotLaunchParams parameters, int shotCount)
         {
             float spawnDistance = parameters.Instigator
                 ? Vector3.Distance(parameters.Instigator.transform.position, parameters.SpawnPosition)
@@ -17,14 +17,14 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             
             for (int i = 0; i < pattern.numberOfBulletShot; i++)
             {
-                float currentAngle = SetBulletAngle(pattern.numberOfBulletShot, i, maxSideAngle);
-                projectileData.Add(SetupBulletPosition(pattern, currentAngle, spawnDistance, parameters, shotCount));
+                float currentAngle = SetProjectileAngle(pattern.numberOfBulletShot, i, maxSideAngle);
+                projectileData.Add(ApplyPatternTransform(pattern, currentAngle, spawnDistance, parameters, shotCount));
             }
 
             return projectileData;
         }
         
-        private static float SetBulletAngle(int numberOfBullets, int index, int maxSideAngle)
+        private float SetProjectileAngle(int numberOfBullets, int index, int maxSideAngle)
         {
             if (numberOfBullets == 1)
             {
@@ -36,7 +36,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             return Mathf.Lerp(-maxSideAngle, maxSideAngle, t);
         }
 
-        private static ShotLaunchParams SetupBulletPosition(ShotPatternData pattern, float currentAngle, float spawnDistance, ShotLaunchParams parameters, int shotCount)
+        private ShotLaunchParams ApplyPatternTransform(ShotPatternData pattern, float currentAngle, float spawnDistance, ShotLaunchParams parameters, int shotCount)
         {
             Quaternion rotation2D = Quaternion.Euler(0, 0, currentAngle + pattern.startingRotation + (shotCount * pattern.constantRotation));
             

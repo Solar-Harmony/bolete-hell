@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using BoleteHell.Code.Arsenal.FiringLogic;
-using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Utils;
 using UnityEngine;
@@ -12,39 +9,13 @@ namespace BoleteHell.Code.Arsenal.Cannons
 {
     public record ShotLaunchParams(Vector2 SpawnPosition, Vector2 SpawnDirection, GameObject Instigator);
 
-    public class CannonInstance
-    {
-        public readonly LaserCombo LaserCombo;
-        public readonly CannonConfig Config;
-        public readonly FiringLogic.FiringLogic CurrentFiringLogic;
-        public readonly ShotPattern Pattern = new();
-        public int ShotCount = 0;
-        public float AttackTimer = 100f;
-        public float ChargeTimer = 0f;
-        public bool CanShoot = false;
-        public bool IsCharged = false;
-
-        public CannonInstance(CannonConfig config)
-        {
-            if (config.laserDatas.Count == 0)
-                throw new ArgumentException("CannonConfig must have at least one LaserData");
-            
-            Config = config;
-            LaserCombo = new LaserCombo(config.laserDatas);
-            CurrentFiringLogic = config.cannonData.firingType switch
-            {
-                FiringTypes.Automatic => new LaserProjectileLogic(),
-                FiringTypes.Charged => new LaserBeamLogic(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            IsCharged = !config.cannonData.WaitBeforeFiring;
-        }
-    }
-
     public class CannonService : ICannonService
     {
         [Inject]
         private IGlobalCoroutine _coroutine;
+        
+        [Inject]
+        private IShotPatternService _patternService;
 
         public void Tick(CannonInstance cannon)
         {
@@ -78,7 +49,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         {
             foreach (ShotPatternData patternData in cannon.Config.GetBulletPatterns())
             {
-                List<ShotLaunchParams> projectiles = cannon.Pattern.Fire(patternData, parameters, cannon.ShotCount);
+                List<ShotLaunchParams> projectiles = _patternService.ComputeSpawnPoints(patternData, parameters, cannon.ShotCount);
                 
                 for (int i = 0; i < patternData.burstShotCount; i++)
                 {

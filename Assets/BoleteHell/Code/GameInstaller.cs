@@ -1,5 +1,6 @@
 ﻿using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Arsenal.Cannons;
+using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Destructible;
@@ -63,6 +64,7 @@ namespace BoleteHell.Code
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
             Container.Bind<IDirector>().To<Director>().AsSingle();
             Container.Bind<ICannonService>().To<CannonService>().AsSingle();
+            Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IBaseService>().To<BaseService>().AsSingle();
 
             // UI
