@@ -11,14 +11,13 @@ using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
-    //Automatic: Plein de petit laser
-    //Charged: Charge puis tire un laser instant
-    //Constant: tire un laser de manière constante
     public enum FiringTypes
     {
-        Automatic,
-        Charged,
+        Automatic, // Plein de petits lasers
+        Charged,   // Charge puis tire un laser instant
     }
+    
+    public record ShotParams(Vector2 SpawnPosition, Vector2 SpawnDirection, GameObject Instigator);
     
     [Serializable]
     public class Cannon : IRequestManualInject
@@ -84,7 +83,6 @@ namespace BoleteHell.Code.Arsenal.Cannons
 
         public void Init()
         {
-            
             // J'ai envie d'avoir des stats de laser on hit différentes selon le firing type du weapon qui l'équipe.
             // Donc si on tire un laser qui explose, l'explosion ferait de base plus de dégât et serais plus grosse pour les laserBeams que les projectiles.
             // Peut-être devrions-nous avoir un enum FiringType dans le laser data qui permet de dire quel stats utiliser selon l'enum
@@ -135,8 +133,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
         {
             foreach (ShotPatternData patternData in GetBulletPatterns())
             {
-                List<ProjectileLaunchData> projectiles = pattern.Fire(patternData, startPosition, direction, instigator, shotCount);
-
+                var shotParams = new ShotParams(startPosition, direction, instigator);
+                List<ProjectileLaunchData> projectiles = pattern.Fire(patternData, shotParams, shotCount);
+                
                 for (int i = 0; i < patternData.burstShotCount; i++)
                 {
                     _coroutine.Launch(RoutineFire(projectiles, patternData, instigator));

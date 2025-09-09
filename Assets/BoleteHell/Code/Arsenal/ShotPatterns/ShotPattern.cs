@@ -8,7 +8,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
 
     public class ShotPattern
     {
-        public static List<ProjectileLaunchData> Fire(ShotPatternData pattern, ShotParams parameters, int shotCount)
+        public List<ProjectileLaunchData> Fire(ShotPatternData pattern, ShotParams parameters, int shotCount)
         {
             float spawnDistance = parameters.Instigator
                 ? Vector3.Distance(parameters.Instigator.transform.position, parameters.SpawnPosition)
