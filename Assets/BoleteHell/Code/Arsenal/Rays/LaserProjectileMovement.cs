@@ -17,7 +17,7 @@ namespace BoleteHell.Code.Arsenal.Rays
          _rb = GetComponent<Rigidbody2D>();
       }
 
-      public UnityEvent<Collider2D> OnCollide;
+      public event Action<Collider2D> OnCollide;
    
       public void StartMovement(Vector2 direction, float speed)
       {
@@ -47,6 +47,11 @@ namespace BoleteHell.Code.Arsenal.Rays
       private void OnTriggerExit2D(Collider2D other)
       {
          _isColliding = false;
+      }
+
+      public void RemoveCollideListeners()
+      {
+         OnCollide = null;
       }
    }
 }
