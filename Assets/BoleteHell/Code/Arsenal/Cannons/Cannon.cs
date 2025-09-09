@@ -21,7 +21,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
     }
     
     [Serializable]
-    public class Cannon:IRequestManualInject
+    public class Cannon : IRequestManualInject
     {
         [ValidateInput("@laserDatas.Count > 0", "Must have at least one laser data.")] [SerializeField]
         private List<LaserData> laserDatas;
@@ -84,8 +84,6 @@ namespace BoleteHell.Code.Arsenal.Cannons
 
         public void Init()
         {
-            //TODO:
-            //cloner les laser data
             
             // J'ai envie d'avoir des stats de laser on hit différentes selon le firing type du weapon qui l'équipe.
             // Donc si on tire un laser qui explose, l'explosion ferait de base plus de dégât et serais plus grosse pour les laserBeams que les projectiles.

@@ -36,17 +36,7 @@ namespace BoleteHell.Code.Arsenal
                 rayCannon.Init();
             }
         }
-        //TODO: faire une méthode tick dans les cannon,
-        //Ajouter une méthode update ici qui call le tick du weapon courrant
-        //Le tick update la valeur du timer de charge et le timer entre le tir du weapon 
-        //Afin de déterminer si le joueur devrait pouvoir tirer ou pas
-        
-        //Je ne peut pas avoir de update dans les weapons et cette manière permet de seulement update le weapon courrant
-        //Je ne peut pas avoir de bool dans le cannon data qui permettrais a d'autre script de savoir si le cannon peut tirer ou pas 
-        //car le cannon data est un scriptable object et donc le modifier pour un le modifie pour tout les autres
-        //Je pourrais faire la vérification dans le shotPattern mais je ne suis pas un fan,
-        //le shot pattern devrait seulement gerer le tir du pattern et c'est tout
-
+       
         private void Update()
         {
             GetSelectedWeapon().Tick();
