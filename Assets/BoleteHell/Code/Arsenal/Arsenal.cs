@@ -59,7 +59,7 @@ namespace BoleteHell.Code.Arsenal
             // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
-            var shotParams = new ShotParams(spawnPosition, direction, this.gameObject);
+            var shotParams = new ShotLaunchParams(spawnPosition, direction, this.gameObject);
             
             _cannonService.TryShoot(GetSelectedWeapon(), shotParams);
         }

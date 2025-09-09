@@ -10,7 +10,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
-    public record ShotParams(Vector2 SpawnPosition, Vector2 SpawnDirection, GameObject Instigator);
+    public record ShotLaunchParams(Vector2 SpawnPosition, Vector2 SpawnDirection, GameObject Instigator);
 
     public class CannonInstance
     {
@@ -61,7 +61,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
         
-        public void TryShoot(CannonInstance cannon, ShotParams parameters)
+        public void TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
         {
             if (!cannon.CanShoot) return;
             
@@ -74,11 +74,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
             FireProjectiles(cannon, parameters);
         }
 
-        private void FireProjectiles(CannonInstance cannon, ShotParams parameters)
+        private void FireProjectiles(CannonInstance cannon, ShotLaunchParams parameters)
         {
             foreach (ShotPatternData patternData in cannon.Config.GetBulletPatterns())
             {
-                List<ProjectileLaunchData> projectiles = cannon.Pattern.Fire(patternData, parameters, cannon.ShotCount);
+                List<ShotLaunchParams> projectiles = cannon.Pattern.Fire(patternData, parameters, cannon.ShotCount);
                 
                 for (int i = 0; i < patternData.burstShotCount; i++)
                 {
@@ -105,11 +105,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
 
-        private IEnumerator RoutineFire(CannonInstance cannon, List<ProjectileLaunchData> projectileLaunchData, ShotPatternData patternData, GameObject instigator)
+        private IEnumerator RoutineFire(CannonInstance cannon, List<ShotLaunchParams> projectileLaunchData, ShotPatternData patternData, GameObject instigator)
         {
-            foreach (ProjectileLaunchData launchData in projectileLaunchData)
+            foreach (ShotLaunchParams launchData in projectileLaunchData)
             {
-                cannon.CurrentFiringLogic?.Shoot(launchData.StartPosition, launchData.Direction, cannon.Config.cannonData, cannon.LaserCombo, instigator);
+                cannon.CurrentFiringLogic?.Shoot(launchData.SpawnPosition, launchData.SpawnDirection, cannon.Config.cannonData, cannon.LaserCombo, instigator);
             }
             yield return new WaitForSeconds(patternData.burstShotCooldown);
         }
