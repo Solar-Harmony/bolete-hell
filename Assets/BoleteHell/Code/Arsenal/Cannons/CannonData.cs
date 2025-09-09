@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
-    //Peut-être déplacer l'information dans les bulletPatterns directement
-    //Mais le fait de garder le firingType séparer du BulletPatternData permet d'utiliser le même BulletPatternData pour n'importe quel type de projectile
-    //Sans avoir a faire un BulletPatternData par type
     [CreateAssetMenu(fileName = "CannonData", menuName = "BoleteHell/Arsenal/Cannon", order = -100)]
     public class CannonData : ScriptableObject
     { 
@@ -34,8 +31,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         
         [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Tooltip("Time for the shot to be charged")] [Unit(Units.Second)] [Min(0)]
         public float chargeTime;
-        // TODO: I feel like we could move these 2 properties, since they're specific
-        // to the FiringLogic they might be better placed there instead of branching everywhere
+        
         public float Lifetime => useCustomLifetime ? lifetime : firingType switch
         {
             FiringTypes.Automatic => 20.0f,
@@ -49,7 +45,5 @@ namespace BoleteHell.Code.Arsenal.Cannons
             FiringTypes.Charged => true,
             _ => throw new ArgumentOutOfRangeException()
         };
-        
-        
     }
 }
