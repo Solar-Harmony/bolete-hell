@@ -24,6 +24,7 @@ namespace BoleteHell.Code
         
         public void InjectDependencies()
         {
+            // FIXME: This fails for certain dependencies
             // if (IsInjected)
             //     return; 
             
