@@ -2,6 +2,7 @@
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
 using Unity.VisualScripting;
@@ -10,7 +11,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, ITargetable, ISceneObject
+    public abstract class Character : MonoBehaviour, ITargetable, ISceneObject, IStatusEffectTarget
     {
         [SerializeField]
         public Health health;
