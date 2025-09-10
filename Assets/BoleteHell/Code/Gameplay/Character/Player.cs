@@ -17,11 +17,17 @@ namespace BoleteHell.Code.Gameplay.Character
                 _outcome.TriggerDefeat("You have died");
             };
         }
+
+        private void Update()
+        {
+            Energy?.Replenish(Time.deltaTime);
+        }
         
         private void OnGUI()
         {
             GUI.skin.label.fontSize = 32;
             GUI.Label(new Rect(10, 10, 300, 80), "Health: " + Health.CurrentHealth);
+            GUI.Label(new Rect(10, 50, 300, 80), $"Energy: {Energy?.currentEnergy:F0} / {Energy?.maxEnergy}");
         }
     }
 }

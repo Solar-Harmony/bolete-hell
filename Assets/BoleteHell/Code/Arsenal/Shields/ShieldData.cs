@@ -1,4 +1,5 @@
 using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
+using BoleteHell.Code.Gameplay.Character;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -21,14 +22,22 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private ShieldPreviewDrawer lineDrawer;
         
+        [field: SerializeField]
+        [MinValue(0f)]
+        public float EnergyCostPerCm { get; set; } = 10f;
+
+        private Player _player;
+        
         public void StartLine()
         {
             var obj = Instantiate(shieldPreview);
             lineDrawer = obj.GetComponent<ShieldPreviewDrawer>();
+            _player = FindFirstObjectByType<Player>();
         }
 
         public void DrawShieldPreview(Vector3 nextPos)
         {
+            lineDrawer.Initialize(_player, this);
             lineDrawer.DrawPreview(nextPos);
         }
 

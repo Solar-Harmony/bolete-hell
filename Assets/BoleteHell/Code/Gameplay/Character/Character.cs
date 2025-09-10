@@ -5,7 +5,6 @@ using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +19,9 @@ namespace BoleteHell.Code.Gameplay.Character
         
         [field: SerializeField]
         public float MovementSpeed { get; set; } = 5f;
+        
+        [field: SerializeField]
+        public Energy Energy { get; private set; }
 
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
@@ -68,7 +70,9 @@ namespace BoleteHell.Code.Gameplay.Character
             {
                 ParticleSystem.MainModule mainModule = _fire.main;
                 float alpha =  1 - (Health.CurrentHealth / (float)Health.MaxHealth);
-                mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
+                var color = _fire.main.startColor.color;
+                color.a = alpha;
+                mainModule.startColor = color;
             }
         }
     }
