@@ -1,4 +1,5 @@
 ﻿using BoleteHell.Code.Gameplay.GameState;
+using BoleteHell.Code.Input;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,9 @@ namespace BoleteHell.Code.Gameplay.Character
     {
         [Inject]
         private IGameOutcomeService _outcome;
+        
+        [Inject]
+        private IInputDispatcher _inputDispatcher;
         
         protected override void Awake()
         {
@@ -20,7 +24,10 @@ namespace BoleteHell.Code.Gameplay.Character
 
         private void Update()
         {
-            Energy?.Replenish(Time.deltaTime);
+            if (!_inputDispatcher.IsDrawingShield)
+            {
+                Energy?.Replenish(Time.deltaTime);
+            }
         }
         
         private void OnGUI()

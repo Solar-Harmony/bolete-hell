@@ -7,11 +7,11 @@ namespace BoleteHell.Code.Gameplay.Character
     public class Energy
     {
         [SerializeField]
-        public float maxEnergy = 100f;
+        public float maxEnergy = 150f;
         
         [SerializeField]
         [Tooltip("energy/s")]
-        public float regenRate = 10f;
+        public float regenRate = 20f;
         
         [SerializeField]
         public float currentEnergy = 100f;
