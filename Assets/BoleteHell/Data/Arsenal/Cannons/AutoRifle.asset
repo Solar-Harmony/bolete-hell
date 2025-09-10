@@ -19,3 +19,4 @@ MonoBehaviour:
   maxRayDistance: 10
   useCustomLifetime: 0
   lifetime: 11.57
+  chargeTime: 0

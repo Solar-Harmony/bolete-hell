@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BoleteHell.Code.Arsenal.Rays
 {
@@ -46,6 +47,11 @@ namespace BoleteHell.Code.Arsenal.Rays
       private void OnTriggerExit2D(Collider2D other)
       {
          _isColliding = false;
+      }
+
+      public void RemoveCollideListeners()
+      {
+         OnCollide = null;
       }
    }
 }

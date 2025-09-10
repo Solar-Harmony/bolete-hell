@@ -17,14 +17,14 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             reservedRenderer.transform.position = bulletSpawnPoint;
             reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime);
             var projectile = reservedRenderer.SetupProjectileLaser(direction, data.projectileSpeed);
-            projectile.OnCollide +=  (hit) =>
+            projectile.OnCollide += ((hit) =>
             {
                 ITargetable.Context context = new(hit.gameObject, instigator, projectile.gameObject, projectile.gameObject.transform.position, direction, laserCombo);
                 OnHit(context, resp =>
                 {
                     projectile.SetDirection(resp.Direction);
                 });
-            }; 
+            });  
         }
     
         public override void FinishFiring()

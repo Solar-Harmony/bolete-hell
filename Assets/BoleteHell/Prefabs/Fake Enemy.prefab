@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
   - component: {fileID: 2877549176397520493}
-  - component: {fileID: 2835406013110666550}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
   - component: {fileID: 8131877402109793878}
@@ -221,32 +220,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.79
-  cannons:
-  - rid: 7223671017346170967
+  cannonConfigs:
+  - rid: 420089513965518929
   references:
     version: 2
     RefIds:
-    - rid: 7223671017346170967
-      type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+    - rid: 420089513965518929
+      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+        - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
---- !u!114 &2835406013110666550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &7099119133421844960
 Rigidbody2D:
   serializedVersion: 5

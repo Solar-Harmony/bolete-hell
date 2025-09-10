@@ -6,5 +6,5 @@ namespace BoleteHell.Code.Utils
     public interface IGlobalCoroutine
     {
         Coroutine Launch(IEnumerator routine);
-    }
+    } 
 }
