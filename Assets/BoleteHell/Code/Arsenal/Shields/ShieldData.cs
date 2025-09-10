@@ -20,6 +20,9 @@ namespace BoleteHell.Code.Arsenal.Shields
         [SerializeField] 
         private GameObject shieldPreview;
         
+        [SerializeField]
+        public float despawnTime = 3f;
+        
         private ShieldPreviewDrawer lineDrawer;
         
         [field: SerializeField]
