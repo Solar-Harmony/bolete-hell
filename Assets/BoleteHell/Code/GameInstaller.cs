@@ -1,5 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Arsenal.Cannons;
+using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Audio;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Character;
@@ -28,11 +30,11 @@ namespace BoleteHell.Code
         
         public void InjectDependencies()
         {
-            // TODO: I dont remember why this is commented lmao
+            // FIXME: This fails for certain dependencies
             // if (IsInjected)
             //     return; 
             
-            GameInstaller.staticContainer?.Inject(this);
+            GameInstaller.StaticContainer?.Inject(this);
             IsInjected = true;
         }
     }
@@ -40,7 +42,7 @@ namespace BoleteHell.Code
     public class GameInstaller : MonoInstaller
     {
         // TODO: This should not be internal lol
-        internal static DiContainer staticContainer;
+        internal static DiContainer StaticContainer;
         
         // TODO: This can be moved to per service settings
         [SerializeField]
@@ -55,9 +57,15 @@ namespace BoleteHell.Code
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
-            staticContainer = Container;
-            
-            Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
+            StaticContainer = Container;
+
+            // the player (temp?)
+            var player = FindFirstObjectByType<Player>();
+            Debug.Assert(player);
+            Container
+                .Bind<ISceneObject>()
+                .WithId("Player")
+                .FromInstance(player);
             
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputDispatcher>().AsSingle();
@@ -67,42 +75,23 @@ namespace BoleteHell.Code
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
             Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
+            
+            // gameplay
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
             Container.Bind<IDirector>().To<Director>().AsSingle();
-            
-            Container.Bind<VictoryScreen>()
-                .FromComponentInNewPrefabResource("UI/VictoryScreen")
-                .UnderTransformGroup("UI")
-                .AsSingle()
-                .NonLazy();
-            
-            BindMemoryPools();
-
-            // temp
-            var player = FindFirstObjectByType<Player>();
-            Debug.Assert(player);
-            Container
-                .Bind<ISceneObject>()
-                .WithId("Player")
-                .FromInstance(player);
-            
-            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
-
-            BindStatusEffects();
-            Container.BindInterfacesTo<StatusEffectService>().AsSingle();
-            
+            Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<ICannonService>().To<CannonService>().AsSingle();
+            Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
-        }
-
-        private void BindMemoryPools()
-        {
+            BindStatusEffects();
+            
+            // pools
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)
                 .WithMaxSize(50)
                 .ExpandByOneAtATime()
                 .FromComponentInNewPrefab(transientLightPrefab)
                 .UnderTransformGroup("TransientLights");
-
             Container.BindMemoryPool<SpriteFragment, SpriteFragment.Pool>()
                 .WithInitialSize(30)
                 .WithMaxSize(250)
@@ -120,6 +109,8 @@ namespace BoleteHell.Code
                 { 
                     Container.Bind<IStatusEffect>().To(type).AsSingle();
                 });
+            
+            Container.BindInterfacesTo<StatusEffectService>().AsSingle();
         }
     }
 }

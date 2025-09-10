@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
-using BoleteHell.Code.Arsenal.ShotPatterns;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal
 {
     //Chaque RayCannonManager a son propre BulletPattern ,permet chaque a unité d'avoir son propre timer de pattern
-    [RequireComponent(typeof(ShotPattern))]
     public class Arsenal : MonoBehaviour
     {
         [ShowInInspector, LabelText("Custom Spawn Origin")]
@@ -20,10 +19,13 @@ namespace BoleteHell.Code.Arsenal
         private float spawnRadius = 5.0f;
         
         [SerializeReference] [HideReferenceObjectPicker] 
-        private List<Cannon> cannons;
+        private List<CannonConfig> cannonConfigs;
+
+        [Inject]
+        private ICannonService _cannonService;
         
-        private ShotPattern _pattern;
         private int _selectedCannonIndex;
+        private readonly List<CannonInstance> _cannons = new();
         
         private void OnDrawGizmosSelected()
         {
@@ -33,16 +35,22 @@ namespace BoleteHell.Code.Arsenal
 
         private void Start()
         {
-            _pattern = GetComponent<ShotPattern>();
-            foreach (Cannon rayCannon in cannons)
+            foreach (CannonConfig cannonConfig in cannonConfigs)
             {
-                rayCannon.Init();
+                // TODO: we can simplify this
+                var instance = new CannonInstance(cannonConfig);
+                _cannons.Add(instance);
             }
+        }
+       
+        private void Update()
+        {
+            _cannonService.Tick(GetSelectedWeapon());
         }
 
         public void Shoot(Vector2 direction)
         {
-            if (cannons.Count == 0)
+            if (cannonConfigs.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
                 return;
@@ -51,18 +59,20 @@ namespace BoleteHell.Code.Arsenal
             // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
-            _pattern.Shoot(GetSelectedWeapon(), spawnPosition, direction);
+            var shotParams = new ShotLaunchParams(spawnPosition, direction, this.gameObject);
+            
+            _cannonService.TryShoot(GetSelectedWeapon(), shotParams);
         }
         
         public float GetProjectileSpeed()
         {
-            if (cannons.Count == 0)
+            if (cannonConfigs.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
                 return 0.0f;
             }
             
-            CannonData data = GetSelectedWeapon().cannonData;
+            CannonData data = GetSelectedWeapon().Config.cannonData;
             return data.firingType switch
             {
                 FiringTypes.Automatic => data.projectileSpeed,
@@ -73,42 +83,40 @@ namespace BoleteHell.Code.Arsenal
     
         public void CycleWeapons(int value)
         {
-            if (cannons.Count <= 1)
+            if (cannonConfigs.Count <= 1)
             {
                 Debug.LogWarning("No weapons to cycle trough");
                 return;
             }
 
-            _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
+            _selectedCannonIndex = (_selectedCannonIndex + value + cannonConfigs.Count) % cannonConfigs.Count;
 
-            Debug.Log($"selected {GetSelectedWeapon().cannonData.name}");
+            Debug.Log($"selected {GetSelectedWeapon().Config.cannonData.name}");
         }
     
-        public Cannon GetSelectedWeapon()
+        public CannonInstance GetSelectedWeapon()
         {
-            if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannons.Count)
+            if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannonConfigs.Count)
             {
                 return null;
             }
 
-            if (cannons[_selectedCannonIndex] == null)
+            if (cannonConfigs[_selectedCannonIndex] == null)
             {
                 Debug.LogWarning("No weapons equipped");
                 return null;
             }
             
-            return cannons[_selectedCannonIndex];
+            return _cannons[_selectedCannonIndex];
         }
     
         public void OnShootCanceled()
         {
-            GetSelectedWeapon()?.FinishFiring();
-        }
-
-        public void AddNewWeapon(Cannon cannon)
-        {
-            cannon.Init();
-            cannons.Add(cannon);
+            CannonInstance selectedWeapon = GetSelectedWeapon();
+            if (selectedWeapon == null) 
+                return;
+            
+            _cannonService.FinishFiring(selectedWeapon);
         }
 
         private void OnDestroy()

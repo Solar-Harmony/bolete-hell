@@ -82,6 +82,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             _rb.linearVelocity = Vector2.zero;
             _lineRenderer.numCapVertices = 0;
             _isProjectile = false;
+            _movement.RemoveCollideListeners();
         }
     }
 }

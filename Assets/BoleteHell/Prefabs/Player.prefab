@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6227788247584861831}
   - component: {fileID: 938295390074202206}
   - component: {fileID: 57039783232871073}
-  - component: {fileID: 5858263315430876513}
   - component: {fileID: -2775713761536112375}
   - component: {fileID: -6850370767394821370}
   - component: {fileID: 8833217652067245739}
@@ -136,14 +135,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.71
-  cannons:
-  - rid: 7223671017346170964
-  - rid: 7223671017346170965
+  cannonConfigs:
+  - rid: 420089513965518930
+  - rid: 420089513965518931
   references:
     version: 2
     RefIds:
-    - rid: 7223671017346170964
-      type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+    - rid: 420089513965518930
+      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
@@ -151,8 +150,8 @@ MonoBehaviour:
         usePatternMaster: 1
         bulletPatterns: []
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
-    - rid: 7223671017346170965
-      type: {class: Cannon, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+    - rid: 420089513965518931
+      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
@@ -160,18 +159,6 @@ MonoBehaviour:
         usePatternMaster: 1
         bulletPatterns: []
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
---- !u!114 &5858263315430876513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9803254034568238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b787fa379dc0b894fa2e43f2da93d043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-2775713761536112375
 MonoBehaviour:
   m_ObjectHideFlags: 0
