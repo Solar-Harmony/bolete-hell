@@ -11,7 +11,6 @@ using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Gameplay.Input;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
-using BoleteHell.Code.UI;
 using BoleteHell.Code.Utils;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -67,23 +66,26 @@ namespace BoleteHell.Code
                 .WithId("Player")
                 .FromInstance(player);
             
+            // gameplay
+            Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
+            Container.Bind<IDirector>().To<Director>().AsSingle();
+            Container.Bind<ICannonService>().To<CannonService>().AsSingle();
+            Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
+            Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
+            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
+            BindStatusEffects();
+            
+            // input
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputDispatcher>().AsSingle();
             Container.Bind<IInputState>().To<InputState>().AsSingle();
 
+            // utils
+            Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
             Container.Bind<ISpriteFragmenter>().To<SpriteFragmenter>().AsSingle();
             Container.Bind<ITargetingUtils>().To<TargetingUtils>().AsSingle();
             Container.Bind<IObjectInstantiator>().To<ObjectInstantiator>().AsSingle();
             Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
-            
-            // gameplay
-            Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
-            Container.Bind<IDirector>().To<Director>().AsSingle();
-            Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
-            Container.Bind<ICannonService>().To<CannonService>().AsSingle();
-            Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
-            Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
-            BindStatusEffects();
             
             // pools
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()

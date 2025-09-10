@@ -229,7 +229,7 @@ MonoBehaviour:
       type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: 7503652498e34364ba25bda0e2de7a76, type: 2}
+        - {fileID: 11400000, guid: 4b65c3760f1cdb84394d12f0e2ba6869, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
