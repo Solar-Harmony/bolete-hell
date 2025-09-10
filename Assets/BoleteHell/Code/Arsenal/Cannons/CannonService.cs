@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
     public class CannonService : ICannonService
     {
         [Inject]
-        private IGlobalCoroutine _coroutine;
+        private ICoroutineProvider _coroutine;
         
         [Inject]
         private IShotPatternService _patternService;
@@ -53,7 +53,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
                 
                 for (int i = 0; i < patternData.burstShotCount; i++)
                 {
-                    _coroutine.Launch(RoutineFire(cannon, projectiles, patternData, parameters.Instigator));
+                    _coroutine.StartCoroutine(RoutineFire(cannon, projectiles, patternData, parameters.Instigator));
                 }
             }
             
