@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7800540844462225391}
+  - component: {fileID: 57039783232871073}
   - component: {fileID: 4327110905113141562}
   - component: {fileID: 6227788247584861831}
   - component: {fileID: 938295390074202206}
-  - component: {fileID: 57039783232871073}
   - component: {fileID: -2775713761536112375}
   - component: {fileID: -6850370767394821370}
   - component: {fileID: 8833217652067245739}
@@ -45,6 +45,44 @@ Transform:
   - {fileID: 1398748979581358320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &57039783232871073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnDistance: {fileID: 0}
+  spawnRadius: 0.71
+  cannonConfigs:
+  - rid: 420089513965518930
+  - rid: 420089513965518931
+  references:
+    version: 2
+    RefIds:
+    - rid: 420089513965518930
+      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+      data:
+        laserDatas:
+        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
+        usePatternMaster: 1
+        bulletPatterns: []
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    - rid: 420089513965518931
+      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
+      data:
+        laserDatas:
+        - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
+        cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+        usePatternMaster: 1
+        bulletPatterns: []
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!50 &4327110905113141562
 Rigidbody2D:
   serializedVersion: 5
@@ -121,44 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipExhaust: {fileID: 1762079061245450209}
---- !u!114 &57039783232871073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9803254034568238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 0}
-  spawnRadius: 0.71
-  cannonConfigs:
-  - rid: 420089513965518930
-  - rid: 420089513965518931
-  references:
-    version: 2
-    RefIds:
-    - rid: 420089513965518930
-      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
-      data:
-        laserDatas:
-        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
-        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        usePatternMaster: 1
-        bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
-    - rid: 420089513965518931
-      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
-      data:
-        laserDatas:
-        - {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
-        cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
-        usePatternMaster: 1
-        bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!114 &-2775713761536112375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,9 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620760ddc4214ec6b73512a1bd423c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
+  <Health>k__BackingField:
     <IsInvincible>k__BackingField: 0
     <MaxHealth>k__BackingField: 100
+  <MovementSpeed>k__BackingField: 5
   spriteFragmentConfig:
     <sr>k__BackingField: {fileID: 8887576795586774717}
     <parentRb>k__BackingField: {fileID: 4327110905113141562}
@@ -194,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e67ed0cdfc4adfb985ea9f001c78e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpeedFactor>k__BackingField: 5
   maxLightIntensity: 5
 --- !u!114 &8833217652067245739
 MonoBehaviour:
