@@ -11,7 +11,14 @@ namespace BoleteHell.Code.Arsenal.Shields
         [SerializeField] 
         private ShieldData lineInfo;
         
+        private MeshRenderer meshRenderer;
+        
         private Coroutine despawnCoroutine;
+
+        private void Awake()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
 
         private void Start()
         {
@@ -21,6 +28,11 @@ namespace BoleteHell.Code.Arsenal.Shields
         public void SetLineInfo(ShieldData info)
         {
             lineInfo = info;
+            Material mat = new Material(meshRenderer.material)
+            {
+                color = lineInfo.color
+            };
+            meshRenderer.material = mat;
         }
 
         private Vector2 OnRayHitLine(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)

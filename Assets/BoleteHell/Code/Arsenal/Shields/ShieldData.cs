@@ -11,8 +11,8 @@ namespace BoleteHell.Code.Arsenal.Shields
     [CreateAssetMenu(fileName = "ShieldData", menuName = "BoleteHell/Arsenal/Shield Data")]
     public class ShieldData : ScriptableObject
     {
-        [SerializeField] 
-        private Color color;
+        [field: SerializeField] 
+        public Color color { get; set; }
         
         [Required] [SerializeReference] 
         private IShieldHitLogic onHitLogic;
