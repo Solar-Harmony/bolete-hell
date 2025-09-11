@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using UnityEngine;
@@ -22,7 +21,7 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         private void Start()
         {
-            despawnCoroutine = StartCoroutine(DespawnAfterTime());
+            Destroy(gameObject, lineInfo.despawnTime);
         }
 
         public void SetLineInfo(ShieldData info)
@@ -64,29 +63,6 @@ namespace BoleteHell.Code.Arsenal.Shields
             Vector3 newDirection = OnRayHitLine(ctx.Direction, hit, laser.CombinedRefractiveIndex);
             Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
             callback?.Invoke(new ITargetable.Response(ctx) { Direction = newDirection });
-        }
-        
-        private IEnumerator DespawnAfterTime()
-        {
-            yield return new WaitForSeconds(lineInfo.despawnTime);
-            Destroy(gameObject);
-        }
-        
-        public void DestroyShield()
-        {
-            if (despawnCoroutine != null)
-            {
-                StopCoroutine(despawnCoroutine);
-            }
-            Destroy(gameObject);
-        }
-        
-        private void OnDestroy()
-        {
-            if (despawnCoroutine != null)
-            {
-                StopCoroutine(despawnCoroutine);
-            }
         }
     }
 }
