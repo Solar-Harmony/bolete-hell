@@ -22,4 +22,4 @@ MonoBehaviour:
     - rid: 8651057782743105641
       type: {class: SimpleDamageOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
-        baseHitDamage: 5
+        baseHitDamage: 20

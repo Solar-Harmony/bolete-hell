@@ -17,6 +17,8 @@ MonoBehaviour:
     rid: 7223671015644069985
   shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   despawnTime: 3
+  statusEffectConfig:
+    rid: 8554527290138558548
   <EnergyCostPerCm>k__BackingField: 10
   references:
     version: 2
@@ -24,3 +26,18 @@ MonoBehaviour:
     - rid: 7223671015644069985
       type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data: 
+    - rid: 8554527290138558548
+      type: {class: DamageStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+      data:
+        isTransient: 0
+        numTicks: 2
+        initialDelay: 0
+        tickInterval: 20
+        stackBehavior:
+          rid: 8554527290138558549
+        damageMultiplier: 2
+    - rid: 8554527290138558549
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        maxStacks: 3
+        condition: 0

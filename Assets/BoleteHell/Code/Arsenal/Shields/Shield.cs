@@ -21,6 +21,8 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         private void Start()
         {
+            ((IRequestManualInject)lineInfo).InjectDependencies();
+
             Destroy(gameObject, lineInfo.despawnTime);
         }
 
@@ -34,12 +36,12 @@ namespace BoleteHell.Code.Arsenal.Shields
             meshRenderer.material = mat;
         }
 
-        private Vector2 OnRayHitLine(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
+        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserCombo laser, GameObject instigator)
         {
             if (lineInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
 
-            return lineInfo.OnRayHit(incomingDirection, hitPoint, lightRefractiveIndice);
+            return lineInfo.OnRayHit(incomingDirection, hitPoint, laser, instigator);
         }
 
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
@@ -60,7 +62,7 @@ namespace BoleteHell.Code.Arsenal.Shields
                 return;
             }
             
-            Vector3 newDirection = OnRayHitLine(ctx.Direction, hit, laser.CombinedRefractiveIndex);
+            Vector3 newDirection = OnRayHitShield(ctx.Direction, hit, laser, ctx.Instigator);
             Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
             callback?.Invoke(new ITargetable.Response(ctx) { Direction = newDirection });
         }

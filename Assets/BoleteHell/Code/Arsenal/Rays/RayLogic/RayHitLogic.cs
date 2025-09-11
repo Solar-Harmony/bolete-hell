@@ -1,15 +1,16 @@
 using System;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
     // TODO: Use a similar pattern to the status effects to avoid injection in hit logics
     [Serializable]
-    public abstract class RayHitLogic : IRequestManualInject
+    public abstract class RayHitLogic : IRequestManualInject, IStatusEffectTarget
     {
-        [SerializeField] protected int baseHitDamage;
-
+        [SerializeField] public int baseHitDamage;
+         
         bool IRequestManualInject.IsInjected { get; set; } = false;
 
         //Au lieu de health on pourrais avoir un component de stats en général comme ça les tir pourrait affecter le stat qu'il veut directement

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.RayData
@@ -11,11 +12,11 @@ namespace BoleteHell.Code.Arsenal.RayData
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }
         //Va pouvoir être utilisé pour quand le laser hit un diffract shield
-        private List<LaserData> _datas;
-    
+        public List<LaserData> Datas { get; private set; }
+
         public LaserCombo(List<LaserData> datas)
         {
-            _datas = datas;
+            Datas = datas;
             if (datas.Count == 1)
             {
                 CombinedColor = datas[0].Color;
@@ -52,7 +53,7 @@ namespace BoleteHell.Code.Arsenal.RayData
 
         public void CombinedEffect(Vector2 hitPosition, IDamageable hitCharacterHealth)
         {
-            foreach (LaserData data in _datas)
+            foreach (LaserData data in Datas)
             {
                 data.Logic.OnHit(hitPosition, hitCharacterHealth);
             }
