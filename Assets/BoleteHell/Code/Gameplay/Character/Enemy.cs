@@ -37,7 +37,7 @@ namespace BoleteHell.Code.Gameplay.Character
             ss.y = Screen.height - ss.y;
             Rect rect = new(ss, new Vector2(100, 50));
             GUI.skin.label.fontSize = 24;
-            GUI.Label(rect, health.CurrentHealth + "hp");
+            GUI.Label(rect, Health.CurrentHealth + "hp");
         }
     }
 }

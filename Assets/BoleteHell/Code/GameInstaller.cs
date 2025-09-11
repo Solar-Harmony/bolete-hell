@@ -73,6 +73,7 @@ namespace BoleteHell.Code
             Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IBaseService>().To<BaseService>().AsSingle();
+            Container.Bind<IEntityFinder>().To<EntityFinder>().FromNewComponentOnRoot().AsSingle();
             BindStatusEffects();
             
             // input

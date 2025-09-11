@@ -90,7 +90,7 @@ namespace BoleteHell.Code.Gameplay.Base
             
             if (target && target.TryGetComponent(out Character.Character character))
             {
-                if (character.health.IsDead)
+                if (character.Health.IsDead)
                 {
                     _blackboard.SetVariableValue<GameObject>("Target", null);
                 }

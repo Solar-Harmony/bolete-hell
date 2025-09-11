@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BoleteHell.Code.Gameplay.Character;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Shields
@@ -33,6 +34,9 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private Vector3 xOffset;
 
+        private Character character;
+        private ShieldData shieldData;
+
         private void Awake()
         {
             mesh = new Mesh();
@@ -40,12 +44,24 @@ namespace BoleteHell.Code.Arsenal.Shields
             GetComponent<MeshFilter>().mesh = mesh;
         }
 
+        public void Initialize(Character character, ShieldData shieldData)
+        {
+            this.character = character;
+            this.shieldData = shieldData;
+        }
+
         public void DrawPreview(Vector3 mouseWorld)
         {
             if (points.Count > 0) SetOffset(mouseWorld);
 
-            if (points.Count == 0 || Vector3.Distance(points[^1], mouseWorld) > spaceBetweenPoints)
+            float distance = points.Count == 0 ? 0f : Vector3.Distance(points[^1], mouseWorld);
+            float energyRequired = distance * (shieldData?.EnergyCostPerCm ?? 1f);
+            if (points.Count == 0 || (distance > spaceBetweenPoints && character?.Energy != null && character.Energy.CanSpend(energyRequired)))
             {
+                if (points.Count > 0)
+                {
+                    character.Energy.Spend(energyRequired);
+                }
                 AddPointToMesh(mouseWorld);
                 UpdateMesh();
             }

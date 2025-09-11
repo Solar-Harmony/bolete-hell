@@ -7,11 +7,31 @@ namespace BoleteHell.Code.Arsenal.Shields
 {
     public class Shield : MonoBehaviour, ITargetable
     {
-        [SerializeField] private ShieldData lineInfo;
+        [SerializeField] 
+        private ShieldData lineInfo;
+        
+        private MeshRenderer meshRenderer;
+        
+        private Coroutine despawnCoroutine;
+
+        private void Awake()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        private void Start()
+        {
+            Destroy(gameObject, lineInfo.despawnTime);
+        }
 
         public void SetLineInfo(ShieldData info)
         {
             lineInfo = info;
+            Material mat = new Material(meshRenderer.material)
+            {
+                color = lineInfo.color
+            };
+            meshRenderer.material = mat;
         }
 
         private Vector2 OnRayHitLine(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
