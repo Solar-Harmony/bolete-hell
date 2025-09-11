@@ -22,12 +22,14 @@ namespace BoleteHell.Code.Gameplay.Character
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
-            
-            _outcome.OnDefeat += reason =>
-            {
-                _agent.Graph.End();
-                _agent.enabled = false;
-            };
+
+            _outcome.OnDefeat += OnDefeat;
+        }
+
+        private void OnDefeat(string reason)
+        {
+            _agent.Graph.End();
+            _agent.enabled = false;
         }
         
         private void OnGUI()
@@ -38,6 +40,11 @@ namespace BoleteHell.Code.Gameplay.Character
             Rect rect = new(ss, new Vector2(100, 50));
             GUI.skin.label.fontSize = 24;
             GUI.Label(rect, Health.CurrentHealth + "hp");
+        }
+
+        private void OnDestroy()
+        {
+            _outcome.OnDefeat -= OnDefeat;
         }
     }
 }

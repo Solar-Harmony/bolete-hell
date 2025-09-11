@@ -17,6 +17,8 @@ namespace BoleteHell.Code.Gameplay.Character
         
         public Vector2 Position => transform.position;
         
+        public bool IsValid => this && gameObject;
+        
         [field: SerializeField]
         public float MovementSpeed { get; set; } = 5f;
         

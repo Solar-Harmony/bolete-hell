@@ -96,11 +96,13 @@ namespace BoleteHell.Code.Gameplay.Destructible
             
             protected override void OnSpawned(SpriteFragment item)
             {
-                item.OnInitialized += () =>
+                Action onInitializedHandler = null;
+                onInitializedHandler = () =>
                 {
-                    item.OnInitialized -= item.OnDespawned;
+                    item.OnInitialized -= onInitializedHandler;
                     _instantiator.DespawnLater(this, item, item._timeToDestroy);
                 };
+                item.OnInitialized += onInitializedHandler;
             }
         }
     }
