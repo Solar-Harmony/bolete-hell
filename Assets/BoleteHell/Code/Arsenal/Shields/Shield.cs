@@ -2,13 +2,15 @@ using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
     public class Shield : MonoBehaviour, ITargetable
     {
+        [FormerlySerializedAs("lineInfo")]
         [SerializeField] 
-        private ShieldData lineInfo;
+        private ShieldData shieldInfo;
         
         private MeshRenderer meshRenderer;
         
@@ -21,27 +23,27 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         private void Start()
         {
-            ((IRequestManualInject)lineInfo).InjectDependencies();
+            ((IRequestManualInject)shieldInfo).InjectDependencies();
 
-            Destroy(gameObject, lineInfo.despawnTime);
+            Destroy(gameObject, shieldInfo.despawnTime);
         }
 
         public void SetLineInfo(ShieldData info)
         {
-            lineInfo = info;
+            shieldInfo = info;
             Material mat = new Material(meshRenderer.material)
             {
-                color = lineInfo.color
+                color = shieldInfo.color
             };
             meshRenderer.material = mat;
         }
 
         private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserCombo laser, GameObject instigator)
         {
-            if (lineInfo.Equals(null))
+            if (shieldInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
 
-            return lineInfo.OnRayHit(incomingDirection, hitPoint, laser, instigator);
+            return shieldInfo.OnRayHit(incomingDirection, hitPoint, laser, instigator);
         }
 
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)

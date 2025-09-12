@@ -22,5 +22,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         }
 
         public abstract void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth);
+        public bool IsValid => true;
     }
 }

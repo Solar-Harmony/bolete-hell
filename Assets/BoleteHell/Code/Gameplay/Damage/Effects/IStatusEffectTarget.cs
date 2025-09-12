@@ -2,6 +2,6 @@
 {
     public interface IStatusEffectTarget
     {
-        
+        bool IsValid { get; }
     }
 }
