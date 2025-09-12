@@ -16,9 +16,9 @@ namespace BoleteHell.Code.Arsenal.Shields
     {
         [field: SerializeField] 
         public Color color { get; set; }
-        
-        [Required] [SerializeReference] 
-        private IShieldHitLogic onHitLogic;
+
+        [Required] [field:SerializeReference] 
+        public IShieldHitLogic onHitLogic { get; private set; }
 
         [SerializeField] 
         private GameObject shieldPreview;
@@ -28,11 +28,8 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private ShieldPreviewDrawer lineDrawer;
         
-        [SerializeReference] [Required]
-        private ShieldEffect statusEffectConfig;
-
-        [Inject]
-        private IStatusEffectService _statusEffectService;
+        [field:SerializeReference] [Required]
+        public StatusEffectConfig statusEffectConfig { get; private set; }
         
         [field: SerializeField]
         [MinValue(0f)]
@@ -62,23 +59,6 @@ namespace BoleteHell.Code.Arsenal.Shields
         public void FinishLine()
         {
             lineDrawer.FinishLine(this);
-        }
-
-        public Vector2 OnRayHit(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserCombo laser, GameObject instigator)
-        {
-            //TODO: Pourrait surement ajouter une faction aux shield comme ca si les ennemis créé un shield ça pourrait affecter
-            //Les tirs des ennemis qui passe a travers le shield (ou si jamais le joueur peut avoir des alliés)
-            if (instigator == _player.gameObject)
-            {
-                //Peut avoir un probleme si jamais on a un buff de dégat qui n'est pas un poucentage car ca va être ajouter a chaque laser du combo
-                //(si un laser a 3 couleurs lui jouter 10 dégat donne réellement 30 dégat)
-                foreach (LaserData laserData in laser.Datas)
-                {
-                    _statusEffectService.AddStatusEffect(laserData.Logic, statusEffectConfig);
-                }
-            }
-            
-            return onHitLogic.ExecuteRay(incomingDirection, hitPoint, laser.CombinedRefractiveIndex);
         }
     }
 }

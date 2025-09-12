@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
@@ -23,15 +24,13 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
         public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth)
         {
-            hitCharacterHealth.Health.TakeDamage(baseHitDamage);
-            
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Unit"));
             List<Collider2D> results = new List<Collider2D>();
 
             DrawVisuals(hitPosition);
             
-            int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius,filter,results);
+            int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius, filter, results);
             if (hitCollidersAmount <= 0)
                 return;
 

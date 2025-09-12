@@ -10,7 +10,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
     {
         [field: SerializeField]
         public Health Health { get; set; }
@@ -21,7 +21,10 @@ namespace BoleteHell.Code.Gameplay.Character
         
         [field: SerializeField]
         public float MovementSpeed { get; set; } = 5f;
-        
+
+        [field: SerializeField]
+        public float DamageMultiplier { get; set; } = 1f;
+
         [field: SerializeField]
         public Energy Energy { get; private set; }
 
@@ -65,7 +68,7 @@ namespace BoleteHell.Code.Gameplay.Character
                 return;
             }
         
-            laser.CombinedEffect(ctx.Position, this);
+            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroyProjectile = true });
 
             if (_fire)
@@ -77,5 +80,6 @@ namespace BoleteHell.Code.Gameplay.Character
                 mainModule.startColor = color;
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using BoleteHell.Code.Gameplay.Damage;
+﻿using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,8 +17,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         
         public override void OnHitImpl(Vector2 hitPosition, IDamageable victim)
         {
-            victim.Health.TakeDamage(baseHitDamage);
-
             if (victim is IStatusEffectTarget target)
             {
                 _statusEffectService.AddStatusEffect(target, statusEffectConfig);

@@ -28,7 +28,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
-            LaserRenderer renderer = LaserRendererPool.Instance.Get();
+            LaserInstance laserInstance = LaserRendererPool.Instance.Get();
 
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {
@@ -42,7 +42,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 }
 
                 bool shouldBreak = false;
-                ITargetable.Context context = new(hit.collider.gameObject, instigator, null, CurrentPos, CurrentDirection, laserCombo);
+                ITargetable.Context context = new(hit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;
@@ -58,7 +58,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 if (shouldBreak)
                     break;
             }
-            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
+            laserInstance.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
             _rayPositions.Clear();
         }
     }

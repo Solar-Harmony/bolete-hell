@@ -4,7 +4,6 @@ using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace BoleteHell.Code.Arsenal.FiringLogic
 {
@@ -27,15 +26,8 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             {
                 if (response.RequestDestroyProjectile)
                 {
-                    LaserRenderer renderer = ctx.Projectile?.GetComponent<LaserRenderer>();
-                    if (renderer)
-                    {
-                        ctx.Projectile.gameObject.GetComponent<LaserRenderer>().ResetLaser();
-                    }
-                    else
-                    {
-                        Object.Destroy(ctx.Projectile); 
-                    }
+                    LaserInstance laserInstance = ctx.Projectile.GetComponent<LaserInstance>();
+                    laserInstance.ResetLaser();
                 }
             
                 callback?.Invoke(response);

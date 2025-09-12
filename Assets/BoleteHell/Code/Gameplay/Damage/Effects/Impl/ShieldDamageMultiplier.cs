@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
     [Serializable]
-    public sealed class DamageStatusEffectConfig : ShieldEffect
+    public sealed class DamageStatusEffectConfig : StatusEffectConfig
     {
         public float damageMultiplier = 1.5f;
     }
@@ -14,21 +14,21 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
     {
         public bool CanApply(IStatusEffectTarget target, DamageStatusEffectConfig config)
         {
-            return target is RayHitLogic;
+            return target is IDamageDealer;
         }
 
         public void Apply(IStatusEffectTarget target, DamageStatusEffectConfig config)
         {
-            RayHitLogic laser = (RayHitLogic)target;
-           
-            laser.baseHitDamage = (int)(laser.baseHitDamage * config.damageMultiplier);
+            IDamageDealer damageDealer = (IDamageDealer)target;
+
+            damageDealer.DamageMultiplier *= config.damageMultiplier;
         }
 
         public void Unapply(IStatusEffectTarget target, DamageStatusEffectConfig config)
         {
-            RayHitLogic laser = (RayHitLogic)target;
+            IDamageDealer damageDealer = (IDamageDealer)target;
            
-            laser.baseHitDamage = (int)(laser.baseHitDamage / config.damageMultiplier);
+            damageDealer.DamageMultiplier /= config.damageMultiplier;
         }
     }
 }

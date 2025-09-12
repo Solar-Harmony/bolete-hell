@@ -13,10 +13,6 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] [Tooltip("Time between each shot")] [Min(0)]
         public float rateOfFire;
         
-        // TODO: This is meaningless for Beam projectiles
-        [SerializeField] [Unit(Units.MetersPerSecond)]
-        public float projectileSpeed = 10.0f;
-        
         [SerializeField] [Min(0)]
         public int maxNumberOfBounces = 10;
         

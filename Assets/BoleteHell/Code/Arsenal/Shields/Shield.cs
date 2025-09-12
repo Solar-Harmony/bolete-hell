@@ -1,14 +1,17 @@
 using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Arsenal.Rays;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
     public class Shield : MonoBehaviour, ITargetable
     {
-        [FormerlySerializedAs("lineInfo")]
         [SerializeField] 
         private ShieldData shieldInfo;
         
@@ -16,15 +19,20 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private Coroutine despawnCoroutine;
 
+        [Inject]
+        private IStatusEffectService _statusEffectService;
+
+        [Inject]
+        private IEntityFinder _entityFinder;
+
         private void Awake()
         {
             meshRenderer = GetComponent<MeshRenderer>();
+            GameInstaller.StaticContainer.Inject(this);
         }
 
         private void Start()
         {
-            ((IRequestManualInject)shieldInfo).InjectDependencies();
-
             Destroy(gameObject, shieldInfo.despawnTime);
         }
 
@@ -38,12 +46,17 @@ namespace BoleteHell.Code.Arsenal.Shields
             meshRenderer.material = mat;
         }
 
-        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserCombo laser, GameObject instigator)
+        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserInstance laserInstance, LaserCombo laser, GameObject instigator)
         {
             if (shieldInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
+            
+            if (instigator == _entityFinder.GetPlayer().gameObject)
+            {
+                _statusEffectService.AddStatusEffect(laserInstance, shieldInfo.statusEffectConfig);
+            }
 
-            return shieldInfo.OnRayHit(incomingDirection, hitPoint, laser, instigator);
+            return shieldInfo.onHitLogic.ExecuteRay(incomingDirection, hitPoint, laser.CombinedRefractiveIndex);
         }
 
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
@@ -64,7 +77,7 @@ namespace BoleteHell.Code.Arsenal.Shields
                 return;
             }
             
-            Vector3 newDirection = OnRayHitShield(ctx.Direction, hit, laser, ctx.Instigator);
+            Vector3 newDirection = OnRayHitShield(ctx.Direction, hit, ctx.Projectile, laser, ctx.Instigator);
             Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
             callback?.Invoke(new ITargetable.Response(ctx) { Direction = newDirection });
         }
