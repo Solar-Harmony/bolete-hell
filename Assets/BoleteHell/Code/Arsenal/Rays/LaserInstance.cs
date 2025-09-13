@@ -42,7 +42,6 @@ namespace BoleteHell.Code.Arsenal.Rays
 
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
-            gameObject.SetActive(true);
 
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());

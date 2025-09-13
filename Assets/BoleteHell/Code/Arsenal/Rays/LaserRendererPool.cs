@@ -56,11 +56,12 @@ namespace BoleteHell.Code.Arsenal.Rays
                 {
                     AddObjectToPool();
                 }
-
+            
                 currentPoolSize *= 2;
             }
 
             LaserInstance laserRenderer = _pool.Dequeue();
+            laserRenderer.gameObject.SetActive(true);
             return laserRenderer;
         }
 

@@ -27,10 +27,9 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 if (response.RequestDestroyProjectile )
                 {
                     LaserInstance laserInstance = ctx.Projectile;
-                    if (!laserInstance.isProjectile)
-                        return;
-                    
-                    laserInstance.ResetLaser();
+                   
+                    if(laserInstance.isProjectile)
+                        laserInstance.ResetLaser();
                 }
             
                 callback?.Invoke(response);

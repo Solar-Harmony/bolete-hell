@@ -42,11 +42,12 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 }
 
                 bool shouldBreak = false;
+                CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+
                 ITargetable.Context context = new(hit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;
-                    CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
                     _rayPositions.Add(CurrentPos);
 
                     if (altered.RequestDestroyProjectile)
