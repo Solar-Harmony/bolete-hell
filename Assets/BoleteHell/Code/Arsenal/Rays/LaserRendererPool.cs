@@ -61,7 +61,6 @@ namespace BoleteHell.Code.Arsenal.Rays
             }
 
             LaserInstance laserRenderer = _pool.Dequeue();
-            laserRenderer.gameObject.SetActive(true);
             return laserRenderer;
         }
 

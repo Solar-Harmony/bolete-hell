@@ -28,7 +28,6 @@ namespace BoleteHell.Code.Arsenal.Shields
         private void Awake()
         {
             meshRenderer = GetComponent<MeshRenderer>();
-            GameInstaller.StaticContainer.Inject(this);
         }
 
         private void Start()

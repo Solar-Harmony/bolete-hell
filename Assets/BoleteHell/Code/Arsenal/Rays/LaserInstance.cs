@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BoleteHell.Code.Arsenal.Rays
 {
@@ -22,7 +24,8 @@ namespace BoleteHell.Code.Arsenal.Rays
         
         private LaserRendererPool _parentPool;
         private const float AdjustedColliderLenght = 0.15f;
-        private bool _isProjectile;
+        
+        public bool isProjectile;
         public float MovementSpeed { get; set; }
         public float DamageMultiplier { get; set; } = 1;
 
@@ -40,6 +43,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
             gameObject.SetActive(true);
+
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());
             
@@ -51,7 +55,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public LaserProjectileMovement SetupProjectileLaser(Vector2 direction, float speed)
         {
             MovementSpeed = speed;
-            _isProjectile = true;
+            isProjectile = true;
             _lineRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
@@ -78,16 +82,16 @@ namespace BoleteHell.Code.Arsenal.Rays
         //Pourrais peut-être avoir un renderer pour les laserbeams et un renderer pour les projectile laser
         public void ResetLaser()
         {
-            if (!_isProjectile) return;
-
             LaserRendererPool.Instance.Release(this);
+            if (!isProjectile) return;
+            
             _lineRenderer.useWorldSpace = true;
             _lineRenderer.positionCount = 0;
             _capsuleCollider.enabled = false;
             _movement.enabled = false;
             _rb.linearVelocity = Vector2.zero;
             _lineRenderer.numCapVertices = 0;
-            _isProjectile = false;
+            isProjectile = false;
             _movement.RemoveCollideListeners();
             MovementSpeed = 0;
             DamageMultiplier = 1;

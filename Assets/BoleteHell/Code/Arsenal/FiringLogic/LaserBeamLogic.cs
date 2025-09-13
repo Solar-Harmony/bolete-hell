@@ -29,7 +29,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
             LaserInstance laserInstance = LaserRendererPool.Instance.Get();
-
+            
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {
                 LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");

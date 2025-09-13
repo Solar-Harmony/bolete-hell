@@ -15,28 +15,27 @@ MonoBehaviour:
   <color>k__BackingField: {r: 0, g: 0.79662085, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 8554527307954126935
-  shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   despawnTime: 3
   <statusEffectConfig>k__BackingField:
-    rid: 8554527307954126940
-  <EnergyCostPerCm>k__BackingField: 10
+    rid: 8554527311297511576
+  <EnergyCostPerCm>k__BackingField: 20
   references:
     version: 2
     RefIds:
     - rid: 8554527307954126935
       type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data: 
-    - rid: 8554527307954126940
-      type: {class: DamageStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+    - rid: 8554527311297511576
+      type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
-        isTransient: 1
+        isTransient: 0
         numTicks: 2
         initialDelay: 0
-        tickInterval: 3
+        tickInterval: 20
         stackBehavior:
-          rid: 8554527307954126941
-        damageMultiplier: 2
-    - rid: 8554527307954126941
+          rid: 8554527311297511577
+        damageMultiplier: 1.5
+    - rid: 8554527311297511577
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:
         maxStacks: 3
