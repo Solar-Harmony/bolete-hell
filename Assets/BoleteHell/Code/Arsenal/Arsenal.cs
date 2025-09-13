@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
-using BoleteHell.Code.Arsenal.RayData;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -77,7 +76,7 @@ namespace BoleteHell.Code.Arsenal
             return data.firingType switch
             {
                 FiringTypes.Automatic => GetSelectedWeapon().LaserCombo.GetLaserSpeed(),
-                FiringTypes.Charged => data.rateOfFire,
+                FiringTypes.Charged => data.cooldown,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

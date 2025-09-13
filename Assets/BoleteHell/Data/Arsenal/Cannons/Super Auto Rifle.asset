@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Super Auto Rifle
   m_EditorClassIdentifier: 
   firingType: 0
-  rateOfFire: 0.2
-  projectileSpeed: 15
+  cooldown: 0.1
+  chargeTime: 0
   maxNumberOfBounces: 10
   maxRayDistance: 10
   useCustomLifetime: 0
   lifetime: 11.57
-  chargeTime: 0

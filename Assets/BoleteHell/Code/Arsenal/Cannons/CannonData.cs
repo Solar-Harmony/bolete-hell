@@ -10,8 +10,13 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] 
         public FiringTypes firingType;
         
-        [SerializeField] [Tooltip("Time between each shot")] [Min(0)]
-        public float rateOfFire;
+        [Tooltip("Delay after a shot before being able to shoot again")] 
+        [SerializeField] [Min(0)] [Unit(Units.Second)]
+        public float cooldown;
+        
+        [Tooltip("Time during which the shot input must be pressed before allowing fire")] 
+        [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Unit(Units.Second)] [Min(0)]
+        public float chargeTime;
         
         [SerializeField] [Min(0)]
         public int maxNumberOfBounces = 10;
@@ -22,11 +27,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField]
         private bool useCustomLifetime = false;
         
+        [Tooltip("Time before the projectile despawns.")]
         [SerializeField] [ShowIf(nameof(useCustomLifetime))] [Unit(Units.Second)] [Min(0)]
         private float lifetime = 5.0f;
-        
-        [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Tooltip("Time for the shot to be charged")] [Unit(Units.Second)] [Min(0)]
-        public float chargeTime;
         
         public float Lifetime => useCustomLifetime ? lifetime : firingType switch
         {
