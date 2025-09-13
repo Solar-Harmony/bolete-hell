@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BoleteHell.Code.Arsenal.Rays
 {
-    //Je voullais rendre le laserRenderer fonctionnel pour les beams et les projectiles
-    [RequireComponent(typeof(LaserProjectileMovement),typeof(CapsuleCollider2D),typeof(LineRenderer))]
-    public class LaserRenderer : MonoBehaviour
+    //TODO: Va devoir être cleaned up et séparer
+    [RequireComponent(typeof(LaserProjectileMovement), typeof(CapsuleCollider2D),typeof(LineRenderer))]
+    public class LaserInstance : MonoBehaviour, IStatusEffectTarget, IMovable, IDamageDealer
     {
         [field:SerializeField] public float RayWidth { get; private set; } = 0.2f;
         //Spécifique au projectile lasers
@@ -19,7 +24,10 @@ namespace BoleteHell.Code.Arsenal.Rays
         
         private LaserRendererPool _parentPool;
         private const float AdjustedColliderLenght = 0.15f;
-        private bool _isProjectile;
+        
+        public bool isProjectile;
+        public float MovementSpeed { get; set; }
+        public float DamageMultiplier { get; set; } = 1;
 
         private void Awake()
         {
@@ -34,7 +42,7 @@ namespace BoleteHell.Code.Arsenal.Rays
 
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
-            gameObject.SetActive(true);
+
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());
             
@@ -45,11 +53,12 @@ namespace BoleteHell.Code.Arsenal.Rays
 
         public LaserProjectileMovement SetupProjectileLaser(Vector2 direction, float speed)
         {
-            _isProjectile = true;
+            MovementSpeed = speed;
+            isProjectile = true;
             _lineRenderer.useWorldSpace = false;
 
             _movement.enabled = true;
-            _movement.StartMovement(direction, speed);
+            _movement.StartMovement(direction, MovementSpeed);
             
             _capsuleCollider.direction = CapsuleDirection2D.Vertical;
             _capsuleCollider.size = new Vector2(RayWidth, LaserLength + AdjustedColliderLenght);
@@ -73,16 +82,20 @@ namespace BoleteHell.Code.Arsenal.Rays
         public void ResetLaser()
         {
             LaserRendererPool.Instance.Release(this);
+            if (!isProjectile) return;
             
-            if (!_isProjectile) return;
             _lineRenderer.useWorldSpace = true;
             _lineRenderer.positionCount = 0;
             _capsuleCollider.enabled = false;
             _movement.enabled = false;
             _rb.linearVelocity = Vector2.zero;
             _lineRenderer.numCapVertices = 0;
-            _isProjectile = false;
+            isProjectile = false;
             _movement.RemoveCollideListeners();
+            MovementSpeed = 0;
+            DamageMultiplier = 1;
         }
+
+        public bool IsValid => true;
     }
 }

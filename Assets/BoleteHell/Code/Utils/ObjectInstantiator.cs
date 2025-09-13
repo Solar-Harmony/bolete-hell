@@ -12,17 +12,9 @@ namespace BoleteHell.Code.Utils
     {
         [Inject]
         private ICoroutineProvider _coroutine;
-        
-        public T CloneScriptableObject<T>(T original) where T : ScriptableObject
-        {
-            if (!original)
-            {
-                Debug.LogError("Tried to clone a null object");
-            }
 
-            T clone = Object.Instantiate(original);
-            return clone;
-        }
+        [Inject]
+        private DiContainer _container;
         
         public void InstantiateThenDestroyLater(GameObject prefab, Vector2 position, Quaternion rotation, float timeToDestroy, Action<GameObject> initCallback = null)
         {
@@ -38,7 +30,12 @@ namespace BoleteHell.Code.Utils
             Debug.Assert(delay >= 0.0f);
             _coroutine.StartCoroutine(WaitThenReturnToPool(pool, item, delay));
         }
-        
+
+        public GameObject InstantiateWithInjection(GameObject prefab)
+        {
+           return _container.InstantiatePrefab(prefab);
+        }
+
         private static IEnumerator WaitThenReturnToPool(IMemoryPool pool, object item, float delay)
         {
             yield return new WaitForSeconds(delay);

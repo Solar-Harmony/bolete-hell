@@ -16,13 +16,14 @@ MonoBehaviour:
   <LightRefractiveIndex>k__BackingField: 1.4
   <Logic>k__BackingField:
     rid: 420089553201922048
+  <baseDamage>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 10
   references:
     version: 2
     RefIds:
     - rid: 420089553201922048
       type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
-        baseHitDamage: 5
         statusEffectConfig:
           rid: 420089553201922049
     - rid: 420089553201922049

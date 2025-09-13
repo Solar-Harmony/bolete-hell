@@ -1,6 +1,7 @@
 using System.Linq;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Arsenal.Cannons;
+using BoleteHell.Code.Arsenal.Shields;
 using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Audio;
 using BoleteHell.Code.Gameplay.Base;
@@ -50,6 +51,9 @@ namespace BoleteHell.Code
         [SerializeField]
         private GameObject transientLightPrefab;
         
+        [SerializeField]
+        private GameObject shieldPreviewPrefab;
+        
         // TODO: Split this into multiple installers
         // This will require splitting out code into modules though
         // Which is a good thing but it's also cancer to do at first lol
@@ -75,6 +79,10 @@ namespace BoleteHell.Code
             Container.Bind<IBaseService>().To<BaseService>().AsSingle();
             Container.Bind<IEntityFinder>().To<EntityFinder>().FromNewComponentOnRoot().AsSingle();
             BindStatusEffects();
+            
+            // factories
+            Container.BindFactory<Character, ShieldData, ShieldPreviewDrawer, ShieldPreviewFactory>()
+                .FromComponentInNewPrefab(shieldPreviewPrefab);
             
             // input
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();

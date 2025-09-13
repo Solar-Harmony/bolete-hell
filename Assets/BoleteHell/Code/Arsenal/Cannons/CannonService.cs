@@ -22,7 +22,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             if (cannon.CanShoot) 
                 return;
             
-            if (cannon.AttackTimer < cannon.Config.cannonData.rateOfFire)
+            if (cannon.AttackTimer < cannon.Config.cannonData.cooldown)
             {
                 cannon.AttackTimer += Time.deltaTime;
             }

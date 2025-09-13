@@ -75,8 +75,8 @@ namespace BoleteHell.Code.Arsenal
             CannonData data = GetSelectedWeapon().Config.cannonData;
             return data.firingType switch
             {
-                FiringTypes.Automatic => data.projectileSpeed,
-                FiringTypes.Charged => data.rateOfFire,
+                FiringTypes.Automatic => GetSelectedWeapon().LaserCombo.GetLaserSpeed(),
+                FiringTypes.Charged => data.cooldown,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
