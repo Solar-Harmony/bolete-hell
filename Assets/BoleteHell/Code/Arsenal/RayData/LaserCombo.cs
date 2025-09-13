@@ -3,7 +3,6 @@ using System.Linq;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.Rays;
 using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.RayData
@@ -13,24 +12,24 @@ namespace BoleteHell.Code.Arsenal.RayData
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }
         //Va pouvoir être utilisé pour quand le laser hit un diffract shield
-        public List<LaserData> Datas { get; private set; }
+        public List<LaserData> Data { get; private set; }
         
-        public LaserCombo(List<LaserData> datas)
+        public LaserCombo(List<LaserData> data)
         {
-            Datas = datas;
-            if (datas.Count == 1)
+            Data = data;
+            if (data.Count == 1)
             {
-                CombinedColor = datas[0].Color;
-                CombinedRefractiveIndex = datas[0].LightRefractiveIndex;
+                CombinedColor = data[0].Color;
+                CombinedRefractiveIndex = data[0].LightRefractiveIndex;
             }
             else
             {
-                CombinedColor = CombineColors(datas.Select(l => l.Color).ToList());
-                CombinedRefractiveIndex = CombineRefractiveIndices(datas.Select(l => l.LightRefractiveIndex).ToList());
+                CombinedColor = CombineColors(data.Select(l => l.Color).ToList());
+                CombinedRefractiveIndex = data.Select(l => l.LightRefractiveIndex).Average();
             }
         }
 
-        Color CombineColors(List<Color> colorList)
+        private static Color CombineColors(List<Color> colorList)
         {
             float r = 0f, g = 0f, b = 0f;
         
@@ -44,17 +43,9 @@ namespace BoleteHell.Code.Arsenal.RayData
             return new Color(r / colorList.Count, g / colorList.Count, b / colorList.Count);
         }
 
-
-        private float CombineRefractiveIndices(List<float> refractiveIndices)
-        {
-            float total = refractiveIndices.Sum();
-
-            return total / refractiveIndices.Count;
-        }
-
         public void CombinedEffect(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance)
         {
-            foreach (LaserData data in Datas)
+            foreach (LaserData data in Data)
             {
                 data.Logic.OnHit(hitPosition, hitCharacterHealth, laserInstance, data);
             }
@@ -62,9 +53,7 @@ namespace BoleteHell.Code.Arsenal.RayData
 
         public float GetLaserSpeed()
         {
-            float speed = Datas.Sum(data => data.MovementSpeed);
-
-            return speed / Datas.Count;
+            return Data.Average(data => data.MovementSpeed);
         }
     }
 }

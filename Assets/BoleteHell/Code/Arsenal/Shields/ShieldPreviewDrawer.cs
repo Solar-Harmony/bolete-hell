@@ -6,11 +6,11 @@ using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
-    //Déssine le preview de la ligne que le joueur déssine
+    // Dessine le preview de la ligne que le joueur déssine
     [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
     public class ShieldPreviewDrawer : MonoBehaviour
     {
-        //Dessin de la ligne initial
+        // Dessin de la ligne initial
         [SerializeField] private float lineWidth;
 
         [Tooltip("Détermine la distance qu'il faut déplacer la souris pour qu'un autre point soit ajouté")]
@@ -19,7 +19,7 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         [SerializeField] private GameObject linePrefab;
 
-        //Params pour la simplification des points
+        // Params pour la simplification des points
         [Tooltip("plus le nombre est petit plus on garde de points après la simplication")] [SerializeField]
         private float tolerance = 0.1f;
 
@@ -49,10 +49,11 @@ namespace BoleteHell.Code.Arsenal.Shields
             GetComponent<MeshFilter>().mesh = mesh;
         }
 
-        public void Initialize(Character character, ShieldData shieldData)
+        [Inject]
+        public void Construct(Character character, ShieldData shieldData)
         {
-           _character = character;
-           _shieldData = shieldData;
+            _character = character;
+            _shieldData = shieldData;
         }
 
         public void DrawPreview(Vector3 mouseWorld)
