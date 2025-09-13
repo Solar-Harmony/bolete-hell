@@ -28,8 +28,8 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
-            LaserRenderer renderer = LaserRendererPool.Instance.Get();
-
+            LaserInstance laserInstance = LaserRendererPool.Instance.Get();
+            
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {
                 LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
@@ -42,11 +42,12 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 }
 
                 bool shouldBreak = false;
-                ITargetable.Context context = new(hit.collider.gameObject, instigator, null, CurrentPos, CurrentDirection, laserCombo);
+                CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+
+                ITargetable.Context context = new(hit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
                 {
                     CurrentDirection = altered.Direction;
-                    CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
                     _rayPositions.Add(CurrentPos);
 
                     if (altered.RequestDestroyProjectile)
@@ -58,7 +59,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 if (shouldBreak)
                     break;
             }
-            renderer.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
+            laserInstance.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
             _rayPositions.Clear();
         }
     }

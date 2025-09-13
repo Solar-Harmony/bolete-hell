@@ -1,7 +1,11 @@
+using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
 using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage.Effects;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
@@ -13,45 +17,18 @@ namespace BoleteHell.Code.Arsenal.Shields
     {
         [field: SerializeField] 
         public Color color { get; set; }
-        
-        [Required] [SerializeReference] 
-        private IShieldHitLogic onHitLogic;
 
-        [SerializeField] 
-        private GameObject shieldPreview;
+        [Required] [field:SerializeReference] 
+        public IShieldHitLogic onHitLogic { get; private set; }
         
         [SerializeField]
         public float despawnTime = 3f;
         
-        private ShieldPreviewDrawer lineDrawer;
+        [field:SerializeReference] [Required]
+        public StatusEffectConfig statusEffectConfig { get; private set; }
         
         [field: SerializeField]
         [MinValue(0f)]
         public float EnergyCostPerCm { get; set; } = 10f;
-
-        private Player _player;
-        
-        public void StartLine()
-        {
-            var obj = Instantiate(shieldPreview);
-            lineDrawer = obj.GetComponent<ShieldPreviewDrawer>();
-            _player = FindFirstObjectByType<Player>();
-        }
-
-        public void DrawShieldPreview(Vector3 nextPos)
-        {
-            lineDrawer.Initialize(_player, this);
-            lineDrawer.DrawPreview(nextPos);
-        }
-
-        public void FinishLine()
-        {
-            lineDrawer.FinishLine(this);
-        }
-
-        public Vector2 OnRayHit(Vector2 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
-        {
-            return onHitLogic.ExecuteRay(incomingDirection, hitPoint, lightRefractiveIndice);
-        }
     }
 }

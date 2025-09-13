@@ -1,10 +1,12 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Gameplay.Character;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Zenject;
 
 namespace BoleteHell.Code.AI.Actions
@@ -22,8 +24,8 @@ namespace BoleteHell.Code.AI.Actions
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
+        [SerializeReference] public BlackboardVariable<Enemy> character;
         [SerializeReference] public BlackboardVariable<float> Range;
-        [SerializeReference] public BlackboardVariable<float> MaxSpeed;
         
         private AIPath _pathfinder;
         
@@ -49,7 +51,7 @@ namespace BoleteHell.Code.AI.Actions
                 return Status.Failure;
             }
 
-            _pathfinder.maxSpeed = MaxSpeed.Value;
+            _pathfinder.maxSpeed = character.Value.MovementSpeed;
             _pathfinder.endReachedDistance = Range;
             _pathfinder.destination = Target.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;

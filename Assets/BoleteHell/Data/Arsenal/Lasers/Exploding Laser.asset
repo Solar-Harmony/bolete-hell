@@ -16,13 +16,14 @@ MonoBehaviour:
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
     rid: 7223671017346171000
+  <baseDamage>k__BackingField: 10
+  <MovementSpeed>k__BackingField: 10
   references:
     version: 2
     RefIds:
     - rid: 7223671017346171000
       type: {class: ExplodeOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
-        baseHitDamage: 3
         explosionDamage: 5
         explosionRadius: 1
         explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}

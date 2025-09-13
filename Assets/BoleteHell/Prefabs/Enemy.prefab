@@ -67,7 +67,7 @@ MonoBehaviour:
       type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
-        - {fileID: 11400000, guid: 4b65c3760f1cdb84394d12f0e2ba6869, type: 2}
+        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
@@ -88,6 +88,11 @@ MonoBehaviour:
     <IsInvincible>k__BackingField: 0
     <MaxHealth>k__BackingField: 25
   <MovementSpeed>k__BackingField: 10
+  <DamageMultiplier>k__BackingField: 1
+  <Energy>k__BackingField:
+    maxEnergy: 150
+    regenRate: 20
+    currentEnergy: 100
   spriteFragmentConfig:
     <sr>k__BackingField: {fileID: 4735358013702089654}
     <parentRb>k__BackingField: {fileID: 7099119133421844960}
@@ -167,6 +172,7 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 7787990485024374974
   - rid: 7787990485024374975
+  - rid: 8554527291320827981
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -188,6 +194,14 @@ MonoBehaviour:
           m_Value1: 11301596354734271912
         Name: CurrentTarget
         m_Value: {fileID: 0}
+    - rid: 8554527291320827981
+      type: {class: 'BlackboardVariable`1[[BoleteHell.Code.Gameplay.Character.Enemy, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9267312410964609706
+          m_Value1: 13204554713553021478
+        Name: Character
+        m_Value: {fileID: 8131877402109793878}
 --- !u!114 &4991494843151904680
 MonoBehaviour:
   m_ObjectHideFlags: 0

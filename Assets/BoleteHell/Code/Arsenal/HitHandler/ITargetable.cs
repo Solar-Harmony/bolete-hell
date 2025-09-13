@@ -1,4 +1,5 @@
 ﻿using System;
+using BoleteHell.Code.Arsenal.Rays;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.HitHandler
@@ -9,7 +10,7 @@ namespace BoleteHell.Code.Arsenal.HitHandler
         (
             GameObject HitObject,
             GameObject Instigator,
-            GameObject Projectile,
+            LaserInstance Projectile,
             Vector2 Position,
             Vector2 Direction,
             IProjectileData Data

@@ -7,14 +7,6 @@ namespace BoleteHell.Code.Utils
     public interface IObjectInstantiator
     {
         /// <summary>
-        /// Allows cloning of ScriptableObjects in classes that are not MonoBehaviours.
-        /// </summary>
-        /// <param name="original"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T CloneScriptableObject<T>(T original) where T : ScriptableObject;
-        
-        /// <summary>
         /// Non-pooled version. Consider subclassing IMemoryPool<T> for pooled instantiation.
         /// </summary>
         /// <param name="prefab"></param>
@@ -31,5 +23,8 @@ namespace BoleteHell.Code.Utils
         /// <param name="item"></param>
         /// <param name="delay"></param>
         public void DespawnLater(IMemoryPool pool, object item, float delay);
+
+
+        public GameObject InstantiateWithInjection(GameObject prefab);
     }
 }

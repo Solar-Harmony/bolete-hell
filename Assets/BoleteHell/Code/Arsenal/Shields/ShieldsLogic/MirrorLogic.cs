@@ -12,10 +12,5 @@ namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
 
             return Vector2.Reflect(incomingDirection, hitPoint.normal);
         }
-
-        public Vector3 ExecuteProjectile(Vector3 incomingDirection)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
