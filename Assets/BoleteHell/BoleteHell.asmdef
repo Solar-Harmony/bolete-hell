@@ -1,0 +1,23 @@
+﻿{
+    "name": "BoleteHell",
+    "references": [
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:44f3d1351286464196383e27bb46a3a9",
+        "GUID:6d7ba256bd534e3abcb17d5c42ad343c",
+        "GUID:4a78ee0f39a8405fadae42a4a7762cfe",
+        "GUID:b20aecebaad34d73978eafd89d336f58",
+        "GUID:e16466e0beee478da0e84b74b9c8b421",
+        "GUID:772f56d6833b4bea818cbdd2c8ac4f63",
+        "GUID:d55d5866a7bf4e268c3308c3de6367b7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
+
