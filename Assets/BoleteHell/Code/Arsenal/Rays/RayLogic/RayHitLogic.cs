@@ -16,7 +16,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance, LaserData data)
         {
             ((IRequestManualInject)this).InjectDependencies();
-            Debug.Log($"dealt {(int)(data.baseDamage * laserInstance.DamageMultiplier)} damage");
             hitCharacterHealth.Health.TakeDamage((int)(data.baseDamage * laserInstance.DamageMultiplier));
             
             OnHitImpl(hitPosition, hitCharacterHealth);

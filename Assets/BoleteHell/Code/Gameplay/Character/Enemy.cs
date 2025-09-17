@@ -1,15 +1,17 @@
-﻿using BoleteHell.Code.Gameplay.GameState;
+﻿using System;
+using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
-        private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
+        public float visionRange;
+        public float attackRange;
 
         [Inject]
         private IGameOutcomeService _outcome;
@@ -20,8 +22,9 @@ namespace BoleteHell.Code.Gameplay.Character
         {
             base.Awake(); // TODO: I hate this so much
             _mainCamera = Camera.main;
-            _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
+            _agent.BlackboardReference.SetVariableValue("Character", this);
+            _agent.BlackboardReference.SetVariableValue("Self", this.gameObject);
 
             _outcome.OnDefeat += OnDefeat;
         }

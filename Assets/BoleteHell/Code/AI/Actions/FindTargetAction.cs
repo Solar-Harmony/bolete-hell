@@ -28,28 +28,30 @@ namespace BoleteHell.Code.AI.Actions
         [Inject]
         private IDirector _director;
 
+        private Character character;
+
         protected override Status OnStartImpl()
         {
-            var character = Agent.Value.GetComponent<Character>();
+            character = Agent.Value.GetComponent<Character>();
             if (!character)
             {
                 Debug.LogError("Agent does not have a Character component");
                 return Status.Failure;
             }
-
-            ISceneObject target = _director.FindTarget(character);
-            if (target is not MonoBehaviour go)
-            {
-                return Status.Failure;
-            }
-
-            Target.Value = go.gameObject;
-            return Status.Success;
+            return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            return Status.Success;
+            ISceneObject target = _director.FindTarget(character);
+            if (target is not MonoBehaviour go)
+            {
+                Debug.LogError($"{Agent.Name} targeted a non MonoBehaviour {target}");
+                return Status.Failure;
+            }
+
+            Target.Value = go.gameObject;
+            return Status.Running;
         }
 
         protected override void OnEnd()
