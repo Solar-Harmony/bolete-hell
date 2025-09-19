@@ -10,12 +10,11 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
+    [RequireComponent(typeof(Health))]
     public abstract class Character : MonoBehaviour, ITargetable, ISceneObject
     {
-        [SerializeField]
-        public Health health;
-        Health IDamageable.Health => health;
-        
+        public Health Health { get; private set; }
+
         public Vector2 Position => transform.position;
 
         [SerializeField]
@@ -34,7 +33,8 @@ namespace BoleteHell.Code.Gameplay.Character
         
         protected virtual void Awake()
         {
-            health.OnDeath += () =>
+            Health = GetComponent<Health>();
+            Health.OnDeath += () =>
             {
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
                 gameObject.SetActive(false);
@@ -64,7 +64,7 @@ namespace BoleteHell.Code.Gameplay.Character
             if (_fire)
             {
                 ParticleSystem.MainModule mainModule = _fire.main;
-                float alpha =  1 - (health.CurrentHealth / (float)health.MaxHealth);
+                float alpha =  1 - (Health.CurrentHealth / (float)Health.MaxHealth);
                 mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
             }
         }

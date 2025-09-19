@@ -1,10 +1,4 @@
-using Pathfinding;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.IntegerTime;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthText : MonoBehaviour
@@ -39,6 +33,5 @@ public class HealthText : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 }

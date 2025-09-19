@@ -13,13 +13,12 @@ namespace BoleteHell.Code.Gameplay.Base
 {
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
+    [RequireComponent(typeof(Health))]
     public class Base : MonoBehaviour, ITargetable, ISceneObject
     {
         public Vector2 Position => transform.position;
-
-        [SerializeField]
-        public Health health;
-        Health IDamageable.Health => health;
+        
+        public Health Health { get; private set; }
         
         [Inject]
         private Camera _mainCamera;
@@ -34,7 +33,8 @@ namespace BoleteHell.Code.Gameplay.Base
 
         private void Awake()
         {
-            health.OnDeath += () =>
+            Health = GetComponent<Health>();
+            Health.OnDeath += () =>
             {
                 ShowDeathVFX();
                 _bases.NotifyBaseDied(this);
@@ -89,7 +89,7 @@ namespace BoleteHell.Code.Gameplay.Base
             
             if (target && target.TryGetComponent(out Character.Character character))
             {
-                if (character.health.IsDead)
+                if (character.Health.IsDead)
                 {
                     _blackboard.SetVariableValue<GameObject>("Target", null);
                 }
@@ -107,7 +107,7 @@ namespace BoleteHell.Code.Gameplay.Base
             ss.y = Screen.height - ss.y;
             Rect rect = new(ss, new Vector2(100, 50));
             GUI.skin.label.fontSize = 24;
-            GUI.Label(rect, health.CurrentHealth + "hp");
+            GUI.Label(rect, Health.CurrentHealth + "hp");
         }
     }
 }

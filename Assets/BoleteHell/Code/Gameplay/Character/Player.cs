@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Gameplay.Character
         protected override void Awake()
         {
             base.Awake();
-            health.OnDeath += () =>
+            Health.OnDeath += () =>
             {
                 _outcome.TriggerDefeat("You have died");
             };
@@ -21,7 +21,7 @@ namespace BoleteHell.Code.Gameplay.Character
         private void OnGUI()
         {
             GUI.skin.label.fontSize = 32;
-            GUI.Label(new Rect(10, 10, 300, 80), "Health: " + health.CurrentHealth);
+            GUI.Label(new Rect(10, 10, 300, 80), "Health: " + Health.CurrentHealth);
         }
     }
 }
