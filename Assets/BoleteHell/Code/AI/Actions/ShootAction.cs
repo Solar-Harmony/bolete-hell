@@ -10,11 +10,11 @@ using Zenject;
 namespace BoleteHell.Code.AI.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Shoot", story: "[Self] shoots at [Target]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
+    [NodeDescription(name: "Shoot", story: "[Self] shoots at [CurrentTarget]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
     public partial class ShootAction : BoleteAction
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
-        [SerializeReference] public BlackboardVariable<GameObject> Target;
+        [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
         
         [Inject]
         private ITargetingUtils _targeting;
@@ -28,7 +28,7 @@ namespace BoleteHell.Code.AI.Actions
         {
             ((IRequestManualInject)this).InjectDependencies();
 
-            if (Self.Value == null || Target.Value == null)
+            if (Self.Value == null || CurrentTarget.Value == null)
             {
                 Debug.LogError("Self or Target is null");
                 return Status.Failure;
@@ -41,22 +41,17 @@ namespace BoleteHell.Code.AI.Actions
                 return Status.Failure;
             }
             
-            
-            return Status.Running;
-        }
-
-        protected override Status OnUpdate()
-        {
             Vector2 selfPosition = Self.Value.transform.position;
             Vector2 selfVelocity = Self.Value.GetComponent<AIPath>()?.desiredVelocity ?? Vector2.zero;
-            Vector2 targetPosition = Target.Value.transform.position;
-            Vector2 targetVelocity = Target.Value.TryGetComponent(out Rigidbody2D rb)
+            Vector2 targetPosition = CurrentTarget.Value.transform.position;
+            Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
                 ? rb.linearVelocity
                 : Vector2.zero;
             float projectileSpeed = _arsenal.GetProjectileSpeed();
             _targeting.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
             _arsenal.Shoot(direction);
-            return Status.Running;
+            
+            return Status.Success;
         }
 
         protected override void OnEnd()

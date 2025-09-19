@@ -23,8 +23,8 @@ namespace BoleteHell.Code.Gameplay.Character
             base.Awake(); // TODO: I hate this so much
             _mainCamera = Camera.main;
             _agent = GetComponent<BehaviorGraphAgent>();
-            _agent.BlackboardReference.SetVariableValue("Character", this);
-            _agent.BlackboardReference.SetVariableValue("Self", this.gameObject);
+            _agent.BlackboardReference.SetVariableValue("SelfCharacter", this);
+            _agent.BlackboardReference.SetVariableValue("Self", gameObject);
 
             _outcome.OnDefeat += OnDefeat;
         }

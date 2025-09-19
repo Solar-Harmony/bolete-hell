@@ -1,5 +1,6 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
+using BoleteHell.Code.AI.Condition;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Gameplay.Character;
 using Pathfinding;
@@ -23,7 +24,7 @@ namespace BoleteHell.Code.AI.Actions
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
-        [SerializeReference] public BlackboardVariable<Enemy> Character;
+        [SerializeReference] public BlackboardVariable<Enemy> SelfCharacter;
         
         private AIPath _pathfinder;
         
@@ -34,28 +35,24 @@ namespace BoleteHell.Code.AI.Actions
 
         protected override Status OnStartImpl()
         {
-            return Status.Running;
-        }
-
-        protected override Status OnUpdate()
-        {
-            GameObject agent = Self.Value;
-            GameObject target = CurrentTarget.Value;
-            
-            if (!agent || !target) 
+            if (!Self.Value || !CurrentTarget.Value) 
                 return Status.Failure;
             
-            if (!(_pathfinder ??= Self.Value.GetComponent<AIPath>()))
-            {
-                Debug.LogError("AIPath component not found on the agent.");
-                return Status.Failure;
-            }
-
-            _pathfinder.maxSpeed = Character.Value.MovementSpeed;
+            Debug.Assert(_pathfinder ??= Self.Value.GetComponent<AIPath>());
+            
+            _pathfinder.maxSpeed = SelfCharacter.Value.MovementSpeed;
             _pathfinder.destination = CurrentTarget.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
             return Status.Running;
+            
+        }
+
+        protected override Status OnUpdate()
+        {
+            return _pathfinder.remainingDistance <= 0.5
+                ? Status.Success
+                : Status.Running;
         }
 
         protected override void OnEnd()

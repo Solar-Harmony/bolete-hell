@@ -51,7 +51,7 @@ namespace BoleteHell.Code.AI.Actions
             }
 
             Target.Value = go.gameObject;
-            return Status.Running;
+            return Status.Success;
         }
 
         protected override void OnEnd()

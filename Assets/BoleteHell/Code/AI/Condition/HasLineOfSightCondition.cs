@@ -22,14 +22,14 @@ namespace BoleteHell.Code.AI.Condition
         
         public override bool IsTrueImpl()
         {
-            return _targeting.HasLineOfSight(Self.Value, Agent.Value, ViewRange.Value,Has.Value);
+            return _targeting.HasLineOfSight(Self.Value, Agent.Value, ViewRange.Value, Has.Value);
         }
 
         public override void OnStart()
         {
             ((IRequestManualInject)this).InjectDependencies();
         }
-
+        
         public override void OnEnd()
         {
         }

@@ -101,6 +101,8 @@ MonoBehaviour:
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 10
   hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+  visionRange: 25
+  attackRange: 5
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0
