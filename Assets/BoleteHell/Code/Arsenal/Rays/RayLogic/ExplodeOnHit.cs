@@ -41,7 +41,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
                 if (!hit.gameObject.TryGetComponent(out Character character)) 
                     continue;
                     
-                character.health.TakeDamage(explosionDamage);
+                character.Health.TakeDamage(explosionDamage);
             }
         }
 
