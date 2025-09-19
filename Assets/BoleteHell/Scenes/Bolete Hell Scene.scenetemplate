@@ -161,4 +161,4 @@ MonoBehaviour:
     instantiationMode: 1
   templatePipeline: {fileID: 0}
   badge: {fileID: 2800000, guid: 1a02efd9f7744e2408f1e37c1ec53005, type: 3}
-  addToDefaults: 1
+  addToDefaults: 0

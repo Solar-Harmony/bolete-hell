@@ -10,11 +10,11 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
+    [RequireComponent(typeof(Health))]
     public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
     {
-        [field: SerializeField]
-        public Health Health { get; set; }
-        
+        public Health Health { get; private set; }
+
         public Vector2 Position => transform.position;
         
         public bool IsValid => this && gameObject;
@@ -44,6 +44,7 @@ namespace BoleteHell.Code.Gameplay.Character
         
         protected virtual void Awake()
         {
+            Health = GetComponent<Health>();
             Health.OnDeath += () =>
             {
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);

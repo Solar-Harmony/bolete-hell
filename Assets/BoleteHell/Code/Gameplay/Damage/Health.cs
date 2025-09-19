@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BoleteHell.Code.Gameplay.Damage
 {
-    [Serializable]
-    public class Health : ISerializationCallbackReceiver
+    public class Health : MonoBehaviour, ISerializationCallbackReceiver
     {
         [field: SerializeField]
         public bool IsInvincible { get; private set; } = false;
@@ -15,15 +15,16 @@ namespace BoleteHell.Code.Gameplay.Damage
         public int CurrentHealth { get; private set; }
     
         public event Action OnDeath;
-        
-        public bool IsDead => CurrentHealth <= 0;
+        public static event Action<GameObject, int> OnDamaged;
 
+        public bool IsDead => CurrentHealth <= 0;
         public void TakeDamage(int damageAmount)
         {
             if (IsInvincible || IsDead)
                 return;
             
             CurrentHealth = Math.Max(0, CurrentHealth - damageAmount);
+            OnDamaged?.Invoke(gameObject, damageAmount);
 
             if (IsDead)
             {
