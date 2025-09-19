@@ -1,3 +1,4 @@
+using Pathfinding;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -13,6 +14,9 @@ public class HealthText : MonoBehaviour, IPoolable<Vector3, int>
     private float timeElapsed = 0f;
     private Color startColor;
 
+    [Inject] 
+    private Pool _pool;
+
     private void Awake()
     {
         textTransform = GetComponent<RectTransform>();
@@ -23,12 +27,14 @@ public class HealthText : MonoBehaviour, IPoolable<Vector3, int>
     public void OnSpawned(Vector3 position, int damage)
     {
         transform.SetPositionAndRotation(position, Quaternion.identity);
+        textMeshPro.color = startColor;
         textMeshPro.text = damage.ToString();
+        timeElapsed = 0f; // Reset time when spawned
     }
 
     public void OnDespawned()
     {
-        
+        timeElapsed = 0f; // Reset for next use
     }
 
     private void Update()
@@ -43,7 +49,7 @@ public class HealthText : MonoBehaviour, IPoolable<Vector3, int>
         }
         else
         {
-            Destroy(gameObject);
+            _pool.Despawn(this);
         }
     }
 

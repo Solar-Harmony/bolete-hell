@@ -6,9 +6,6 @@ using BoleteHell.Code.Gameplay.Damage;
 public class DamageTextManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject damagetextPrefab;
-
-    [SerializeField]
     private Canvas gameCanvas;
 
     [Inject]
@@ -26,7 +23,24 @@ public class DamageTextManager : MonoBehaviour
 
     private void CharacterTookDamage(GameObject character, int damageAmount)
     {
-        Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position);
-        _pool.Spawn(spawnPosition, damageAmount);
+        Vector3 worldPosition = character.transform.position;
+        Vector2 canvasPosition = WorldToCanvasPosition(worldPosition);
+        
+        var healthText = _pool.Spawn(canvasPosition, damageAmount);
+      
+        healthText.transform.SetParent(gameCanvas.transform, false);
+    }
+
+    private Vector2 WorldToCanvasPosition(Vector3 worldPosition)
+    {
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(worldPosition);
+        
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            gameCanvas.transform as RectTransform, 
+            screenPoint, 
+            gameCanvas.worldCamera, 
+            out Vector2 localPoint);
+            
+        return localPoint;
     }
 }
