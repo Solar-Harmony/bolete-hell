@@ -10,8 +10,8 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
-    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
     [RequireComponent(typeof(Health))]
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
     {
         public Health Health { get; private set; }
 
