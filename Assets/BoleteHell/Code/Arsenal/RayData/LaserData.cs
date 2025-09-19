@@ -1,4 +1,7 @@
 using BoleteHell.Code.Arsenal.Rays.RayLogic;
+using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,5 +18,11 @@ namespace BoleteHell.Code.Arsenal.RayData
         
         [Required] [field: SerializeReference] 
         public RayHitLogic Logic { get; private set; }
+
+        [field: SerializeField] 
+        public int baseDamage { get; private set; }
+
+        [field: SerializeField] 
+        public float MovementSpeed { get; set; }
     }
 }

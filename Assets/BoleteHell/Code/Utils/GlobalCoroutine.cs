@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BoleteHell.Code.Utils
 {
-    public class GlobalCoroutine : MonoBehaviour, IGlobalCoroutine
+    public class GlobalCoroutine : MonoBehaviour, ICoroutineProvider
     {
-        public Coroutine Launch(IEnumerator routine)
-        {
-            return StartCoroutine(routine);
-        }
+        // satisfied by monobehavior
     }
 }

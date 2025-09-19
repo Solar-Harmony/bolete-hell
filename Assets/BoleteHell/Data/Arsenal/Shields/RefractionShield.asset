@@ -12,14 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604794fded01c8943a45fbfe5f2acd44, type: 3}
   m_Name: RefractionShield
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0.216981, b: 0.216981, a: 1}
-  onHitLogic:
-    rid: 7223671015644069986
-  shieldPreview: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
+  <color>k__BackingField: {r: 0.21538448, g: 0, b: 1, a: 1}
+  <onHitLogic>k__BackingField:
+    rid: 8554527307954126936
+  despawnTime: 3
+  <statusEffectConfig>k__BackingField:
+    rid: 8554527311297511574
+  <EnergyCostPerCm>k__BackingField: 10
   references:
     version: 2
     RefIds:
-    - rid: 7223671015644069986
+    - rid: 8554527307954126936
       type: {class: RefractLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data:
-        materialRefractiveIndice: 4.5
+        materialRefractiveIndice: 2.417
+    - rid: 8554527311297511574
+      type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+      data:
+        isTransient: 0
+        numTicks: 2
+        initialDelay: 0
+        tickInterval: 20
+        stackBehavior:
+          rid: 8554527311297511575
+        damageMultiplier: 1.5
+    - rid: 8554527311297511575
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        maxStacks: 3
+        condition: 0

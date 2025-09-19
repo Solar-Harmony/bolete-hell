@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
+  m_Name: Weak Poison Laser
+  m_EditorClassIdentifier: 
+  <Color>k__BackingField: {r: 0.4475476, g: 0.57254905, b: 0.23529412, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.44
+  <Logic>k__BackingField:
+    rid: 8651057782743105642
+  <baseDamage>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 10
+  references:
+    version: 2
+    RefIds:
+    - rid: 420089345060110433
+      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data: 
+    - rid: 8651057782743105642
+      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
+      data:
+        statusEffectConfig:
+          rid: 8651057782743105643
+    - rid: 8651057782743105643
+      type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+      data:
+        isTransient: 0
+        numTicks: 3
+        initialDelay: 0
+        tickInterval: 1
+        stackBehavior:
+          rid: 420089345060110433
+        damageEachTick: 1

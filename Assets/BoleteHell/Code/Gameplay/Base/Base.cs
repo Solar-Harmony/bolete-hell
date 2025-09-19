@@ -38,6 +38,7 @@ namespace BoleteHell.Code.Gameplay.Base
             {
                 ShowDeathVFX();
                 _bases.NotifyBaseDied(this);
+                GetComponent<BehaviorGraphAgent>().enabled = false;
             };
             _blackboard = GetComponent<BehaviorGraphAgent>().BlackboardReference;
         }
@@ -64,7 +65,7 @@ namespace BoleteHell.Code.Gameplay.Base
             if (ctx.Data is not LaserCombo laser)
                 return;
         
-            laser.CombinedEffect(ctx.Position, this);
+            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
 
             if (ctx.Instigator)

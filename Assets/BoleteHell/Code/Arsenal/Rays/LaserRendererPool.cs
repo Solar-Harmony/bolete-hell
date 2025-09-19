@@ -8,9 +8,9 @@ namespace BoleteHell.Code.Arsenal.Rays
         [SerializeField] public GameObject lineRendererPrefab; 
 
         [SerializeField] private int initialPoolSize = 25;
+         private int currentPoolSize;
 
-        private readonly Queue<LaserRenderer> _pool = new();
-
+        private readonly Queue<LaserInstance> _pool = new();
         public static LaserRendererPool Instance { get; private set; }
 
         private void Awake()
@@ -26,6 +26,7 @@ namespace BoleteHell.Code.Arsenal.Rays
 
         private void InitializePool(int size)
         {
+            currentPoolSize = size;
             for (int i = 0; i < size; i++)
             {
                 AddObjectToPool();
@@ -34,32 +35,40 @@ namespace BoleteHell.Code.Arsenal.Rays
         
         private void AddObjectToPool()
         {
-            if (!lineRendererPrefab.GetComponent<LaserRenderer>())
+            if (!lineRendererPrefab.GetComponent<LaserInstance>())
             {
                 Debug.LogError("lineRendererPrefab empty");
                 return;
             }
-            GameObject obj = Instantiate(lineRendererPrefab, transform);
+
+            Vector3 spawnPos = transform.position + new Vector3(0.0f, 0.0f, -1.0f); // keep in front of backgrounds
+            GameObject obj = Instantiate(lineRendererPrefab, spawnPos, Quaternion.identity);
+            
             obj.name = $"LaserRenderer {_pool.Count}";
             obj.SetActive(false);
-            LaserRenderer rayRenderer = obj.GetComponent<LaserRenderer>();
+            LaserInstance rayRenderer = obj.GetComponent<LaserInstance>();
             _pool.Enqueue(rayRenderer);
         }
 
-        public LaserRenderer Get()
+        public LaserInstance Get()
         {
             if (_pool.Count == 0)
             {
                 Debug.LogWarning("Pool empty adding more");
-                AddObjectToPool();
+                for (int i = 0; i < currentPoolSize; i++)
+                {
+                    AddObjectToPool();
+                }
+            
+                currentPoolSize *= 2;
             }
 
-            LaserRenderer laserRenderer = _pool.Dequeue();
+            LaserInstance laserRenderer = _pool.Dequeue();
             laserRenderer.gameObject.SetActive(true);
             return laserRenderer;
         }
 
-        public void Release(LaserRenderer laserRenderer)
+        public void Release(LaserInstance laserRenderer)
         {
             if (!laserRenderer)
             {

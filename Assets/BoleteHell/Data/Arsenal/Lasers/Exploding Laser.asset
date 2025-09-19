@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
+  m_Name: Exploding Laser
+  m_EditorClassIdentifier: 
+  <Color>k__BackingField: {r: 0.8706199, g: 0.5814159, b: 0.19594803, a: 1}
+  <LightRefractiveIndex>k__BackingField: 1.33
+  <Logic>k__BackingField:
+    rid: 7223671017346171000
+  <baseDamage>k__BackingField: 10
+  <MovementSpeed>k__BackingField: 10
+  references:
+    version: 2
+    RefIds:
+    - rid: 7223671017346171000
+      type: {class: ExplodeOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
+      data:
+        explosionDamage: 5
+        explosionRadius: 1
+        explosionCircle: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}

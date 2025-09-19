@@ -13,11 +13,6 @@ namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
             return Refract(incomingDirection, hitPoint.normal, lightRefractiveIndice, materialRefractiveIndice);
         }
 
-        public Vector3 ExecuteProjectile(Vector3 incomingDirection)
-        {
-            throw new NotImplementedException();
-        }
-
         private Vector2 Refract(Vector2 incidentDirection, Vector2 surfaceNormal, float refractiveIndex1,
             float refractiveIndex2)
         {

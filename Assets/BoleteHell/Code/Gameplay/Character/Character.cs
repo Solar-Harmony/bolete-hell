@@ -2,20 +2,31 @@
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
     [RequireComponent(typeof(Health))]
-    public abstract class Character : MonoBehaviour, ITargetable, ISceneObject
     {
         public Health Health { get; private set; }
 
         public Vector2 Position => transform.position;
+        
+        public bool IsValid => this && gameObject;
+        
+        [field: SerializeField]
+        public float MovementSpeed { get; set; } = 5f;
+
+        [field: SerializeField]
+        public float DamageMultiplier { get; set; } = 1f;
+
+        [field: SerializeField]
+        public Energy Energy { get; private set; }
 
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
@@ -58,15 +69,18 @@ namespace BoleteHell.Code.Gameplay.Character
                 return;
             }
         
-            laser.CombinedEffect(ctx.Position, this);
+            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroyProjectile = true });
 
             if (_fire)
             {
                 ParticleSystem.MainModule mainModule = _fire.main;
                 float alpha =  1 - (Health.CurrentHealth / (float)Health.MaxHealth);
-                mainModule.startColor = _fire.main.startColor.color.WithAlpha(alpha);
+                var color = _fire.main.startColor.color;
+                color.a = alpha;
+                mainModule.startColor = color;
             }
         }
+
     }
 }

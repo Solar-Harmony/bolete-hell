@@ -4,21 +4,19 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
-    //Peut-être déplacer l'information dans les bulletPatterns directement
-    //Mais le fait de garder le firingType séparer du BulletPatternData permet d'utiliser le même BulletPatternData pour n'importe quel type de projectile
-    //Sans avoir a faire un BulletPatternData par type
     [CreateAssetMenu(fileName = "CannonData", menuName = "BoleteHell/Arsenal/Cannon", order = -100)]
     public class CannonData : ScriptableObject
     { 
         [SerializeField] 
         public FiringTypes firingType;
         
-        [SerializeField] [Tooltip("Time between each shot")] [Min(0)]
-        public float rateOfFire;
+        [Tooltip("Delay after a shot before being able to shoot again")] 
+        [SerializeField] [Min(0)] [Unit(Units.Second)]
+        public float cooldown;
         
-        // TODO: This is meaningless for Beam projectiles
-        [SerializeField] [Unit(Units.MetersPerSecond)]
-        public float projectileSpeed = 10.0f;
+        [Tooltip("Time during which the shot input must be pressed before allowing fire")] 
+        [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Unit(Units.Second)] [Min(0)]
+        public float chargeTime;
         
         [SerializeField] [Min(0)]
         public int maxNumberOfBounces = 10;
@@ -29,11 +27,10 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField]
         private bool useCustomLifetime = false;
         
+        [Tooltip("Time before the projectile despawns.")]
         [SerializeField] [ShowIf(nameof(useCustomLifetime))] [Unit(Units.Second)] [Min(0)]
         private float lifetime = 5.0f;
         
-        // TODO: I feel like we could move these 2 properties, since they're specific
-        // to the FiringLogic they might be better placed there instead of branching everywhere
         public float Lifetime => useCustomLifetime ? lifetime : firingType switch
         {
             FiringTypes.Automatic => 20.0f,

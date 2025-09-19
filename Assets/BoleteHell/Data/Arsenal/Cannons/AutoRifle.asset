@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AutoRifle
   m_EditorClassIdentifier: 
   firingType: 0
-  rateOfFire: 0.2
-  projectileSpeed: 5
+  cooldown: 0.2
+  chargeTime: 0
   maxNumberOfBounces: 10
   maxRayDistance: 10
   useCustomLifetime: 0
