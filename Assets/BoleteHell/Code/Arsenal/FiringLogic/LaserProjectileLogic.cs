@@ -3,20 +3,21 @@ using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
+using BoleteHell.Code.Gameplay.Character;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.FiringLogic
 {
     public class LaserProjectileLogic : FiringLogic
     {
-        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, GameObject instigator = null)
+        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, IFaction instigator )
         {
             Vector2 currentDirection = direction;
             // crée seulement un point de début et un point de fin
             LaserInstance reservedRenderer = LaserRendererPool.Instance.Get();
             List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
             reservedRenderer.transform.position = bulletSpawnPoint;
-            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime);
+            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime, instigator);
             LaserProjectileMovement projectileMovement = reservedRenderer.SetupProjectileLaser(currentDirection, laserCombo.GetLaserSpeed());
             projectileMovement.OnCollide += ((hit) =>
             {

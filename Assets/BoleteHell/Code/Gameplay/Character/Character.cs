@@ -11,7 +11,7 @@ using Zenject;
 namespace BoleteHell.Code.Gameplay.Character
 {
     [RequireComponent(typeof(Health))]
-    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer, IFaction
     {
         public Health Health { get; private set; }
 
@@ -27,6 +27,8 @@ namespace BoleteHell.Code.Gameplay.Character
 
         [field: SerializeField]
         public Energy Energy { get; private set; }
+
+        public abstract Faction faction { get; set; }
 
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
@@ -57,10 +59,7 @@ namespace BoleteHell.Code.Gameplay.Character
         public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             // TODO: make a proper factions system
-            if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
-                return;
-            
-            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
+           
             
             if (ctx.Data is not LaserCombo laser)
             {
@@ -68,6 +67,11 @@ namespace BoleteHell.Code.Gameplay.Character
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
                 return;
             }
+            
+            if (((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
+                return;
+            
+            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
         
             laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroyProjectile = true });
@@ -81,6 +85,5 @@ namespace BoleteHell.Code.Gameplay.Character
                 mainModule.startColor = color;
             }
         }
-
     }
 }

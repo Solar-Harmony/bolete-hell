@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.ShotPatterns;
+using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
-    public record ShotLaunchParams(Vector2 SpawnPosition, Vector2 SpawnDirection, GameObject Instigator);
+    public record ShotLaunchParams(Vector2 CenterPos, Vector2 SpawnPosition, Vector2 SpawnDirection, IFaction Instigator);
 
     public class CannonService : ICannonService
     {
@@ -76,7 +77,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
 
-        private IEnumerator RoutineFire(CannonInstance cannon, List<ShotLaunchParams> projectileLaunchData, ShotPatternData patternData, GameObject instigator)
+        private IEnumerator RoutineFire(CannonInstance cannon, List<ShotLaunchParams> projectileLaunchData, ShotPatternData patternData, IFaction instigator)
         {
             foreach (ShotLaunchParams launchData in projectileLaunchData)
             {

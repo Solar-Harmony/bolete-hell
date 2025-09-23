@@ -14,11 +14,13 @@ namespace BoleteHell.Code.Gameplay.Base
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
     [RequireComponent(typeof(Health))]
-    public class Base : MonoBehaviour, ITargetable, ISceneObject
+    public class Base : MonoBehaviour, ITargetable, ISceneObject, IFaction
     {
         public Vector2 Position => transform.position;
         
         public Health Health { get; private set; }
+        
+        public Faction faction { get; set; } = Faction.Player;
         
         [Inject]
         private Camera _mainCamera;
@@ -64,19 +66,21 @@ namespace BoleteHell.Code.Gameplay.Base
         {
             if (ctx.Data is not LaserCombo laser)
                 return;
-        
+            
+            if (((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
+                return;
+            
             laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
-
-            if (ctx.Instigator)
-            {
-                _blackboard.SetVariableValue<GameObject>("Target", ctx.Instigator);
-                if (_deaggroCoroutine != null)
-                {
-                    StopCoroutine(_deaggroCoroutine);
-                }
-                _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
-            }
+           
+           //TODO: Modifier pour attaquer les ennemis dans le range plutot que d'attendre d'être attaqué
+            // _blackboard.SetVariableValue<GameObject>("Target", ctx.);
+            // if (_deaggroCoroutine != null)
+            // {
+            //     StopCoroutine(_deaggroCoroutine);
+            // }
+            // _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
+            
             
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
         }
@@ -110,5 +114,11 @@ namespace BoleteHell.Code.Gameplay.Base
             GUI.skin.label.fontSize = 24;
             GUI.Label(rect, Health.CurrentHealth + "hp");
         }
+
+        public void Interact()
+        {
+            Debug.Log("Interaction");
+        }
+
     }
 }

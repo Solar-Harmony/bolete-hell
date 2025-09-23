@@ -12,7 +12,9 @@ namespace BoleteHell.Code.Gameplay.Character
         
         [Inject]
         private IInputDispatcher _inputDispatcher;
-        
+
+        public override Faction faction { get; set; } = Faction.Player;
+
         protected override void Awake()
         {
             base.Awake();

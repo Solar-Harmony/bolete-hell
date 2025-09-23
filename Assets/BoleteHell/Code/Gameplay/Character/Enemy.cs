@@ -16,6 +16,8 @@ namespace BoleteHell.Code.Gameplay.Character
 
         private BehaviorGraphAgent _agent;
 
+        public override Faction faction { get; set; } = Faction.Enemy;
+
         protected override void Awake()
         {
             base.Awake(); // TODO: I hate this so much

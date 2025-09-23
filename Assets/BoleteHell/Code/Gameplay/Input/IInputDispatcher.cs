@@ -17,6 +17,7 @@ namespace BoleteHell.Code.Input
         event Action OnShieldStart;
         event Action OnShieldEnd;
         event Action OnShoot;
+        event Action OnInteract;
         event Action<int> OnCycleWeapons;
         event Action<int> OnCycleShield;
     }

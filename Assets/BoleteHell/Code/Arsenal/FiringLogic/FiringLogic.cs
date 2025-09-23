@@ -3,6 +3,7 @@ using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
+using BoleteHell.Code.Gameplay.Character;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.FiringLogic
@@ -12,13 +13,10 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         protected Vector2 CurrentDirection;
         protected Vector3 CurrentPos;
     
-        public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, GameObject instigator = null);
+        public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, IFaction instigator);
         public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             // always ignore hits with the instigator (for now)
-            if (ctx.HitObject == ctx.Instigator)
-                return;
-
             ITargetable handler = ctx.HitObject.GetComponent<ITargetable>()
                                   ?? ctx.HitObject.GetComponentInParent<ITargetable>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
 

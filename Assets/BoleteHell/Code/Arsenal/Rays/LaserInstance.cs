@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
@@ -16,6 +17,22 @@ namespace BoleteHell.Code.Arsenal.Rays
         [field:SerializeField] public float RayWidth { get; private set; } = 0.2f;
         //Spécifique au projectile lasers
         [field:SerializeField]public float LaserLength { get; private set; } = 0.3f;
+
+        public IFaction Instigator;
+        public bool isProjectile;
+        private float _movementSpeed;
+        public float MovementSpeed 
+        {
+            get => _movementSpeed;
+            set
+            {
+                _movementSpeed = value;
+                _movement.UpdateSpeed(value);
+            }
+        }
+        public float DamageMultiplier { get; set; } = 1;
+        
+        
         private LineRenderer _lineRenderer;
 
         private LaserProjectileMovement _movement;
@@ -24,10 +41,8 @@ namespace BoleteHell.Code.Arsenal.Rays
         
         private LaserRendererPool _parentPool;
         private const float AdjustedColliderLenght = 0.15f;
+
         
-        public bool isProjectile;
-        public float MovementSpeed { get; set; }
-        public float DamageMultiplier { get; set; } = 1;
 
         private void Awake()
         {
@@ -40,8 +55,9 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
+        public void DrawRay(List<Vector3> positions, Color color, float lifeTime, IFaction instigator)
         {
+            Instigator = instigator;
 
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());
