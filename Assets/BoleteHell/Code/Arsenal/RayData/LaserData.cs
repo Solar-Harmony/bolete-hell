@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.RayData
 {
+   
+    
     [CreateAssetMenu(fileName = "LaserData", menuName = "BoleteHell/Arsenal/Laser Data", order = -100)]
     public class LaserData : ScriptableObject
     {
@@ -18,11 +20,16 @@ namespace BoleteHell.Code.Arsenal.RayData
         
         [Required] [field: SerializeReference] 
         public RayHitLogic Logic { get; private set; }
+        
+        [SerializeField]
+        public AffectedSide affectedSide = AffectedSide.Enemies;
 
         [field: SerializeField] 
         public int baseDamage { get; private set; }
 
         [field: SerializeField] 
         public float MovementSpeed { get; set; }
+        
+        
     }
 }

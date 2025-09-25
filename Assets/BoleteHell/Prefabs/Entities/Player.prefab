@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: -6850370767394821370}
   - component: {fileID: 8833217652067245739}
   - component: {fileID: -7735479623250359012}
+  - component: {fileID: 1536071927711564797}
+  - component: {fileID: 3814531209225375410}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -171,9 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620760ddc4214ec6b73512a1bd423c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Health>k__BackingField:
-    <IsInvincible>k__BackingField: 0
-    <MaxHealth>k__BackingField: 100
   <MovementSpeed>k__BackingField: 5
   <DamageMultiplier>k__BackingField: 1
   <Energy>k__BackingField:
@@ -213,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2598b4cb002d314fb548237a312d5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shieldPreviewPrefab: {fileID: 0}
   currentShields:
   - {fileID: 11400000, guid: 67c3e6d11be5c8546b73f04a26d85b54, type: 2}
   - {fileID: 11400000, guid: 88e85a1e01f3340488d988789fae7634, type: 2}
@@ -228,6 +228,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1b8a377022a73459530e89212f186e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1536071927711564797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInvincible>k__BackingField: 0
+  <MaxHealth>k__BackingField: 50
+--- !u!114 &3814531209225375410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0552d95d3a4d6c545a74595e9500155b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
 --- !u!1 &885100575828019646
 GameObject:
   m_ObjectHideFlags: 0

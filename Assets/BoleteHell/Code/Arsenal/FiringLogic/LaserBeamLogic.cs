@@ -3,6 +3,7 @@ using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
+using BoleteHell.Code.Gameplay.Character;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.FiringLogic
@@ -13,7 +14,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         //Modifier pour ne plus réserver un renderer et le réutiliser car ca ne fonctionne pas avec le tire de multiple laser en même temps malheureusement
         //on a une seule instance de LaserBeamLogic donc si l'instance réserve un renderer le même va être utiliser pour tout les tires
         //Serais possible si on informe le LaserBeamLogic du nombre de renderer a réserver 
-        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, GameObject instigator = null)
+        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, Character instigator)
         {
             Cast(bulletSpawnPoint, direction, cannonData, laserCombo, instigator);
         }
@@ -23,12 +24,12 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
 
         }
      
-        private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, GameObject instigator)
+        private void Cast(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, Character instigator)
         {
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
-            LaserInstance laserInstance = LaserRendererPool.Instance.Get();
+            LaserInstance laserInstance = LaserRendererPool.Instance.Get(instigator, laserCombo.HitSide);
             
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {

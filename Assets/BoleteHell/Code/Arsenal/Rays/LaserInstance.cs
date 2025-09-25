@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
@@ -16,6 +17,26 @@ namespace BoleteHell.Code.Arsenal.Rays
         [field:SerializeField] public float RayWidth { get; private set; } = 0.2f;
         //Spécifique au projectile lasers
         [field:SerializeField]public float LaserLength { get; private set; } = 0.3f;
+
+        //Pour déterminer la faction du laser et ce qu'il devrait pouvoir affecter
+        public Character instigator;
+        public AffectedSide affectedSide;
+        
+        public bool isProjectile;
+        private float _movementSpeed;
+        public float MovementSpeed 
+        {
+            get => _movementSpeed;
+            set
+            {
+                _movementSpeed = value;
+                _movement.UpdateSpeed(value);
+            }
+        }
+        public float GeneralDamageMultiplier { get; set; } = 1;
+        public Dictionary<Faction, float> factionDamageMultiplier { get;} = new();
+
+
         private LineRenderer _lineRenderer;
 
         private LaserProjectileMovement _movement;
@@ -24,10 +45,8 @@ namespace BoleteHell.Code.Arsenal.Rays
         
         private LaserRendererPool _parentPool;
         private const float AdjustedColliderLenght = 0.15f;
+
         
-        public bool isProjectile;
-        public float MovementSpeed { get; set; }
-        public float DamageMultiplier { get; set; } = 1;
 
         private void Awake()
         {
@@ -40,9 +59,19 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
+        public void SetFactionInfo(Character owner, AffectedSide side )
+        {
+            instigator = owner;
+            affectedSide = side;
+        }
+
+        public void MakeLaserNeutral()
+        {
+            affectedSide = AffectedSide.All;
+        }
+
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
         {
-
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());
             
@@ -82,6 +111,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public void ResetLaser()
         {
             LaserRendererPool.Instance.Release(this);
+            instigator = null;
             if (!isProjectile) return;
             
             _lineRenderer.useWorldSpace = true;
@@ -93,7 +123,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             isProjectile = false;
             _movement.RemoveCollideListeners();
             MovementSpeed = 0;
-            DamageMultiplier = 1;
+            GeneralDamageMultiplier = 1;
         }
 
         public bool IsValid => true;

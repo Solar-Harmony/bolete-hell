@@ -1,5 +1,6 @@
 using System;
 using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 
@@ -10,14 +11,24 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
     public abstract class RayHitLogic : IRequestManualInject
     {
         bool IRequestManualInject.IsInjected { get; set; } = false;
-
+        
         //Au lieu de health on pourrais avoir un component de stats en général comme ça les tir pourrait affecter le stat qu'il veut directement
         //(réduire le mouvement, reduire l'attaque wtv)
         public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance, LaserData data)
         {
             ((IRequestManualInject)this).InjectDependencies();
-            Debug.Log($"dealt {(int)(data.baseDamage * laserInstance.DamageMultiplier)} damage");
-            hitCharacterHealth.Health.TakeDamage((int)(data.baseDamage * laserInstance.DamageMultiplier));
+            
+            Faction hitCharacterFaction = ((IFaction)hitCharacterHealth).faction;
+            
+            float characterDamageMultiplierAgainstTarget =
+                ((IDamageDealer)laserInstance.instigator).GetDamageMultiplier(hitCharacterFaction);
+            
+            float laserDamageMultiplierAgainstTarget =
+                ((IDamageDealer)laserInstance).GetDamageMultiplier(hitCharacterFaction);
+            
+            //Debug.Log($"hit for {(int)(data.baseDamage * characterDamageMultiplierAgainstTarget * laserDamageMultiplierAgainstTarget)}");
+
+            hitCharacterHealth.Health.TakeDamage((int)(data.baseDamage * characterDamageMultiplierAgainstTarget * laserDamageMultiplierAgainstTarget));
             
             OnHitImpl(hitPosition, hitCharacterHealth);
         }
