@@ -43,6 +43,8 @@ MonoBehaviour:
         stackBehavior:
           rid: 8554527557946441821
         damageMultiplier: 1.5
+        isAppliedToFaction: 1
+        affectedFaction: 1
     - rid: 8554527557946441821
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:

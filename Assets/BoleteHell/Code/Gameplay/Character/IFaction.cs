@@ -12,7 +12,8 @@ namespace BoleteHell.Code.Gameplay.Character
         Enemies,
         All
     }
-    
+    //Simplifier pour l'instant vu que je ne sais pas si on va actually ajouter des faction autre que juste les ennemis(Shrooms) et le player
+    //Mais on pourrais facilement faire un FactionManager qui gère les relation entre les faction et bouger le IsAffected et le GetSide la dedans en temps et lieu 
     public interface IFaction
     {
         public Faction faction { get; set; }

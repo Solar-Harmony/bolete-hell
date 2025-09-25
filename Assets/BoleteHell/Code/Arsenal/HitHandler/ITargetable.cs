@@ -10,7 +10,7 @@ namespace BoleteHell.Code.Arsenal.HitHandler
         public record Context
         (
             GameObject HitObject,
-            IFaction Instigator,
+            Character Instigator,
             LaserInstance Projectile,
             Vector2 Position,
             Vector2 Direction,

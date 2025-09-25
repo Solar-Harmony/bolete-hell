@@ -10,14 +10,14 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
 {
     public class LaserProjectileLogic : FiringLogic
     {
-        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, IFaction instigator )
+        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, Character instigator )
         {
             Vector2 currentDirection = direction;
             // crée seulement un point de début et un point de fin
-            LaserInstance reservedRenderer = LaserRendererPool.Instance.Get();
+            LaserInstance reservedRenderer = LaserRendererPool.Instance.Get(instigator);
             List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
             reservedRenderer.transform.position = bulletSpawnPoint;
-            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime, instigator);
+            reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime);
             LaserProjectileMovement projectileMovement = reservedRenderer.SetupProjectileLaser(currentDirection, laserCombo.GetLaserSpeed());
             projectileMovement.OnCollide += ((hit) =>
             {

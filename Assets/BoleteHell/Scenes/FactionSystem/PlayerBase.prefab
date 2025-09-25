@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3254317764152869805}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856569073709956364}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: ShowOnDeath
   m_TagString: VariantDestroyed
   m_Icon: {fileID: 0}
@@ -80,7 +80,8 @@ GameObject:
   - component: {fileID: -7706689365234032475}
   - component: {fileID: 728234813211920058}
   - component: {fileID: 4450026047873336119}
-  m_Layer: 6
+  - component: {fileID: 45582599979237282}
+  m_Layer: 11
   m_Name: PlayerBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,6 +261,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a0b5eddece24cac86be511792c78f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MovementSpeed>k__BackingField: 5
+  <GeneralDamageMultiplier>k__BackingField: 1
+  <Energy>k__BackingField:
+    maxEnergy: 150
+    regenRate: 20
+    currentEnergy: 100
+  spriteFragmentConfig:
+    <sr>k__BackingField: {fileID: 0}
+    <parentRb>k__BackingField: {fileID: 0}
+    <explosion>k__BackingField: {fileID: 0}
+    <fragmentsX>k__BackingField: 4
+    <fragmentsY>k__BackingField: 4
+    <explosionForce>k__BackingField: 1
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   deathSprite: {fileID: 21300000, guid: cddd52524f25f37419856dea6e607145, type: 3}
 --- !u!114 &-7706689365234032475
 MonoBehaviour:
@@ -329,8 +344,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsInvincible>k__BackingField: 0
+  <IsInvincible>k__BackingField: 1
   <MaxHealth>k__BackingField: 50
+--- !u!114 &45582599979237282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef324fadb8682e44da66334af839f3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactions:
+  - rid: 8554527557946441735
+  references:
+    version: 2
+    RefIds:
+    - rid: 8554527557946441735
+      type: {class: RotateShieldInteraction, ns: BoleteHell.Code.Gameplay.Interactions, asm: Assembly-CSharp}
+      data: 
 --- !u!1001 &1193320144923651803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 7c0a73f6f95614e44a281e3bcc82651e, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -515,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 7c0a73f6f95614e44a281e3bcc82651e, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 7c0a73f6f95614e44a281e3bcc82651e, type: 3}
       propertyPath: m_StaticEditorFlags

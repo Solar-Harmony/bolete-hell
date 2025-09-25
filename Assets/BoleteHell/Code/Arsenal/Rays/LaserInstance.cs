@@ -18,7 +18,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         //Spécifique au projectile lasers
         [field:SerializeField]public float LaserLength { get; private set; } = 0.3f;
 
-        public IFaction Instigator;
+        public Character instigator;
         public bool isProjectile;
         private float _movementSpeed;
         public float MovementSpeed 
@@ -30,9 +30,10 @@ namespace BoleteHell.Code.Arsenal.Rays
                 _movement.UpdateSpeed(value);
             }
         }
-        public float DamageMultiplier { get; set; } = 1;
-        
-        
+        public float GeneralDamageMultiplier { get; set; } = 1;
+        public Dictionary<Faction, float> factionDamageMultiplier { get;} = new();
+
+
         private LineRenderer _lineRenderer;
 
         private LaserProjectileMovement _movement;
@@ -55,10 +56,13 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void DrawRay(List<Vector3> positions, Color color, float lifeTime, IFaction instigator)
+        public void SetOwner(Character owner)
         {
-            Instigator = instigator;
+            instigator = owner;
+        }
 
+        public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
+        {
             _lineRenderer.positionCount = positions.Count;
             _lineRenderer.SetPositions(positions.ToArray());
             
@@ -98,6 +102,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public void ResetLaser()
         {
             LaserRendererPool.Instance.Release(this);
+            instigator = null;
             if (!isProjectile) return;
             
             _lineRenderer.useWorldSpace = true;
@@ -109,7 +114,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             isProjectile = false;
             _movement.RemoveCollideListeners();
             MovementSpeed = 0;
-            DamageMultiplier = 1;
+            GeneralDamageMultiplier = 1;
         }
 
         public bool IsValid => true;

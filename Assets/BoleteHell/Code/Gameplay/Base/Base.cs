@@ -14,13 +14,12 @@ namespace BoleteHell.Code.Gameplay.Base
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
     [RequireComponent(typeof(Health))]
-    public class Base : MonoBehaviour, ITargetable, ISceneObject, IFaction
+    //Changé pour herité de character car c'est pratiquement un character juste avec un movement speed de 0
+    //Et ca permet d'utiliser Character comme instigateur dans les tir ce qui facilite grandement l'accès aux informations nécéssaire
+    //Fait que les bases  sont affecter par les éffets de tir ce qu'on ne veut peut-être pas (Sortir IStatusEffectTarget de character et le mettre dans Enemy+Player)
+    public class Base : Character.Character
     {
-        public Vector2 Position => transform.position;
-        
-        public Health Health { get; private set; }
-        
-        public Faction faction { get; set; } = Faction.Player;
+        public override Faction faction { get; set; } = Faction.Player;
         
         [Inject]
         private Camera _mainCamera;
@@ -33,9 +32,9 @@ namespace BoleteHell.Code.Gameplay.Base
 
         private BlackboardReference _blackboard;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Health = GetComponent<Health>();
+            base.Awake();
             Health.OnDeath += () =>
             {
                 ShowDeathVFX();
@@ -62,27 +61,17 @@ namespace BoleteHell.Code.Gameplay.Base
             }
         }
 
-        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
+        //TODO:Peut-être modifier pour attaquer les ennemis dans le range plutot que d'attendre d'être attaqué
+        public override void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            if (ctx.Data is not LaserCombo laser)
-                return;
+            base.OnHit(ctx, callback);
             
-            if (((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
-                return;
-            
-            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
-            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
-           
-           //TODO: Modifier pour attaquer les ennemis dans le range plutot que d'attendre d'être attaqué
-            // _blackboard.SetVariableValue<GameObject>("Target", ctx.);
-            // if (_deaggroCoroutine != null)
-            // {
-            //     StopCoroutine(_deaggroCoroutine);
-            // }
-            // _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
-            
-            
-            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
+            _blackboard.SetVariableValue("Target", ctx.Instigator.gameObject);
+            if (_deaggroCoroutine != null)
+            {
+                StopCoroutine(_deaggroCoroutine);
+            }
+            _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
         }
         
         private Coroutine _deaggroCoroutine;
@@ -113,11 +102,6 @@ namespace BoleteHell.Code.Gameplay.Base
             Rect rect = new(ss, new Vector2(100, 50));
             GUI.skin.label.fontSize = 24;
             GUI.Label(rect, Health.CurrentHealth + "hp");
-        }
-
-        public void Interact()
-        {
-            Debug.Log("Interaction");
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
@@ -23,7 +24,9 @@ namespace BoleteHell.Code.Gameplay.Character
         public float MovementSpeed { get; set; } = 5f;
 
         [field: SerializeField]
-        public float DamageMultiplier { get; set; } = 1f;
+        public float GeneralDamageMultiplier { get; set; } = 1f;
+
+        public Dictionary<Faction, float> factionDamageMultiplier { get; set; } = new ();
 
         [field: SerializeField]
         public Energy Energy { get; private set; }
@@ -56,11 +59,8 @@ namespace BoleteHell.Code.Gameplay.Character
             _fire = GetComponentInChildren<ParticleSystem>();
         }
         
-        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
+        public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            // TODO: make a proper factions system
-           
-            
             if (ctx.Data is not LaserCombo laser)
             {
                 // TODO: make/find a filtered logging system
@@ -68,7 +68,7 @@ namespace BoleteHell.Code.Gameplay.Character
                 return;
             }
             
-            if (((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
+            if (!((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
                 return;
             
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
