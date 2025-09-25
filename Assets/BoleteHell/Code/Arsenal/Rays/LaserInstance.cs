@@ -18,7 +18,10 @@ namespace BoleteHell.Code.Arsenal.Rays
         //Spécifique au projectile lasers
         [field:SerializeField]public float LaserLength { get; private set; } = 0.3f;
 
+        //Pour déterminer la faction du laser et ce qu'il devrait pouvoir affecter
         public Character instigator;
+        public AffectedSide affectedSide;
+        
         public bool isProjectile;
         private float _movementSpeed;
         public float MovementSpeed 
@@ -56,9 +59,15 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void SetOwner(Character owner)
+        public void SetFactionInfo(Character owner, AffectedSide side )
         {
             instigator = owner;
+            affectedSide = side;
+        }
+
+        public void MakeLaserNeutral()
+        {
+            affectedSide = AffectedSide.All;
         }
 
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)

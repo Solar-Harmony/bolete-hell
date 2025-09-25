@@ -267,13 +267,6 @@ MonoBehaviour:
     maxEnergy: 150
     regenRate: 20
     currentEnergy: 100
-  spriteFragmentConfig:
-    <sr>k__BackingField: {fileID: 0}
-    <parentRb>k__BackingField: {fileID: 0}
-    <explosion>k__BackingField: {fileID: 0}
-    <fragmentsX>k__BackingField: 4
-    <fragmentsY>k__BackingField: 4
-    <explosionForce>k__BackingField: 1
   hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   deathSprite: {fileID: 21300000, guid: 1a797df68b4c9eb4493f6060f338e729, type: 3}
 --- !u!114 &-7706689365234032475
@@ -319,11 +312,20 @@ MonoBehaviour:
   m_Graph: {fileID: 8485693057347280529, guid: 96e97b07dfd681847b7aa82fcd2885ce, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 8651057624823103839
+  - rid: 8554527597233176673
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 8554527597233176673
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3512649774910937916
+          m_Value1: 5009068071176071469
+        Name: Target
+        m_Value: {fileID: 0}
     - rid: 8651057624823103839
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

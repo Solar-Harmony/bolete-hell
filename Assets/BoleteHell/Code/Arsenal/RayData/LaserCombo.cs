@@ -16,8 +16,8 @@ namespace BoleteHell.Code.Arsenal.RayData
         public List<LaserData> Data { get; private set; }
 
         //Détermine qui le laser peut toucher
-        public AffectedSide HitSide;
-        
+        public AffectedSide HitSide { get; private set; }
+
         public LaserCombo(List<LaserData> data)
         {
             Data = data;
@@ -53,14 +53,7 @@ namespace BoleteHell.Code.Arsenal.RayData
         {
             foreach (LaserData data in Data)
             {
-                //Not gonna lie je comprend pas ce qui ce passe avec le IDamageable et pourquoi c'est castable en IFaction
-                
-                //Peut-être faire le check de si l'éffet devrait affecter la personne touché selon sa faction
-                //Donc un laser qui a un effet de soin des alliés et un effet de dégat des ennemis
-                //Le laser pourrait soigné les alliés sans les endommagé ou endommagé les ennemis sans les soigné
-                //Ce qui devrait être modifier quand un laser touche un shield a quel moment tout les éffet du laser devrait devenir neutre
                 data.Logic.OnHit(hitPosition, hitCharacterHealth, laserInstance, data);
-                
             }
         }
 
@@ -77,11 +70,6 @@ namespace BoleteHell.Code.Arsenal.RayData
             if (!Data.Any(laserData =>
                     laserData.affectedSide == AffectedSide.All || laserData.affectedSide != HitSide)) return;
             
-            HitSide = AffectedSide.All;
-        }
-
-        public void MakeLaserNeutral()
-        {
             HitSide = AffectedSide.All;
         }
     }

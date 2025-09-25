@@ -57,8 +57,8 @@ namespace BoleteHell.Code.Arsenal.Shields
                     _statusEffectService.AddStatusEffect(laserInstance, effect.statusEffectConfig );
                 }
             }
-
-            laser.MakeLaserNeutral();
+            
+            laserInstance.MakeLaserNeutral();
             
             return shieldInfo.onHitLogic.ExecuteRay(incomingDirection, hitPoint, laser.CombinedRefractiveIndex);
         }

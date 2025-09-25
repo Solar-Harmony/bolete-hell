@@ -14,7 +14,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         {
             Vector2 currentDirection = direction;
             // crée seulement un point de début et un point de fin
-            LaserInstance reservedRenderer = LaserRendererPool.Instance.Get(instigator);
+            LaserInstance reservedRenderer = LaserRendererPool.Instance.Get(instigator, laserCombo.HitSide);
             List<Vector3> positions = new List<Vector3> { Vector3.zero, Vector3.up * reservedRenderer.LaserLength };
             reservedRenderer.transform.position = bulletSpawnPoint;
             reservedRenderer.DrawRay(positions, laserCombo.CombinedColor, data.Lifetime);

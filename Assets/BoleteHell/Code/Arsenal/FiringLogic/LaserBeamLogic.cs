@@ -29,7 +29,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
             CurrentDirection = direction;
-            LaserInstance laserInstance = LaserRendererPool.Instance.Get(instigator);
+            LaserInstance laserInstance = LaserRendererPool.Instance.Get(instigator, laserCombo.HitSide);
             
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {

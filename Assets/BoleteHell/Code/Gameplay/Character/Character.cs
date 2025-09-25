@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.Arsenal.Rays;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
@@ -32,15 +33,9 @@ namespace BoleteHell.Code.Gameplay.Character
         public Energy Energy { get; private set; }
 
         public abstract Faction faction { get; set; }
-
-        [SerializeField]
-        private SpriteFragmentConfig spriteFragmentConfig;
         
         [field: SerializeField]
         private GameObject hitFeedbackEffect;
-        
-        [Inject]
-        private ISpriteFragmenter _spriteFragmenter;
         
         [Inject]
         private TransientLight.Pool _explosionVFXPool;
@@ -50,17 +45,12 @@ namespace BoleteHell.Code.Gameplay.Character
         protected virtual void Awake()
         {
             Health = GetComponent<Health>();
-            Health.OnDeath += () =>
-            {
-                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
-                gameObject.SetActive(false);
-                Destroy(gameObject);
-            };
             _fire = GetComponentInChildren<ParticleSystem>();
         }
         
         public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
+            
             if (ctx.Data is not LaserCombo laser)
             {
                 // TODO: make/find a filtered logging system
@@ -68,7 +58,7 @@ namespace BoleteHell.Code.Gameplay.Character
                 return;
             }
             
-            if (!((IFaction)this).IsAffected(laser.HitSide, ctx.Instigator))
+            if (!((IFaction)this).IsAffected(ctx.Projectile.affectedSide, ctx.Instigator))
                 return;
             
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);

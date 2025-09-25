@@ -66,6 +66,7 @@ namespace BoleteHell.Code.Gameplay.Base
         {
             base.OnHit(ctx, callback);
             
+            if (ctx.Instigator.Health.IsDead) return;
             _blackboard.SetVariableValue("Target", ctx.Instigator.gameObject);
             if (_deaggroCoroutine != null)
             {

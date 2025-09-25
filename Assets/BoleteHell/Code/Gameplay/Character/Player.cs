@@ -1,4 +1,5 @@
-﻿using BoleteHell.Code.Gameplay.GameState;
+﻿using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Input;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,12 @@ namespace BoleteHell.Code.Gameplay.Character
         
         [Inject]
         private IInputDispatcher _inputDispatcher;
+        
+        [Inject]
+        private ISpriteFragmenter _spriteFragmenter;
+        
+        [SerializeField]
+        private SpriteFragmentConfig spriteFragmentConfig;
 
         public override Faction faction { get; set; } = Faction.Player;
 
@@ -20,6 +27,9 @@ namespace BoleteHell.Code.Gameplay.Character
             base.Awake();
             Health.OnDeath += () =>
             {
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
                 _outcome.TriggerDefeat("You have died");
             };
         }
