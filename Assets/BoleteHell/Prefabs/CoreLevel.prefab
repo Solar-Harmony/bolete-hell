@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 1a02efd9f7744e2408f1e37c1ec53005, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4465007920826000394}
   - component: {fileID: 7612537699481293638}
   m_Layer: 0
-  m_Name: UI
+  m_Name: UI Toolkit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -520,7 +520,7 @@ Transform:
   m_GameObject: {fileID: 8781894501363492540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.013992865, y: 0.22388583, z: -10}
   m_LocalScale: {x: 1.4292998, y: 1.4292998, z: 1.4292998}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -748,6 +748,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
@@ -819,6 +823,26 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1762079061245450209, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889056687653220468, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930170833335015319, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773248932301171605, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448743163767538087, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6227788247584861831, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -885,6 +909,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936864393787960607, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: input
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8326809350107579061, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8833217652067245739, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}

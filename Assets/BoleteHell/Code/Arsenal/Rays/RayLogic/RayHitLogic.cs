@@ -1,6 +1,7 @@
 using System;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Utils.Editor.Logging;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
@@ -16,7 +17,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance, LaserData data)
         {
             ((IRequestManualInject)this).InjectDependencies();
-            Debug.Log($"dealt {(int)(data.baseDamage * laserInstance.DamageMultiplier)} damage");
+            Log.Debug($"dealt {(int)(data.baseDamage * laserInstance.DamageMultiplier)} damage");
             hitCharacterHealth.Health.TakeDamage((int)(data.baseDamage * laserInstance.DamageMultiplier));
             
             OnHitImpl(hitPosition, hitCharacterHealth);

@@ -1,0 +1,12 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements"
+             noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/BoleteHell/Code/Utils/Editor/ConsolePlus.uss?fileID=7433441132597879392&amp;guid=2d1850d9a6aa09d498e4ff25d41d398f&amp;type=3#ConsolePlus" />
+    <editor:Toolbar>
+        <editor:ToolbarSearchField />
+        <engine:DropdownField label="Filter by category&#10;" />
+        <engine:DropdownField label="Filter by severity&#10;" />
+        <editor:MaskField label="Options" />
+    </editor:Toolbar>
+    <engine:ListView name="logs" style="flex-shrink: 1; flex-grow: 1; overflow: hidden;" />
+    <editor:Toolbar />
+</engine:UXML>
