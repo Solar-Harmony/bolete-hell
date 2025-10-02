@@ -6,7 +6,7 @@ namespace BoleteHell.Code.AI.Services
     {
         //Le expected détermine si je veux check pour "a line of sight" ou "n'a pas line of sight"
         //Vu que les conditionalGuard peuvent pas check si le retour est false
-        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange, bool expected);
+        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange);
 
         /// <summary>
         /// Solves the direction needed to hit a moving target with a projectile.

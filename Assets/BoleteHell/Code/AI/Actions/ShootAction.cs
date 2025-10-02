@@ -20,29 +20,15 @@ namespace BoleteHell.Code.AI.Actions
         private ITargetingUtils _targeting;
 
         private Arsenal.Arsenal _arsenal;
-    
+        private AIPath _pathfinder;
         
-        //TODO: Devrait peut-être avoir une méthode attack dans les ennemis qui est appeler ici plutot que de faire spécifiquement shoot
-        //Comme ca ça peut fonctionner pour les ennemis qui attack mélée ou qui explose
         protected override Status OnStartImpl()
         {
-            ((IRequestManualInject)this).InjectDependencies();
-
-            if (Self.Value == null || CurrentTarget.Value == null)
-            {
-                Debug.LogError("Self or Target is null");
-                return Status.Failure;
-            }
-        
-            // TODO: make arsenal config only and have shooting service
-            if (!Self.Value.TryGetComponent(out _arsenal))
-            {
-                Debug.LogError("Self has no arsenal");
-                return Status.Failure;
-            }
+            Debug.Assert(_arsenal ??= Self.Value.GetComponent<Arsenal.Arsenal>());
+            _pathfinder ??= Self.Value.GetComponent<AIPath>();
             
             Vector2 selfPosition = Self.Value.transform.position;
-            Vector2 selfVelocity = Self.Value.GetComponent<AIPath>()?.desiredVelocity ?? Vector2.zero;
+            Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
             Vector2 targetPosition = CurrentTarget.Value.transform.position;
             Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
                 ? rb.linearVelocity

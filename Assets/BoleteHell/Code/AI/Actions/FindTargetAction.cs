@@ -13,7 +13,7 @@ namespace BoleteHell.Code.AI.Actions
     [GeneratePropertyBag]
     [NodeDescription(
         name: "Find suitable target", 
-        story: "[Agent] locates target, stores in [Target]", 
+        story: "[Agent] finds nearest target, stores in [Target]", 
         icon: "Assets/Art/Cursor.png",
         category: "Bolete Hell",
         id: "ab42fd85c68c2ece114cb2058a600000")]

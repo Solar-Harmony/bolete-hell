@@ -1,6 +1,5 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
-using BoleteHell.Code.AI.Condition;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Gameplay.Character;
 using Pathfinding;
@@ -15,7 +14,7 @@ namespace BoleteHell.Code.AI.Actions
     [GeneratePropertyBag]
     [NodeDescription(
         name: "Navigate in range (2D)", 
-        story: "[Self] navigates in range of [CurrentTarget]", 
+        story: "[Self] pathfinds towards [CurrentTarget]", 
         description: "Use 2D pathfinding to navigate towards the target until within a certain range.",
         icon: "Assets/Art/Cursor.png",
         category: "Bolete Hell",
@@ -24,14 +23,12 @@ namespace BoleteHell.Code.AI.Actions
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
-        [SerializeReference] public BlackboardVariable<Enemy> SelfCharacter;
-        
-        private AIPath _pathfinder;
         
         [Inject]
         private ITargetingUtils _targeting;
         
-        
+        private Enemy _selfCharacter;
+        private AIPath _pathfinder;
 
         protected override Status OnStartImpl()
         {
@@ -39,13 +36,13 @@ namespace BoleteHell.Code.AI.Actions
                 return Status.Failure;
             
             Debug.Assert(_pathfinder ??= Self.Value.GetComponent<AIPath>());
+            Debug.Assert(_selfCharacter ??= Self.Value.GetComponent<Enemy>());
             
-            _pathfinder.maxSpeed = SelfCharacter.Value.MovementSpeed;
+            _pathfinder.maxSpeed = _selfCharacter.MovementSpeed;
             _pathfinder.destination = CurrentTarget.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
             return Status.Running;
-            
         }
 
         protected override Status OnUpdate()

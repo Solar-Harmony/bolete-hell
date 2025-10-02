@@ -4,7 +4,7 @@ namespace BoleteHell.Code.AI.Services
 {
     public class TargetingUtils : ITargetingUtils
     {
-        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange, bool expected)
+        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange)
         {
             if (!self || !agent)
                 return false;
@@ -13,8 +13,7 @@ namespace BoleteHell.Code.AI.Services
             LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy", "IgnoreProjectile", "Shield");
             
             RaycastHit2D hit = Physics2D.CircleCast(self.transform.position, 0.17f, direction.normalized, viewRange, layerMask);
-            bool hasLineOfSight = hit.collider && hit.collider.gameObject == agent;
-            return expected == hasLineOfSight;
+            return hit.collider && hit.collider.gameObject == agent;
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
-﻿namespace BoleteHell.Code.AI.Boilerplate
+﻿using Unity.Behavior;
+
+namespace BoleteHell.Code.AI.Boilerplate
 {
-    public abstract class BoleteCondition : Unity.Behavior.Condition, IRequestManualInject 
+    public abstract class BoleteCondition : Condition, IRequestManualInject 
     {
         // Implement IsTrueImpl() instead.
         public sealed override bool IsTrue()
