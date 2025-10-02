@@ -35,6 +35,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
 
                 RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection, cannonData.maxRayDistance, layerMask);
+                
                 if (!hit)
                 {
                     _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * cannonData.maxRayDistance);
@@ -42,7 +43,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 }
 
                 bool shouldBreak = false;
-                CurrentPos = hit.point + CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+                CurrentPos = hit.point - CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
 
                 ITargetable.Context context = new(hit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
                 OnHit(context, altered =>
@@ -60,6 +61,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                     break;
             }
             laserInstance.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
+
             _rayPositions.Clear();
         }
     }

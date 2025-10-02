@@ -40,7 +40,10 @@ namespace BoleteHell.Code.Arsenal.Rays
                 Debug.LogError("lineRendererPrefab empty");
                 return;
             }
-            GameObject obj = Instantiate(lineRendererPrefab, transform);
+
+            Vector3 spawnPos = transform.position + new Vector3(0.0f, 0.0f, -1.0f); // keep in front of backgrounds
+            GameObject obj = Instantiate(lineRendererPrefab, spawnPos, Quaternion.identity);
+            
             obj.name = $"LaserRenderer {_pool.Count}";
             obj.SetActive(false);
             LaserInstance rayRenderer = obj.GetComponent<LaserInstance>();

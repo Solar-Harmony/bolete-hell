@@ -27,7 +27,10 @@ namespace BoleteHell.Code
         
         [SerializeField]
         private GameObject transientLightPrefab;
-        
+
+        [SerializeField]
+        private GameObject healthTextPrefab;
+
         [SerializeField]
         private GameObject shieldPreviewPrefab;
         
@@ -84,6 +87,12 @@ namespace BoleteHell.Code
                 .ExpandByDoubling()
                 .FromComponentInNewPrefab(spriteFragmentPrefab)
                 .UnderTransformGroup("SpriteFragments");
+            Container.BindMemoryPool<HealthText, HealthText.Pool>()
+                .WithInitialSize(30)
+                .WithMaxSize(250)
+                .ExpandByDoubling()
+                .FromComponentInNewPrefab(healthTextPrefab)
+                .UnderTransformGroup("HealthTexts");
         }
 
         private void BindStatusEffects()
