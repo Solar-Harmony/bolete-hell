@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         private List<IStatusEffect> _effects;
 
         private readonly SortedSet<StatusEffectInstance> _activeEffects = new(new StatusEffectInstanceComparer());
-
+        
         public IReadOnlyList<IStatusEffect> GetStatusEffects()
         {
             return _effects;
@@ -45,40 +45,26 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
             // queue for application
             var instance = new StatusEffectInstance(effect, config, target);
 
-            var effectCopies = _activeEffects.Where(e => e.IsSameAs(instance)).ToList();
-            if (effectCopies.Any())
-            {
-                switch (config.stackBehavior)
-                {
-                    case StatusEffectStackBehavior.Ignore:
-                        return;
-                    case StatusEffectStackBehavior.Replace replace:
-                    {
-                        if (MatchesCondition(config, replace.condition, effectCopies))
-                        {
-                            _activeEffects.RemoveWhere(e => e.IsSameAs(instance));
-                            _activeEffects.Add(instance);
-                        }
-
-                        break;
-                    }
-                    case StatusEffectStackBehavior.Stacking stacking:
-                    {
-                        if (effectCopies.Count > stacking.maxStacks)
-                            break;
-                        
-                        if (MatchesCondition(config, stacking.condition, effectCopies))
-                        {
-                            _activeEffects.Add(instance);
-                        }
-
-                        break;
-                    }
-                }
-            }
-            else
+            List<StatusEffectInstance> effectCopies = _activeEffects.Where(e => e.IsSameAs(instance)).ToList();
+            if (!effectCopies.Any())
             {
                 _activeEffects.Add(instance);
+                return;
+            }
+
+            switch (config.stackBehavior)
+            {
+                case StatusEffectStackBehavior.Ignore:
+                    return;
+                case StatusEffectStackBehavior.Replace replace when MatchesCondition(config, replace.condition, effectCopies):
+                    _activeEffects.ExceptWith(effectCopies);
+                    _activeEffects.Add(instance);
+                    return;
+                case StatusEffectStackBehavior.Stacking stacking when effectCopies.Count >= stacking.maxStacks:
+                    return;
+                case StatusEffectStackBehavior.Stacking stacking when MatchesCondition(config, stacking.condition, effectCopies):
+                    _activeEffects.Add(instance);
+                    return;
             }
         }
 
