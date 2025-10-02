@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;

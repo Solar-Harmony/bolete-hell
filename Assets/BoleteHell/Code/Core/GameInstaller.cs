@@ -17,8 +17,9 @@ using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code
+namespace BoleteHell.Code.Core
 {
+    // TODO: Split this into multiple installers
     public class GameInstaller : MonoInstaller
     {
         // TODO: This can be moved to per service settings
@@ -34,7 +35,6 @@ namespace BoleteHell.Code
         [SerializeField]
         private GameObject shieldPreviewPrefab;
         
-        // TODO: Split this into multiple installers
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
