@@ -1,12 +1,10 @@
 using System;
-using BoleteHell.Code.AI.Boilerplate;
-using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Gameplay.Character;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Zenject;
+using Action = Unity.Behavior.Action;
 
 namespace BoleteHell.Code.AI.Actions
 {
@@ -19,22 +17,16 @@ namespace BoleteHell.Code.AI.Actions
         icon: "Assets/Art/Cursor.png",
         category: "Bolete Hell",
         id: "ab42fd85c68c2ece114cb2058a607833")]
-    public class Navigate2DAction : BoleteAction
+    public class Navigate2DAction : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
-        
-        [Inject]
-        private ITargetingUtils _targeting;
-        
+
         private Enemy _selfCharacter;
         private AIPath _pathfinder;
 
-        protected override Status OnStartImpl()
+        protected override Status OnStart()
         {
-            if (!Self.Value || !CurrentTarget.Value) 
-                return Status.Failure;
-            
             Debug.Assert(_pathfinder ??= Self.Value.GetComponent<AIPath>());
             Debug.Assert(_selfCharacter ??= Self.Value.GetComponent<Enemy>());
             

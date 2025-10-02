@@ -1,29 +1,27 @@
 using System;
-using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Zenject;
+using Action = Unity.Behavior.Action;
 
 namespace BoleteHell.Code.AI.Actions
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Shoot", story: "[Self] shoots at [CurrentTarget]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
-    public partial class ShootAction : BoleteAction
+    public partial class ShootAction : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
         
-        [Inject]
         private ITargetingUtils _targeting;
-
         private Arsenal.Arsenal _arsenal;
         private AIPath _pathfinder;
         
-        protected override Status OnStartImpl()
+        protected override Status OnStart()
         {
+            ServiceLocator.Get(ref _targeting);
             Debug.Assert(_arsenal ??= Self.Value.GetComponent<Arsenal.Arsenal>());
             _pathfinder ??= Self.Value.GetComponent<AIPath>();
             

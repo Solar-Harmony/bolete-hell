@@ -19,31 +19,8 @@ using Zenject;
 
 namespace BoleteHell.Code
 {
-    /// <summary>
-    /// Exposes a method to manually request dependency injection into self.
-    /// Required in places that don't support proper injection, e.g.: BehaviorTree nodes, SerializedReference objects.
-    /// Not a great workaround but it's better than calling static classes.
-    /// </summary>
-    public interface IRequestManualInject
-    {
-        protected bool IsInjected { get; set; }
-        
-        public void InjectDependencies()
-        {
-            // FIXME: This fails for certain dependencies
-            // if (IsInjected)
-            //     return; 
-            
-            GameInstaller.StaticContainer?.Inject(this);
-            IsInjected = true;
-        }
-    }
-    
     public class GameInstaller : MonoInstaller
     {
-        // TODO: This should not be internal lol
-        internal static DiContainer StaticContainer;
-        
         // TODO: This can be moved to per service settings
         [SerializeField]
         private GameObject spriteFragmentPrefab;
@@ -55,12 +32,10 @@ namespace BoleteHell.Code
         private GameObject shieldPreviewPrefab;
         
         // TODO: Split this into multiple installers
-        // This will require splitting out code into modules though
-        // Which is a good thing but it's also cancer to do at first lol
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
-            StaticContainer = Container;
+            ServiceLocator.Initialize(Container);
 
             // the player (temp?)
             var player = FindFirstObjectByType<Player>();
