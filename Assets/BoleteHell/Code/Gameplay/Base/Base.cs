@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
-using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
@@ -19,7 +18,7 @@ namespace BoleteHell.Code.Gameplay.Base
     //Fait que les bases  sont affecter par les éffets de tir ce qu'on ne veut peut-être pas (Sortir IStatusEffectTarget de character et le mettre dans Enemy+Player)
     public class Base : Character.Character
     {
-        public override Faction faction { get; set; } = Faction.Player;
+        public override FactionType faction { get; set; } = FactionType.Player;
         
         [Inject]
         private Camera _mainCamera;

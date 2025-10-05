@@ -1,14 +1,10 @@
 using BoleteHell.Code.Arsenal.Rays.RayLogic;
 using BoleteHell.Code.Gameplay.Character;
-using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Gameplay.Damage.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.RayData
 {
-   
-    
     [CreateAssetMenu(fileName = "LaserData", menuName = "BoleteHell/Arsenal/Laser Data", order = -100)]
     public class LaserData : ScriptableObject
     {
@@ -22,6 +18,7 @@ namespace BoleteHell.Code.Arsenal.RayData
         public RayHitLogic Logic { get; private set; }
         
         [SerializeField]
+        [Tooltip("Détermine quel côté du conflit le laser va affecter")]
         public AffectedSide affectedSide = AffectedSide.Enemies;
 
         [field: SerializeField] 
@@ -29,7 +26,5 @@ namespace BoleteHell.Code.Arsenal.RayData
 
         [field: SerializeField] 
         public float MovementSpeed { get; set; }
-        
-        
     }
 }

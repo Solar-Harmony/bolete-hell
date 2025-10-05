@@ -12,13 +12,12 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
     {
         bool IRequestManualInject.IsInjected { get; set; } = false;
         
-        //Au lieu de health on pourrais avoir un component de stats en général comme ça les tir pourrait affecter le stat qu'il veut directement
-        //(réduire le mouvement, reduire l'attaque wtv)
+        // TODO: Have a stats component that handles damage multipliers, movement speed, and other stats?
         public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance, LaserData data)
         {
             ((IRequestManualInject)this).InjectDependencies();
             
-            Faction hitCharacterFaction = ((IFaction)hitCharacterHealth).faction;
+            FactionType hitCharacterFaction = ((IFaction)hitCharacterHealth).faction;
             
             float characterDamageMultiplierAgainstTarget =
                 ((IDamageDealer)laserInstance.instigator).GetDamageMultiplier(hitCharacterFaction);
@@ -26,8 +25,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             float laserDamageMultiplierAgainstTarget =
                 ((IDamageDealer)laserInstance).GetDamageMultiplier(hitCharacterFaction);
             
-            //Debug.Log($"hit for {(int)(data.baseDamage * characterDamageMultiplierAgainstTarget * laserDamageMultiplierAgainstTarget)}");
-
             hitCharacterHealth.Health.TakeDamage((int)(data.baseDamage * characterDamageMultiplierAgainstTarget * laserDamageMultiplierAgainstTarget));
             
             OnHitImpl(hitPosition, hitCharacterHealth);

@@ -7,9 +7,9 @@ namespace BoleteHell.Code.Gameplay.Damage
   {
     public float GeneralDamageMultiplier { get; set; }
 
-    public Dictionary<Faction, float> factionDamageMultiplier { get; }
+    public Dictionary<FactionType, float> factionDamageMultiplier { get; }
 
-    public float GetDamageMultiplier(Faction hitTargetFaction)
+    public float GetDamageMultiplier(FactionType hitTargetFaction)
     {
       float factionMultiplier = factionDamageMultiplier.GetValueOrDefault(hitTargetFaction, 1f);
       return GeneralDamageMultiplier * factionMultiplier;
@@ -19,7 +19,7 @@ namespace BoleteHell.Code.Gameplay.Damage
     //Si je multiplie les multiplier il deviennent explonentiel alors que ce que je voudrais est que deux buff de 1.5 donne un buff de 2.0 pas 2.25
     //Donc quand on créé un multiplier dans le dictionnaire on l'initie a 1 puis on retire 1 a tout les ajout(Puisque les ajout son en relation avec 1)
     //ajouter deux fois 50% a une faction donne un bonus de 100% plutot que 125%
-    public void AddDamageMultiplier(Faction? hitTargetFaction, float multiplier)
+    public void AddDamageMultiplier(FactionType? hitTargetFaction, float multiplier)
     {
       float actuallyAddedMultiplier = multiplier - 1;
       
@@ -29,7 +29,7 @@ namespace BoleteHell.Code.Gameplay.Damage
       }
       else
       {
-        Faction faction = hitTargetFaction.Value;
+        FactionType faction = hitTargetFaction.Value;
         
         factionDamageMultiplier.TryAdd(faction, 1f);
         
@@ -37,7 +37,7 @@ namespace BoleteHell.Code.Gameplay.Damage
       }
     }
 
-    public void RemoveDamageMultiplier(Faction? hitTargetFaction, float multiplier)
+    public void RemoveDamageMultiplier(FactionType? hitTargetFaction, float multiplier)
     {
       float actuallyAddedMultiplier = multiplier - 1;
 
@@ -47,7 +47,7 @@ namespace BoleteHell.Code.Gameplay.Damage
       }
       else
       {
-        Faction faction = hitTargetFaction.Value;
+        FactionType faction = hitTargetFaction.Value;
         factionDamageMultiplier[faction] -= actuallyAddedMultiplier;
       }
     }

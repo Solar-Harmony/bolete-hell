@@ -1,5 +1,4 @@
 using System;
-using BoleteHell.Code.Arsenal.Rays.RayLogic;
 using BoleteHell.Code.Gameplay.Character;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
         /// </summary>
         public bool isAppliedToFaction;
         [ShowIf("isAppliedToFaction")][Tooltip("The faction that will take the bonus damage (if Enemy, damage against characters of enemy faction will take more damage)")]
-        public Faction affectedFaction;
+        public FactionType affectedFaction;
     }
     
     public class DamageMultiplierStatusEffect : IStatusEffect<DamageMultiplierStatusEffectConfig>
@@ -30,14 +29,14 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
         public void Apply(IStatusEffectTarget target, DamageMultiplierStatusEffectConfig config)
         {
             IDamageDealer damageDealer = (IDamageDealer)target;
-            Faction? faction = config.isAppliedToFaction ? config.affectedFaction : null;
+            FactionType? faction = config.isAppliedToFaction ? config.affectedFaction : null;
             damageDealer.AddDamageMultiplier(faction, config.damageMultiplier);
         }
 
         public void Unapply(IStatusEffectTarget target, DamageMultiplierStatusEffectConfig config)
         {
             IDamageDealer damageDealer = (IDamageDealer)target;
-            Faction? faction = config.isAppliedToFaction ? config.affectedFaction : null;
+            FactionType? faction = config.isAppliedToFaction ? config.affectedFaction : null;
             damageDealer.RemoveDamageMultiplier(faction, config.damageMultiplier);
         }
     }

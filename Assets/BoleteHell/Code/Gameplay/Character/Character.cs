@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
-using BoleteHell.Code.Arsenal.Rays;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
-using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
 using UnityEngine;
 using Zenject;
@@ -27,12 +25,12 @@ namespace BoleteHell.Code.Gameplay.Character
         [field: SerializeField]
         public float GeneralDamageMultiplier { get; set; } = 1f;
 
-        public Dictionary<Faction, float> factionDamageMultiplier { get; set; } = new ();
+        public Dictionary<FactionType, float> factionDamageMultiplier { get; set; } = new ();
 
         [field: SerializeField]
         public Energy Energy { get; private set; }
 
-        public abstract Faction faction { get; set; }
+        public abstract FactionType faction { get; set; }
         
         [field: SerializeField]
         private GameObject hitFeedbackEffect;

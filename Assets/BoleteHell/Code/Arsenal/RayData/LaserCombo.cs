@@ -12,11 +12,12 @@ namespace BoleteHell.Code.Arsenal.RayData
     {
         public Color CombinedColor { get; private set; }
         public float CombinedRefractiveIndex {get; private set; }
-        //Va pouvoir être utilisé pour quand le laser hit un diffract shield
+        
+        // Va pouvoir être utilisé pour quand le laser hit un diffract shield
         public List<LaserData> Data { get; private set; }
-
-        //Détermine qui le laser peut toucher
-        public AffectedSide HitSide { get; private set; }
+        
+        // Whether the laser can hit enemies, players or both
+        public AffectedSide LaserAllegiance { get; private set; }
 
         public LaserCombo(List<LaserData> data)
         {
@@ -62,15 +63,14 @@ namespace BoleteHell.Code.Arsenal.RayData
             return Data.Average(data => data.MovementSpeed);
         }
 
-        //Le affected side va être déterminé selon si les éffet sur le laser affecte les alliés ou les ennemis
         private void SetAffectedSide()
         {
-            HitSide = Data[0].affectedSide;
+            LaserAllegiance = Data[0].affectedSide;
 
             if (!Data.Any(laserData =>
-                    laserData.affectedSide == AffectedSide.All || laserData.affectedSide != HitSide)) return;
+                    laserData.affectedSide == AffectedSide.All || laserData.affectedSide != LaserAllegiance)) return;
             
-            HitSide = AffectedSide.All;
+            LaserAllegiance = AffectedSide.All;
         }
     }
 }

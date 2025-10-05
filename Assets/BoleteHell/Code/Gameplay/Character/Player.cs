@@ -20,7 +20,7 @@ namespace BoleteHell.Code.Gameplay.Character
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
 
-        public override Faction faction { get; set; } = Faction.Player;
+        public override FactionType faction { get; set; } = FactionType.Player;
 
         protected override void Awake()
         {
