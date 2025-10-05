@@ -1,7 +1,7 @@
 ﻿using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     public interface ISceneObject : IDamageable
     {

@@ -1,5 +1,5 @@
 ﻿using BoleteHell.Code.Gameplay.Base;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 using Zenject;
 

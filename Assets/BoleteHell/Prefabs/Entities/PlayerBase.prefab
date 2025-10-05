@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3254317764152869805}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856569073709956364}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: ShowOnDeath
   m_TagString: VariantDestroyed
   m_Icon: {fileID: 0}
@@ -79,7 +79,9 @@ GameObject:
   - component: {fileID: 2564544298301446155}
   - component: {fileID: -7706689365234032475}
   - component: {fileID: 728234813211920058}
-  m_Layer: 6
+  - component: {fileID: 4450026047873336119}
+  - component: {fileID: 5458277079010181547}
+  m_Layer: 11
   m_Name: PlayerBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,9 +261,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a0b5eddece24cac86be511792c78f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    <IsInvincible>k__BackingField: 0
-    <MaxHealth>k__BackingField: 50
+  <MovementSpeed>k__BackingField: 0
+  <GeneralDamageMultiplier>k__BackingField: 1
+  <Energy>k__BackingField:
+    maxEnergy: 150
+    regenRate: 20
+    currentEnergy: 100
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   deathSprite: {fileID: 21300000, guid: 1a797df68b4c9eb4493f6060f338e729, type: 3}
 --- !u!114 &-7706689365234032475
 MonoBehaviour:
@@ -306,11 +312,20 @@ MonoBehaviour:
   m_Graph: {fileID: 8485693057347280529, guid: 96e97b07dfd681847b7aa82fcd2885ce, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 8651057624823103839
+  - rid: 8554527597233176673
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 8554527597233176673
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3512649774910937916
+          m_Value1: 5009068071176071469
+        Name: Target
+        m_Value: {fileID: 0}
     - rid: 8651057624823103839
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -319,6 +334,40 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 8563693215699855702}
+--- !u!114 &4450026047873336119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInvincible>k__BackingField: 0
+  <MaxHealth>k__BackingField: 50
+--- !u!114 &5458277079010181547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef324fadb8682e44da66334af839f3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactions:
+  - rid: 8554527557946441734
+  references:
+    version: 2
+    RefIds:
+    - rid: 8554527557946441734
+      type: {class: RotateShieldInteraction, ns: BoleteHell.Code.Gameplay.Interactions, asm: Assembly-CSharp}
+      data: 
 --- !u!1001 &1193320144923651803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -405,7 +454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 5de7d2c809d27ba4e9058d3b0d424a13, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -503,7 +552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 5de7d2c809d27ba4e9058d3b0d424a13, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8786095904349260066, guid: 5de7d2c809d27ba4e9058d3b0d424a13, type: 3}
       propertyPath: m_StaticEditorFlags

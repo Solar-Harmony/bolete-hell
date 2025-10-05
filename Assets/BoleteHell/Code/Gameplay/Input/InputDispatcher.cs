@@ -32,6 +32,7 @@ namespace BoleteHell.Code.Input
         public event Action OnShieldStart;
         public event Action OnShieldEnd;
         public event Action OnShoot;
+        public event Action OnInteract;
         public event Action<int> OnCycleWeapons;
         public event Action<int> OnCycleShield;
         
@@ -40,6 +41,7 @@ namespace BoleteHell.Code.Input
             if (Actions?.Player == null) return;
             
             Actions.Player.Shoot.canceled += OnShootHandler;
+            Actions.Player.Interact.canceled += OnInteractHandler;
             Actions.Player.CycleNextShield.performed += OnCycleNextShieldHandler;
             Actions.Player.CyclePreviousShield.performed += OnCyclePreviousShieldHandler;
             Actions.Player.DrawShield.started += OnShieldStartHandler;
@@ -52,6 +54,7 @@ namespace BoleteHell.Code.Input
             if (Actions?.Player == null) return;
             
             Actions.Player.Shoot.canceled -= OnShootHandler;
+            Actions.Player.Interact.canceled -= OnInteractHandler;
             Actions.Player.CycleNextShield.performed -= OnCycleNextShieldHandler;
             Actions.Player.CyclePreviousShield.performed -= OnCyclePreviousShieldHandler;
             Actions.Player.DrawShield.started -= OnShieldStartHandler;
@@ -60,6 +63,7 @@ namespace BoleteHell.Code.Input
         }
         
         private void OnShootHandler(InputAction.CallbackContext ctx) => OnShoot?.Invoke();
+        private void OnInteractHandler(InputAction.CallbackContext ctx) => OnInteract?.Invoke();
         private void OnCycleNextShieldHandler(InputAction.CallbackContext ctx) => OnCycleShield?.Invoke(1);
         private void OnCyclePreviousShieldHandler(InputAction.CallbackContext ctx) => OnCycleShield?.Invoke(-1);
         private void OnShieldStartHandler(InputAction.CallbackContext ctx) => OnShieldStart?.Invoke();

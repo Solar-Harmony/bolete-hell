@@ -1,14 +1,14 @@
-using BoleteHell.Code.Arsenal.RayData;
+using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
-using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage.Effects;
-using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
+
+   
+
     /// <summary>
     ///     Classe qui permet de déterminer les informations spécifique a un shield
     /// </summary>
@@ -25,7 +25,7 @@ namespace BoleteHell.Code.Arsenal.Shields
         public float despawnTime = 3f;
         
         [field:SerializeReference] [Required]
-        public StatusEffectConfig statusEffectConfig { get; private set; }
+        public List<ShieldEffect> shieldEffect { get; private set; }
         
         [field: SerializeField]
         [MinValue(0f)]

@@ -25,7 +25,13 @@ namespace BoleteHell.Code.Arsenal.Rays
          _projectileSpeed = speed;
          _rb.linearVelocity = _currentDirection * _projectileSpeed;
       }
-   
+
+      public void UpdateSpeed(float speed)
+      {
+         _projectileSpeed = speed;
+         _rb.linearVelocity = _currentDirection * _projectileSpeed;
+      }
+
       public void SetDirection(Vector2 direction)
       {
          _currentDirection = direction;

@@ -1,12 +1,11 @@
 using System;
 using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Zenject;
 
 namespace BoleteHell.Code.AI.Actions
@@ -56,7 +55,7 @@ namespace BoleteHell.Code.AI.Actions
             _pathfinder.destination = Target.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
-            bool bHasLineOfSight = _targeting.HasLineOfSight(agent, target, 1000); // TODO: use range value in agent
+            bool bHasLineOfSight = _targeting.HasLineOfSight(agent, target, 10); // TODO: use range value in agent
             if (bHasLineOfSight)
             {
                 _pathfinder.maxSpeed = 0.0f; // stop moving if we have line of sight

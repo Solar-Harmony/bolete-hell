@@ -1,7 +1,5 @@
 using BoleteHell.Code.Arsenal.Rays.RayLogic;
-using BoleteHell.Code.Gameplay.Character;
-using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Gameplay.Damage.Effects;
+using BoleteHell.Code.Gameplay.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -18,6 +16,10 @@ namespace BoleteHell.Code.Arsenal.RayData
         
         [Required] [field: SerializeReference] 
         public RayHitLogic Logic { get; private set; }
+        
+        [SerializeField]
+        [Tooltip("Détermine quel côté du conflit le laser va affecter")]
+        public AffectedSide affectedSide = AffectedSide.Enemies;
 
         [field: SerializeField] 
         public int baseDamage { get; private set; }

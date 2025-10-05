@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     public class EntityFinder : MonoBehaviour, IEntityFinder
     {

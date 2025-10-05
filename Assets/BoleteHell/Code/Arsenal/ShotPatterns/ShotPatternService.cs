@@ -8,9 +8,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
     {
         public List<ShotLaunchParams> ComputeSpawnPoints(ShotPatternData pattern, ShotLaunchParams parameters, int shotCount)
         {
-            float spawnDistance = parameters.Instigator
-                ? Vector3.Distance(parameters.Instigator.transform.position, parameters.SpawnPosition)
-                : 0.0f;
+            float spawnDistance = Vector3.Distance(parameters.CenterPos, parameters.SpawnPosition);
             
             int maxSideAngle = pattern.maxAngleRange / 2;
             var projectileData = new List<ShotLaunchParams>();
@@ -41,7 +39,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
             Quaternion rotation2D = Quaternion.Euler(0, 0, currentAngle + pattern.startingRotation + (shotCount * pattern.constantRotation));
             
             Vector2 direction = rotation2D * parameters.SpawnDirection;
-            Vector2 spawnPosition = (Vector2)parameters.Instigator.transform.position + (direction.normalized * spawnDistance);
+            Vector2 spawnPosition = parameters.CenterPos + (direction.normalized * spawnDistance);
             
             return parameters with { SpawnDirection = direction, SpawnPosition = spawnPosition };
         }

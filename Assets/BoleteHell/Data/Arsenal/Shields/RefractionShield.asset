@@ -15,9 +15,10 @@ MonoBehaviour:
   <color>k__BackingField: {r: 0.21538448, g: 0, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 8554527307954126936
-  despawnTime: 3
-  <statusEffectConfig>k__BackingField:
-    rid: 8554527311297511574
+  despawnTime: 5
+  <shieldEffect>k__BackingField:
+  - rid: 8554527557946441819
+  - rid: 8554527557946441822
   <EnergyCostPerCm>k__BackingField: 10
   references:
     version: 2
@@ -26,7 +27,13 @@ MonoBehaviour:
       type: {class: RefractLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data:
         materialRefractiveIndice: 2.417
-    - rid: 8554527311297511574
+    - rid: 8554527557946441819
+      type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        affectedSide: 0
+        <statusEffectConfig>k__BackingField:
+          rid: 8554527557946441820
+    - rid: 8554527557946441820
       type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
         isTransient: 0
@@ -34,9 +41,32 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 20
         stackBehavior:
-          rid: 8554527311297511575
+          rid: 8554527557946441821
         damageMultiplier: 1.5
-    - rid: 8554527311297511575
+        isAppliedToFaction: 1
+        affectedFaction: 1
+    - rid: 8554527557946441821
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        maxStacks: 3
+        condition: 0
+    - rid: 8554527557946441822
+      type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        affectedSide: 2
+        <statusEffectConfig>k__BackingField:
+          rid: 8554527557946441823
+    - rid: 8554527557946441823
+      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+      data:
+        isTransient: 0
+        numTicks: 2
+        initialDelay: 0
+        tickInterval: 20
+        stackBehavior:
+          rid: 8554527557946441824
+        slowPercentage: 0.5
+    - rid: 8554527557946441824
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:
         maxStacks: 3

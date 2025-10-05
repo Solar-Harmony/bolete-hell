@@ -1,5 +1,5 @@
 ﻿using System;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl

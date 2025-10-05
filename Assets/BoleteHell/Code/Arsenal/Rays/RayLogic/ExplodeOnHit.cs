@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Arsenal.RayData;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using UnityEngine;
@@ -27,7 +26,6 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Unit"));
             List<Collider2D> results = new List<Collider2D>();
-            Debug.Log($"hit {hitPosition}");
             DrawVisuals(hitPosition);
             
             int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius, filter, results);

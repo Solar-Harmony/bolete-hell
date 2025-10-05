@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;
@@ -80,7 +80,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             shieldGameObject.name = $"Spawned Shield";
             Shield shield = shieldGameObject.GetComponent<Shield>();
 
-            shield.SetLineInfo(_shieldData);
+            shield.SetLineInfo(_shieldData, _character);
             shieldGameObject.GetComponent<SplineCreator>()
                 .CreateSpline(LineSimplifier.Simplify(points, tolerance), lineWidth);
 

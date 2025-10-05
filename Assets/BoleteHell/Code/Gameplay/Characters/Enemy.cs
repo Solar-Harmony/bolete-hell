@@ -1,20 +1,30 @@
-﻿using BoleteHell.Code.Gameplay.GameState;
+﻿using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
+        
         private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
 
         [Inject]
         private IGameOutcomeService _outcome;
+        
+        [Inject]
+        private ISpriteFragmenter _spriteFragmenter;
+        
+        [SerializeField]
+        private SpriteFragmentConfig spriteFragmentConfig;
 
         private BehaviorGraphAgent _agent;
+
+        public override FactionType faction { get; set; } = FactionType.Enemy;
 
         protected override void Awake()
         {
@@ -22,7 +32,14 @@ namespace BoleteHell.Code.Gameplay.Character
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
-
+            
+            Health.OnDeath += () =>
+            {
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
+            };
+            
             _outcome.OnDefeat += OnDefeat;
         }
 

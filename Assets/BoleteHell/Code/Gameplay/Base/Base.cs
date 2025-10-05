@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
-using BoleteHell.Code.Arsenal.RayData;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using Unity.Behavior;
@@ -14,11 +13,9 @@ namespace BoleteHell.Code.Gameplay.Base
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
     [RequireComponent(typeof(Health))]
-    public class Base : MonoBehaviour, ITargetable, ISceneObject
+    public class Base : Character
     {
-        public Vector2 Position => transform.position;
-        
-        public Health Health { get; private set; }
+        public override FactionType faction { get; set; } = FactionType.Player;
         
         [Inject]
         private Camera _mainCamera;
@@ -31,9 +28,9 @@ namespace BoleteHell.Code.Gameplay.Base
 
         private BlackboardReference _blackboard;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Health = GetComponent<Health>();
+            base.Awake();
             Health.OnDeath += () =>
             {
                 ShowDeathVFX();
@@ -60,25 +57,18 @@ namespace BoleteHell.Code.Gameplay.Base
             }
         }
 
-        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
+        //TODO:Peut-être modifier pour attaquer les ennemis dans le range plutot que d'attendre d'être attaqué
+        public override void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            if (ctx.Data is not LaserCombo laser)
-                return;
-        
-            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
-            callback?.Invoke(new ITargetable.Response(ctx) { RequestDestroyProjectile = true });
-
-            if (ctx.Instigator)
-            {
-                _blackboard.SetVariableValue<GameObject>("Target", ctx.Instigator);
-                if (_deaggroCoroutine != null)
-                {
-                    StopCoroutine(_deaggroCoroutine);
-                }
-                _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
-            }
+            base.OnHit(ctx, callback);
             
-            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
+            if (ctx.Instigator.Health.IsDead) return;
+            _blackboard.SetVariableValue("Target", ctx.Instigator.GameObject);
+            if (_deaggroCoroutine != null)
+            {
+                StopCoroutine(_deaggroCoroutine);
+            }
+            _deaggroCoroutine = StartCoroutine(DeaggroAfterDelay());
         }
         
         private Coroutine _deaggroCoroutine;
@@ -88,7 +78,7 @@ namespace BoleteHell.Code.Gameplay.Base
             yield return new WaitForSeconds(1.0f);
             _blackboard.GetVariableValue<GameObject>("Target", out var target);
             
-            if (target && target.TryGetComponent(out Character.Character character))
+            if (target && target.TryGetComponent(out Character character))
             {
                 if (character.Health.IsDead)
                 {

@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
-using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Graphics;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Health))]
-    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer, IFaction, IInstigator
     {
         public Health Health { get; private set; }
+        public GameObject GameObject => gameObject;
 
         public Vector2 Position => transform.position;
         
@@ -23,19 +24,17 @@ namespace BoleteHell.Code.Gameplay.Character
         public float MovementSpeed { get; set; } = 5f;
 
         [field: SerializeField]
-        public float DamageMultiplier { get; set; } = 1f;
+        public float GeneralDamageMultiplier { get; set; } = 1f;
+
+        public Dictionary<FactionType, float> factionDamageMultiplier { get; set; } = new ();
 
         [field: SerializeField]
         public Energy Energy { get; private set; }
 
-        [SerializeField]
-        private SpriteFragmentConfig spriteFragmentConfig;
+        public abstract FactionType faction { get; set; }
         
         [field: SerializeField]
         private GameObject hitFeedbackEffect;
-        
-        [Inject]
-        private ISpriteFragmenter _spriteFragmenter;
         
         [Inject]
         private TransientLight.Pool _explosionVFXPool;
@@ -45,22 +44,11 @@ namespace BoleteHell.Code.Gameplay.Character
         protected virtual void Awake()
         {
             Health = GetComponent<Health>();
-            Health.OnDeath += () =>
-            {
-                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
-                gameObject.SetActive(false);
-                Destroy(gameObject);
-            };
             _fire = GetComponentInChildren<ParticleSystem>();
         }
         
-        public void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
+        public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            // TODO: make a proper factions system
-            if (ctx.Instigator && ctx.Instigator.gameObject.CompareTag(gameObject.tag))
-                return;
-            
-            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
             
             if (ctx.Data is not LaserCombo laser)
             {
@@ -68,6 +56,11 @@ namespace BoleteHell.Code.Gameplay.Character
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
                 return;
             }
+            
+            if (!((IFaction)this).IsAffected(ctx.Projectile.AffectedSide, ctx.Instigator))
+                return;
+            
+            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
         
             laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
             callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroyProjectile = true });
@@ -81,6 +74,5 @@ namespace BoleteHell.Code.Gameplay.Character
                 mainModule.startColor = color;
             }
         }
-
     }
 }
