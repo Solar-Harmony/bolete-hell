@@ -53,7 +53,7 @@ MonoBehaviour:
     - rid: 8554527557946441822
       type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:
-        affectedSide: 1
+        affectedSide: 2
         <statusEffectConfig>k__BackingField:
           rid: 8554527557946441823
     - rid: 8554527557946441823

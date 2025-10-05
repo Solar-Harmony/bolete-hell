@@ -8,12 +8,13 @@ using BoleteHell.Code.Graphics;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Health))]
-    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer, IFaction
+    public abstract class Character : MonoBehaviour, ITargetable, IMovable, ISceneObject, IStatusEffectTarget, IDamageDealer, IFaction, IInstigator
     {
         public Health Health { get; private set; }
+        public GameObject GameObject => gameObject;
 
         public Vector2 Position => transform.position;
         
@@ -56,7 +57,7 @@ namespace BoleteHell.Code.Gameplay.Character
                 return;
             }
             
-            if (!((IFaction)this).IsAffected(ctx.Projectile.affectedSide, ctx.Instigator))
+            if (!((IFaction)this).IsAffected(ctx.Projectile.AffectedSide, ctx.Instigator))
                 return;
             
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Arsenal.RayData;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using UnityEngine;

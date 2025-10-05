@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays
@@ -51,7 +51,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             _pool.Enqueue(rayRenderer);
         }
 
-        public LaserInstance Get(Character owner, AffectedSide side)
+        public LaserInstance Get(IInstigator owner, AffectedSide side)
         {
             if (_pool.Count == 0)
             {
@@ -65,7 +65,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             }
 
             LaserInstance laserRenderer = _pool.Dequeue();
-            //l'instigateur doit être setup avant que le laser est dessiné car le laserbeam fait les dégats avant d'être déssiné
+            // l'instigateur doit être setup avant que le laser est dessiné car le laserbeam fait les dégats avant d'être déssiné
             laserRenderer.SetFactionInfo(owner, side);
             laserRenderer.gameObject.SetActive(true);
             return laserRenderer;

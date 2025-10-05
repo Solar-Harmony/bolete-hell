@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
-using BoleteHell.Code.Gameplay.Character;
 using BoleteHell.Code.Gameplay.Damage.Effects;
-using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {

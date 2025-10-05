@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Interactions

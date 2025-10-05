@@ -1,6 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
@@ -8,19 +9,21 @@ using UnityEngine;
 namespace BoleteHell.Code.Arsenal.Rays
 {
     //TODO: Va devoir être cleaned up et séparer
-    [RequireComponent(typeof(LaserProjectileMovement), typeof(CapsuleCollider2D),typeof(LineRenderer))]
+    [RequireComponent(typeof(LaserProjectileMovement), typeof(CapsuleCollider2D), typeof(LineRenderer))]
     public class LaserInstance : MonoBehaviour, IStatusEffectTarget, IMovable, IDamageDealer
     {
-        [field:SerializeField] 
+        [field: SerializeField] 
         public float RayWidth { get; private set; } = 0.2f;
         
         // Spécifique au projectile lasers
-        [field:SerializeField] 
+        [field: SerializeField] 
         public float LaserLength { get; private set; } = 0.3f;
 
         //Pour déterminer la faction du laser et ce qu'il devrait pouvoir affecter
-        public Character instigator;
-        public AffectedSide affectedSide;
+        public IInstigator Instigator;
+        
+        [NonSerialized]
+        public AffectedSide AffectedSide;
         
         public bool isProjectile;
         private float _movementSpeed;
@@ -59,15 +62,15 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void SetFactionInfo(Character owner, AffectedSide side )
+        public void SetFactionInfo(IInstigator owner, AffectedSide side )
         {
-            instigator = owner;
-            affectedSide = side;
+            Instigator = owner;
+            AffectedSide = side;
         }
 
         public void MakeLaserNeutral()
         {
-            affectedSide = AffectedSide.All;
+            AffectedSide = AffectedSide.All;
         }
 
         public void DrawRay(List<Vector3> positions, Color color, float lifeTime)
@@ -111,7 +114,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public void ResetLaser()
         {
             LaserRendererPool.Instance.Release(this);
-            instigator = null;
+            Instigator = null;
             if (!isProjectile) return;
             
             _lineRenderer.useWorldSpace = true;

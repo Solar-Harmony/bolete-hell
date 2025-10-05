@@ -4,7 +4,7 @@ using BoleteHell.Code.Input;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     public class Player : Character
     {

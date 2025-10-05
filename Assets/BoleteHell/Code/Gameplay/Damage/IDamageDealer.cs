@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 
 namespace BoleteHell.Code.Gameplay.Damage
 {

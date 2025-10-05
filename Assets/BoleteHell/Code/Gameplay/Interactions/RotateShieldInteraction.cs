@@ -1,7 +1,6 @@
 using System;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Input.Controllers;
-using UnityEngine.UIElements;
 
 namespace BoleteHell.Code.Gameplay.Interactions
 {

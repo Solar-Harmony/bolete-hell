@@ -5,7 +5,7 @@ using BoleteHell.Code.Arsenal.Shields;
 using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Audio;
 using BoleteHell.Code.Gameplay.Base;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;

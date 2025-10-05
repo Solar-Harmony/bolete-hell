@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;

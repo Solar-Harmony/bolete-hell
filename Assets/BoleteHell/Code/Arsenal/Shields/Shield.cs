@@ -2,10 +2,9 @@ using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields

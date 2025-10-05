@@ -1,6 +1,6 @@
 using System;
 using BoleteHell.Code.Arsenal.RayData;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 
@@ -19,8 +19,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
             
             FactionType hitCharacterFaction = ((IFaction)hitCharacterHealth).faction;
             
-            float characterDamageMultiplierAgainstTarget =
-                ((IDamageDealer)laserInstance.instigator).GetDamageMultiplier(hitCharacterFaction);
+            float characterDamageMultiplierAgainstTarget = laserInstance.Instigator.GetDamageMultiplier(hitCharacterFaction);
             
             float laserDamageMultiplierAgainstTarget =
                 ((IDamageDealer)laserInstance).GetDamageMultiplier(hitCharacterFaction);

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;

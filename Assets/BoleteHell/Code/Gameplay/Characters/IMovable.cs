@@ -1,4 +1,4 @@
-﻿namespace BoleteHell.Code.Gameplay.Character
+﻿namespace BoleteHell.Code.Gameplay.Characters
 {
     public interface IMovable
     {

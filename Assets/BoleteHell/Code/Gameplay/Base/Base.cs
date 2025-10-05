@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using Unity.Behavior;
@@ -13,10 +13,7 @@ namespace BoleteHell.Code.Gameplay.Base
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
     [RequireComponent(typeof(Health))]
-    //Changé pour herité de character car c'est pratiquement un character juste avec un movement speed de 0
-    //Et ca permet d'utiliser Character comme instigateur dans les tir ce qui facilite grandement l'accès aux informations nécéssaire
-    //Fait que les bases  sont affecter par les éffets de tir ce qu'on ne veut peut-être pas (Sortir IStatusEffectTarget de character et le mettre dans Enemy+Player)
-    public class Base : Character.Character
+    public class Base : Character
     {
         public override FactionType faction { get; set; } = FactionType.Player;
         
@@ -66,7 +63,7 @@ namespace BoleteHell.Code.Gameplay.Base
             base.OnHit(ctx, callback);
             
             if (ctx.Instigator.Health.IsDead) return;
-            _blackboard.SetVariableValue("Target", ctx.Instigator.gameObject);
+            _blackboard.SetVariableValue("Target", ctx.Instigator.GameObject);
             if (_deaggroCoroutine != null)
             {
                 StopCoroutine(_deaggroCoroutine);
@@ -81,7 +78,7 @@ namespace BoleteHell.Code.Gameplay.Base
             yield return new WaitForSeconds(1.0f);
             _blackboard.GetVariableValue<GameObject>("Target", out var target);
             
-            if (target && target.TryGetComponent(out Character.Character character))
+            if (target && target.TryGetComponent(out Character character))
             {
                 if (character.Health.IsDead)
                 {
@@ -103,6 +100,5 @@ namespace BoleteHell.Code.Gameplay.Base
             GUI.skin.label.fontSize = 24;
             GUI.Label(rect, Health.CurrentHealth + "hp");
         }
-
     }
 }

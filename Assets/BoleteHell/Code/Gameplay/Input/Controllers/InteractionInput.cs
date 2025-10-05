@@ -1,5 +1,4 @@
-using System;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Interactions;
 using BoleteHell.Code.Input;
 using UnityEngine;

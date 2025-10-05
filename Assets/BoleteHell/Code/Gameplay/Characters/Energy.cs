@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [Serializable]
     public class Energy

@@ -4,7 +4,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
