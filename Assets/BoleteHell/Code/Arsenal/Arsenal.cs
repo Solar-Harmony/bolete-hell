@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
+using BoleteHell.Code.Gameplay.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -26,6 +27,8 @@ namespace BoleteHell.Code.Arsenal
         
         private int _selectedCannonIndex;
         private readonly List<CannonInstance> _cannons = new();
+
+        private Character _owner;
         
         private void OnDrawGizmosSelected()
         {
@@ -41,6 +44,8 @@ namespace BoleteHell.Code.Arsenal
                 var instance = new CannonInstance(cannonConfig);
                 _cannons.Add(instance);
             }
+
+            _owner = GetComponent<Character>();
         }
        
         private void Update()
@@ -59,7 +64,7 @@ namespace BoleteHell.Code.Arsenal
             // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
-            var shotParams = new ShotLaunchParams(spawnPosition, direction, this.gameObject);
+            var shotParams = new ShotLaunchParams(transform.position, spawnPosition, direction, _owner);
             
             _cannonService.TryShoot(GetSelectedWeapon(), shotParams);
         }

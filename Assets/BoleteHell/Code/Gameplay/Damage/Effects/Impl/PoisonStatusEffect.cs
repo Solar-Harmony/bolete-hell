@@ -1,6 +1,6 @@
 ﻿using System;
 using BoleteHell.Code.Audio;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Graphics;
 using Sirenix.OdinInspector;
 using Zenject;

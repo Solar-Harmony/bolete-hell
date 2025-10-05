@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Character;
+﻿using BoleteHell.Code.Gameplay.Characters;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields

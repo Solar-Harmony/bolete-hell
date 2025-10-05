@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Shields;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 using Zenject;
 
@@ -44,18 +44,18 @@ namespace BoleteHell.Code.Input.Controllers
         {
             input.OnShieldStart += StartShield;
             input.OnShieldEnd += FinishShield;
-            input.OnCycleShield += CycleShields;
+            //input.OnCycleShield += CycleShields;
         }
 
         private void OnDisable()
         {
             input.OnShieldStart -= StartShield;
             input.OnShieldEnd -= FinishShield;
-            input.OnCycleShield -= CycleShields;
+            //input.OnCycleShield -= CycleShields;
         }
 
         //Pourrais être hardcodé pour que Q = refraction,E = reflexion, R = diffractio
-        private void CycleShields(int value)
+        public void CycleShields(int value)
         {
             if (currentShields.Count <= 1)
             {
@@ -64,6 +64,7 @@ namespace BoleteHell.Code.Input.Controllers
             }
 
             _selectedShieldIndex = (_selectedShieldIndex + value + currentShields.Count) % currentShields.Count;
+            Debug.Log($"Equipped {GetSelectedShield().name}");
         }
 
         private void StartShield()

@@ -1,31 +1,49 @@
-﻿using System;
+using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Character
 {
+    [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
+        private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
-        public float visionRange;
-        public float attackRange;
 
         [Inject]
         private IGameOutcomeService _outcome;
+        
+        [Inject]
+        private ISpriteFragmenter _spriteFragmenter;
+        
+        [SerializeField]
+        private SpriteFragmentConfig spriteFragmentConfig;
 
         private BehaviorGraphAgent _agent;
 
+        public override FactionType faction { get; set; } = FactionType.Enemy;
+
         protected override void Awake()
         {
-            base.Awake(); // TODO: I hate this so much
+            base.Awake();
             _mainCamera = Camera.main;
+            _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
             _agent.BlackboardReference.SetVariableValue("SelfCharacter", this);
             _agent.BlackboardReference.SetVariableValue("Self", gameObject);
 
+            
+            Health.OnDeath += () =>
+            {
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+                _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
+            };
+            
             _outcome.OnDefeat += OnDefeat;
         }
 

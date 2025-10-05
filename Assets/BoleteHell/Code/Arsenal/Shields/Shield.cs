@@ -2,10 +2,9 @@ using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
-using BoleteHell.Code.Gameplay.Character;
+using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
@@ -19,11 +18,10 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private Coroutine despawnCoroutine;
 
-        [Inject]
-        private IStatusEffectService _statusEffectService;
+        private Character _owner;
 
         [Inject]
-        private IEntityFinder _entityFinder;
+        private IStatusEffectService _statusEffectService;
 
         private void Awake()
         {
@@ -35,7 +33,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             Destroy(gameObject, shieldInfo.despawnTime);
         }
 
-        public void SetLineInfo(ShieldData info)
+        public void SetLineInfo(ShieldData info, Character owner)
         {
             shieldInfo = info;
             Material mat = new Material(meshRenderer.material)
@@ -43,18 +41,24 @@ namespace BoleteHell.Code.Arsenal.Shields
                 color = shieldInfo.color
             };
             meshRenderer.material = mat;
+            _owner = owner;
         }
 
-        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserInstance laserInstance, LaserCombo laser, GameObject instigator)
+        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserInstance laserInstance, LaserCombo laser, IFaction instigator)
         {
             if (shieldInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
             
-            if (instigator == _entityFinder.GetPlayer().gameObject)
+            foreach (ShieldEffect effect in shieldInfo.shieldEffect)
             {
-                _statusEffectService.AddStatusEffect(laserInstance, shieldInfo.statusEffectConfig);
+                if (instigator.IsAffected(effect.affectedSide, _owner))
+                {
+                    _statusEffectService.AddStatusEffect(laserInstance, effect.statusEffectConfig );
+                }
             }
-
+            
+            laserInstance.MakeLaserNeutral();
+            
             return shieldInfo.onHitLogic.ExecuteRay(incomingDirection, hitPoint, laser.CombinedRefractiveIndex);
         }
 
