@@ -1,34 +1,32 @@
 using System;
-using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Core;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Zenject;
 
-namespace BoleteHell.Code.AI.Condition
+namespace BoleteHell.Code.AI.Conditions
 {
     [Serializable, GeneratePropertyBag]
-    [Condition(name: "Has Line of Sight", story: "[Self] has line of sight [ViewRange] for [Agent]", category: "Bolete Hell", id: "619bbda3973eb7d09301865566a2be13")]
-    public partial class HasLineOfSightCondition : BoleteCondition
+    [Condition(name: "Has Line of Sight", story: "[Self] has [Agent] in sight, max [ViewRange] meters away", category: "Bolete Hell", id: "619bbda3973eb7d09301865566a2be13")]
+    public partial class HasLineOfSightCondition : Condition
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
-        [SerializeReference] public BlackboardVariable<float> ViewRange; // todo make param of agent
+        [SerializeReference] public BlackboardVariable<float> ViewRange; // TODO: make param of agent
         
-        [Inject]
         private ITargetingUtils _targeting;
         
-        public override bool IsTrueImpl()
+        public override bool IsTrue()
         {
             return _targeting.HasLineOfSight(Self.Value, Agent.Value, ViewRange.Value);
         }
 
         public override void OnStart()
         {
-            ((IRequestManualInject)this).InjectDependencies();
+            ServiceLocator.Get(ref _targeting);
         }
-
+        
         public override void OnEnd()
         {
         }

@@ -6,17 +6,11 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
-    // TODO: Use a similar pattern to the status effects to avoid injection in hit logics
     [Serializable]
-    public abstract class RayHitLogic : IRequestManualInject
+    public abstract class RayHitLogic
     {
-        bool IRequestManualInject.IsInjected { get; set; } = false;
-        
-        // TODO: Have a stats component that handles damage multipliers, movement speed, and other stats?
         public void OnHit(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance, LaserData data)
         {
-            ((IRequestManualInject)this).InjectDependencies();
-            
             FactionType hitCharacterFaction = ((IFaction)hitCharacterHealth).faction;
             
             float characterDamageMultiplierAgainstTarget = laserInstance.Instigator.GetDamageMultiplier(hitCharacterFaction);

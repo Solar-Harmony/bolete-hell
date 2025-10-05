@@ -13,8 +13,8 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         protected Vector2 CurrentDirection;
         protected Vector3 CurrentPos;
     
-        public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo,
-            IInstigator instigator);
+        public abstract void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData data, LaserCombo laserCombo, IInstigator instigator);
+        
         public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             // always ignore hits with the instigator (for now)

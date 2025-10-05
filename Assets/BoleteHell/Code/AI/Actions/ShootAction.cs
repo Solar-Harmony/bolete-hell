@@ -1,56 +1,41 @@
 using System;
-using BoleteHell.Code.AI.Boilerplate;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Core;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Zenject;
+using Action = Unity.Behavior.Action;
 
 namespace BoleteHell.Code.AI.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Shoot", story: "[Self] shoots at [Target]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
-    public partial class ShootAction : BoleteAction
+    [NodeDescription(name: "Shoot", story: "[Self] shoots at [CurrentTarget]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
+    public partial class ShootAction : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Self;
-        [SerializeReference] public BlackboardVariable<GameObject> Target;
+        [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
         
-        [Inject]
         private ITargetingUtils _targeting;
-    
-        protected override Status OnStartImpl()
-        {
-            ((IRequestManualInject)this).InjectDependencies();
-
-            if (Self.Value == null || Target.Value == null)
-            {
-                Debug.LogError("Self or Target is null");
-                return Status.Failure;
-            }
+        private Arsenal.Arsenal _arsenal;
+        private AIPath _pathfinder;
         
-            // TODO: make arsenal config only and have shooting service
-            if (!Self.Value.TryGetComponent(out Arsenal.Arsenal arsenal))
-            {
-                Debug.LogError("Self has no arsenal");
-                return Status.Failure;
-            }
+        protected override Status OnStart()
+        {
+            ServiceLocator.Get(ref _targeting);
+            Debug.Assert(_arsenal ??= Self.Value.GetComponent<Arsenal.Arsenal>());
+            _pathfinder ??= Self.Value.GetComponent<AIPath>();
             
             Vector2 selfPosition = Self.Value.transform.position;
-            Vector2 selfVelocity = Self.Value.GetComponent<AIPath>()?.desiredVelocity ?? Vector2.zero;
-            Vector2 targetPosition = Target.Value.transform.position;
-            Vector2 targetVelocity = Target.Value.TryGetComponent(out Rigidbody2D rb)
+            Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
+            Vector2 targetPosition = CurrentTarget.Value.transform.position;
+            Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
                 ? rb.linearVelocity
                 : Vector2.zero;
-            float projectileSpeed = arsenal.GetProjectileSpeed();
+            float projectileSpeed = _arsenal.GetProjectileSpeed();
             _targeting.SuggestProjectileDirection(out Vector2 direction, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
-            arsenal.Shoot(direction);
-        
-            return Status.Running;
-        }
-
-        protected override Status OnUpdate()
-        {
+            _arsenal.Shoot(direction);
+            
             return Status.Success;
         }
 

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoleteHell.Code.Core;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
-using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
 {
-    public class StatusEffectDebugger : EditorWindow, IRequestManualInject
+    // TODO: Marchera plus pour l'instant mais honnetement on s'en fout un peu lol
+    public class StatusEffectDebugger : EditorWindow
     {
-        [Inject]
         private IStatusEffectService _statusEffectService;
-        
-        bool IRequestManualInject.IsInjected { get; set; }
         
         private Vector2 _scrollPosition;
         private string _targetFilter = "";
@@ -45,35 +43,6 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<StatusEffectDebugger>("Bolete Hell Status Effects");
-            window.TryInjectDependencies();
-        }
-
-        private void OnEnable()
-        {
-            // Re-register the event handler each time the window is enabled
-            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-        }
-
-        private void OnDisable()
-        {
-            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-        }
-
-        private void OnPlayModeStateChanged(PlayModeStateChange state)
-        {
-            if (state == PlayModeStateChange.EnteredPlayMode)
-            {
-                TryInjectDependencies();
-            }
-        }
-
-        private void TryInjectDependencies()
-        {
-            if (!Application.isPlaying)
-                return;
-
-            ((IRequestManualInject)this).InjectDependencies();
         }
         
         private void RegisterColumns(out Column sortColumn)
@@ -97,6 +66,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
 
         private void CreateGUI()
         {
+            ServiceLocator.Get(ref _statusEffectService);
             RegisterColumns(out _sortColumn);
         }
 
@@ -106,12 +76,6 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
             {
                 EditorGUILayout.HelpBox("Bolete Hell Status Effect Debugger is only available during play mode.", MessageType.Info);
                 return;
-            }
-
-            // Always try to inject if service is null and we're playing
-            if (_statusEffectService == null)
-            {
-                TryInjectDependencies();
             }
 
             // If still null after injection attempt, show error

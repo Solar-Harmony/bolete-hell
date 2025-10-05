@@ -1,9 +1,8 @@
-﻿using BoleteHell.Code.Arsenal.RayData;
+﻿using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 {
@@ -12,11 +11,12 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         [SerializeReference] [Required]
         private StatusEffectConfig statusEffectConfig;
 
-        [Inject]
         private IStatusEffectService _statusEffectService;
         
         public override void OnHitImpl(Vector2 hitPosition, IDamageable victim)
         {
+            ServiceLocator.Get(ref _statusEffectService);
+            
             if (victim is IStatusEffectTarget target)
             {
                 _statusEffectService.AddStatusEffect(target, statusEffectConfig);

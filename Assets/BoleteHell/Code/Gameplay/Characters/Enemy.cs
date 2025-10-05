@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
 using UnityEngine;
@@ -9,7 +9,6 @@ namespace BoleteHell.Code.Gameplay.Characters
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
-        
         private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
 
@@ -28,7 +27,7 @@ namespace BoleteHell.Code.Gameplay.Characters
 
         protected override void Awake()
         {
-            base.Awake(); // TODO: I hate this so much
+            base.Awake();
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();

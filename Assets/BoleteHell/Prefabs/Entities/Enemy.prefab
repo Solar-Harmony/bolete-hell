@@ -71,7 +71,8 @@ MonoBehaviour:
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200,
+          type: 2}
 --- !u!114 &8131877402109793878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,14 +91,18 @@ MonoBehaviour:
     maxEnergy: 150
     regenRate: 20
     currentEnergy: 100
-  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   spriteFragmentConfig:
     <sr>k__BackingField: {fileID: 4735358013702089654}
     <parentRb>k__BackingField: {fileID: 7099119133421844960}
-    <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+    <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb,
+      type: 3}
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 10
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb,
+    type: 3}
+  visionRange: 25
+  attackRange: 5
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0
