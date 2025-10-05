@@ -1,12 +1,10 @@
-using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Gameplay.Character
+namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
@@ -33,9 +31,6 @@ namespace BoleteHell.Code.Gameplay.Character
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
-            _agent.BlackboardReference.SetVariableValue("SelfCharacter", this);
-            _agent.BlackboardReference.SetVariableValue("Self", gameObject);
-
             
             Health.OnDeath += () =>
             {
