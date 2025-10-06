@@ -8,28 +8,31 @@
     float _BlurStrength;
     float _ReferenceHeight;
 
-    // Properly normalized Gaussian weights for 13-tap blur (very heavy)
-    static const float weights[13] = { 
-        0.09893, 0.09735, 0.09275, 0.08565, 0.07661,
-        0.06619, 0.05502, 0.04379, 0.03316, 0.02370,
-        0.01591, 0.01015, 0.00613
+    // Higher quality 17-tap blur with better distribution to reduce banding
+    static const float weights[17] = { 
+        0.0540540541, 0.0539568346, 0.0536650891, 0.0531811118,
+        0.0525086284, 0.0516527082, 0.0506194382, 0.0494158894,
+        0.0480501080, 0.0465309447, 0.0448680391, 0.0430717157,
+        0.0411529683, 0.0391233445, 0.0369948348, 0.0347798393,
+        0.0324911660
     };
 
     float4 BlurHorizontal(Varyings input) : SV_Target
     {
         float2 texelSize = _BlitTexture_TexelSize.xy;
         
-        // Much more aggressive scaling - use camera orthographic size if available
-        // For now, use fixed heavy blur that doesn't scale with resolution
-        float adjustedBlurStrength = _BlurStrength * 3.0; // 3x multiplier for heavy blur
+        // Reduced multiplier since we're doing multiple iterations
+        float adjustedBlurStrength = _BlurStrength * 1.2;
         
         float3 result = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord).rgb * weights[0];
         
-        for(int i = 1; i < 13; i++)
+        // Use sub-pixel offsets to reduce banding
+        for(int i = 1; i < 17; i++)
         {
-            float2 offset = float2(texelSize.x * i * adjustedBlurStrength, 0.0);
-            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord + offset).rgb * weights[i];
-            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord - offset).rgb * weights[i];
+            float offset = (float)i * adjustedBlurStrength;
+            float2 offsetVec = float2(texelSize.x * offset, 0.0);
+            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord + offsetVec).rgb * weights[i];
+            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord - offsetVec).rgb * weights[i];
         }
         
         return float4(result, 1.0);
@@ -39,15 +42,18 @@
     {
         float2 texelSize = _BlitTexture_TexelSize.xy;
         
-        float adjustedBlurStrength = _BlurStrength * 3.0; // 3x multiplier for heavy blur
+        // Reduced multiplier since we're doing multiple iterations
+        float adjustedBlurStrength = _BlurStrength * 1.2;
         
         float3 result = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord).rgb * weights[0];
         
-        for(int i = 1; i < 13; i++)
+        // Use sub-pixel offsets to reduce banding
+        for(int i = 1; i < 17; i++)
         {
-            float2 offset = float2(0.0, texelSize.y * i * adjustedBlurStrength);
-            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord + offset).rgb * weights[i];
-            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord - offset).rgb * weights[i];
+            float offset = (float)i * adjustedBlurStrength;
+            float2 offsetVec = float2(0.0, texelSize.y * offset);
+            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord + offsetVec).rgb * weights[i];
+            result += SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord - offsetVec).rgb * weights[i];
         }
         
         return float4(result, 1.0);

@@ -48,9 +48,13 @@ namespace BoleteHell.Code.Rendering.SDF
             edgeDetectTex.depthBufferBits = 0;
             TextureHandle edgeTex = renderGraph.CreateTexture(edgeDetectTex);
             
-            var blurTexDesc = edgeDetectTex;
-            blurTexDesc.name = "BlurTempTexture";
-            TextureHandle blurTemp = renderGraph.CreateTexture(blurTexDesc);
+            var blurTexDesc1 = edgeDetectTex;
+            blurTexDesc1.name = "BlurTemp1";
+            TextureHandle blurTemp1 = renderGraph.CreateTexture(blurTexDesc1);
+            
+            var blurTexDesc2 = edgeDetectTex;
+            blurTexDesc2.name = "BlurTemp2";
+            TextureHandle blurTemp2 = renderGraph.CreateTexture(blurTexDesc2);
 
             UpdateBlurSettings();
             
@@ -61,13 +65,27 @@ namespace BoleteHell.Code.Rendering.SDF
             RenderGraphUtils.BlitMaterialParameters edgePassParams = new(silhouetteTex, edgeTex, _edgeMaterial, 0);
             renderGraph.AddBlitPass(edgePassParams, "sdf edge");
             
-            // Pass 2: Horizontal blur
-            RenderGraphUtils.BlitMaterialParameters blurHorizontalParams = new(edgeTex, blurTemp, _blurMaterial, 0);
-            renderGraph.AddBlitPass(blurHorizontalParams, "sdf blur horizontal");
+            // Multiple blur iterations for uniform smoothness
+            // Iteration 1
+            RenderGraphUtils.BlitMaterialParameters blurH1 = new(edgeTex, blurTemp1, _blurMaterial, 0);
+            renderGraph.AddBlitPass(blurH1, "sdf blur h1");
             
-            // Pass 3: Vertical blur (output to camera color)
-            RenderGraphUtils.BlitMaterialParameters blurVerticalParams = new(blurTemp, srcCamColor, _blurMaterial, 1);
-            renderGraph.AddBlitPass(blurVerticalParams, "sdf blur vertical");
+            RenderGraphUtils.BlitMaterialParameters blurV1 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
+            renderGraph.AddBlitPass(blurV1, "sdf blur v1");
+            
+            // Iteration 2
+            RenderGraphUtils.BlitMaterialParameters blurH2 = new(blurTemp2, blurTemp1, _blurMaterial, 0);
+            renderGraph.AddBlitPass(blurH2, "sdf blur h2");
+            
+            RenderGraphUtils.BlitMaterialParameters blurV2 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
+            renderGraph.AddBlitPass(blurV2, "sdf blur v2");
+            
+            // Iteration 3 (final output to camera)
+            RenderGraphUtils.BlitMaterialParameters blurH3 = new(blurTemp2, blurTemp1, _blurMaterial, 0);
+            renderGraph.AddBlitPass(blurH3, "sdf blur h3");
+            
+            RenderGraphUtils.BlitMaterialParameters blurV3 = new(blurTemp1, srcCamColor, _blurMaterial, 1);
+            renderGraph.AddBlitPass(blurV3, "sdf blur v3");
         }
         
         private void UpdateBlurSettings()
