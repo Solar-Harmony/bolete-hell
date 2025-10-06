@@ -1,4 +1,4 @@
-﻿    Shader "CustomEffects/EdgeSDF"
+﻿Shader "CustomEffects/EdgeSDF"
     {
         HLSLINCLUDE
 
@@ -57,8 +57,9 @@
             float edgeStrength = sqrt(gx * gx + gy * gy);
             edgeStrength *= _EdgeSensitivity;
 
-            // Simulate SDF: invert edge strength
-            float sdfValue = saturate(1.0 - edgeStrength);
+            // Output edge strength directly (edges are white, non-edges are black)
+            // This will be blurred to create the SDF gradient
+            float sdfValue = saturate(edgeStrength);
 
             return float4(sdfValue, sdfValue, sdfValue, 1);
         }

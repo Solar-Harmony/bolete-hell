@@ -27,17 +27,19 @@ namespace BoleteHell.Code.Rendering.SDF
         
         private EdgeDetectionRenderPass _edgeDetectionPass;
         private Material _edgeDetectionMaterial;
+        private Material _blurMaterial;
 
         public override void Create()
         {
             InitEdgeDetectionMaterial();
+            InitBlurMaterial();
             
             _silhouettePass = new ObstaclesSilhouettePass(settings.renderingLayerMaskName)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _edgeDetectionPass = new EdgeDetectionRenderPass(_edgeDetectionMaterial, settings.tempBlurStrength)
+            _edgeDetectionPass = new EdgeDetectionRenderPass(_edgeDetectionMaterial, _blurMaterial, settings.tempBlurStrength, settings.tempBlurStrength)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
@@ -49,16 +51,22 @@ namespace BoleteHell.Code.Rendering.SDF
             _edgeDetectionMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
+        private void InitBlurMaterial()
+        {
+            var shader = Shader.Find("CustomEffects/GaussianBlur");
+            _blurMaterial = CoreUtils.CreateEngineMaterial(shader);
+        }
+        
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             renderer.EnqueuePass(_silhouettePass);
             renderer.EnqueuePass(_edgeDetectionPass);
         }
 
-
         protected override void Dispose(bool disposing)
         {
             CoreUtils.Destroy(_edgeDetectionMaterial);
+            CoreUtils.Destroy(_blurMaterial);
         }
     }
 }
