@@ -28,18 +28,20 @@ namespace BoleteHell.Code.Rendering.SDF
         private EdgeDetectionRenderPass _edgeDetectionPass;
         private Material _edgeDetectionMaterial;
         private Material _blurMaterial;
+        private Material _combineMaterial;
 
         public override void Create()
         {
             InitEdgeDetectionMaterial();
             InitBlurMaterial();
+            InitCombineMaterial();
             
             _silhouettePass = new ObstaclesSilhouettePass(settings.renderingLayerMaskName)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _edgeDetectionPass = new EdgeDetectionRenderPass(_edgeDetectionMaterial, _blurMaterial, settings.tempBlurStrength, settings.tempBlurStrength)
+            _edgeDetectionPass = new EdgeDetectionRenderPass(_edgeDetectionMaterial, _blurMaterial, _combineMaterial, settings.tempBlurStrength, settings.tempBlurStrength)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
@@ -57,6 +59,12 @@ namespace BoleteHell.Code.Rendering.SDF
             _blurMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
+        private void InitCombineMaterial()
+        {
+            var shader = Shader.Find("CustomEffects/SDFCombine");
+            _combineMaterial = CoreUtils.CreateEngineMaterial(shader);
+        }
+        
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             renderer.EnqueuePass(_silhouettePass);
@@ -67,6 +75,7 @@ namespace BoleteHell.Code.Rendering.SDF
         {
             CoreUtils.Destroy(_edgeDetectionMaterial);
             CoreUtils.Destroy(_blurMaterial);
+            CoreUtils.Destroy(_combineMaterial);
         }
     }
 }

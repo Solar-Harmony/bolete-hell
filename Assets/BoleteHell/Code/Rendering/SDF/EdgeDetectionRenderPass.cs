@@ -10,6 +10,7 @@ namespace BoleteHell.Code.Rendering.SDF
     {
         private readonly Material _edgeMaterial;
         private readonly Material _blurMaterial;
+        private readonly Material _combineMaterial;
         private TextureDesc edgeDetectTex;
         private float _edgeSensitivity;
         private float _blurStrength;
@@ -17,11 +18,13 @@ namespace BoleteHell.Code.Rendering.SDF
         private static readonly int EdgeSensitivityId = Shader.PropertyToID("_EdgeSensitivity");
         private static readonly int BlurStrengthId = Shader.PropertyToID("_BlurStrength");
         private static readonly int ReferenceHeightId = Shader.PropertyToID("_ReferenceHeight");
+        private static readonly int SilhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
         
-        public EdgeDetectionRenderPass(Material edgeMaterial, Material blurMaterial, float edgeSensitivity, float blurStrength)
+        public EdgeDetectionRenderPass(Material edgeMaterial, Material blurMaterial, Material combineMaterial, float edgeSensitivity, float blurStrength)
         {
             _edgeMaterial = edgeMaterial;
             _blurMaterial = blurMaterial;
+            _combineMaterial = combineMaterial;
             _edgeSensitivity = edgeSensitivity;
             _blurStrength = blurStrength;
         }
@@ -80,12 +83,31 @@ namespace BoleteHell.Code.Rendering.SDF
             RenderGraphUtils.BlitMaterialParameters blurV2 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
             renderGraph.AddBlitPass(blurV2, "sdf blur v2");
             
-            // Iteration 3 (final output to camera)
+            // Iteration 3
             RenderGraphUtils.BlitMaterialParameters blurH3 = new(blurTemp2, blurTemp1, _blurMaterial, 0);
             renderGraph.AddBlitPass(blurH3, "sdf blur h3");
             
-            RenderGraphUtils.BlitMaterialParameters blurV3 = new(blurTemp1, srcCamColor, _blurMaterial, 1);
+            RenderGraphUtils.BlitMaterialParameters blurV3 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
             renderGraph.AddBlitPass(blurV3, "sdf blur v3");
+            
+            // Final pass: Combine blurred edges with silhouette to create proper SDF
+            // We need to manually add this pass to bind both textures
+            using (var builder = renderGraph.AddRasterRenderPass<CombinePassData>("sdf combine", out var passData))
+            {
+                passData.silhouetteTex = silhouetteTex;
+                passData.blurredEdgeTex = blurTemp2;
+                passData.material = _combineMaterial;
+                
+                builder.UseTexture(silhouetteTex, AccessFlags.Read);
+                builder.UseTexture(blurTemp2, AccessFlags.Read);
+                builder.SetRenderAttachment(srcCamColor, 0, AccessFlags.Write);
+                
+                builder.SetRenderFunc((CombinePassData data, RasterGraphContext context) =>
+                {
+                    data.material.SetTexture(SilhouetteTexId, data.silhouetteTex);
+                    Blitter.BlitTexture(context.cmd, data.blurredEdgeTex, new Vector4(1, 1, 0, 0), data.material, 0);
+                });
+            }
         }
         
         private void UpdateBlurSettings()
@@ -101,6 +123,13 @@ namespace BoleteHell.Code.Rendering.SDF
                 // Use 1080p as reference resolution for consistent blur appearance
                 _blurMaterial.SetFloat(ReferenceHeightId, 1080f);
             }
+        }
+        
+        private class CombinePassData
+        {
+            public TextureHandle silhouetteTex;
+            public TextureHandle blurredEdgeTex;
+            public Material material;
         }
     }
 }
