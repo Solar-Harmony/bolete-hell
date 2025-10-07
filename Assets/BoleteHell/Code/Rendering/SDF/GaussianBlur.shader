@@ -20,7 +20,7 @@
     float4 BlurHorizontal(Varyings input) : SV_Target
     {
         float2 texelSize = _BlitTexture_TexelSize.xy;
-        
+
         // Reduced multiplier since we're doing multiple iterations
         float adjustedBlurStrength = _BlurStrength * 1.2;
         
@@ -41,7 +41,7 @@
     float4 BlurVertical(Varyings input) : SV_Target
     {
         float2 texelSize = _BlitTexture_TexelSize.xy;
-        
+
         // Reduced multiplier since we're doing multiple iterations
         float adjustedBlurStrength = _BlurStrength * 1.2;
         

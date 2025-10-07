@@ -10,32 +10,38 @@
     
     float4 CombineToSDF(Varyings input) : SV_Target
     {
-        // Sample the blurred edge texture (from _BlitTexture)
-        // This represents edge distance - higher values = closer to edge
-        float edgeStrength = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord).r;
+        // Sample the JFA distance field (upsampled from half-res)
+        // R,G = nearest seed position in pixels, B = distance to nearest edge in pixels
+        float4 jfaData = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord);
+        float distanceInPixels = jfaData.z;
         
-        // Sample the original silhouette texture
-        // This is binary: 1 = inside shape, 0 = outside shape
+        // Sample the original full-resolution silhouette texture
         float silhouette = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, input.texcoord).r;
         
-        // Create proper SDF:
-        // - Outside shapes (silhouette = 0): black (0)
-        // - Inside shapes far from edge (silhouette = 1, low edgeStrength): white (1)
-        // - At edges (silhouette = 1, high edgeStrength): mid-grey (0.5)
+        // Check if this pixel has valid distance data
+        bool hasValidDistance = jfaData.x >= 0.0;
+        
+        // Normalize distance - since we're at half resolution, distances are in those pixels
+        // A distance of ~10 pixels at half-res should create a nice gradient
+        // Clamp to avoid issues with pixels that didn't receive distance info
+        float normalizedDist = saturate(distanceInPixels / 10.0);
         
         float sdfValue;
         
-        if (silhouette < 0.01)
+        if (!hasValidDistance)
         {
-            // Outside the shape - always black
-            sdfValue = 0.0;
+            // No valid distance data - fallback to simple silhouette
+            sdfValue = silhouette > 0.5 ? 1.0 : 0.0;
+        }
+        else if (silhouette > 0.5)
+        {
+            // Inside the shape: white (1.0) far from edge, grey (0.5) at edge
+            sdfValue = lerp(0.5, 1.0, normalizedDist);
         }
         else
         {
-            // Inside the shape - interpolate from white (1.0) to mid-grey (0.5) based on edge proximity
-            // When edgeStrength is high (at edge), output 0.5
-            // When edgeStrength is low (interior), output 1.0
-            sdfValue = lerp(1.0, 0.5, saturate(edgeStrength * 2.0));
+            // Outside the shape: grey (0.5) at edge, black (0.0) far away
+            sdfValue = lerp(0.5, 0.0, normalizedDist);
         }
         
         return float4(sdfValue, sdfValue, sdfValue, 1.0);
@@ -51,7 +57,7 @@
 
         Pass
         {
-            Name "SDFCombinePass"
+            Name "CombineToSDF"
 
             HLSLPROGRAM
             #pragma vertex Vert

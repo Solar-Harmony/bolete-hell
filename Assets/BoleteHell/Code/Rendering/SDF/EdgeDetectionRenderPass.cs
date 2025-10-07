@@ -8,29 +8,21 @@ namespace BoleteHell.Code.Rendering.SDF
 {
     public class EdgeDetectionRenderPass : ScriptableRenderPass
     {
-        private readonly Material _edgeMaterial;
-        private readonly Material _blurMaterial;
+        private readonly Material _copyMaterial;
+        private readonly Material _jfaMaterial;
         private readonly Material _combineMaterial;
-        private TextureDesc edgeDetectTex;
+        private TextureDesc jfaTexDesc;
         private float _edgeSensitivity;
-        private float _blurStrength;
         
-        private static readonly int EdgeSensitivityId = Shader.PropertyToID("_EdgeSensitivity");
-        private static readonly int BlurStrengthId = Shader.PropertyToID("_BlurStrength");
-        private static readonly int ReferenceHeightId = Shader.PropertyToID("_ReferenceHeight");
+        private static readonly int JumpStepId = Shader.PropertyToID("_JumpStep");
         private static readonly int SilhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
         
-        public EdgeDetectionRenderPass(Material edgeMaterial, Material blurMaterial, Material combineMaterial, float edgeSensitivity, float blurStrength)
+        public EdgeDetectionRenderPass(Material copyMaterial, Material jfaMaterial, Material combineMaterial, float edgeSensitivity)
         {
-            _edgeMaterial = edgeMaterial;
-            _blurMaterial = blurMaterial;
+            _copyMaterial = copyMaterial;
+            _jfaMaterial = jfaMaterial;
             _combineMaterial = combineMaterial;
             _edgeSensitivity = edgeSensitivity;
-            _blurStrength = blurStrength;
-        }
-        
-        private class PassData
-        {
         }
         
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -38,97 +30,88 @@ namespace BoleteHell.Code.Rendering.SDF
             TextureHandle silhouetteTex = frameData.Get<ObstaclesSilhouetteData>().SilhouetteTex;
             
             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-            UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
             
             if (resourceData.isActiveTargetBackBuffer)
                 return;
             
             TextureHandle srcCamColor = resourceData.activeColorTexture;
             
-            // Create intermediate textures for edge detection and blur passes
-            edgeDetectTex = silhouetteTex.GetDescriptor(renderGraph);
-            edgeDetectTex.name = "EdgeDetectionTexture";
-            edgeDetectTex.depthBufferBits = 0;
-            TextureHandle edgeTex = renderGraph.CreateTexture(edgeDetectTex);
+            // Create half-resolution textures for JFA
+            jfaTexDesc = silhouetteTex.GetDescriptor(renderGraph);
+            jfaTexDesc.name = "DownsampledSilhouette";
+            jfaTexDesc.depthBufferBits = 0;
+            // Downsample to half resolution for performance
+            jfaTexDesc.width /= 2;
+            jfaTexDesc.height /= 2;
+            TextureHandle downsampledSilhouette = renderGraph.CreateTexture(jfaTexDesc);
             
-            var blurTexDesc1 = edgeDetectTex;
-            blurTexDesc1.name = "BlurTemp1";
-            TextureHandle blurTemp1 = renderGraph.CreateTexture(blurTexDesc1);
+            var jfaTexDesc1 = jfaTexDesc;
+            jfaTexDesc1.name = "JFATemp1";
+            TextureHandle jfaTemp1 = renderGraph.CreateTexture(jfaTexDesc1);
             
-            var blurTexDesc2 = edgeDetectTex;
-            blurTexDesc2.name = "BlurTemp2";
-            TextureHandle blurTemp2 = renderGraph.CreateTexture(blurTexDesc2);
-
-            UpdateBlurSettings();
+            var jfaTexDesc2 = jfaTexDesc;
+            jfaTexDesc2.name = "JFATemp2";
+            TextureHandle jfaTemp2 = renderGraph.CreateTexture(jfaTexDesc2);
             
-            if (!srcCamColor.IsValid() || !edgeTex.IsValid())
+            if (!srcCamColor.IsValid())
                 return;
             
-            // Pass 1: Sobel edge detection
-            RenderGraphUtils.BlitMaterialParameters edgePassParams = new(silhouetteTex, edgeTex, _edgeMaterial, 0);
-            renderGraph.AddBlitPass(edgePassParams, "sdf edge");
+            // Pass 1: Downsample silhouette to half resolution for JFA
+            RenderGraphUtils.BlitMaterialParameters downsampleParams = new(silhouetteTex, downsampledSilhouette, _copyMaterial, 0);
+            renderGraph.AddBlitPass(downsampleParams, "downsample silhouette");
             
-            // Multiple blur iterations for uniform smoothness
-            // Iteration 1
-            RenderGraphUtils.BlitMaterialParameters blurH1 = new(edgeTex, blurTemp1, _blurMaterial, 0);
-            renderGraph.AddBlitPass(blurH1, "sdf blur h1");
+            // Pass 2: Initialize JFA from downsampled silhouette (detect boundaries)
+            RenderGraphUtils.BlitMaterialParameters initParams = new(downsampledSilhouette, jfaTemp1, _jfaMaterial, 0);
+            renderGraph.AddBlitPass(initParams, "jfa init");
             
-            RenderGraphUtils.BlitMaterialParameters blurV1 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
-            renderGraph.AddBlitPass(blurV1, "sdf blur v1");
+            // Pass 3: Jump Flood iterations
+            int maxDimension = Mathf.Max(jfaTexDesc.width, jfaTexDesc.height);
+            int numIterations = Mathf.CeilToInt(Mathf.Log(maxDimension, 2));
             
-            // Iteration 2
-            RenderGraphUtils.BlitMaterialParameters blurH2 = new(blurTemp2, blurTemp1, _blurMaterial, 0);
-            renderGraph.AddBlitPass(blurH2, "sdf blur h2");
+            TextureHandle currentInput = jfaTemp1;
+            TextureHandle currentOutput = jfaTemp2;
             
-            RenderGraphUtils.BlitMaterialParameters blurV2 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
-            renderGraph.AddBlitPass(blurV2, "sdf blur v2");
+            for (int i = 0; i < numIterations; i++)
+            {
+                int jumpStep = 1 << (numIterations - 1 - i);
+                
+                _jfaMaterial.SetInt(JumpStepId, jumpStep);
+                
+                RenderGraphUtils.BlitMaterialParameters jfaParams = new(currentInput, currentOutput, _jfaMaterial, 1);
+                renderGraph.AddBlitPass(jfaParams, $"jfa step {jumpStep}");
+                
+                (currentInput, currentOutput) = (currentOutput, currentInput);
+            }
             
-            // Iteration 3
-            RenderGraphUtils.BlitMaterialParameters blurH3 = new(blurTemp2, blurTemp1, _blurMaterial, 0);
-            renderGraph.AddBlitPass(blurH3, "sdf blur h3");
+            // Add final pass with step 1 to fill any gaps
+            _jfaMaterial.SetInt(JumpStepId, 1);
+            RenderGraphUtils.BlitMaterialParameters finalJfaParams = new(currentInput, currentOutput, _jfaMaterial, 1);
+            renderGraph.AddBlitPass(finalJfaParams, "jfa step 1 final");
+            (currentInput, currentOutput) = (currentOutput, currentInput);
             
-            RenderGraphUtils.BlitMaterialParameters blurV3 = new(blurTemp1, blurTemp2, _blurMaterial, 1);
-            renderGraph.AddBlitPass(blurV3, "sdf blur v3");
-            
-            // Final pass: Combine blurred edges with silhouette to create proper SDF
-            // We need to manually add this pass to bind both textures
+            // Final pass: Combine JFA result with silhouette to create proper SDF
             using (var builder = renderGraph.AddRasterRenderPass<CombinePassData>("sdf combine", out var passData))
             {
                 passData.silhouetteTex = silhouetteTex;
-                passData.blurredEdgeTex = blurTemp2;
+                passData.jfaResult = currentInput;
                 passData.material = _combineMaterial;
                 
                 builder.UseTexture(silhouetteTex, AccessFlags.Read);
-                builder.UseTexture(blurTemp2, AccessFlags.Read);
+                builder.UseTexture(currentInput, AccessFlags.Read);
                 builder.SetRenderAttachment(srcCamColor, 0, AccessFlags.Write);
                 
                 builder.SetRenderFunc((CombinePassData data, RasterGraphContext context) =>
                 {
                     data.material.SetTexture(SilhouetteTexId, data.silhouetteTex);
-                    Blitter.BlitTexture(context.cmd, data.blurredEdgeTex, new Vector4(1, 1, 0, 0), data.material, 0);
+                    Blitter.BlitTexture(context.cmd, data.jfaResult, new Vector4(1, 1, 0, 0), data.material, 0);
                 });
-            }
-        }
-        
-        private void UpdateBlurSettings()
-        {
-            if (_edgeMaterial)
-            {
-                _edgeMaterial.SetFloat(EdgeSensitivityId, _edgeSensitivity);
-            }
-           
-            if (_blurMaterial)
-            {
-                _blurMaterial.SetFloat(BlurStrengthId, _blurStrength);
-                // Use 1080p as reference resolution for consistent blur appearance
-                _blurMaterial.SetFloat(ReferenceHeightId, 1080f);
             }
         }
         
         private class CombinePassData
         {
             public TextureHandle silhouetteTex;
-            public TextureHandle blurredEdgeTex;
+            public TextureHandle jfaResult;
             public Material material;
         }
     }

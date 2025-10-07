@@ -27,13 +27,14 @@ namespace BoleteHell.Code.Rendering.SDF
         
         private EdgeDetectionRenderPass _edgeDetectionPass;
         private Material _edgeDetectionMaterial;
-        private Material _blurMaterial;
+        private Material _jfaMaterial;
         private Material _combineMaterial;
+        private Material _copyMaterial;
 
         public override void Create()
         {
-            InitEdgeDetectionMaterial();
-            InitBlurMaterial();
+            InitCopyMaterial();
+            InitJFAMaterial();
             InitCombineMaterial();
             
             _silhouettePass = new ObstaclesSilhouettePass(settings.renderingLayerMaskName)
@@ -41,22 +42,22 @@ namespace BoleteHell.Code.Rendering.SDF
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _edgeDetectionPass = new EdgeDetectionRenderPass(_edgeDetectionMaterial, _blurMaterial, _combineMaterial, settings.tempBlurStrength, settings.tempBlurStrength)
+            _edgeDetectionPass = new EdgeDetectionRenderPass(_copyMaterial, _jfaMaterial, _combineMaterial, settings.tempBlurStrength)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
         }
         
-        private void InitEdgeDetectionMaterial()
+        private void InitCopyMaterial()
         {
-            var shader = Shader.Find("CustomEffects/EdgeSDF");
-            _edgeDetectionMaterial = CoreUtils.CreateEngineMaterial(shader);
+            var shader = Shader.Find("CustomEffects/SimpleCopy");
+            _copyMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
-        private void InitBlurMaterial()
+        private void InitJFAMaterial()
         {
-            var shader = Shader.Find("CustomEffects/GaussianBlur");
-            _blurMaterial = CoreUtils.CreateEngineMaterial(shader);
+            var shader = Shader.Find("CustomEffects/JumpFloodSDF");
+            _jfaMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
         private void InitCombineMaterial()
@@ -73,8 +74,8 @@ namespace BoleteHell.Code.Rendering.SDF
 
         protected override void Dispose(bool disposing)
         {
-            CoreUtils.Destroy(_edgeDetectionMaterial);
-            CoreUtils.Destroy(_blurMaterial);
+            CoreUtils.Destroy(_copyMaterial);
+            CoreUtils.Destroy(_jfaMaterial);
             CoreUtils.Destroy(_combineMaterial);
         }
     }
