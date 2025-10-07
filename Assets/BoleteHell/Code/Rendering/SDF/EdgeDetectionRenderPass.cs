@@ -14,16 +14,19 @@ namespace BoleteHell.Code.Rendering.SDF
         private readonly Material _combineMaterial;
         private TextureDesc jfaTexDesc;
         private float _edgeSensitivity;
+        private float _referenceHeight;
         
         private static readonly int JumpStepId = Shader.PropertyToID("_JumpStep");
         private static readonly int SilhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
+        private static readonly int ReferenceHeightId = Shader.PropertyToID("_ReferenceHeight");
         
-        public EdgeDetectionRenderPass(Material copyMaterial, Material jfaMaterial, Material combineMaterial, float edgeSensitivity)
+        public EdgeDetectionRenderPass(Material copyMaterial, Material jfaMaterial, Material combineMaterial, float edgeSensitivity, float referenceHeight)
         {
             _copyMaterial = copyMaterial;
             _jfaMaterial = jfaMaterial;
             _combineMaterial = combineMaterial;
             _edgeSensitivity = edgeSensitivity;
+            _referenceHeight = referenceHeight;
         }
         
         private class JFAPassData
@@ -122,6 +125,7 @@ namespace BoleteHell.Code.Rendering.SDF
                 passData.silhouetteTex = silhouetteTex;
                 passData.jfaResult = currentInput;
                 passData.material = _combineMaterial;
+                passData.referenceHeight = _referenceHeight;
                 
                 builder.UseTexture(silhouetteTex, AccessFlags.Read);
                 builder.UseTexture(currentInput, AccessFlags.Read);
@@ -130,6 +134,7 @@ namespace BoleteHell.Code.Rendering.SDF
                 builder.SetRenderFunc((CombinePassData data, RasterGraphContext context) =>
                 {
                     data.material.SetTexture(SilhouetteTexId, data.silhouetteTex);
+                    data.material.SetFloat(ReferenceHeightId, data.referenceHeight);
                     Blitter.BlitTexture(context.cmd, data.jfaResult, new Vector4(1, 1, 0, 0), data.material, 0);
                 });
             }
@@ -140,6 +145,7 @@ namespace BoleteHell.Code.Rendering.SDF
             public TextureHandle silhouetteTex;
             public TextureHandle jfaResult;
             public Material material;
+            public float referenceHeight;
         }
     }
 }

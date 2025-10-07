@@ -14,6 +14,9 @@ namespace BoleteHell.Code.Rendering.SDF
         
         [Range(1, 10f)] 
         public float tempBlurStrength = 1f;
+        
+        [Tooltip("Reference resolution height (e.g., 1080) for resolution-independent SDF scaling.")]
+        public float referenceHeight = 1080f;
 
         private bool ValidateRenderLayer(string name) => RenderingLayerMask.NameToRenderingLayer(name) != -1;
     }
@@ -42,7 +45,7 @@ namespace BoleteHell.Code.Rendering.SDF
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _edgeDetectionPass = new EdgeDetectionRenderPass(_copyMaterial, _jfaMaterial, _combineMaterial, settings.tempBlurStrength)
+            _edgeDetectionPass = new EdgeDetectionRenderPass(_copyMaterial, _jfaMaterial, _combineMaterial, settings.tempBlurStrength, settings.referenceHeight)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
