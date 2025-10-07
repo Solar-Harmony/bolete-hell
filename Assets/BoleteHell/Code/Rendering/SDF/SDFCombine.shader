@@ -21,10 +21,9 @@
         // Check if this pixel has valid distance data
         bool hasValidDistance = jfaData.x >= 0.0;
         
-        // Normalize distance - since we're at half resolution, distances are in those pixels
-        // A distance of ~10 pixels at half-res should create a nice gradient
-        // Clamp to avoid issues with pixels that didn't receive distance info
-        float normalizedDist = saturate(distanceInPixels / 10.0);
+        // Normalize distance - now working at full resolution (not half-res anymore)
+        // A distance of ~20 pixels at full-res should create a nice gradient
+        float normalizedDist = saturate(distanceInPixels / 20.0);
         
         float sdfValue;
         

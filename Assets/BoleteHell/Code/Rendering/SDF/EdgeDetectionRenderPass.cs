@@ -44,24 +44,17 @@ namespace BoleteHell.Code.Rendering.SDF
             
             TextureHandle srcCamColor = resourceData.activeColorTexture;
             
-            // Create half-resolution textures for JFA
+            // Run JFA at full resolution to avoid banding artifacts from downsampling
             jfaTexDesc = silhouetteTex.GetDescriptor(renderGraph);
-            jfaTexDesc.name = "DownsampledSilhouette";
+            jfaTexDesc.name = "JFATemp1";
             jfaTexDesc.depthBufferBits = 0;
-            // Downsample to half resolution for performance
-            jfaTexDesc.width /= 2;
-            jfaTexDesc.height /= 2;
             // Use Float16 format for maximum precision in storing pixel coordinates
             jfaTexDesc.colorFormat = GraphicsFormat.R16G16B16A16_SFloat;
             
             UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
-            Debug.Log($"JFA Pass: Camera={cameraData.camera.name}, JFA Size={jfaTexDesc.width}x{jfaTexDesc.height}, Format={jfaTexDesc.colorFormat}");
+            Debug.Log($"JFA Pass: Camera={cameraData.camera.name}, Full-res JFA Size={jfaTexDesc.width}x{jfaTexDesc.height}, Format={jfaTexDesc.colorFormat}");
             
-            TextureHandle downsampledSilhouette = renderGraph.CreateTexture(jfaTexDesc);
-            
-            var jfaTexDesc1 = jfaTexDesc;
-            jfaTexDesc1.name = "JFATemp1";
-            TextureHandle jfaTemp1 = renderGraph.CreateTexture(jfaTexDesc1);
+            TextureHandle jfaTemp1 = renderGraph.CreateTexture(jfaTexDesc);
             
             var jfaTexDesc2 = jfaTexDesc;
             jfaTexDesc2.name = "JFATemp2";
@@ -70,15 +63,11 @@ namespace BoleteHell.Code.Rendering.SDF
             if (!srcCamColor.IsValid())
                 return;
             
-            // Pass 1: Downsample silhouette to half resolution for JFA
-            RenderGraphUtils.BlitMaterialParameters downsampleParams = new(silhouetteTex, downsampledSilhouette, _copyMaterial, 0);
-            renderGraph.AddBlitPass(downsampleParams, "downsample silhouette");
-            
-            // Pass 2: Initialize JFA from downsampled silhouette (detect boundaries)
-            RenderGraphUtils.BlitMaterialParameters initParams = new(downsampledSilhouette, jfaTemp1, _jfaMaterial, 0);
+            // Pass 1: Initialize JFA directly from full-resolution silhouette (no downsampling)
+            RenderGraphUtils.BlitMaterialParameters initParams = new(silhouetteTex, jfaTemp1, _jfaMaterial, 0);
             renderGraph.AddBlitPass(initParams, "jfa init");
             
-            // Pass 3: Jump Flood iterations - FIX: capture jump step in pass data
+            // Pass 2: Jump Flood iterations
             int maxDimension = Mathf.Max(jfaTexDesc.width, jfaTexDesc.height);
             int numIterations = Mathf.CeilToInt(Mathf.Log(maxDimension, 2));
             
