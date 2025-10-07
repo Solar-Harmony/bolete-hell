@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
@@ -53,7 +54,19 @@ namespace BoleteHell.Code.Rendering.SDF
             passData.RendererListHandle = renderGraph.CreateRendererList(rendererListParams);
             builder.UseRendererList(passData.RendererListHandle);
             
-            TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, cameraData.cameraTargetDescriptor, "Lasers in separate layer", true);
+            // Create silhouette texture with explicit settings to avoid MSAA/filtering issues
+            var silhouetteDesc = cameraData.cameraTargetDescriptor;
+            silhouetteDesc.msaaSamples = 1; // Disable MSAA - causes false edge detection
+            silhouetteDesc.depthBufferBits = 0; // No depth needed
+            silhouetteDesc.useMipMap = false;
+            silhouetteDesc.autoGenerateMips = false;
+            // Use Float16 format for maximum precision - critical for accurate edge detection
+            // Float format has better precision than UNorm for intermediate calculations
+            silhouetteDesc.graphicsFormat = GraphicsFormat.R16G16B16A16_SFloat;
+            
+            Debug.Log($"Silhouette Pass: Camera={cameraData.camera.name}, Format={silhouetteDesc.graphicsFormat}, Size={silhouetteDesc.width}x{silhouetteDesc.height}");
+            
+            TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, silhouetteDesc, "SDF Silhouette", true, FilterMode.Point);
             builder.SetRenderAttachment(destination, 0);
             
             // pass to next pass

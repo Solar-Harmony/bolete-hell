@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.RenderGraphModule.Util;
@@ -25,6 +26,13 @@ namespace BoleteHell.Code.Rendering.SDF
             _edgeSensitivity = edgeSensitivity;
         }
         
+        private class JFAPassData
+        {
+            public Material material;
+            public int jumpStep;
+            public TextureHandle input;
+        }
+        
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
         {
             TextureHandle silhouetteTex = frameData.Get<ObstaclesSilhouetteData>().SilhouetteTex;
@@ -43,6 +51,12 @@ namespace BoleteHell.Code.Rendering.SDF
             // Downsample to half resolution for performance
             jfaTexDesc.width /= 2;
             jfaTexDesc.height /= 2;
+            // Use Float16 format for maximum precision in storing pixel coordinates
+            jfaTexDesc.colorFormat = GraphicsFormat.R16G16B16A16_SFloat;
+            
+            UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
+            Debug.Log($"JFA Pass: Camera={cameraData.camera.name}, JFA Size={jfaTexDesc.width}x{jfaTexDesc.height}, Format={jfaTexDesc.colorFormat}");
+            
             TextureHandle downsampledSilhouette = renderGraph.CreateTexture(jfaTexDesc);
             
             var jfaTexDesc1 = jfaTexDesc;
@@ -64,7 +78,7 @@ namespace BoleteHell.Code.Rendering.SDF
             RenderGraphUtils.BlitMaterialParameters initParams = new(downsampledSilhouette, jfaTemp1, _jfaMaterial, 0);
             renderGraph.AddBlitPass(initParams, "jfa init");
             
-            // Pass 3: Jump Flood iterations
+            // Pass 3: Jump Flood iterations - FIX: capture jump step in pass data
             int maxDimension = Mathf.Max(jfaTexDesc.width, jfaTexDesc.height);
             int numIterations = Mathf.CeilToInt(Mathf.Log(maxDimension, 2));
             
@@ -75,18 +89,42 @@ namespace BoleteHell.Code.Rendering.SDF
             {
                 int jumpStep = 1 << (numIterations - 1 - i);
                 
-                _jfaMaterial.SetInt(JumpStepId, jumpStep);
-                
-                RenderGraphUtils.BlitMaterialParameters jfaParams = new(currentInput, currentOutput, _jfaMaterial, 1);
-                renderGraph.AddBlitPass(jfaParams, $"jfa step {jumpStep}");
+                // Create custom pass to set jump step at EXECUTION time, not recording time
+                using (var builder = renderGraph.AddRasterRenderPass<JFAPassData>($"jfa step {jumpStep}", out var passData))
+                {
+                    passData.material = _jfaMaterial;
+                    passData.jumpStep = jumpStep;
+                    passData.input = currentInput;
+                    
+                    builder.UseTexture(currentInput, AccessFlags.Read);
+                    builder.SetRenderAttachment(currentOutput, 0, AccessFlags.Write);
+                    
+                    builder.SetRenderFunc((JFAPassData data, RasterGraphContext context) =>
+                    {
+                        data.material.SetInt(JumpStepId, data.jumpStep);
+                        Blitter.BlitTexture(context.cmd, data.input, new Vector4(1, 1, 0, 0), data.material, 1);
+                    });
+                }
                 
                 (currentInput, currentOutput) = (currentOutput, currentInput);
             }
             
             // Add final pass with step 1 to fill any gaps
-            _jfaMaterial.SetInt(JumpStepId, 1);
-            RenderGraphUtils.BlitMaterialParameters finalJfaParams = new(currentInput, currentOutput, _jfaMaterial, 1);
-            renderGraph.AddBlitPass(finalJfaParams, "jfa step 1 final");
+            using (var builder = renderGraph.AddRasterRenderPass<JFAPassData>("jfa step 1 final", out var passData))
+            {
+                passData.material = _jfaMaterial;
+                passData.jumpStep = 1;
+                passData.input = currentInput;
+                
+                builder.UseTexture(currentInput, AccessFlags.Read);
+                builder.SetRenderAttachment(currentOutput, 0, AccessFlags.Write);
+                
+                builder.SetRenderFunc((JFAPassData data, RasterGraphContext context) =>
+                {
+                    data.material.SetInt(JumpStepId, data.jumpStep);
+                    Blitter.BlitTexture(context.cmd, data.input, new Vector4(1, 1, 0, 0), data.material, 1);
+                });
+            }
             (currentInput, currentOutput) = (currentOutput, currentInput);
             
             // Final pass: Combine JFA result with silhouette to create proper SDF

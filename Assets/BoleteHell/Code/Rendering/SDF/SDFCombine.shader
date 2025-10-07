@@ -10,9 +10,9 @@
     
     float4 CombineToSDF(Varyings input) : SV_Target
     {
-        // Sample the JFA distance field (upsampled from half-res)
+        // Sample the JFA distance field with POINT filtering to avoid interpolating seed positions
         // R,G = nearest seed position in pixels, B = distance to nearest edge in pixels
-        float4 jfaData = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord);
+        float4 jfaData = SAMPLE_TEXTURE2D(_BlitTexture, sampler_PointClamp, input.texcoord);
         float distanceInPixels = jfaData.z;
         
         // Sample the original full-resolution silhouette texture

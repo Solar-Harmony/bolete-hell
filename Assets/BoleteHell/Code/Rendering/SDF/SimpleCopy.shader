@@ -7,8 +7,9 @@
 
     float4 SimpleCopy(Varyings input) : SV_Target
     {
-        // Simple passthrough - just copy the input texture
-        return SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, input.texcoord);
+        // Use point sampling to preserve exact values (no interpolation)
+        // Critical for silhouette downsampling to maintain binary 0/1 values
+        return SAMPLE_TEXTURE2D(_BlitTexture, sampler_PointClamp, input.texcoord);
     }
 
     ENDHLSL
@@ -30,4 +31,3 @@
         }
     }
 }
-
