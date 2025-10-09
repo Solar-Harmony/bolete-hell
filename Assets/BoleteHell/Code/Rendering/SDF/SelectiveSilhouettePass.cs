@@ -15,11 +15,11 @@ namespace BoleteHell.Code.Rendering.SDF
         }
     }
     
-    public class ObstaclesSilhouettePass : ScriptableRenderPass
+    public class SelectiveSilhouettePass : ScriptableRenderPass
     {
         private readonly RenderingLayerMask _renderingLayerMask;
         
-        public ObstaclesSilhouettePass(string renderingLayerMaskName)
+        public SelectiveSilhouettePass(string renderingLayerMaskName)
         {
             _renderingLayerMask = RenderingLayerMask.GetMask(renderingLayerMaskName);
         }

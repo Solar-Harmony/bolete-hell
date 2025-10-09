@@ -22,9 +22,9 @@ namespace BoleteHell.Code.Rendering.SDF
         [SerializeField]
         private SDFRenderingSettings settings;
         
-        private ObstaclesSilhouettePass _silhouettePass;
+        private SelectiveSilhouettePass _silhouettePass;
 
-        private EdgeDetectionRenderPass _edgeDetectionPass;
+        private SDFRenderPass sdfPass;
         private Material _jfaMaterial;
         private Material _combineMaterial;
 
@@ -33,12 +33,12 @@ namespace BoleteHell.Code.Rendering.SDF
             InitJFAMaterial();
             InitCombineMaterial();
             
-            _silhouettePass = new ObstaclesSilhouettePass(settings.renderingLayerMaskName)
+            _silhouettePass = new SelectiveSilhouettePass(settings.renderingLayerMaskName)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
 
-            _edgeDetectionPass = new EdgeDetectionRenderPass(_jfaMaterial, _combineMaterial, settings.referenceHeight)
+            sdfPass = new SDFRenderPass(_jfaMaterial, _combineMaterial, settings.referenceHeight)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
@@ -59,7 +59,7 @@ namespace BoleteHell.Code.Rendering.SDF
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             renderer.EnqueuePass(_silhouettePass);
-            renderer.EnqueuePass(_edgeDetectionPass);
+            renderer.EnqueuePass(sdfPass);
         }
 
         protected override void Dispose(bool disposing)

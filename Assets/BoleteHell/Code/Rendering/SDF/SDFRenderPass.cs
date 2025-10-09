@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace BoleteHell.Code.Rendering.SDF
 {
-    public class EdgeDetectionRenderPass : ScriptableRenderPass
+    public class SDFRenderPass : ScriptableRenderPass
     {
         private readonly Material _jfaMaterial;
         private readonly Material _combineMaterial;
@@ -25,7 +25,7 @@ namespace BoleteHell.Code.Rendering.SDF
             public float ReferenceHeight;
         }
         
-        public EdgeDetectionRenderPass(Material jfaMaterial, Material combineMaterial, float referenceHeight)
+        public SDFRenderPass(Material jfaMaterial, Material combineMaterial, float referenceHeight)
         {
             _jfaMaterial = jfaMaterial;
             _combineMaterial = combineMaterial;
