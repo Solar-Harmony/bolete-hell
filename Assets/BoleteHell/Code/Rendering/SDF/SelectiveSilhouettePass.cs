@@ -54,14 +54,11 @@ namespace BoleteHell.Code.Rendering.SDF
             passData.RendererListHandle = renderGraph.CreateRendererList(rendererListParams);
             builder.UseRendererList(passData.RendererListHandle);
             
-            // Create silhouette texture with explicit settings to avoid MSAA/filtering issues
-            var silhouetteDesc = cameraData.cameraTargetDescriptor;
-            silhouetteDesc.msaaSamples = 1; // Disable MSAA - causes false edge detection
-            silhouetteDesc.depthBufferBits = 0; // No depth needed
+            RenderTextureDescriptor silhouetteDesc = cameraData.cameraTargetDescriptor;
+            silhouetteDesc.msaaSamples = 1; 
+            silhouetteDesc.depthBufferBits = 0;
             silhouetteDesc.useMipMap = false;
             silhouetteDesc.autoGenerateMips = false;
-            // Use Float16 format for maximum precision - critical for accurate edge detection
-            // Float format has better precision than UNorm for intermediate calculations
             silhouetteDesc.graphicsFormat = GraphicsFormat.R8_UNorm;
             
             TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, silhouetteDesc, "SDF Silhouette", true, FilterMode.Point);
