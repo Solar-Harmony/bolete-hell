@@ -62,9 +62,7 @@ namespace BoleteHell.Code.Rendering.SDF
             silhouetteDesc.autoGenerateMips = false;
             // Use Float16 format for maximum precision - critical for accurate edge detection
             // Float format has better precision than UNorm for intermediate calculations
-            silhouetteDesc.graphicsFormat = GraphicsFormat.R16G16B16A16_SFloat;
-            
-            Debug.Log($"Silhouette Pass: Camera={cameraData.camera.name}, Format={silhouetteDesc.graphicsFormat}, Size={silhouetteDesc.width}x{silhouetteDesc.height}");
+            silhouetteDesc.graphicsFormat = GraphicsFormat.R8_UNorm;
             
             TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, silhouetteDesc, "SDF Silhouette", true, FilterMode.Point);
             builder.SetRenderAttachment(destination, 0);
