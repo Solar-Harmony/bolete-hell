@@ -1,4 +1,4 @@
-﻿Shader "CustomEffects/SDFCombine"
+﻿Shader "BoleteHell/SDFCombine"
 {
     HLSLINCLUDE
 

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc3c66737d0fac84f992e9198ee2a9c6, type: 3}
-  m_Name: SDFRenderFeature
+  m_Name: SDF Render Feature
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
     renderingLayerMaskName: Lasers
-    tempBlurStrength: 1
+    referenceHeight: 1080
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

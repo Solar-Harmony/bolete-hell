@@ -1,4 +1,4 @@
-﻿Shader "CustomEffects/JumpFloodSDF"
+﻿Shader "BoleteHell/SDFJumpFlood"
 {
     HLSLINCLUDE
 

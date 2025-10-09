@@ -17,7 +17,7 @@ namespace BoleteHell.Code.Rendering.SDF
         public float referenceHeight = 1080f;
     }
     
-    public class SDFRenderFeature : ScriptableRendererFeature
+    public class ScreenSpaceSignedDistanceField : ScriptableRendererFeature
     {
         [SerializeField]
         private SDFRenderingSettings settings;
@@ -46,13 +46,13 @@ namespace BoleteHell.Code.Rendering.SDF
         
         private void InitJFAMaterial()
         {
-            var shader = Shader.Find("CustomEffects/JumpFloodSDF");
+            var shader = Shader.Find("BoleteHell/SDFJumpFlood");
             _jfaMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
         private void InitCombineMaterial()
         {
-            var shader = Shader.Find("CustomEffects/SDFCombine");
+            var shader = Shader.Find("BoleteHell/SDFCombine");
             _combineMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
         
