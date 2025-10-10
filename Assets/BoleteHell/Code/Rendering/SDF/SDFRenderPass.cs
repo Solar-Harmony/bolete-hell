@@ -12,10 +12,12 @@ namespace BoleteHell.Code.Rendering.SDF
         private readonly Material _jfaMaterial;
         private readonly Material _combineMaterial;
         private readonly float _referenceHeight;
+        private readonly bool _debugOutput;
         
         private static readonly int JumpStepId = Shader.PropertyToID("_JumpStep");
         private static readonly int SilhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
         private static readonly int ReferenceHeightId = Shader.PropertyToID("_ReferenceHeight");
+        private static readonly int SDFTexId = Shader.PropertyToID("_ScreenSpaceSDF");
         
         private class CombinePassData
         {
@@ -25,11 +27,12 @@ namespace BoleteHell.Code.Rendering.SDF
             public float ReferenceHeight;
         }
         
-        public SDFRenderPass(Material jfaMaterial, Material combineMaterial, float referenceHeight)
+        public SDFRenderPass(Material jfaMaterial, Material combineMaterial, float referenceHeight, bool debugOutput)
         {
             _jfaMaterial = jfaMaterial;
             _combineMaterial = combineMaterial;
             _referenceHeight = referenceHeight;
+            _debugOutput = debugOutput;
         }
         
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -87,6 +90,12 @@ namespace BoleteHell.Code.Rendering.SDF
 
         private void AddCombinePass(RenderGraph renderGraph, TextureHandle silhouetteTex, TextureHandle currentInput, TextureHandle srcCamColor)
         {
+            TextureDesc sdfDesc = currentInput.GetDescriptor(renderGraph);
+            sdfDesc.name = "Screen-space signed distance field texture";
+            sdfDesc.colorFormat = GraphicsFormat.R8_UNorm;
+            sdfDesc.depthBufferBits = 0;
+            TextureHandle sdfOutput = renderGraph.CreateTexture(sdfDesc);
+            
             using var builder = renderGraph.AddRasterRenderPass<CombinePassData>("Screen-space SDF final combine pass", out var passData);
             passData.SilhouetteTex = silhouetteTex;
             passData.JfaResult = currentInput;
@@ -95,7 +104,17 @@ namespace BoleteHell.Code.Rendering.SDF
                 
             builder.UseTexture(silhouetteTex);
             builder.UseTexture(currentInput);
-            builder.SetRenderAttachment(srcCamColor, 0);
+
+            if (_debugOutput)
+            {
+                builder.SetRenderAttachment(srcCamColor, 0);
+            }
+            else
+            {
+                builder.SetRenderAttachment(sdfOutput, 0);
+                builder.SetGlobalTextureAfterPass(sdfOutput, SDFTexId);
+            }
+            
             builder.SetRenderFunc((CombinePassData data, RasterGraphContext context) =>
             {
                 data.Material.SetTexture(SilhouetteTexId, data.SilhouetteTex);

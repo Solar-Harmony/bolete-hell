@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1066278310178707433}
-  - component: {fileID: 1280372453981324485}
   - component: {fileID: -7077992100956332028}
   - component: {fileID: 7586376362338869267}
   - component: {fileID: 576180338976705918}
@@ -40,19 +39,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1280372453981324485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5080979106228210044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ce39a37e034b378ae069da8da5c883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0.061406612, a: 1}
 --- !u!114 &-7077992100956332028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,7 +372,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7ca75990280bc242ace92a86e141ef0, type: 2}
+  - {fileID: 2100000, guid: 26a0c8982db59e248a84fc76144baec2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

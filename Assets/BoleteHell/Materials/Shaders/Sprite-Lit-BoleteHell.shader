@@ -5,6 +5,13 @@
         _BaseColor("Base Color", Color) = (1,1,1,1)
         _NormalMap("Normal Map", 2D) = "bump" {}
         _ZWrite("ZWrite", Float) = 0
+        
+        [Header(SDF Edge Shading)]
+        [Toggle(DEBUG_SDF)] _DebugSDF("Debug - Show Raw SDF", Float) = 0
+        _SDFInfluence("SDF Influence", Range(0, 1)) = 1.0
+        _EdgeDarken("Edge Darkening", Range(0, 1)) = 0.3
+        _EdgeWidth("Edge Width", Range(0.01, 50)) = 0.05
+        _OutsideDarken("Outside Darkening", Range(0, 1)) = 0.5
     }
 
     SubShader
@@ -26,6 +33,7 @@
 
             #pragma vertex CombinedShapeLightVertex
             #pragma fragment CombinedShapeLightFragment
+            #pragma shader_feature_local DEBUG_SDF
 
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/ShapeLightShared.hlsl"
 
@@ -57,6 +65,8 @@
 
             // declare the base color
             
+            TEXTURE2D(_ScreenSpaceSDF);
+            SAMPLER(sampler_ScreenSpaceSDF);
             
 //            TEXTURE2D(_MainTex);
 //            SAMPLER(sampler_MainTex);
@@ -69,6 +79,10 @@
             CBUFFER_START(UnityPerMaterial)
 //                half4 _Color;
                 half4 _BaseColor;
+                half _SDFInfluence;
+                half _EdgeDarken;
+                half _EdgeWidth;
+                half _OutsideDarken;
             CBUFFER_END
 
             #if USE_SHAPE_LIGHT_TYPE_0
@@ -115,13 +129,46 @@
             {
                 //const half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 const half4 main = i.color * _BaseColor;
+
+                half sdfValue = SAMPLE_TEXTURE2D(_ScreenSpaceSDF, sampler_ScreenSpaceSDF, i.lightingUV).r;
                 
+                #ifdef DEBUG_SDF
+                    return half4(sdfValue.xxx, 1.0);
+                #endif
+                
+                // SDF interpretation for the current shape:
+                // 0.0 = far outside this shape's silhouette
+                // 0.5 = at this shape's edge
+                // 1.0 = far inside this shape's silhouette
+                
+                // Calculate edge proximity (0 = at edge, 1 = far from edge)
+                half distFromEdge = abs(sdfValue - 0.5) * 2.0; // Remap [0,1] to distance from 0.5
+                half edgeFactor = saturate(distFromEdge / _EdgeWidth);
+                // return half4(edgeFactor.xxx, 1.0);
+                
+                // Calculate darkening based on whether we're inside or outside
+                half isInside = step(0.5, sdfValue); // 1 if inside, 0 if outside
+                half outsideFactor = (1.0 - isInside) * _OutsideDarken;
+                
+                // Combine edge darkening and outside darkening
+                half edgeDarkening = (1.0 - edgeFactor) * _EdgeDarken;
+                half totalDarkening = max(edgeDarkening, outsideFactor);
+                
+                // Apply darkening
+                half brightness = 1.0 - totalDarkening;
+                half3 shadedColor = main.rgb * brightness;
+                
+                // Blend between original and shaded based on influence
+                half4 finalColor = half4(lerp(main.rgb, shadedColor, _SDFInfluence), main.a);
+                
+                // return half4(finalColor, main.a);
+
 //                const half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 SurfaceData2D surfaceData;
                 InputData2D inputData;
 
                 const half4 mask = half4(1, 1, 1, 1);
-                InitializeSurfaceData(main.rgb, main.a, mask, surfaceData);
+                InitializeSurfaceData(finalColor.rgb, finalColor.a, mask, surfaceData);
                 InitializeInputData(i.uv, i.lightingUV, inputData);
 
 //                SETUP_DEBUG_TEXTURE_DATA_2D_NO_TS(inputData, i.positionWS, i.positionCS, _MainTex);

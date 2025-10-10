@@ -15,6 +15,9 @@ namespace BoleteHell.Code.Rendering.SDF
         
         [Tooltip("Reference resolution height (e.g., 1080) for resolution-independent SDF scaling.")]
         public float referenceHeight = 1080f;
+        
+        [Tooltip("Output the generated SDF texture to camera, for debugging purposes")]
+        public bool visualizeSDF = false;
     }
     
     public class ScreenSpaceSignedDistanceField : ScriptableRendererFeature
@@ -35,12 +38,12 @@ namespace BoleteHell.Code.Rendering.SDF
             
             _silhouettePass = new SelectiveSilhouettePass(settings.renderingLayerMaskName)
             {
-                renderPassEvent = RenderPassEvent.AfterRenderingTransparents
+                renderPassEvent = RenderPassEvent.BeforeRendering
             };
 
-            sdfPass = new SDFRenderPass(_jfaMaterial, _combineMaterial, settings.referenceHeight)
+            sdfPass = new SDFRenderPass(_jfaMaterial, _combineMaterial, settings.referenceHeight, settings.visualizeSDF)
             {
-                renderPassEvent = RenderPassEvent.AfterRenderingTransparents
+                renderPassEvent = RenderPassEvent.BeforeRendering
             };
         }
         
