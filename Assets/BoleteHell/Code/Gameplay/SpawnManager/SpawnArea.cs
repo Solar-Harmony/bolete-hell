@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoleteHell.Code.SpawnManager
+namespace BoleteHell.Code.Gameplay.SpawnManager
 {
     public class SpawnArea : MonoBehaviour
     {

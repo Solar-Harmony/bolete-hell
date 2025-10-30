@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoleteHell.Code.SpawnManager
+namespace BoleteHell.Code.Gameplay.SpawnManager
 {
     [CreateAssetMenu(menuName = "BoleteHell/AI/Spawn List")]
     public class SpawnList : ScriptableObject

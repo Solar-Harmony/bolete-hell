@@ -18,6 +18,9 @@ namespace BoleteHell.Code.Gameplay.Characters
         [Inject]
         private ISpriteFragmenter _spriteFragmenter;
         
+        [field: SerializeField]
+        public bool isElite { get; private set; }
+        
         [SerializeField]
         private SpriteFragmentConfig spriteFragmentConfig;
 
