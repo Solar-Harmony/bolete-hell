@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace BoleteHell.Code.Gameplay.Characters
 {
@@ -6,5 +7,6 @@ namespace BoleteHell.Code.Gameplay.Characters
     {
         Player GetPlayer();
         List<Enemy> GetAllEnemies();
+        [CanBeNull] Enemy GetWeakestEliteAlive();
     }
 }
