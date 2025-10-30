@@ -56,14 +56,26 @@ namespace BoleteHell.Code.Gameplay.Characters
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
                 return;
             }
-            
-            if (!((IFaction)this).IsAffected(ctx.Projectile.AffectedSide, ctx.Instigator))
+
+            bool isAffected = ((IFaction)this).IsAffected(ctx.Projectile.AffectedSide, ctx.Instigator);
+
+
+            if (!isAffected)
+            {
+                //Si la personne n'est pas affecter on laisse toujours le laser passer
+                callback?.Invoke(new ITargetable.Response(ctx));
                 return;
+            }
+
+            ProcessHitEffects(ctx, laser);
             
+            callback?.Invoke(new ITargetable.Response(ctx){RequestDestroyProjectile = ctx.Projectile.isProjectile});
+        }
+
+        private void ProcessHitEffects(ITargetable.Context ctx, LaserCombo laser)
+        {
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
-        
             laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
-            callback?.Invoke(new ITargetable.Response(ctx){ RequestDestroyProjectile = true });
 
             if (_fire)
             {
