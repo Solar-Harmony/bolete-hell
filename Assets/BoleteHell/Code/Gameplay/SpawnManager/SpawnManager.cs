@@ -1,13 +1,22 @@
 using UnityEngine;
+using Zenject;
 
-namespace BoleteHell.Code.SpawnManager
+namespace BoleteHell.Code.Gameplay.SpawnManager
 {
     public class SpawnManager : MonoBehaviour
     {
-
+        [Inject]
+        private DiContainer _container; // TODO: Temporary, we should make a simple factory
+        
         public bool Spawn(SpawnArea spawnArea)
         {
-            var entries = spawnArea.spawnList.allowedEnemies;
+            if (!spawnArea.spawnList || spawnArea.spawnList.allowedEnemies.Length == 0)
+            {
+                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
+                return false;
+            }
+            
+            GameObject[] entries = spawnArea.spawnList.allowedEnemies;
             if (entries == null || entries.Length == 0)
                 return false;
 
@@ -15,7 +24,7 @@ namespace BoleteHell.Code.SpawnManager
             return true;
         }
 
-        public Vector2 GetSpawnPosition(SpawnArea spawnArea)
+        private static Vector2 GetSpawnPosition(SpawnArea spawnArea)
         {
             Vector2 dir2D = Random.insideUnitCircle.normalized;
             float dist = Random.Range(spawnArea.minSpawnRadius, spawnArea.maxSpawnRadius);
@@ -23,13 +32,17 @@ namespace BoleteHell.Code.SpawnManager
             return center2D + dir2D * dist;
         }
 
-        public void SpawnSelectedEnemy(SpawnList allowedEnemies, SpawnArea spawnArea)
+        private void SpawnSelectedEnemy(SpawnList allowedEnemies, SpawnArea spawnArea)
         {
-            Vector3 finalSpawnPos = GetSpawnPosition(spawnArea);
             int index = Random.Range(0, allowedEnemies.allowedEnemies.Length);
             GameObject prefabToSpawn = allowedEnemies.allowedEnemies[index];
 
-            Instantiate(prefabToSpawn, finalSpawnPos, Quaternion.identity);
+            GameObjectCreationParameters parameters = new()
+            {
+                Position = GetSpawnPosition(spawnArea)
+            };
+            
+            _container.InstantiatePrefab(prefabToSpawn, parameters);
         }
     }
 }
