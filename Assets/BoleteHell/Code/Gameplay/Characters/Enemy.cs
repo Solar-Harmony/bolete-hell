@@ -1,5 +1,6 @@
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
+using Sirenix.OdinInspector;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -7,7 +8,7 @@ using Zenject;
 namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
-    public class Enemy : Character
+    public class Enemy : Character, ILootable
     {
         private Arsenal.Arsenal _weapon;
         private Camera _mainCamera;
@@ -27,6 +28,12 @@ namespace BoleteHell.Code.Gameplay.Characters
         private BehaviorGraphAgent _agent;
 
         public override FactionType faction { get; set; } = FactionType.Enemy;
+        
+        [field:SerializeReference, HideReferenceObjectPicker]
+        public DropContext dropContext { get; set; }
+
+        public DropManager dropManager { get; set; }
+
 
         protected override void Awake()
         {
@@ -34,15 +41,20 @@ namespace BoleteHell.Code.Gameplay.Characters
             _mainCamera = Camera.main;
             _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
+            dropManager = FindFirstObjectByType<DropManager>();
             
             Health.OnDeath += () =>
             {
+                dropManager.DropDroplets(gameObject, dropContext.dropletContext);
+                //dropManager.DropGold(this.gameObject, dropContext.goldContext);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
             };
             
             _outcome.OnDefeat += OnDefeat;
+            
+            
         }
 
         private void OnDefeat(string reason)
@@ -65,5 +77,6 @@ namespace BoleteHell.Code.Gameplay.Characters
         {
             _outcome.OnDefeat -= OnDefeat;
         }
+
     }
 }

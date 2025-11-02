@@ -35,7 +35,7 @@ namespace BoleteHell.Code.Core
 
         [SerializeField]
         private GameObject shieldPreviewPrefab;
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {

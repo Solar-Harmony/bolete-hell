@@ -31,6 +31,19 @@ namespace BoleteHell.Code.Gameplay.Characters
             currentEnergy += regenRate * deltaTime;
             currentEnergy = Mathf.Min(currentEnergy, maxEnergy);
         }
+
+        public void GainFixedAmount(float amount)
+        {
+            currentEnergy += amount;
+            currentEnergy = Mathf.Min(currentEnergy, maxEnergy);
+            Debug.Log($"Gained {amount} energy");
+        }
+        
+        public void LoseFixedAmount(float amount)
+        {
+            currentEnergy -= amount;
+            currentEnergy = Mathf.Max(currentEnergy, 0);
+        }
     }
 }
 

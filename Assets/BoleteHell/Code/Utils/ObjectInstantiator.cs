@@ -36,6 +36,11 @@ namespace BoleteHell.Code.Utils
            return _container.InstantiatePrefab(prefab);
         }
 
+        public GameObject InstantiateWithInjection(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
+        {
+            return _container.InstantiatePrefab(prefab, position, rotation, parent);
+        }
+
         private static IEnumerator WaitThenReturnToPool(IMemoryPool pool, object item, float delay)
         {
             yield return new WaitForSeconds(delay);
