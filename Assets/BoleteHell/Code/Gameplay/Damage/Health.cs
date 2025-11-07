@@ -16,6 +16,7 @@ namespace BoleteHell.Code.Gameplay.Damage
     
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
+        public static event Action<GameObject, int> OnHealed;
 
         public bool IsDead => CurrentHealth <= 0;
         public void TakeDamage(int damageAmount)
@@ -31,6 +32,14 @@ namespace BoleteHell.Code.Gameplay.Damage
                 OnDeath?.Invoke();
                 OnDeath = null;
             }
+        }
+        
+        public void Heal(int healAmount)
+        {
+            if(IsDead)return;
+            CurrentHealth = Math.Min(MaxHealth, CurrentHealth + healAmount);
+            Debug.Log($"Gained {healAmount} hp");
+            OnHealed?.Invoke(gameObject, healAmount);
         }
 
         public void OnBeforeSerialize()

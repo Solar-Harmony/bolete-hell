@@ -1,4 +1,5 @@
 using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.Droppables;
 using BoleteHell.Code.Gameplay.GameState;
 using Unity.Behavior;
 using UnityEngine;
@@ -9,34 +10,38 @@ namespace BoleteHell.Code.Gameplay.Characters
     [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
-        private Arsenal.Arsenal _weapon;
-        private Camera _mainCamera;
-
+        [field: SerializeField]
+        public bool isElite { get; private set; }
+        
+        public override FactionType faction { get; set; } = FactionType.Enemy;
+        
+        [SerializeField]
+        private DropSettings _dropSettings;
+        
+        [SerializeField]
+        private SpriteFragmentConfig spriteFragmentConfig;
+        
         [Inject]
         private IGameOutcomeService _outcome;
         
         [Inject]
         private ISpriteFragmenter _spriteFragmenter;
         
-        [field: SerializeField]
-        public bool isElite { get; private set; }
-        
-        [SerializeField]
-        private SpriteFragmentConfig spriteFragmentConfig;
+        [Inject]
+        public IDropManager dropManager { get; set; }
 
         private BehaviorGraphAgent _agent;
-
-        public override FactionType faction { get; set; } = FactionType.Enemy;
-
+        private Camera _mainCamera;
+        
         protected override void Awake()
         {
             base.Awake();
             _mainCamera = Camera.main;
-            _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
             
             Health.OnDeath += () =>
             {
+                dropManager.DropDroplets(gameObject, _dropSettings.dropletContext);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
