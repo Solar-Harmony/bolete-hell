@@ -26,5 +26,6 @@ namespace BoleteHell.Code.Utils
 
 
         public GameObject InstantiateWithInjection(GameObject prefab);
+        public GameObject InstantiateWithInjection(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent);
     }
 }

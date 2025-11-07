@@ -9,14 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4023435176609027149}
-  - component: {fileID: 2877549176397520493}
   - component: {fileID: 8131877402109793878}
+  - component: {fileID: 7765380612193698732}
+  - component: {fileID: 2877549176397520493}
   - component: {fileID: 4735358013702089654}
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
   - component: {fileID: 7099119133421844960}
   - component: {fileID: -687021765542443590}
-  - component: {fileID: 7765380612193698732}
+  - component: {fileID: -5673025283711493893}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -35,8 +36,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6872167419365447248}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -44,6 +44,129 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2.15, y: 2.15}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8131877402109793878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MovementSpeed>k__BackingField: 10
+  <GeneralDamageMultiplier>k__BackingField: 1
+  <Energy>k__BackingField:
+    maxEnergy: 150
+    regenRate: 20
+    currentEnergy: 100
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+  <isElite>k__BackingField: 0
+  spriteFragmentConfig:
+    <sr>k__BackingField: {fileID: 4735358013702089654}
+    <parentRb>k__BackingField: {fileID: 7099119133421844960}
+    <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+    <fragmentsX>k__BackingField: 4
+    <fragmentsY>k__BackingField: 4
+    <explosionForce>k__BackingField: 10
+  <dropContext>k__BackingField:
+    rid: 7325218740191887476
+  references:
+    version: 2
+    RefIds:
+    - rid: 7325218740191887476
+      type: {class: DropContext, ns: , asm: Assembly-CSharp}
+      data:
+        dropletContext:
+          dropChance: 100
+          min: 1
+          max: 4
+          dropCurve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.563956
+              value: 0.23341388
+              inSlope: 0.59743816
+              outSlope: 0.59743816
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.94448805
+              value: 0.68889093
+              inSlope: 2
+              outSlope: 2
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.9840151
+              value: 1.0047472
+              inSlope: -0.18762852
+              outSlope: -0.18762852
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 1
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+        goldContext:
+          dropChance: 60
+          min: 1
+          max: 1
+          dropCurve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 1
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 1
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+--- !u!114 &7765380612193698732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInvincible>k__BackingField: 0
+  <MaxHealth>k__BackingField: 50
 --- !u!114 &2877549176397520493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,38 +194,7 @@ MonoBehaviour:
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
         bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200,
-          type: 2}
---- !u!114 &8131877402109793878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 10
-  <GeneralDamageMultiplier>k__BackingField: 1
-  <Energy>k__BackingField:
-    maxEnergy: 150
-    regenRate: 20
-    currentEnergy: 100
-  spriteFragmentConfig:
-    <sr>k__BackingField: {fileID: 4735358013702089654}
-    <parentRb>k__BackingField: {fileID: 7099119133421844960}
-    <explosion>k__BackingField: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb,
-      type: 3}
-    <fragmentsX>k__BackingField: 4
-    <fragmentsY>k__BackingField: 4
-    <explosionForce>k__BackingField: 10
-  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb,
-    type: 3}
-  visionRange: 25
-  attackRange: 5
+        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -291,7 +383,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.15
---- !u!114 &7765380612193698732
+--- !u!114 &-5673025283711493893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,39 +392,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 6982038961960877227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsInvincible>k__BackingField: 0
-  <MaxHealth>k__BackingField: 50
---- !u!1 &7047168010642913551
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6872167419365447248}
-  m_Layer: 7
-  m_Name: BulletSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6872167419365447248
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7047168010642913551}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4023435176609027149}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Graph: {fileID: -8870313207143250243, guid: 244496790adeb594e864a73c248a4912, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 5920448562586189824
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5920448562586189824
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 6982038961960877227}

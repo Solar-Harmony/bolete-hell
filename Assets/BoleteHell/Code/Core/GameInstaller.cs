@@ -8,8 +8,10 @@ using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.Droppables;
 using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Gameplay.Input;
+using BoleteHell.Code.Gameplay.SpawnManager;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Code.Utils;
@@ -34,7 +36,7 @@ namespace BoleteHell.Code.Core
 
         [SerializeField]
         private GameObject shieldPreviewPrefab;
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
@@ -56,6 +58,8 @@ namespace BoleteHell.Code.Core
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IBaseService>().To<BaseService>().AsSingle();
             Container.Bind<IEntityFinder>().To<EntityFinder>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<SpawnManager>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<IDropManager>().To<DropManager>().AsSingle();
             BindStatusEffects();
             
             // factories
