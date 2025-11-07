@@ -2,6 +2,7 @@ using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
+using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
@@ -82,7 +83,10 @@ namespace BoleteHell.Code.Arsenal.Shields
             
             Vector3 newDirection = OnRayHitShield(ctx.Direction, hit, ctx.Projectile, laser, ctx.Instigator);
             Debug.DrawRay(hit.point, newDirection * 5, Color.red, 1f);
-            callback?.Invoke(new ITargetable.Response(ctx) { Direction = newDirection });
+            
+            callback?.Invoke(ctx.Projectile.isProjectile || !shieldInfo.onHitLogic.ShouldBlocklaser
+                ? new ITargetable.Response(ctx) { Direction = newDirection }
+                : new ITargetable.Response(ctx) { Direction = newDirection, BlockProjectile = true });
         }
     }
 }

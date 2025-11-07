@@ -26,7 +26,8 @@ MonoBehaviour:
     - rid: 8554527307954126936
       type: {class: RefractLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data:
-        materialRefractiveIndice: 2.417
+        materialRefractiveIndice: 2.47
+        <ShouldBlocklaser>k__BackingField: 1
     - rid: 8554527557946441819
       type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:

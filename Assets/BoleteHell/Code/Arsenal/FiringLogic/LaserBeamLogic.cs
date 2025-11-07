@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.HitHandler;
@@ -14,41 +15,61 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         
         public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, IInstigator instigator)
         {
+            Collider2D previousHitCollider = null;
             CurrentPos = bulletSpawnPoint;
             _rayPositions.Add(CurrentPos);
-            CurrentDirection = direction;
-            LaserInstance laserInstance = LaserRendererPool.Instance.Get(instigator, laserCombo.LaserAllegiance);
+            CurrentDirection = direction.normalized;
             
+            LaserInstance laserInstance = LaserRendererPool.Instance.Get(instigator, laserCombo.LaserAllegiance);
+            bool destroy = false;
             for (int i = 0; i <= cannonData.maxNumberOfBounces; i++)
             {
                 LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
-
-                RaycastHit2D hit = Physics2D.Raycast(CurrentPos, CurrentDirection, cannonData.maxRayDistance, layerMask);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(CurrentPos, CurrentDirection, cannonData.maxRayDistance, layerMask);
                 
-                if (!hit)
+                Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+                bool hasInteraction = false;
+
+                //Pour chaque hit on fait son éffet
+                foreach (RaycastHit2D currentHit in hits)
                 {
-                    _rayPositions.Add((Vector2)CurrentPos + CurrentDirection * cannonData.maxRayDistance);
-                    break;
-                }
-
-                bool shouldBreak = false;
-                CurrentPos = hit.point - CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
-
-                ITargetable.Context context = new(hit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
-                OnHit(context, altered =>
-                {
-                    CurrentDirection = altered.Direction;
-                    _rayPositions.Add(CurrentPos);
-
-                    if (altered.RequestDestroyProjectile)
+                    if (previousHitCollider && currentHit.collider == previousHitCollider)
+                        continue; 
+                    CurrentPos = currentHit.point - CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+                    
+                    ITargetable.Context context = new(currentHit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
+                    OnHit(context, altered =>
                     {
-                        shouldBreak = true;
-                    }
-                });
+                        CurrentDirection = altered.Direction;
+                        _rayPositions.Add(CurrentPos);
 
-                if (shouldBreak)
+                        hasInteraction = altered.BlockProjectile || altered.RequestDestroyProjectile;
+                        destroy = altered.RequestDestroyProjectile;
+                    });
+
+                    if (hasInteraction)
+                    {
+                        //Empêche de toucher le même collider deux fois de suite
+                        //Sert surtout car le refract shield doit refaire le raycast a partir du point toucher mais  comme il va dans la même direction général qu'au début
+                        //il retouche toujours le même coté touché précédemment
+                        //donc je doit lui permettre de skipper le mur touché et faire le check des prochaines choses
+                        previousHitCollider = currentHit.collider;
+                        break;
+                    }
+                }
+                
+                //Si on a pas d'interactions on force l'arret des rebondissement
+                if (destroy || !hasInteraction)
                     break;
             }
+            
+            //Si le laser ne se fait pas détruire on déssine sa destination final
+            if (!destroy)
+            {
+                Vector2 finalPoint = (Vector2)CurrentPos + CurrentDirection * cannonData.maxRayDistance;
+                _rayPositions.Add(finalPoint);
+            }
+
             laserInstance.DrawRay(_rayPositions, laserCombo.CombinedColor, cannonData.Lifetime);
 
             _rayPositions.Clear();
