@@ -1,6 +1,11 @@
 using UnityEngine;
 
-public interface IDropManager
+namespace BoleteHell.Code.Gameplay.Droppables
 {
-    public void Drop(GameObject dropSource, DropContext ctx);
+    public interface IDropManager
+    {
+        public void Drop(GameObject dropSource, DropSettings ctx);
+        public void DropDroplets(GameObject dropSource, DropRangeContext ctx);
+        public void DropGold(GameObject dropSource, DropRangeContext ctx);
+    }
 }

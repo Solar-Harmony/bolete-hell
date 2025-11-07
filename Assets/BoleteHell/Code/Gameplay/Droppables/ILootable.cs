@@ -1,8 +1,8 @@
-using System;
-using UnityEngine;
-
-public interface ILootable
+namespace BoleteHell.Code.Gameplay.Droppables
 {
-    public DropContext dropContext { get; set; }
-    public DropManager dropManager { get; set; }
+    public interface ILootable
+    {
+        public DropSettings DropSettings { get; set; }
+        public IDropManager dropManager { get; set; }
+    }
 }

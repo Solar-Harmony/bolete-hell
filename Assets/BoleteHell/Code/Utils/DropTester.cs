@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using Dreamteck.Splines.Editor;
+using BoleteHell.Code.Gameplay.Droppables;
 using UnityEditor;
 using UnityEngine;
 
@@ -53,7 +52,7 @@ public class DropTesterEditor : Editor
     
     private static void ClearConsole()
     {
-        var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
+        var logEntries = Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
         var clearMethod = logEntries?.GetMethod("Clear", BindingFlags.Static | BindingFlags.Public);
         clearMethod?.Invoke(null, null);
     }

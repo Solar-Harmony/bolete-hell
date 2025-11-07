@@ -1,6 +1,6 @@
 using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Code.Gameplay.Droppables;
 using BoleteHell.Code.Gameplay.GameState;
-using Sirenix.OdinInspector;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -8,53 +8,46 @@ using Zenject;
 namespace BoleteHell.Code.Gameplay.Characters
 {
     [RequireComponent(typeof(Arsenal.Arsenal))]
-    public class Enemy : Character, ILootable
+    public class Enemy : Character
     {
-        private Arsenal.Arsenal _weapon;
-        private Camera _mainCamera;
-
+        [field: SerializeField]
+        public bool isElite { get; private set; }
+        
+        public override FactionType faction { get; set; } = FactionType.Enemy;
+        
+        [SerializeField]
+        private DropSettings _dropSettings;
+        
+        [SerializeField]
+        private SpriteFragmentConfig spriteFragmentConfig;
+        
         [Inject]
         private IGameOutcomeService _outcome;
         
         [Inject]
         private ISpriteFragmenter _spriteFragmenter;
         
-        [field: SerializeField]
-        public bool isElite { get; private set; }
-        
-        [SerializeField]
-        private SpriteFragmentConfig spriteFragmentConfig;
+        [Inject]
+        public IDropManager dropManager { get; set; }
 
         private BehaviorGraphAgent _agent;
-
-        public override FactionType faction { get; set; } = FactionType.Enemy;
+        private Camera _mainCamera;
         
-        [field:SerializeReference, HideReferenceObjectPicker]
-        public DropContext dropContext { get; set; }
-
-        public DropManager dropManager { get; set; }
-
-
         protected override void Awake()
         {
             base.Awake();
             _mainCamera = Camera.main;
-            _weapon = GetComponent<Arsenal.Arsenal>();
             _agent = GetComponent<BehaviorGraphAgent>();
-            dropManager = FindFirstObjectByType<DropManager>();
             
             Health.OnDeath += () =>
             {
-                dropManager.DropDroplets(gameObject, dropContext.dropletContext);
-                //dropManager.DropGold(this.gameObject, dropContext.goldContext);
+                dropManager.DropDroplets(gameObject, _dropSettings.dropletContext);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
             };
             
             _outcome.OnDefeat += OnDefeat;
-            
-            
         }
 
         private void OnDefeat(string reason)
@@ -77,6 +70,5 @@ namespace BoleteHell.Code.Gameplay.Characters
         {
             _outcome.OnDefeat -= OnDefeat;
         }
-
     }
 }
