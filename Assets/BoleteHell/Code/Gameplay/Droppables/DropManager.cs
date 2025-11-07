@@ -31,12 +31,8 @@ namespace BoleteHell.Code.Gameplay.Droppables
             public List<GameObject> Droplets;
         }
         
-        public DropManager(Config config)
-        {
-            _config = config;
-        }
-        
-        private readonly Config _config;
+        [Inject]
+        private Config _config;
         
         [Inject]
         private IObjectInstantiator _instantiator;
