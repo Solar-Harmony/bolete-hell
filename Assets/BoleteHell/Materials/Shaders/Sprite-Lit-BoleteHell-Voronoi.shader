@@ -15,12 +15,16 @@
 
     SubShader
     {
-        Tags {"Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+        Tags {
+            "Queue" = "Transparent"
+            "RenderType" = "Transparent"
+            "RenderPipeline" = "UniversalPipeline"
+        }
 
         Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-        Cull Off
-        ZWrite [_ZWrite]
-        ZTest Off
+        Cull Off  
+        ZWrite Off
+        ZTest LEqual  
 
         Pass
         {
