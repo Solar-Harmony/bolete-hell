@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3315598625102643069}
   - component: {fileID: 5437693159795558763}
   m_Layer: 0
-  m_Name: NewLevelObstacle
+  m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,14 +573,14 @@ MonoBehaviour:
     useClippedPercent: 0
     keys: []
   _clipFromSample:
-    position: {x: -1.9570606, y: 2.0601153, z: 1}
+    position: {x: -1.9570606, y: 2.0601153, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.7013083, y: 0.7128581, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
   _clipToSample:
-    position: {x: -1.9570606, y: 2.0601153, z: 1}
+    position: {x: -1.9570606, y: 2.0601153, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.70130837, y: 0.71285796, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -821,14 +821,14 @@ MonoBehaviour:
     useClippedPercent: 0
     keys: []
   _clipFromSample:
-    position: {x: -1.9570606, y: 2.0601153, z: 1}
+    position: {x: -1.9570606, y: 2.0601153, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.7013083, y: 0.7128581, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
   _clipToSample:
-    position: {x: -1.9570606, y: 2.0601153, z: 1}
+    position: {x: -1.9570606, y: 2.0601153, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.70130837, y: 0.71285796, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
