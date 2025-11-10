@@ -25,6 +25,15 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
 
         [Inject]
         private IBaseService _bases;
+
+        [Serializable]
+        public class Config
+        {
+            public float Interval = 5.0f;
+        }
+
+        [Inject]
+        private Config _config;
         
         private List<SpawnArea> _spawnAreas;
 
@@ -33,7 +42,7 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         private void Start()
         {
             _spawnAreas = new List<SpawnArea>(FindObjectsByType<SpawnArea>(FindObjectsSortMode.None));
-            InvokeRepeating(nameof(SpawnEnemies), 0.0f, 5.0f);
+            InvokeRepeating(nameof(SpawnEnemies), 0.0f, _config.Interval);
         }
 
         private void SpawnEnemies()
