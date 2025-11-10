@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: Shrink Laser
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.76280314, g: 0.19635493, b: 0.638737, a: 1}
+  <Color>k__BackingField: {r: 1, g: 0, b: 0.7793102, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
     rid: 8651057760533741568
+  affectedSide: 2
   <baseDamage>k__BackingField: 5
   <MovementSpeed>k__BackingField: 10
   references:

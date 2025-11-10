@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace BoleteHell.Code.Gameplay.Base
 {
@@ -13,7 +15,16 @@ namespace BoleteHell.Code.Gameplay.Base
         public List<Base> Bases => _cache ??= new List<Base>(Object.FindObjectsByType<Base>(FindObjectsSortMode.None));
 
         [Inject]
-        private IGameOutcomeService _outcome; 
+        private IGameOutcomeService _outcome;
+        
+        [Serializable]
+        public class Config
+        {
+            public bool DefeatWhenNoBaseLeft = true;
+        }
+        
+        [Inject]
+        private Config _config;
         
         private List<Base> _cache;
         
@@ -21,7 +32,7 @@ namespace BoleteHell.Code.Gameplay.Base
         {
             Bases.Remove(theBase);
             
-            if (Bases.Count == 0)
+            if (Bases.Count == 0 && _config.DefeatWhenNoBaseLeft)
             {
                 _outcome.TriggerDefeat("All your bases were destroyed");
             }

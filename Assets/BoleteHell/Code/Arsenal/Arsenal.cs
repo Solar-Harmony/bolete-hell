@@ -114,6 +114,17 @@ namespace BoleteHell.Code.Arsenal
             
             return _cannons[_selectedCannonIndex];
         }
+
+        public void SetSelectedWeapon(int index)
+        {
+            if (index < 0 || index >= cannonConfigs.Count)
+            {
+                Debug.LogWarning("Invalid weapon index");
+                return;
+            }
+
+            _selectedCannonIndex = index;
+        }
     
         public void OnShootCanceled()
         {

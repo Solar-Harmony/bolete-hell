@@ -64,6 +64,63 @@ MonoBehaviour:
     currentEnergy: 100
   hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   <isElite>k__BackingField: 0
+  _dropSettings:
+    dropletContext:
+      dropChance: 60
+      min: 1
+      max: 1
+      dropCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    goldContext:
+      dropChance: 60
+      min: 1
+      max: 1
+      dropCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   spriteFragmentConfig:
     <sr>k__BackingField: {fileID: 4735358013702089654}
     <parentRb>k__BackingField: {fileID: 7099119133421844960}
@@ -71,88 +128,6 @@ MonoBehaviour:
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 10
-  <dropContext>k__BackingField:
-    rid: 7325218740191887476
-  references:
-    version: 2
-    RefIds:
-    - rid: 7325218740191887476
-      type: {class: DropContext, ns: , asm: Assembly-CSharp}
-      data:
-        dropletContext:
-          dropChance: 100
-          min: 1
-          max: 4
-          dropCurve:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 0
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 0.563956
-              value: 0.23341388
-              inSlope: 0.59743816
-              outSlope: 0.59743816
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 0.94448805
-              value: 0.68889093
-              inSlope: 2
-              outSlope: 2
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 0.9840151
-              value: 1.0047472
-              inSlope: -0.18762852
-              outSlope: -0.18762852
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 1
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-        goldContext:
-          dropChance: 60
-          min: 1
-          max: 1
-          dropCurve:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 0
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
 --- !u!114 &7765380612193698732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,8 +168,18 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
-        bulletPatterns: []
+        bulletPatterns:
+        - rid: 795110976313622630
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    - rid: 795110976313622630
+      type: {class: ShotPatternData, ns: BoleteHell.Code.Arsenal.ShotPatterns, asm: Assembly-CSharp}
+      data:
+        numberOfBulletShot: 3
+        maxAngleRange: 0
+        startingRotation: 0
+        constantRotation: 0
+        burstShotCount: 1
+        burstShotCooldown: 0
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0

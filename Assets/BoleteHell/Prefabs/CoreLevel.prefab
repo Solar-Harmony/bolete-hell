@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -91,7 +91,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnController
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -137,7 +137,7 @@ GameObject:
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -200,7 +200,7 @@ GameObject:
   m_Layer: 0
   m_Name: Pathfinder
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -319,7 +319,7 @@ GameObject:
   m_Layer: 0
   m_Name: Global Light 2D
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -404,7 +404,7 @@ GameObject:
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -554,7 +554,7 @@ GameObject:
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -567,7 +567,7 @@ Transform:
   m_GameObject: {fileID: 8781894501363492540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.013992865, y: 0.22388583, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -721,7 +721,7 @@ GameObject:
   m_Layer: 0
   m_Name: Laser Renderer Pool
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -795,6 +795,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
+    - target: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
@@ -866,9 +870,37 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1762079061245450209, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
+    - target: {fileID: 1889056687653220468, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
+    - target: {fileID: 2755423188508139861, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930170833335015319, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
+    - target: {fileID: 4773248932301171605, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
+    - target: {fileID: 5448743163767538087, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
     - target: {fileID: 6227788247584861831, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520202086016763502, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7066555419404122879, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: input
@@ -934,6 +966,10 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8326809350107579061, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
     - target: {fileID: 8833217652067245739, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: shieldPreviewPrefab
       value: 
@@ -960,6 +996,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5999945677421747797}
     m_Modifications:
+    - target: {fileID: 1577792748088605393, guid: ae7634687aade7749921f5ce8f249139, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 4f84569e816fabc4094b973c98380688, type: 3}
     - target: {fileID: 1577792748088605393, guid: ae7634687aade7749921f5ce8f249139, type: 3}
       propertyPath: m_Name
       value: UI Canvas
