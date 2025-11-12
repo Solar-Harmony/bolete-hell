@@ -10,7 +10,6 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Base
 {
-    [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BehaviorGraphAgent))]
     [RequireComponent(typeof(Health))]
     public class Base : Character
