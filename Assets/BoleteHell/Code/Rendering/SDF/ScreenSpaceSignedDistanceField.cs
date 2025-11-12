@@ -43,7 +43,7 @@ namespace BoleteHell.Code.Rendering.SDF
 
             sdfPass = new SDFRenderPass(_jfaMaterial, _combineMaterial, settings.referenceHeight, settings.visualizeSDF)
             {
-                renderPassEvent = RenderPassEvent.BeforeRendering
+                renderPassEvent = settings.visualizeSDF ? RenderPassEvent.BeforeRenderingPostProcessing : RenderPassEvent.BeforeRendering
             };
         }
         
