@@ -27,6 +27,9 @@ namespace BoleteHell.Code.Gameplay.Base
 
         private BlackboardReference _blackboard;
 
+        [SerializeField]
+        private Renderer _bounds;
+
         protected override void Awake()
         {
             base.Awake();
@@ -96,7 +99,7 @@ namespace BoleteHell.Code.Gameplay.Base
         
         private void OnGUI()
         {
-            Vector2 position = new Vector2(transform.position.x, transform.position.y + GetComponent<Renderer>().bounds.size.y * 0.5f);
+            Vector2 position = new Vector2(transform.position.x, transform.position.y + _bounds.bounds.size.y * 0.5f);
             Vector2 ss = _mainCamera.WorldToScreenPoint(position);
             ss.y = Screen.height - ss.y;
             Rect rect = new(ss, new Vector2(100, 50));

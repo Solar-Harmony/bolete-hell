@@ -1391,6 +1391,7 @@ MonoBehaviour:
     regenRate: 20
     currentEnergy: 100
   hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
+  _bounds: {fileID: 8478053692772356421}
   deathSprite: {fileID: 21300000, guid: 1a797df68b4c9eb4493f6060f338e729, type: 3}
 --- !u!114 &-7706689365234032475
 MonoBehaviour:
