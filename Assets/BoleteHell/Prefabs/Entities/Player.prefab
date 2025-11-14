@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -7735479623250359012}
   - component: {fileID: 1536071927711564797}
   - component: {fileID: 3814531209225375410}
+  - component: {fileID: 4806280786062315358}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -174,11 +175,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MovementSpeed>k__BackingField: 5
-  <DamageMultiplier>k__BackingField: 1
+  <GeneralDamageMultiplier>k__BackingField: 1
   <Energy>k__BackingField:
     maxEnergy: 150
     regenRate: 20
     currentEnergy: 100
+  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   spriteFragmentConfig:
     <sr>k__BackingField: {fileID: 8887576795586774717}
     <parentRb>k__BackingField: {fileID: 4327110905113141562}
@@ -186,7 +188,6 @@ MonoBehaviour:
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 1
-  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
 --- !u!114 &-6850370767394821370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +256,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 2
+--- !u!114 &4806280786062315358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e7508780b464b3785847e7a1c4382e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentVisibilities:
+  - component: {fileID: 7800540844462225391}
+    Visibility: 1
+  - component: {fileID: 57039783232871073}
+    Visibility: 0
+  - component: {fileID: 4327110905113141562}
+    Visibility: 0
+  - component: {fileID: 6227788247584861831}
+    Visibility: 0
+  - component: {fileID: 938295390074202206}
+    Visibility: 0
+  - component: {fileID: -2775713761536112375}
+    Visibility: 0
+  - component: {fileID: -6850370767394821370}
+    Visibility: 0
+  - component: {fileID: 8833217652067245739}
+    Visibility: 0
+  - component: {fileID: -7735479623250359012}
+    Visibility: 0
+  - component: {fileID: 1536071927711564797}
+    Visibility: 0
+  - component: {fileID: 3814531209225375410}
+    Visibility: 0
 --- !u!1 &885100575828019646
 GameObject:
   m_ObjectHideFlags: 0
