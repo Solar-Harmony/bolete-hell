@@ -17,6 +17,6 @@ MonoBehaviour:
     - {fileID: 3476611043504849278, guid: 7a222cc10f4fb1642a64e7999a19bfe7, type: 3}
     - {fileID: 560586752497531280, guid: 892a0737f9c0a56418030b68742b3079, type: 3}
   SpawnControllerConfig:
-    Interval: 1000
+    Interval: 5
   BaseServiceConfig:
     DefeatWhenNoBaseLeft: 0
