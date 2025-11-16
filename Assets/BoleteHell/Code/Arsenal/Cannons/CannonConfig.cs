@@ -13,6 +13,14 @@ namespace BoleteHell.Code.Arsenal.Cannons
         Charged,   // Charge puis tire un laser instant
     }
     
+    [Serializable]
+    public class Cannon
+    {
+        [SerializeReference] [HideReferenceObjectPicker]
+        [ValidateInput("@cannonConfigs.Count > 0", "Must have at least one cannon config.")]
+        public List<CannonConfig> cannonConfigs = new();
+    }
+    
     // TODO: See what we can merge with the CannonData scriptable object
     // It's a matter of what we want to be reusable as a template VS unique per character
     [Serializable]

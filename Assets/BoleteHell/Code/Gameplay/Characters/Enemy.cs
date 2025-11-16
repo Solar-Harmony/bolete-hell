@@ -7,7 +7,6 @@ using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Characters
 {
-    [RequireComponent(typeof(Arsenal.Arsenal))]
     public class Enemy : Character
     {
         [field: SerializeField]

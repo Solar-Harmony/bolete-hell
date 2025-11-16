@@ -39,7 +39,9 @@ namespace BoleteHell.Code.AI.Actions
 
         protected override Status OnUpdate()
         {
-            return _pathfinder.remainingDistance <= 0.5
+            _pathfinder.destination = CurrentTarget.Value.transform.position;
+
+            return _pathfinder.remainingDistance <= 0.2f
                 ? Status.Success
                 : Status.Running;
         }

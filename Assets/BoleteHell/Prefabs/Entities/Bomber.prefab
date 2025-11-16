@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4023435176609027149}
   - component: {fileID: 8131877402109793878}
   - component: {fileID: 7765380612193698732}
-  - component: {fileID: 2877549176397520493}
   - component: {fileID: 4735358013702089654}
   - component: {fileID: 4991494843151904680}
   - component: {fileID: 3500938891576973719}
@@ -19,7 +18,7 @@ GameObject:
   - component: {fileID: -687021765542443590}
   - component: {fileID: -5673025283711493893}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Bomber
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 10
+  <MovementSpeed>k__BackingField: 13
   <GeneralDamageMultiplier>k__BackingField: 1
   <Energy>k__BackingField:
     maxEnergy: 150
@@ -168,36 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsInvincible>k__BackingField: 0
-  <MaxHealth>k__BackingField: 50
---- !u!114 &2877549176397520493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3108e9754aa154b47ac7865db9132e8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnDistance: {fileID: 0}
-  spawnRadius: 0.79
-  cannons:
-  - cannonConfigs:
-    - rid: 3883006987907891201
-  references:
-    version: 2
-    RefIds:
-    - rid: 3883006987907891201
-      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
-      data:
-        laserDatas:
-        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
-        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        usePatternMaster: 1
-        bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+  <MaxHealth>k__BackingField: 30
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -267,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   drawGizmos: 1
-  detailedGizmos: 1
+  detailedGizmos: 0
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
@@ -316,9 +286,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 0.5
-  endReachedDistance: 0.2
+  slowdownDistance: 5
+  pickNextWaypointDist: 2
+  endReachedDistance: 2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -398,14 +368,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -8870313207143250243, guid: 244496790adeb594e864a73c248a4912, type: 2}
+  m_Graph: {fileID: -8870313207143250243, guid: 3563ca1908c7cb445b06c03392fb990f, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 5920448562586189824
+  - rid: 3883007015366165326
+  - rid: 3883007015366165327
+  - rid: 3883007015366165328
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 3883007015366165326
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 260230977890859816
+          m_Value1: 3850880787442722694
+        Name: ExplosionDamage
+        m_Value: 30
+    - rid: 3883007015366165327
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3313586394014279779
+          m_Value1: 2543800744231755274
+        Name: ExplosionRadius
+        m_Value: 2.5
+    - rid: 3883007015366165328
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12154697054213703388
+          m_Value1: 16120766032041961730
+        Name: ExplosionObject
+        m_Value: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
     - rid: 5920448562586189824
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

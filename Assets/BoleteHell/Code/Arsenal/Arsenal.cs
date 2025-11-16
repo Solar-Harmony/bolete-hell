@@ -1,4 +1,5 @@
 using System;
+using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Gameplay.Characters;
@@ -19,14 +20,14 @@ namespace BoleteHell.Code.Arsenal
         [Min(0)]
         private float spawnRadius = 5.0f;
         
-        [SerializeReference] [HideReferenceObjectPicker] 
-        private List<CannonConfig> cannonConfigs;
+        [SerializeField]
+        private List<Cannon> cannons = new();
 
         [Inject]
         private ICannonService _cannonService;
         
         private int _selectedCannonIndex;
-        private readonly List<CannonInstance> _cannons = new();
+        private readonly List<List<CannonInstance>> _cannonInstances = new();
 
         private Character _owner;
         
@@ -38,11 +39,15 @@ namespace BoleteHell.Code.Arsenal
 
         private void Start()
         {
-            foreach (CannonConfig cannonConfig in cannonConfigs)
+            foreach (Cannon cannon in cannons)
             {
-                // TODO: we can simplify this
-                var instance = new CannonInstance(cannonConfig);
-                _cannons.Add(instance);
+                var instances = new List<CannonInstance>();
+                foreach (CannonConfig cannonConfig in cannon.cannonConfigs)
+                {
+                    var instance = new CannonInstance(cannonConfig);
+                    instances.Add(instance);
+                }
+                _cannonInstances.Add(instances);
             }
 
             _owner = GetComponent<Character>();
@@ -50,12 +55,15 @@ namespace BoleteHell.Code.Arsenal
        
         private void Update()
         {
-            _cannonService.Tick(GetSelectedWeapon());
+            foreach (CannonInstance weapon in GetSelectedWeapon())
+            {
+                _cannonService.Tick(weapon);
+            }
         }
 
         public void Shoot(Vector2 direction)
         {
-            if (cannonConfigs.Count == 0)
+            if (cannons.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
                 return;
@@ -66,21 +74,27 @@ namespace BoleteHell.Code.Arsenal
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
             var shotParams = new ShotLaunchParams(transform.position, spawnPosition, direction, _owner);
             
-            _cannonService.TryShoot(GetSelectedWeapon(), shotParams);
+
+            foreach (CannonInstance weapon in GetSelectedWeapon())
+            {
+                _cannonService.TryShoot(weapon, shotParams);
+            }
         }
         
         public float GetProjectileSpeed()
         {
-            if (cannonConfigs.Count == 0)
+            if (cannons.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
                 return 0.0f;
             }
             
-            CannonData data = GetSelectedWeapon().Config.cannonData;
+            List<CannonInstance> selectedWeapon = GetSelectedWeapon();
+            
+            CannonData data = selectedWeapon[0].Config.cannonData;
             return data.firingType switch
             {
-                FiringTypes.Automatic => GetSelectedWeapon().LaserCombo.GetLaserSpeed(),
+                FiringTypes.Automatic => selectedWeapon[0].LaserCombo.GetLaserSpeed(),
                 FiringTypes.Charged => data.cooldown,
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -88,40 +102,41 @@ namespace BoleteHell.Code.Arsenal
     
         public void CycleWeapons(int value)
         {
-            if (cannonConfigs.Count <= 1)
+            if (cannons.Count <= 1)
             {
                 Debug.LogWarning("No weapons to cycle trough");
                 return;
             }
 
-            _selectedCannonIndex = (_selectedCannonIndex + value + cannonConfigs.Count) % cannonConfigs.Count;
-
-            Debug.Log($"selected {GetSelectedWeapon().Config.cannonData.name}");
+            _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
         }
     
-        public CannonInstance GetSelectedWeapon()
+        public List<CannonInstance> GetSelectedWeapon()
         {
-            if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannonConfigs.Count)
+            if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannons.Count)
             {
                 return null;
             }
 
-            if (cannonConfigs[_selectedCannonIndex] == null)
+            if (cannons[_selectedCannonIndex] == null || cannons[_selectedCannonIndex].cannonConfigs.Count == 0)
             {
                 Debug.LogWarning("No weapons equipped");
                 return null;
             }
             
-            return _cannons[_selectedCannonIndex];
+            return _cannonInstances[_selectedCannonIndex];
         }
     
         public void OnShootCanceled()
         {
-            CannonInstance selectedWeapon = GetSelectedWeapon();
-            if (selectedWeapon == null) 
+            List<CannonInstance> selectedWeapons = GetSelectedWeapon();
+            if (selectedWeapons == null) 
                 return;
             
-            _cannonService.FinishFiring(selectedWeapon);
+            foreach (CannonInstance weapon in selectedWeapons)
+            {
+                _cannonService.FinishFiring(weapon);
+            }
         }
 
         private void OnDestroy()

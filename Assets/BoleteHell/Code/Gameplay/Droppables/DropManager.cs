@@ -36,6 +36,8 @@ namespace BoleteHell.Code.Gameplay.Droppables
         
         [Inject]
         private IObjectInstantiator _instantiator;
+
+        private float dropletDropRadius = 1.5f;
         
         public void Drop(GameObject dropSource, DropSettings ctx)
         {
@@ -45,14 +47,18 @@ namespace BoleteHell.Code.Gameplay.Droppables
         public void DropDroplets(GameObject dropSource, DropRangeContext ctx)
         {
             //Pourrais être plus contextuel et dropper selon ce que le joueur manque le plus
-            //Devrait aussi positionner les drop aux alentour du dropSource pas directement toute a la même position
-            if (Random.value * 10 > ctx.dropChance) return;
+           
+            if (Random.value * 100 > ctx.dropChance) return;
             
             for (int i = 0; i < ctx.GetValueInRange(); i++)
             {
                 int randomDropIndex = Random.Range(0, _config.Droplets.Count);
-                Vector3 position = dropSource.transform.position;
+                
+                Vector2 randomOffset = Random.insideUnitCircle * dropletDropRadius;
+                
+                Vector3 position = dropSource.transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
                 position.z = -1;
+                
                 _instantiator.InstantiateWithInjection(_config.Droplets[randomDropIndex], position, dropSource.transform.rotation, null);
             }
         }
