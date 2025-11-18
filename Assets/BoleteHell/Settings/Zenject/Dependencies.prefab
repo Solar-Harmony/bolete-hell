@@ -48,3 +48,4 @@ MonoBehaviour:
   transientLightPrefab: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
   healthTextPrefab: {fileID: 3323289865720968271, guid: d95b4567830b54846ba7617e17934d8e, type: 3}
   shieldPreviewPrefab: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
+  laserPreviewPrefab: {fileID: 1426292161275421721, guid: b0409229323448b4aa0c3744ca25d2ca, type: 3}
