@@ -1,6 +1,6 @@
 using System;
+using BoleteHell.Code.Utils.LogFilter;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace BoleteHell.Code.Gameplay.Damage
 {
@@ -13,11 +13,11 @@ namespace BoleteHell.Code.Gameplay.Damage
         public int MaxHealth { get; private set; } = 50;
     
         public int CurrentHealth { get; private set; }
-    
+        
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
         public static event Action<GameObject, int> OnHealed;
-
+        
         public bool IsDead => CurrentHealth <= 0;
         public void TakeDamage(int damageAmount)
         {
@@ -26,6 +26,7 @@ namespace BoleteHell.Code.Gameplay.Damage
             
             CurrentHealth = Math.Max(0, CurrentHealth - damageAmount);
             OnDamaged?.Invoke(gameObject, damageAmount);
+            Scribe.Log(LogCategories.Health, $"{gameObject.name} took {damageAmount} damage ({CurrentHealth}hp/{MaxHealth}hp).");
 
             if (IsDead)
             {
