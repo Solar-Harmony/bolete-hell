@@ -845,7 +845,7 @@ PrefabInstance:
     - target: {fileID: 57039783232871073, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: 'managedReferences[420089513965518930].laserDatas.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: a62903b35a8824b4b86d4811a4d404ef, type: 2}
+      objectReference: {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
     - target: {fileID: 57039783232871073, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
       propertyPath: 'managedReferences[420089513965518931].laserDatas.Array.data[0]'
       value: 

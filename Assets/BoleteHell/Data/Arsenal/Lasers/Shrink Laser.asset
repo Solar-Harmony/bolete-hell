@@ -16,9 +16,9 @@ MonoBehaviour:
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
     rid: 8651057760533741568
-  affectedSide: 2
+  AffectedSide: 2
   <baseDamage>k__BackingField: 5
-  <MovementSpeed>k__BackingField: 10
+  <MovementSpeed>k__BackingField: 4
   references:
     version: 2
     RefIds:
