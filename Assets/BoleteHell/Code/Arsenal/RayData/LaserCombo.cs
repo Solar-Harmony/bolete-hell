@@ -65,10 +65,10 @@ namespace BoleteHell.Code.Arsenal.RayData
 
         private void SetAffectedSide()
         {
-            LaserAllegiance = Data[0].affectedSide;
+            LaserAllegiance = Data[0].AffectedSide;
 
             if (!Data.Any(laserData =>
-                    laserData.affectedSide == AffectedSide.All || laserData.affectedSide != LaserAllegiance)) return;
+                    laserData.AffectedSide == AffectedSide.All || laserData.AffectedSide != LaserAllegiance)) return;
             
             LaserAllegiance = AffectedSide.All;
         }

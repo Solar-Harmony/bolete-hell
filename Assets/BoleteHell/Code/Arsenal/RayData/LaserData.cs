@@ -19,7 +19,7 @@ namespace BoleteHell.Code.Arsenal.RayData
         
         [SerializeField]
         [Tooltip("Détermine quel côté du conflit le laser va affecter")]
-        public AffectedSide affectedSide = AffectedSide.Enemies;
+        public AffectedSide AffectedSide = AffectedSide.Enemies;
 
         [field: SerializeField] 
         public int baseDamage { get; private set; }

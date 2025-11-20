@@ -49,17 +49,13 @@ namespace BoleteHell.Code.Gameplay.Characters
         
         public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
-            
             if (ctx.Data is not LaserCombo laser)
             {
-                // TODO: make/find a filtered logging system
                 Debug.LogWarning($"Hit data is not a CombinedLaser. Ignored hit.");
                 return;
             }
 
             bool isAffected = ((IFaction)this).IsAffected(ctx.Projectile.AffectedSide, ctx.Instigator);
-
-
             if (!isAffected)
             {
                 //Si la personne n'est pas affecter on laisse toujours le laser passer
@@ -77,14 +73,14 @@ namespace BoleteHell.Code.Gameplay.Characters
             _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
             laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
 
-            if (_fire)
-            {
-                ParticleSystem.MainModule mainModule = _fire.main;
-                float alpha =  1 - (Health.CurrentHealth / (float)Health.MaxHealth);
-                var color = _fire.main.startColor.color;
-                color.a = alpha;
-                mainModule.startColor = color;
-            }
+            if (!_fire) 
+                return;
+            
+            ParticleSystem.MainModule mainModule = _fire.main;
+            float alpha =  1 - (Health.CurrentHealth / (float)Health.MaxHealth);
+            var color = _fire.main.startColor.color;
+            color.a = alpha;
+            mainModule.startColor = color;
         }
     }
 }
