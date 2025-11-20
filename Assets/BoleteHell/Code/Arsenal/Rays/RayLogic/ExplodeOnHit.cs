@@ -4,6 +4,7 @@ using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
+using BoleteHell.Code.Utils.LogFilter;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
@@ -18,14 +19,16 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         private TransientLight.Pool _explosionVFXPool;
 
         //Peut-être pouvoir déterminer si l'explosion affecte le joueur et les ennemis ou seulement les ennemis
-        public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth)
+        public override void OnHitImpl(Vector2 hitPosition, IDamageable hitCharacterHealth, float damageMultiplier)
         {
             ServiceLocator.Get(ref _explosionVFXPool);
 
             DrawVisuals(hitPosition);
             
+            int totalExplosionDamage = Mathf.RoundToInt(explosionDamage * damageMultiplier);
+            
             var filter = new ContactFilter2D();
-            filter.SetLayerMask(LayerMask.GetMask("Unit"));
+            filter.SetLayerMask(LayerMask.GetMask("Unit", "PlayerEnemy"));
             
             var results = new List<Collider2D>();
             int hitCollidersAmount = Physics2D.OverlapCircle(hitPosition, explosionRadius, filter, results);
@@ -37,8 +40,10 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
                 Collider2D hit = results[i];
                 if (!hit.gameObject.TryGetComponent(out Character character)) 
                     continue;
+                
+                Scribe.Log(LogHits, $"{character.name} was hit by an explosion for {totalExplosionDamage} damage.");
                     
-                character.Health.TakeDamage(explosionDamage);
+                character.Health.TakeDamage(totalExplosionDamage);
             }
         }
 
