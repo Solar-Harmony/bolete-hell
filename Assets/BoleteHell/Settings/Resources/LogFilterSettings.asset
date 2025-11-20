@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f682aef4af74c0985f46d2a60629f52, type: 3}
   m_Name: LogFilterSettings
   m_EditorClassIdentifier: 
-  Categories:
+  CategoryConfigs:
   - Name: Health
-    Color: {r: 0.46091634, g: 0.0540427, b: 0.0540427, a: 1}
-    Enabled: 0
+    Color: {r: 1, g: 0, b: 0, a: 1}
+    Enabled: 1

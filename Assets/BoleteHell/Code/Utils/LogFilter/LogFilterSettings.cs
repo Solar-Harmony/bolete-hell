@@ -8,14 +8,13 @@ namespace BoleteHell.Code.Utils.LogFilter
     [CreateAssetMenu(fileName = "LogFilterSettings", menuName = "Bolete Hell/Log Filter Settings")]
     public class LogFilterSettings : ScriptableObject
     {
-        private static Dictionary<string, LogCategory> _categoriesCache;
-        
-        public List<LogCategory> Categories = new();
+        [ListDrawerSettings(IsReadOnly = true, DraggableItems = false)]
+        public List<LogCategory> CategoryConfigs = new();
         
         [Button] [HorizontalGroup("Buttons", Width = 150)]
         public void EnableAllCategories()
         {
-            foreach (var category in Categories)
+            foreach (var category in CategoryConfigs)
             {
                 category.Enabled = true;
             }
@@ -24,25 +23,37 @@ namespace BoleteHell.Code.Utils.LogFilter
         [Button] [HorizontalGroup("Buttons", Width = 150)]
         public void ResetAllCategories()
         {
-            foreach (var category in Categories)
+            foreach (var category in CategoryConfigs)
             {
                 category.Enabled = false;
             }
         }
         
-        private bool _pendingCategoryConstantGeneration;
+        private void OnEnable()
+        {
+            RebuildCache();
+        }
+        
         private void OnValidate()
         {
-            var validCategories = Categories.Where(c => !string.IsNullOrWhiteSpace(c.Name));
-            _categoriesCache = validCategories.ToDictionary(c => c.Name, c => c);
-#if UNITY_EDITOR
-            LogCategoriesConstantsGenerator.RequestDeferredGeneration();
-#endif
+            RebuildCache();
         }
-
-        public static LogCategory GetCategory(string name)
+        
+        private void RebuildCache()
         {
-            return _categoriesCache[name];
+            List<LogCategory> categories = LogCategory.GetAllCategories();
+            
+            HashSet<string> newIds = categories.Select(c => c.Name).ToHashSet();
+            CategoryConfigs.RemoveAll(c => !newIds.Contains(c.Name));
+            
+            HashSet<string> existingIds = CategoryConfigs.Select(c => c.Name).ToHashSet();
+            var itemsToAdd = categories.Where(c => !existingIds.Contains(c.Name));
+            CategoryConfigs.AddRange(itemsToAdd);
+
+            foreach (LogCategory category in CategoryConfigs)
+            {
+                LogCategory.GetCategoriesDictionary()[category.Name] = category;
+            }
         }
     }
 }

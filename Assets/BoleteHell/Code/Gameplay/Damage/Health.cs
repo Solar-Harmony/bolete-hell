@@ -17,6 +17,8 @@ namespace BoleteHell.Code.Gameplay.Damage
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
         public static event Action<GameObject, int> OnHealed;
+
+        private static readonly LogCategory _logHealth = new("Health", new Color(0.58f, 0.07f, 0f));
         
         public bool IsDead => CurrentHealth <= 0;
         public void TakeDamage(int damageAmount)
@@ -26,7 +28,7 @@ namespace BoleteHell.Code.Gameplay.Damage
             
             CurrentHealth = Math.Max(0, CurrentHealth - damageAmount);
             OnDamaged?.Invoke(gameObject, damageAmount);
-            Scribe.Log(LogCategories.Health, $"{gameObject.name} took {damageAmount} damage ({CurrentHealth}hp/{MaxHealth}hp).");
+            Scribe.Log(_logHealth, $"{gameObject.name} took {damageAmount} damage ({CurrentHealth}hp/{MaxHealth}hp).");
 
             if (IsDead)
             {
@@ -37,9 +39,11 @@ namespace BoleteHell.Code.Gameplay.Damage
         
         public void Heal(int healAmount)
         {
-            if(IsDead)return;
+            if (IsDead) 
+                return;
+            
             CurrentHealth = Math.Min(MaxHealth, CurrentHealth + healAmount);
-            Debug.Log($"Gained {healAmount} hp");
+            Scribe.Log(_logHealth, $"Gained {healAmount} hp");
             OnHealed?.Invoke(gameObject, healAmount);
         }
 
