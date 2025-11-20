@@ -38,7 +38,6 @@ namespace BoleteHell.Code.Gameplay.Damage
         {
             if(IsDead)return;
             CurrentHealth = Math.Min(MaxHealth, CurrentHealth + healAmount);
-            Debug.Log($"Gained {healAmount} hp");
             OnHealed?.Invoke(gameObject, healAmount);
         }
 

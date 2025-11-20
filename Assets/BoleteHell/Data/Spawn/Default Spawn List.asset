@@ -15,3 +15,5 @@ MonoBehaviour:
   allowedEnemies:
   - {fileID: 6982038961960877227, guid: 99e191c0b8b27c64abdad62ea56b988e, type: 3}
   - {fileID: 6982038961960877227, guid: ac51713dd4528a34ab13680836bef7a3, type: 3}
+  - {fileID: 6982038961960877227, guid: 999c81675a38fe648961075c76dffd50, type: 3}
+  - {fileID: 6982038961960877227, guid: 932a46b8869275245a823d63d223fdca, type: 3}

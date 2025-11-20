@@ -29,6 +29,9 @@ namespace BoleteHell.Code.Gameplay.Characters
         [Inject]
         public IDropManager dropManager { get; set; }
 
+        [Inject]
+        private IEntityFinder _entityFinder;
+
         private BehaviorGraphAgent _agent;
         private Camera _mainCamera;
         
@@ -67,6 +70,7 @@ namespace BoleteHell.Code.Gameplay.Characters
 
         private void OnDestroy()
         {
+            _entityFinder.RemoveEnemy(this);
             _outcome.OnDefeat -= OnDefeat;
         }
     }

@@ -54,13 +54,11 @@ namespace BoleteHell.Code.Input.Controllers
 
         private void Dodging()
         {
-            Debug.Log($"Dodge check - isDodging: {input.IsDodging}, canDodge: {canDodge}");
             if (input.IsDodging && canDodge)
             {
                 //Permet d'ignorer les ennemis quand on dodge donc on est pas bloquer et on peut plus facilement aller backstab les ennemis
                 gameObject.layer = LayerMask.NameToLayer($"PlayerDodge");
                 StartCoroutine(DodgingRoutine());
-                Debug.Log("Dodge started");
             }
         }
 

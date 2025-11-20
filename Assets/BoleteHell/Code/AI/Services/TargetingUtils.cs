@@ -1,19 +1,29 @@
-﻿using UnityEngine;
+﻿using BoleteHell.Code.Gameplay.Characters;
+using UnityEngine;
 
 namespace BoleteHell.Code.AI.Services
 {
     public class TargetingUtils : ITargetingUtils
     {
-        public bool HasLineOfSight(GameObject self, GameObject agent, float viewRange)
+        //private string playerLayer = "Unit";
+        private string enemyLayer = "PlayerEnemy";
+        private float radius = 0.17f;
+        public bool HasLineOfSight(GameObject self, Character target, float viewRange)
         {
-            if (!self || !agent)
+            if (!self || !target)
                 return false;
         
-            Vector3 direction = agent.transform.position - self.transform.position;
-            LayerMask layerMask = ~LayerMask.GetMask("PlayerEnemy", "IgnoreProjectile", "Shield");
+            Vector3 direction = target.transform.position - self.transform.position;
             
-            RaycastHit2D hit = Physics2D.CircleCast(self.transform.position, 0.17f, direction.normalized, viewRange, layerMask);
-            return hit.collider && hit.collider.gameObject == agent;
+            //Permet a l'ennemis de ne pas prendre les autre ennemis en compte pour target le joueur ou les bases
+            //mais de prendre les autre ennemis en compte quand il target un ennemis
+            string ignoreLayer = target.faction == FactionType.Enemy ? "" : enemyLayer;
+            LayerMask layerMask = ~LayerMask.GetMask(ignoreLayer, "IgnoreProjectile", "Shield");
+            
+            //j'avance le cast un peut pour ne pas se hit soit même
+            RaycastHit2D hit = Physics2D.CircleCast(self.transform.position + direction.normalized * 0.8f, radius, direction.normalized, viewRange, layerMask);
+            Debug.DrawRay(self.transform.position + direction.normalized * 0.8f, direction.normalized * viewRange);
+            return hit.collider && hit.collider.gameObject == target.gameObject;
         }
 
         /// <summary>

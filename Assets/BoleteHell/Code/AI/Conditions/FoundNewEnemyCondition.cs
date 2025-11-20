@@ -10,8 +10,8 @@ using UnityEngine;
 namespace BoleteHell.Code.AI.Conditions
 {
     [Serializable, GeneratePropertyBag]
-    [Condition(name: "Closer target available", story: "[SelfCharacter] found a new [target]", category: "Bolete Hell", id: "a6c458a36beedbba632aa9f9dc2a4d70")]
-    public partial class FoundNewTargetCondition : Condition
+    [Condition(name: "Closer enemy available", story: "[SelfCharacter] found a new [target]", category: "Bolete Hell", id: "a6c458a36beedbba632aa9f9dc2a4d71")]
+    public partial class FoundNewEnemyCondition : Condition
     {
         [SerializeReference] public BlackboardVariable<Character> SelfCharacter;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
@@ -22,7 +22,7 @@ namespace BoleteHell.Code.AI.Conditions
         {
             ServiceLocator.Get(ref _director);
             
-            ISceneObject target = _director.FindTarget(SelfCharacter);
+            ISceneObject target = _director.FindClosestShroom(SelfCharacter);
             if (target is not MonoBehaviour go)
             {
                 Debug.LogError($"{SelfCharacter.Name} targeted a non MonoBehaviour {target}");
