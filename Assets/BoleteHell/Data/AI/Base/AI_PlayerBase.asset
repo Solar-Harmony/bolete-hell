@@ -76,7 +76,7 @@ MonoBehaviour:
   - rid: 8651057624823103644
   - rid: 5920447947859297125
   - rid: 5920447948603260964
-  m_VersionTimestamp: 638952688572880339
+  m_VersionTimestamp: 638993279542446552
   m_DebugInfo: {fileID: -5713726435717084356}
   m_RuntimeGraph: {fileID: 8485693057347280529}
   AssetID:
@@ -95,20 +95,20 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
   - Name: Shoot
-    Story: '[Self] shoots at [CurrentTarget]'
+    Story: 'Shoot at [CurrentTarget]'
     RuntimeTypeID:
       m_Value0: 14696599572089096223
       m_Value1: 4173363149089251346
     Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
     - Name: CurrentTarget
       Type:
         m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: TurnSpeed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
   - Name: Abort
@@ -223,6 +223,44 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 795111226832584756
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: TurnSpeed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 795111226832584757
+        LinkedVariable:
+          rid: -2
+    - rid: 795111226832584757
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 5
+    - rid: 795111226832584882
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Option
+        Type:
+          m_SerializableType: BoleteHell.Code.AI.Conditions.ValidityOption, Assembly-CSharp,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 795111226832584883
+        LinkedVariable:
+          rid: -2
+    - rid: 795111226832584883
+      type: {class: 'BlackboardVariable`1[[BoleteHell.Code.AI.Conditions.ValidityOption, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
     - rid: 5920447947859297113
       type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -236,7 +274,7 @@ MonoBehaviour:
     - rid: 5920447947859297125
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -53.749084, y: 100.388695}
+        Position: {x: -50.549084, y: 79.360054}
         ID:
           m_Value0: 8030939554862231170
           m_Value1: 16253542928578421366
@@ -251,8 +289,8 @@ MonoBehaviour:
           m_Value0: 14696599572089096223
           m_Value1: 4173363149089251346
         m_FieldValues:
-        - rid: 5920447947859297128
         - rid: 5920447947859297129
+        - rid: 795111226832584756
     - rid: 5920447947859297126
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -272,17 +310,6 @@ MonoBehaviour:
         m_NodeModel:
           rid: 5920447947859297125
         m_Connections: []
-    - rid: 5920447947859297128
-      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
-      data:
-        FieldName: Self
-        Type:
-          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        LocalValue:
-          rid: 5920447947859297130
-        LinkedVariable:
-          rid: 5920447947859297131
     - rid: 5920447947859297129
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -294,24 +321,6 @@ MonoBehaviour:
           rid: 5920447947859297132
         LinkedVariable:
           rid: 5920447947859297113
-    - rid: 5920447947859297130
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: {fileID: 0}
-    - rid: 5920447947859297131
-      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: {fileID: 0}
     - rid: 5920447947859297132
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -323,7 +332,7 @@ MonoBehaviour:
     - rid: 5920447948603260964
       type: {class: AbortNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -55.81365, y: -46.163208}
+        Position: {x: -53.07068, y: -63.077515}
         ID:
           m_Value0: 13569181859330996517
           m_Value1: 7189179035616166636
@@ -367,7 +376,7 @@ MonoBehaviour:
       type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
         ConditionType:
-          m_SerializableType: BoleteHell.Code.AI.Conditions.IsNullCondition, Assembly-CSharp,
+          m_SerializableType: BoleteHell.Code.AI.Conditions.IsValidCondition, Assembly-CSharp,
             Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         ConditionTypeID:
           m_Value0: 7983530251277139419
@@ -376,6 +385,7 @@ MonoBehaviour:
           rid: 5920447948603260964
         m_FieldValues:
         - rid: 5920447948603260986
+        - rid: 795111226832584882
         OperatorFieldModel:
           rid: -2
     - rid: 5920447948603260986
@@ -479,82 +489,98 @@ MonoBehaviour:
   m_Name: AI_PlayerBase
   m_EditorClassIdentifier: 
   Graphs:
-  - rid: 5920447948603261053
+  - rid: 795111226832584908
   RootGraph:
-    rid: 5920447948603261053
+    rid: 795111226832584908
   m_DebugInfo: {fileID: -5713726435717084356}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 5920447948603261053
+    - rid: 795111226832584895
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 5
+    - rid: 795111226832584896
+      type: {class: 'BlackboardVariable`1[[BoleteHell.Code.AI.Conditions.ValidityOption, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 795111226832584908
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         AuthoringAssetID:
           m_Value0: 9548148938393774486
           m_Value1: 14881345405448649339
-        m_DebugInfo: {fileID: -5713726435717084356}
+        m_DebugInfo: {fileID: 0}
         BlackboardReference:
-          rid: 5920447948603261054
+          rid: 795111226832584909
         BlackboardGroupReferences: []
         Root:
-          rid: 5920447948603261055
+          rid: 795111226832584910
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
-          rid: 5920447948603261056
+          rid: 795111226832584911
         m_EndedNodes:
-          rid: 5920447948603261057
-        m_VersionTimestamp: 638952688572880339
-    - rid: 5920447948603261054
+          rid: 795111226832584912
+        m_VersionTimestamp: 638993279542446552
+    - rid: 795111226832584909
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
-          rid: 5920447948603261058
+          rid: 795111226832584913
         m_Source: {fileID: 6187810708220125775}
-    - rid: 5920447948603261055
+    - rid: 795111226832584910
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 9528697277853123864
           m_Value1: 15130025208710440183
         Graph:
-          rid: 5920447948603261053
+          rid: 795111226832584908
         m_Parent:
           rid: -2
         m_Child:
-          rid: 5920447948603261059
+          rid: 795111226832584914
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 5920447948603261056
+    - rid: 795111226832584911
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
-    - rid: 5920447948603261057
+    - rid: 795111226832584912
       type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
       data: 
-    - rid: 5920447948603261058
+    - rid: 795111226832584913
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 5920447948603261060
-        - rid: 5920447948603261061
-    - rid: 5920447948603261059
+        - rid: 795111226832584915
+        - rid: 795111226832584916
+    - rid: 795111226832584914
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 13569181859330996517
           m_Value1: 7189179035616166636
         Graph:
-          rid: 5920447948603261053
+          rid: 795111226832584908
         m_Parent:
-          rid: 5920447948603261055
+          rid: 795111226832584910
         m_Child:
-          rid: 5920447948603261062
+          rid: 795111226832584917
         m_Conditions:
-        - rid: 5920447948603261063
+        - rid: 795111226832584918
         m_RequiresAllConditions: 0
-    - rid: 5920447948603261060
+    - rid: 795111226832584915
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -562,7 +588,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 0}
-    - rid: 5920447948603261061
+    - rid: 795111226832584916
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -570,24 +596,26 @@ MonoBehaviour:
           m_Value1: 5009068071176071469
         Name: Target
         m_Value: {fileID: 0}
-    - rid: 5920447948603261062
+    - rid: 795111226832584917
       type: {class: ShootAction, ns: BoleteHell.Code.AI.Actions, asm: Assembly-CSharp}
       data:
         ID:
           m_Value0: 8030939554862231170
           m_Value1: 16253542928578421366
         Graph:
-          rid: 5920447948603261053
+          rid: 795111226832584908
         m_Parent:
-          rid: 5920447948603261059
-        Self:
-          rid: 5920447948603261060
+          rid: 795111226832584914
         CurrentTarget:
-          rid: 5920447948603261061
-    - rid: 5920447948603261063
-      type: {class: IsNullCondition, ns: BoleteHell.Code.AI.Conditions, asm: Assembly-CSharp}
+          rid: 795111226832584916
+        TurnSpeed:
+          rid: 795111226832584895
+    - rid: 795111226832584918
+      type: {class: IsValidCondition, ns: BoleteHell.Code.AI.Conditions, asm: Assembly-CSharp}
       data:
         Graph:
-          rid: 5920447948603261053
+          rid: 795111226832584908
         Object:
-          rid: 5920447948603261061
+          rid: 795111226832584916
+        Option:
+          rid: 795111226832584896

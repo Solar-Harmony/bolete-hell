@@ -66,7 +66,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Editor
 
         private void CreateGUI()
         {
-            ServiceLocator.Get(ref _statusEffectService);
+            ServiceLocator.Get(out _statusEffectService);
             RegisterColumns(out _sortColumn);
         }
 

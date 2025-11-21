@@ -18,7 +18,7 @@ namespace BoleteHell.Code.Core
             _container = container;
         }
 
-        public static void Get<T>(ref T obj)
+        public static void Get<T>(out T obj)
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             ValidateCallingSite<T>();

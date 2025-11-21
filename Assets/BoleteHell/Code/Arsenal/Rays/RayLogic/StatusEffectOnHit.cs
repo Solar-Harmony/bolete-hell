@@ -15,7 +15,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
         
         public override void OnHitImpl(Vector2 hitPosition, IDamageable victim, LaserInstance laser)
         {
-            ServiceLocator.Get(ref _statusEffectService);
+            ServiceLocator.Get(out _statusEffectService);
             
             if (victim is IStatusEffectTarget target)
             {
