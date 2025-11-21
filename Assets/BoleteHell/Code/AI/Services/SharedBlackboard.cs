@@ -8,16 +8,16 @@ namespace BoleteHell.Code.AI.Services
     public class SharedBlackboard : MonoBehaviour
     {
         [SerializeField]
-        private BlackboardReference _blackboard;
+        private RuntimeBlackboardAsset _blackboard;
         
         [Inject]
         private IEntityFinder _entityFinder;
         
         private void Awake()
         {
-            Debug.Assert(_blackboard != null);
-            
-            _blackboard.SetVariableValue("Player", _entityFinder.GetPlayer().gameObject);
+            Debug.Assert(_blackboard);
+            var player = _entityFinder.GetPlayer().gameObject;
+            _blackboard.Blackboard.Variables.Find(v => v.Name == "Player").ObjectValue = player;
         }
     }
 }
