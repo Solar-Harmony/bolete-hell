@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: Slow Laser
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.23671351, g: 0.86522907, b: 0.83064073, a: 1}
+  <Color>k__BackingField: {r: 0, g: 1, b: 0.9440994, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.4
   <Logic>k__BackingField:
     rid: 420089553201922048
+  AffectedSide: 2
   <baseDamage>k__BackingField: 5
-  <MovementSpeed>k__BackingField: 10
+  <MovementSpeed>k__BackingField: 2
   references:
     version: 2
     RefIds:
@@ -34,8 +35,10 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 5
         stackBehavior:
-          rid: 420089553201922050
-        slowPercentage: 0.8
-    - rid: 420089553201922050
-      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data: 
+          rid: 795111210494984193
+        slowPercentage: 0.2
+    - rid: 795111210494984193
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+      data:
+        maxStacks: 3
+        condition: 0

@@ -8,12 +8,12 @@ namespace BoleteHell.Code.Utils
     [RequireComponent(typeof(MeshRenderer))]
     public class MaterialProperties : MonoBehaviour
     {
-        public Color color;
+        public Color Color;
 
         private MaterialPropertyBlock _propertyBlock;
         private MeshRenderer _meshRenderer;
         
-        private static readonly int ColorId = Shader.PropertyToID("_BaseColor");
+        private static readonly int ColorId = Shader.PropertyToID("_Color");
         
         private void Awake()
         {
@@ -41,7 +41,7 @@ namespace BoleteHell.Code.Utils
             if (_propertyBlock == null)
                 return;
             
-            _propertyBlock.SetColor(ColorId, color);
+            _propertyBlock.SetColor(ColorId, Color);
             _meshRenderer.SetPropertyBlock(_propertyBlock);
         }
     }

@@ -26,6 +26,15 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
 
         [Inject]
         private IBaseService _bases;
+
+        [Serializable]
+        public class Config
+        {
+            public float Interval = 5.0f;
+        }
+
+        [Inject]
+        private Config _config;
         
         private List<SpawnArea> _spawnAreas;
         
@@ -65,7 +74,7 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
                     _spawnManager.Spawn(spawnArea);
                 }
 
-                yield return new WaitForSeconds(5.0f);
+                yield return new WaitForSeconds(_config.Interval);
             }
         }
 
@@ -78,7 +87,7 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         {
             return _goal switch
             {
-                SpawnTargetPriority.Player => _entities.GetPlayer() ? _entities.GetPlayer().Position : Vector2.zero,
+                SpawnTargetPriority.Player => _entities.GetPlayer().Position,
                 SpawnTargetPriority.WeakestPlayerBase => _bases.GetWeakestBase().Position,
                 SpawnTargetPriority.DefendWeakestElites => _entities.GetWeakestEliteAlive()?.Position ?? _entities.GetPlayer().Position,
                 _ => throw new ArgumentOutOfRangeException()
