@@ -1,3 +1,4 @@
+using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 using Zenject;
 
@@ -7,7 +8,11 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
     {
         [Inject]
         private DiContainer _container; // TODO: Temporary, we should make a simple factory
-        
+
+        [Inject]
+        private IEntityFinder _entityFinder;
+
+        private int counter;
         public bool Spawn(SpawnArea spawnArea)
         {
             if (!spawnArea.spawnList || spawnArea.spawnList.allowedEnemies.Length == 0)
@@ -42,7 +47,10 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
                 Position = GetSpawnPosition(spawnArea)
             };
             
-            _container.InstantiatePrefab(prefabToSpawn, parameters);
+            Enemy enemy = _container.InstantiatePrefab(prefabToSpawn, parameters).GetComponent<Enemy>();
+            enemy.transform.name = enemy.name + $"{counter}";
+            _entityFinder.AddEnemy(enemy);
+            counter++;
         }
     }
 }

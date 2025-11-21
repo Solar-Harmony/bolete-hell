@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -687021765542443590}
   - component: {fileID: -5673025283711493893}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Basic
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a988d0ba8b354cc4996b27325525c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 10
   <GeneralDamageMultiplier>k__BackingField: 1
   <Energy>k__BackingField:
     maxEnergy: 150
@@ -66,29 +66,56 @@ MonoBehaviour:
   <isElite>k__BackingField: 0
   _dropSettings:
     dropletContext:
-      dropChance: 60
+      dropChance: 80
       min: 1
-      max: 1
+      max: 4
       dropCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 0
+          time: -0.0026893616
+          value: 0.14465332
           inSlope: 0
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
+          time: 0.36919573
+          value: 0.27387828
+          inSlope: 0.48182428
+          outSlope: 0.48182428
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.6491916
+          value: 0.4240877
+          inSlope: 0.637271
+          outSlope: 0.637271
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.42913142
+          outWeight: 0.5661031
+        - serializedVersion: 3
+          time: 0.9280391
+          value: 0.69159174
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.9840151
+          value: 1.0047472
+          inSlope: -0.18762852
+          outSlope: -0.18762852
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 1
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -156,30 +183,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.79
-  cannonConfigs:
-  - rid: 420089513965518929
+  cannons:
+  - cannonConfigs:
+    - rid: 3883006987907891201
   references:
     version: 2
     RefIds:
-    - rid: 420089513965518929
+    - rid: 3883006987907891201
       type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
       data:
         laserDatas:
         - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
         cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
         usePatternMaster: 1
-        bulletPatterns:
-        - rid: 795110976313622630
+        bulletPatterns: []
         shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
-    - rid: 795110976313622630
-      type: {class: ShotPatternData, ns: BoleteHell.Code.Arsenal.ShotPatterns, asm: Assembly-CSharp}
-      data:
-        numberOfBulletShot: 3
-        maxAngleRange: 0
-        startingRotation: 0
-        constantRotation: 0
-        burstShotCount: 1
-        burstShotCooldown: 0
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -249,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   drawGizmos: 1
-  detailedGizmos: 0
+  detailedGizmos: 1
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
@@ -299,7 +317,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
+  pickNextWaypointDist: 0.5
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

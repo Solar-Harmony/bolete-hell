@@ -26,7 +26,17 @@ namespace BoleteHell.Code.Gameplay.Characters
         {
             return _enemies;
         }
-        
+
+        public void AddEnemy(Enemy enemy)
+        {
+            _enemies.Add(enemy);
+        }
+
+        public void RemoveEnemy(Enemy enemy)
+        {
+            _enemies.Remove(enemy);
+        }
+
         public Enemy GetWeakestEliteAlive()
         {
             return _elites

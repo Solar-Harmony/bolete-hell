@@ -24,6 +24,8 @@ namespace BoleteHell.Code.AI.Actions
         
         protected override Status OnStart()
         {
+            if (CurrentTarget.Value == null)
+                return Status.Failure;
             ServiceLocator.Get(ref _targeting);
             Debug.Assert(_arsenal ??= Self.Value.GetComponent<Arsenal.Arsenal>());
             _pathfinder ??= Self.Value.GetComponent<AIPath>();

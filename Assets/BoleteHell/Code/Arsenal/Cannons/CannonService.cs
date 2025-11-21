@@ -18,6 +18,10 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [Inject]
         private IShotPatternService _patternService;
 
+        [Inject]
+        private LaserPreviewRenderer.Pool _pool;
+
+        private LaserPreviewRenderer beamPreview;
         public void Tick(CannonInstance cannon)
         {
             if (cannon.CanShoot) 
@@ -39,11 +43,33 @@ namespace BoleteHell.Code.Arsenal.Cannons
             
             if (cannon.Config.cannonData.WaitBeforeFiring && !cannon.IsCharged)
             {
-                ChargeShot(cannon);
+                if (!beamPreview)
+                {
+                    //Setup du preview
+                    //Le preview ne montre pas les réflections et refractions etc
+                    beamPreview = _pool.Spawn(parameters.SpawnPosition, GetBeamPreviewEndPoint(cannon, parameters), cannon.LaserCombo.CombinedColor,
+                        cannon.Config.cannonData.chargeTime);
+                }
+
+                ChargeShot(cannon, parameters);
                 return;
             }
             
             FireProjectiles(cannon, parameters);
+        }
+
+        private Vector2 GetBeamPreviewEndPoint(CannonInstance cannon, ShotLaunchParams parameters)
+        {
+            int obstacleLayerMask = LayerMask.GetMask("Obstacle");
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                parameters.SpawnPosition,
+                parameters.SpawnDirection,
+                cannon.Config.cannonData.maxRayDistance,
+                obstacleLayerMask
+            );
+            
+            return hit ? hit.point : parameters.SpawnPosition + parameters.SpawnDirection * cannon.Config.cannonData.maxRayDistance;
         }
 
         private void FireProjectiles(CannonInstance cannon, ShotLaunchParams parameters)
@@ -65,14 +91,17 @@ namespace BoleteHell.Code.Arsenal.Cannons
             cannon.ChargeTimer = 0f;
         }
 
-        private void ChargeShot(CannonInstance cannon)
+        private void ChargeShot(CannonInstance cannon, ShotLaunchParams parameters)
         {
             if (cannon.ChargeTimer < cannon.Config.cannonData.chargeTime)
             {
+                beamPreview.UpdatePreview(parameters.SpawnPosition, GetBeamPreviewEndPoint(cannon, parameters), cannon.ChargeTimer);
                 cannon.ChargeTimer += Time.deltaTime;
             }
             else
             {
+                beamPreview.Despawn();
+                beamPreview = null;
                 cannon.IsCharged = true;
             }
         }
@@ -88,6 +117,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
 
         public void FinishFiring(CannonInstance cannon)
         {
+            if (beamPreview)
+            {
+                beamPreview.Despawn();
+                beamPreview = null;
+            }
             cannon.ChargeTimer = 0;
             cannon.CurrentFiringLogic?.FinishFiring();
         }

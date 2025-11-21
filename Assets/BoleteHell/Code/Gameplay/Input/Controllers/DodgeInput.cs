@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 using Zenject;
 
@@ -6,14 +8,6 @@ namespace BoleteHell.Code.Input.Controllers
 {
     public class DodgeInput : MonoBehaviour
     {
-        private void Update()
-        {
-            Dodging();
-        }
-
-        [SerializeField] 
-        private MovementInput movementInput;
-        
         [Inject] 
         private IInputDispatcher input;
 
@@ -27,6 +21,9 @@ namespace BoleteHell.Code.Input.Controllers
         private float invincibilityDuration = 2f;
 
         [SerializeField]
+        private float dodgeRechargeTimer = 3f;
+        
+        [SerializeField]
         private float stutterInterval = 0.1f;
 
         [SerializeField]
@@ -39,24 +36,36 @@ namespace BoleteHell.Code.Input.Controllers
         private Color stutterColor = new Color(1f, 1f, 1f, 0.3f);
 
         private bool canDodge = true;
-        public bool isInvincible = false;
         [SerializeField]
         SpriteRenderer spriteRenderer;
 
-        public void Dodging()
+
+        private Health health;
+        private void Start()
         {
-            Debug.Log($"Dodge check - isDodging: {input.IsDodging}, canDodge: {canDodge}");
+            health = GetComponent<Health>();
+        }
+        
+        private void Update()
+        {
+            Dodging();
+        }
+
+
+        private void Dodging()
+        {
             if (input.IsDodging && canDodge)
             {
-                StartCoroutine(dodgingRoutine());
-                Debug.Log("Dodge started");
+                //Permet d'ignorer les ennemis quand on dodge donc on est pas bloquer et on peut plus facilement aller backstab les ennemis
+                gameObject.layer = LayerMask.NameToLayer($"PlayerDodge");
+                StartCoroutine(DodgingRoutine());
             }
         }
 
-        private IEnumerator dodgingRoutine()
+        private IEnumerator DodgingRoutine()
         {
             canDodge = false;
-            isInvincible = true;
+            health.IsInvincible = true;
 
             // Get the movement direction from PlayerMovement's current input
             Vector2 moveDir = input.MovementDisplacement.normalized;
@@ -64,14 +73,14 @@ namespace BoleteHell.Code.Input.Controllers
             // If no movement input, don't dodge
             if (moveDir == Vector2.zero)
             {
+                gameObject.layer = LayerMask.NameToLayer($"Unit");
                 canDodge = true;
-                isInvincible = false;
+                health.IsInvincible = false;
                 yield break;
             }
-
-            // Store original position for stutter effect
-            Vector3 originalPos = transform.position;
-
+            
+            StartCoroutine(StutterRoutine());
+            
             // Perform the dodge movement
             float elapsedTime = 0f;
             while (elapsedTime < dodgeDuration)
@@ -81,10 +90,22 @@ namespace BoleteHell.Code.Input.Controllers
                 yield return null;
             }
 
-            // Create stutter effect
+            // Wait for invincibility to end
+            yield return new WaitForSeconds(invincibilityDuration - dodgeDuration);
+            health.IsInvincible = false;
+            gameObject.layer = LayerMask.NameToLayer($"Unit");
+
+            // Wait for remaining cooldown
+            yield return new WaitForSeconds(dodgeRechargeTimer - invincibilityDuration);
+
+            canDodge = true;
+        }
+        
+        //This can't possibly be good performance wise
+        private IEnumerator StutterRoutine()
+        {
             for (int i = 0; i < stutterCount; i++)
             {
-                // Create a visual copy of the player
                 GameObject stutterCopy = new GameObject("DodgeStutter");
                 stutterCopy.transform.position = transform.position;
                 stutterCopy.transform.rotation = transform.rotation;
@@ -93,19 +114,11 @@ namespace BoleteHell.Code.Input.Controllers
                 stutterSprite.color = stutterColor;
                 stutterSprite.sortingOrder = spriteRenderer.sortingOrder - 1;
 
-                // Destroy the copy after the specified lifetime
                 Destroy(stutterCopy, stutterLifetime);
 
                 yield return new WaitForSeconds(stutterInterval);
             }
-
-            // Wait for invincibility to end
-            yield return new WaitForSeconds(invincibilityDuration - dodgeDuration);
-            isInvincible = false;
-
-            // Wait for remaining cooldown
-            yield return new WaitForSeconds(5f - invincibilityDuration);
-            canDodge = true;
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Characters;
@@ -36,23 +37,44 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         private Config _config;
         
         private List<SpawnArea> _spawnAreas;
+        
+        private Coroutine _spawnCoroutine = null;
 
         public SpawnTargetPriority _goal; // TEMP, will be modified by the AI director
         
         private void Start()
         {
             _spawnAreas = new List<SpawnArea>(FindObjectsByType<SpawnArea>(FindObjectsSortMode.None));
-            InvokeRepeating(nameof(SpawnEnemies), 0.0f, _config.Interval);
+            StartSpawning();
+        }
+        
+        public void StartSpawning()
+        {
+            _spawnCoroutine ??= StartCoroutine(nameof(SpawnEnemies));
+        }
+        
+        public void StopSpawning()
+        {
+            if (_spawnCoroutine != null)
+            {
+                StopCoroutine(_spawnCoroutine);
+                _spawnCoroutine = null;
+            }
         }
 
-        private void SpawnEnemies()
+        private IEnumerator SpawnEnemies()
         {
-            Vector2 targetLocation = FindTargetLocation();
-            SpawnArea spawnArea = FindClosestSpawnArea(targetLocation);
-            
-            if (spawnArea)
+            while (true)
             {
-                _spawnManager.Spawn(spawnArea);
+                Vector2 targetLocation = FindTargetLocation();
+                SpawnArea spawnArea = FindClosestSpawnArea(targetLocation);
+            
+                if (spawnArea)
+                {
+                    _spawnManager.Spawn(spawnArea);
+                }
+
+                yield return new WaitForSeconds(_config.Interval);
             }
         }
 

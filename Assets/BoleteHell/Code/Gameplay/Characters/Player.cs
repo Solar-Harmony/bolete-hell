@@ -1,6 +1,7 @@
 ﻿using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Input;
+using Pathfinding;
 using UnityEngine;
 using Zenject;
 

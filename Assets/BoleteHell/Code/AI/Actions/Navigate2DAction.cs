@@ -31,7 +31,6 @@ namespace BoleteHell.Code.AI.Actions
             Debug.Assert(_selfCharacter ??= Self.Value.GetComponent<Enemy>());
             
             _pathfinder.maxSpeed = _selfCharacter.MovementSpeed;
-            _pathfinder.destination = CurrentTarget.Value.transform.position;
             _pathfinder.whenCloseToDestination = CloseToDestinationMode.Stop;
             
             return Status.Running;
@@ -39,7 +38,16 @@ namespace BoleteHell.Code.AI.Actions
 
         protected override Status OnUpdate()
         {
-            return _pathfinder.remainingDistance <= 0.5
+
+            if (CurrentTarget.Value == null)
+            {
+                return Status.Failure;
+            }
+            
+            _pathfinder.destination = CurrentTarget.Value.transform.position;
+
+
+            return _pathfinder.remainingDistance <= 0.2f
                 ? Status.Success
                 : Status.Running;
         }

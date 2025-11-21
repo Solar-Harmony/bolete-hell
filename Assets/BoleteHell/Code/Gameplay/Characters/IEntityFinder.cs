@@ -7,6 +7,8 @@ namespace BoleteHell.Code.Gameplay.Characters
     {
         Player GetPlayer();
         List<Enemy> GetAllEnemies();
+        void AddEnemy(Enemy enemy);
+        void RemoveEnemy(Enemy enemy);
         [CanBeNull] Enemy GetWeakestEliteAlive();
     }
 }
