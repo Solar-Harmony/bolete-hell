@@ -50,6 +50,7 @@ namespace BoleteHell.Code.Arsenal
             }
 
             _owner = GetComponent<Character>();
+            _owner.Health.OnDeath += OnShootCanceled;
         }
        
         private void Update()

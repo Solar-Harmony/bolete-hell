@@ -21,8 +21,6 @@ public partial class SelfDestructAction : Action
 
     private Renderer _renderer;
     private Color _originalColor;
-    private bool _startedCountdown;
-    private float _currentCountdownTimer = 0f;
     private float _countdown;
     
     private TransientLight.Pool _explosionVFXPool;
@@ -55,7 +53,7 @@ public partial class SelfDestructAction : Action
     
     private void FlashColor()
     {
-        float t = Mathf.Clamp01(1f - (_currentCountdownTimer / TimeBeforeExplosion));
+        float t = Mathf.Clamp01(1f - (_countdown / TimeBeforeExplosion));
         float flashFrequency = Mathf.Lerp(0.8f, 0.1f, t);
         float flashPhase = Mathf.PingPong(Time.time * (1f / flashFrequency), 1f);
 

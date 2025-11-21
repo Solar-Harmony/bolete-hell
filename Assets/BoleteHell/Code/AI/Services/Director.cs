@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using BoleteHell.Code.Gameplay.Base;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Utils;
@@ -18,6 +18,17 @@ namespace BoleteHell.Code.AI.Services
         [Inject]
         private IEntityFinder _entityFinder;
         
+
+        //Pourrais être changer pour un findClosestAlly qui prendrait en compte les faction et chercherais dans tout les entité
+        public ISceneObject FindWeakestAlly(Character self)
+        {
+            return _entityFinder
+                .GetAllEnemies()
+                .Where(e => e != self)
+                .OrderBy(e => e.Health.Percent)
+                .FirstOrDefault(); 
+        }
+
         // TODO: Support factions
         public ISceneObject FindNearestAlly(Character self)
         {

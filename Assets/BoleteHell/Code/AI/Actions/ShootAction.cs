@@ -56,5 +56,10 @@ namespace BoleteHell.Code.AI.Actions
             
             return Status.Success;
         }
+
+        protected override void OnEnd()
+        {
+            _arsenal.OnShootCanceled();
+        }
     }
 }
