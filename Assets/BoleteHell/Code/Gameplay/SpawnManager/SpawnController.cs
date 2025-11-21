@@ -30,6 +30,7 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         [Serializable]
         public class Config
         {
+            public bool AllowSpawning = true;
             public float Interval = 5.0f;
         }
 
@@ -45,7 +46,9 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         private void Start()
         {
             _spawnAreas = new List<SpawnArea>(FindObjectsByType<SpawnArea>(FindObjectsSortMode.None));
-            StartSpawning();
+            
+            if (_config.AllowSpawning)
+                StartSpawning();
         }
         
         public void StartSpawning()
