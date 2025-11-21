@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -12,7 +11,7 @@ using UnityEngine;
     category: "Bolete Hell", id: "c67ebb5f1f75b7d355bddabfa6ae34f4")]
 public partial class CanFleeCondition : Condition
 {
-    [SerializeReference] [Unit(Units.Meter)] public BlackboardVariable<float> Distance;
+    [SerializeReference] public BlackboardVariable<float> Distance;
     [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
     [SerializeReference] public BlackboardVariable<Vector2> FleePosition;
     
