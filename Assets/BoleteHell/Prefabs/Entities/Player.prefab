@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -7735479623250359012}
   - component: {fileID: 1536071927711564797}
   - component: {fileID: 3814531209225375410}
+  - component: {fileID: 1417967757637309638}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -61,20 +62,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.71
-  cannonConfigs:
-  - rid: 420089513965518930
+  cannons: []
   references:
     version: 2
-    RefIds:
-    - rid: 420089513965518930
-      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
-      data:
-        laserDatas:
-        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
-        cannonData: {fileID: 11400000, guid: 8ca6313793b105141a3f6034e7aa81c2, type: 2}
-        usePatternMaster: 1
-        bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    RefIds: []
 --- !u!50 &4327110905113141562
 Rigidbody2D:
   serializedVersion: 5
@@ -202,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2598b4cb002d314fb548237a312d5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldPreviewPrefab: {fileID: 0}
+  shieldPreviewPrefab: {fileID: 5518710562994201309, guid: b791fd0fa8252e348a229ad1341d426c, type: 3}
   currentShields:
   - {fileID: 11400000, guid: 67c3e6d11be5c8546b73f04a26d85b54, type: 2}
   - {fileID: 11400000, guid: 88e85a1e01f3340488d988789fae7634, type: 2}
@@ -245,6 +236,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 2
+--- !u!114 &1417967757637309638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c99a81b8da201d449d8d52bae4c4380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgeSpeed: 10
+  dodgeDuration: 0.2
+  invincibilityDuration: 0.5
+  dodgeRechargeTimer: 3
+  stutterInterval: 0.1
+  stutterCount: 10
+  stutterLifetime: 0.5
+  stutterColor: {r: 1, g: 1, b: 1, a: 0.3}
+  spriteRenderer: {fileID: 8887576795586774717}
 --- !u!1 &885100575828019646
 GameObject:
   m_ObjectHideFlags: 0
