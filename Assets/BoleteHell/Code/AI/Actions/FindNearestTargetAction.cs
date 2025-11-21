@@ -22,20 +22,20 @@ namespace BoleteHell.Code.AI.Actions
         public BlackboardVariable<GameObject> Target;
         
         private IDirector _director;
-        private Character character;
+        private Character _character;
 
         protected override Status OnStart()
         {
             ServiceLocator.Get(out _director);
 
-            GameObject.GetComponentChecked(out character);
+            GameObject.GetComponentChecked(out _character);
             
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            ISceneObject target = _director.FindNearestTarget(character);
+            ISceneObject target = _director.FindNearestTarget(_character);
             if (target is not MonoBehaviour go)
             {
                 Debug.LogError($"{GameObject.name} targeted a non MonoBehaviour {target}");

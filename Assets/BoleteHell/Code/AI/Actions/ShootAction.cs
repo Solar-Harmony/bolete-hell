@@ -56,6 +56,5 @@ namespace BoleteHell.Code.AI.Actions
             
             return Status.Success;
         }
-        
     }
 }
