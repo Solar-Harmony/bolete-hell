@@ -66,7 +66,7 @@ public partial class StartSelfDestructSequenceAction : Action
         DrawVisuals(Self.Value.transform.position);
             
         var filter = new ContactFilter2D();
-        filter.SetLayerMask(LayerMask.GetMask("Unit"));
+        filter.SetLayerMask(~0);
             
         var results = new List<Collider2D>();
         int hitCollidersAmount = Physics2D.OverlapCircle(Self.Value.transform.position, ExplosionRadius, filter, results);

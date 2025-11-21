@@ -15,6 +15,8 @@ public partial class ValidFleePositionExistsCondition : Condition
     
     public override bool IsTrue()
     {
+        if (!CurrentTarget.Value)
+            return false;
         LayerMask obstacleMask = LayerMask.GetMask("Obstacle"); 
         Vector3 selfPos = Self.Value.transform.position;
         Vector3 directionAway = (selfPos - CurrentTarget.Value.transform.position).normalized;
