@@ -7,7 +7,7 @@ namespace BoleteHell.Code.Gameplay.Damage
     public class Health : MonoBehaviour, ISerializationCallbackReceiver
     {
         [field: SerializeField]
-        public bool IsInvincible { get; private set; } = false;
+        public bool IsInvincible { get; set; } = false;
         
         [field: SerializeField] 
         public int MaxHealth { get; private set; } = 50;
@@ -38,7 +38,6 @@ namespace BoleteHell.Code.Gameplay.Damage
         {
             if(IsDead)return;
             CurrentHealth = Math.Min(MaxHealth, CurrentHealth + healAmount);
-            Debug.Log($"Gained {healAmount} hp");
             OnHealed?.Invoke(gameObject, healAmount);
         }
 

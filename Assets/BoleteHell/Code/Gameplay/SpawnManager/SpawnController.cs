@@ -56,7 +56,7 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         {
             return _goal switch
             {
-                SpawnTargetPriority.Player => _entities.GetPlayer().Position,
+                SpawnTargetPriority.Player => _entities.GetPlayer() ? _entities.GetPlayer().Position : Vector2.zero,
                 SpawnTargetPriority.WeakestPlayerBase => _bases.GetWeakestBase().Position,
                 SpawnTargetPriority.DefendWeakestElites => _entities.GetWeakestEliteAlive()?.Position ?? _entities.GetPlayer().Position,
                 _ => throw new ArgumentOutOfRangeException()

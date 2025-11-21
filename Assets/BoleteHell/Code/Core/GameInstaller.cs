@@ -36,6 +36,9 @@ namespace BoleteHell.Code.Core
 
         [SerializeField]
         private GameObject shieldPreviewPrefab;
+        
+        [SerializeField]
+        private GameObject laserPreviewPrefab;
 
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
@@ -84,13 +87,22 @@ namespace BoleteHell.Code.Core
                 .WithMaxSize(50)
                 .ExpandByOneAtATime()
                 .FromComponentInNewPrefab(transientLightPrefab)
-                .UnderTransformGroup("TransientLights");
+                .UnderTransformGroup("TransientLights"); 
+            
+            Container.BindMemoryPool<LaserPreviewRenderer, LaserPreviewRenderer.Pool>()
+                .WithInitialSize(30)
+                .WithMaxSize(250)
+                .ExpandByOneAtATime()
+                .FromComponentInNewPrefab(laserPreviewPrefab)
+                .UnderTransformGroup("LaserPreviews");
+            
             Container.BindMemoryPool<SpriteFragment, SpriteFragment.Pool>()
                 .WithInitialSize(30)
                 .WithMaxSize(250)
                 .ExpandByDoubling()
                 .FromComponentInNewPrefab(spriteFragmentPrefab)
                 .UnderTransformGroup("SpriteFragments");
+            
             Container.BindMemoryPool<HealthText, HealthText.Pool>()
                 .WithInitialSize(30)
                 .WithMaxSize(250)

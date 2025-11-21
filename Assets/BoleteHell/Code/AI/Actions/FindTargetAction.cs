@@ -1,5 +1,6 @@
 using System;
 using BoleteHell.Code.AI.Services;
+using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Characters;
 using Unity.Behavior;
 using Unity.Properties;
@@ -25,7 +26,6 @@ namespace BoleteHell.Code.AI.Actions
         [SerializeReference]
         public BlackboardVariable<GameObject> Target;
         
-        [Inject]
         private IDirector _director;
 
         private Character character;
@@ -43,6 +43,8 @@ namespace BoleteHell.Code.AI.Actions
 
         protected override Status OnUpdate()
         {
+            ServiceLocator.Get(ref _director);
+            
             ISceneObject target = _director.FindTarget(character);
             if (target is not MonoBehaviour go)
             {
