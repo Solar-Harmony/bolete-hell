@@ -1,6 +1,7 @@
 using System;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Core;
+using BoleteHell.Code.Utils;
 using Pathfinding;
 using Unity.Behavior;
 using Unity.Properties;
@@ -10,10 +11,12 @@ using Action = Unity.Behavior.Action;
 namespace BoleteHell.Code.AI.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Shoot", story: "[Self] shoots at [CurrentTarget]", category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
+    [NodeDescription(
+        name: "Shoot", 
+        story: "Shoot at [CurrentTarget]", 
+        category: "Bolete Hell", id: "1f4887e471cff4cb12a02b34acc3ea39")]
     public partial class ShootAction : Action
     {
-        [SerializeReference] public BlackboardVariable<GameObject> Self;
         [SerializeReference] public BlackboardVariable<GameObject> CurrentTarget;
         [SerializeReference] [CreateProperty] public BlackboardVariable<float> TurnSpeed = new(5f);
         
@@ -24,19 +27,21 @@ namespace BoleteHell.Code.AI.Actions
         
         protected override Status OnStart()
         {
-            if (CurrentTarget.Value == null)
+            if (!CurrentTarget.Value)
                 return Status.Failure;
-            ServiceLocator.Get(ref _targeting);
-            Debug.Assert(_arsenal ??= Self.Value.GetComponent<Arsenal.Arsenal>());
-            _pathfinder ??= Self.Value.GetComponent<AIPath>();
+            
+            ServiceLocator.Get(out _targeting);
+            
+            GameObject.GetComponentChecked(out _arsenal);
+            GameObject.TryGetComponent(out _pathfinder);
             
             if (_currentAimDirection == Vector2.zero)
             {
-                Transform selfTransform = Self.Value.transform;
+                Transform selfTransform = GameObject.transform;
                 _currentAimDirection = selfTransform.right;
             }
             
-            Vector2 selfPosition = Self.Value.transform.position;
+            Vector2 selfPosition = GameObject.transform.position;
             Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
             Vector2 targetPosition = CurrentTarget.Value.transform.position;
             Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
@@ -51,9 +56,6 @@ namespace BoleteHell.Code.AI.Actions
             
             return Status.Success;
         }
-
-        protected override void OnEnd()
-        {
-        }
+        
     }
 }

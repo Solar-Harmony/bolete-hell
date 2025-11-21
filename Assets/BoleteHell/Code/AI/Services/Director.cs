@@ -18,8 +18,8 @@ namespace BoleteHell.Code.AI.Services
         [Inject]
         private IEntityFinder _entityFinder;
         
-        //Pourrais être changer pour un findClosestAlly qui prendrait en compte les faction et chercherais dans tout les entité
-        public ISceneObject FindClosestShroom(Character self)
+        // TODO: Support factions
+        public ISceneObject FindNearestAlly(Character self)
         {
             return _entityFinder
                 .GetAllEnemies()
@@ -28,7 +28,7 @@ namespace BoleteHell.Code.AI.Services
                 .FindClosestTo(e => e.Position, self.Position, out float distance);
         }
 
-        public ISceneObject FindTarget(Character self)
+        public ISceneObject FindNearestTarget(Character self)
         {
             Base closestBase = _bases.GetClosestBase(self.Position, out float distanceToClosestBase);
             if (!closestBase)
