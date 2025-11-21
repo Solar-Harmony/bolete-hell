@@ -126,7 +126,7 @@ namespace BoleteHell.Code.Arsenal
             return _cannonInstances[_selectedCannonIndex];
         }
 
-        public void SetSelectedWeapon(int index)
+        public void SetSelectedWeaponIndex(int index)
         {
             if (index < 0 || index >= _cannonInstances.Count)
             {

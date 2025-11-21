@@ -20,7 +20,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 
         public override void OnHitImpl(Vector2 hitPosition, IDamageable victim, LaserInstance laser)
         {
-            ServiceLocator.Get(ref _explosionVFXPool);
+            ServiceLocator.Get(out _explosionVFXPool);
 
             DrawVisuals(hitPosition);
             
