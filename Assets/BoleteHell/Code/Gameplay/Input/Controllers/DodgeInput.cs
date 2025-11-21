@@ -12,6 +12,9 @@ namespace BoleteHell.Code.Input.Controllers
         private IInputDispatcher input;
 
         [SerializeField]
+        private int maxNumberOfDodges;
+
+        [SerializeField]
         private float dodgeSpeed = 2f;
 
         [SerializeField]
@@ -39,22 +42,30 @@ namespace BoleteHell.Code.Input.Controllers
         [SerializeField]
         SpriteRenderer spriteRenderer;
 
+        private int remainingDodges;
 
         private Health health;
-        private void Start()
+
+        private void OnEnable()
         {
-            health = GetComponent<Health>();
-        }
-        
-        private void Update()
-        {
-            Dodging();
+            input.OnDodge += Dodging;
         }
 
+        private void OnDisable()
+        {
+            input.OnDodge -= Dodging;
+
+        }
+
+        private void Start()
+        {
+            remainingDodges = maxNumberOfDodges;
+            health = GetComponent<Health>();
+        }
 
         private void Dodging()
         {
-            if (input.IsDodging && canDodge)
+            if (remainingDodges > 0)
             {
                 //Permet d'ignorer les ennemis quand on dodge donc on est pas bloquer et on peut plus facilement aller backstab les ennemis
                 gameObject.layer = LayerMask.NameToLayer($"PlayerDodge");
@@ -78,7 +89,8 @@ namespace BoleteHell.Code.Input.Controllers
                 health.IsInvincible = false;
                 yield break;
             }
-            
+
+            remainingDodges--;
             StartCoroutine(StutterRoutine());
             
             // Perform the dodge movement
@@ -97,7 +109,7 @@ namespace BoleteHell.Code.Input.Controllers
 
             // Wait for remaining cooldown
             yield return new WaitForSeconds(dodgeRechargeTimer - invincibilityDuration);
-
+            remainingDodges++;
             canDodge = true;
         }
         
