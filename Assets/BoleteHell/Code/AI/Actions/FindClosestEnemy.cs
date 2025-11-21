@@ -5,7 +5,6 @@ using BoleteHell.Code.Gameplay.Characters;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using Zenject;
 using Action = Unity.Behavior.Action;
 
 namespace BoleteHell.Code.AI.Actions
@@ -49,9 +48,12 @@ namespace BoleteHell.Code.AI.Actions
         protected override Status OnUpdate()
         {
             ServiceLocator.Get(ref _director);
-            MonoBehaviour target = _director.FindClosestShroom(character) as MonoBehaviour;
+            ISceneObject target = _director.FindClosestShroom(character);
+            
+            CurrentTarget.Value = target is Enemy npc && npc.Health.Percent < 1.0f
+                ? npc.gameObject
+                : null;
 
-            CurrentTarget.Value = target == null ? null : target.gameObject;
             return Status.Success;
         }
 

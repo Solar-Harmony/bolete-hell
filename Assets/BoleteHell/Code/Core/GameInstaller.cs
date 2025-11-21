@@ -62,6 +62,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<IBaseService>().To<BaseService>().AsSingle();
             Container.Bind<IEntityFinder>().To<EntityFinder>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnManager>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
             BindStatusEffects();
             

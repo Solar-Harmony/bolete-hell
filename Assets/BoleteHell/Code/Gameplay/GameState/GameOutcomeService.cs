@@ -1,4 +1,5 @@
 ﻿using System;
+using BoleteHell.Code.Gameplay.SpawnManager;
 using BoleteHell.Code.Input;
 using Zenject;
 
@@ -11,16 +12,26 @@ namespace BoleteHell.Code.Gameplay.GameState
         
         [Inject]
         private IInputState _inputState;
+
+        [Inject]
+        private SpawnController _spawnController;
         
         public void TriggerVictory()
         {
             OnVictory?.Invoke();
+            EndGame();
         }
 
         public void TriggerDefeat(string reason)
         {
-            _inputState.DisableInput();
             OnDefeat?.Invoke(reason);
+            EndGame();
+        }
+
+        private void EndGame()
+        {
+            _inputState.DisableInput();
+            _spawnController.StopSpawning();
         }
     }
 }

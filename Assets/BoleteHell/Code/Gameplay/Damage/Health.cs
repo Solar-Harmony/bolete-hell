@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace BoleteHell.Code.Gameplay.Damage
 {
@@ -13,6 +12,8 @@ namespace BoleteHell.Code.Gameplay.Damage
         public int MaxHealth { get; private set; } = 50;
     
         public int CurrentHealth { get; private set; }
+        
+        public float Percent => (float)CurrentHealth / MaxHealth;
     
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
