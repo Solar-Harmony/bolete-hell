@@ -42,18 +42,47 @@ Material:
     m_Ints:
     - _Octaves: 4
     m_Floats:
+    - _AnimationSpeed: 0.2
+    - _BumpStrength: 0.05
+    - _DetailAnimationSpeed: 0.1
+    - _DetailScale: 3
+    - _EdgeWidth: 0.1223
     - _EnableExternalAlpha: 0
+    - _FlowScale: 5.93
+    - _FlowSpeed: 4.88
+    - _GlisteningBrightness: 0.2
+    - _GlisteningThreshold: 0.468
+    - _LargeScale: 0.001
+    - _NormalEps: 0.01
     - _Octaves: 3
-    - _Persistence: 0.6
+    - _OuterRimWidth: 0
+    - _Persistence: 0.56
+    - _RimIntensity: 0.5
     - _Scale: 1.41
-    - _SmoothMax: 0.201
-    - _SmoothMin: 0.108
+    - _SmoothMax: 0.181
+    - _SmoothMin: 0.021
     - _Smoothness: 0.12
     - _Smoothness2: 0.12
+    - _SpecularIntensity: 0.5
+    - _SpecularPower: 120
+    - _VeinMax: 0.55
+    - _VeinMin: 0.45
+    - _VeinScale: 8
+    - _WetnessMax: 0.7
+    - _WetnessMin: 0.3
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CorruptionColor: {r: 0.55096483, g: 0.26964694, b: 0.88140154, a: 1}
+    - _Color2: {r: 0.6226415, g: 0.5203736, b: 0.4724355, a: 1}
+    - _Color3: {r: 0.6601795, g: 0.55424243, b: 0.73045814, a: 1}
+    - _CorruptionColor: {r: 0.64538574, g: 0.4927709, b: 0.832884, a: 1}
+    - _LightCenter: {r: -0.02, g: 0.9, b: -0.06, a: -0.45}
+    - _LightDir: {r: 2.4, g: 0.11, b: -0.09, a: 0}
+    - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
+    - _PlayerVelocity: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.6075091, g: 0.07412386, b: 1, a: 1}
+    - _RimLightDirection: {r: -0.63, g: 0.31, b: 0, a: 0}
+    - _SpecularColor: {r: 0.535161, g: 0.40087247, b: 0.5687331, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

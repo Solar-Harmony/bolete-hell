@@ -9,6 +9,11 @@ namespace BoleteHell.Code.Graphics
         [SerializeField]
         [Range(0.0f, 1.0f)]
         private float _initialSpreadLevel = 0.5f;
+        
+        public void SetCreepSpread(float level)
+        {
+            Shader.SetGlobalFloat(_corruption, Mathf.Clamp01(level));
+        }
 
         private void Start()
         {

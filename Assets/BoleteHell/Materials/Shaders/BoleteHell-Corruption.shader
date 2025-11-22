@@ -13,11 +13,13 @@
         
         _AnimationSpeed ("Animation Speed", Float) = 0.05
         
-        _RimColor ("Rim Color", Color) = (0.6,0.2,0.8,1)
         _EdgeWidth ("Rim Edge Width", Range(0,0.2)) = 0.05
         _RimLightDirection ("Rim Light Direction", Vector) = (1,0,0,0)
         _SpecularColor ("Specular Color", Color) = (1,1,1,1)
         _SpecularPower ("Specular Power", Float) = 10
+
+        _Color2("Color 2", Color) = (1,1,1,1)
+        _Color3("Color 3", Color) = (1,1,1,1)
     }
     
     SubShader
@@ -59,11 +61,12 @@
             int _Octaves;
             float _Persistence;
             float _AnimationSpeed;
-            float4 _RimColor;
             float _EdgeWidth;
             float4 _RimLightDirection;
             float4 _SpecularColor;
             float _SpecularPower;
+            float4 _Color2;
+            float4 _Color3;
 
 
             float _Corruption;
@@ -117,6 +120,23 @@
                 return saturate(0.5 * (value + 1.0));
             }
             
+            float3 RGBtoHSV(float3 c)
+            {
+                float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+                float4 p = lerp(float4(c.bg, K.wz), float4(c.gb, K.xy), step(c.b, c.g));
+                float4 q = lerp(float4(p.xyw, c.r), float4(c.r, p.yzx), step(p.x, c.r));
+                float d = q.x - min(q.w, q.y);
+                float e = 1.0e-10;
+                return float3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+            }
+
+            float3 HSVtoRGB(float3 c)
+            {
+                float4 K = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+                float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K.www);
+                return c.z * lerp(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+            }
+            
             Varyings vert(Attributes v)
             {
                 Varyings o;
@@ -128,28 +148,51 @@
                         
             half4 frag(Varyings i) : SV_Target
             {
-                float n = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed));
+                float drift = fbm(i.worldPos * 0.1 + _Time.y * 0.005) * 10.0 - 5.0;
+
+                float n = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift));
 
                 float eps = 0.01;
-                float3 offset = float3(0, 0, _Time.y * _AnimationSpeed);
-                float veins = fbm(i.worldPos * _Scale * 8.0 + offset);
-                float nx = fbm(i.worldPos * _Scale + offset + float3(eps, 0, 0));
-                float ny = fbm(i.worldPos * _Scale + offset + float3(0, eps, 0));
+                float veins = fbm(i.worldPos * _Scale * 8.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float nx = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(eps, 0, 0));
+                float ny = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(0, eps, 0));
                 float2 grad = (float2(nx - n, ny - n)) / eps;
                 float bumpStrength = (veins - 0.5) * 0.05;
                 grad += bumpStrength;
                 float2 normal = normalize(float2(-grad.y, grad.x));
 
-                float corruptedMask = 1.0 - smoothstep(_Corruption - _SmoothMin, _Corruption + _SmoothMax, n);
+                float corruption = _Corruption;
+                float corruptedMask = 1.0 - smoothstep(corruption - _SmoothMin, corruption + _SmoothMax, n);
                 corruptedMask = saturate(corruptedMask);
 
-                float3 tintedBase = lerp(_Color.rgb, _Color.rgb * _CorruptionColor.rgb, corruptedMask);
+                float colorBlend = fbm(i.worldPos * _Scale * 1.5 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float3 color1 = _Color.rgb;
+                float3 color2 = _Color2.rgb;
+                float3 color3 = _Color3.rgb;
+                float3 selectedColor;
+                if (colorBlend < 0.33) {
+                    float t = colorBlend / 0.33;
+                    selectedColor = lerp(color1, color2, t);
+                } else if (colorBlend < 0.66) {
+                    float t = (colorBlend - 0.33) / 0.33;
+                    selectedColor = lerp(color2, color3, t);
+                } else {
+                    float t = (colorBlend - 0.66) / 0.34;
+                    selectedColor = lerp(color3, color1, t);
+                }
+                float colorNoise = fbm(i.worldPos * _Scale * 3.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.6 - 0.3;
+                float3 variedCorruptionColor = selectedColor * (1.0 + colorNoise);
+                variedCorruptionColor = saturate(variedCorruptionColor);
+
+                float smallHueNoise = fbm(i.worldPos * _Scale * 2.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.2 - 0.1;
+                float3 hsv = RGBtoHSV(variedCorruptionColor);
+                hsv.x += smallHueNoise;
+                variedCorruptionColor = HSVtoRGB(hsv);
 
                 float veinStrength = smoothstep(0.45, 0.55, veins);
-                tintedBase *= lerp(1.0, 0.8, veinStrength * corruptedMask);
+                float3 tintedBase = _Color.rgb * lerp(1.0, variedCorruptionColor, corruptedMask) * lerp(1.0, 0.8, veinStrength * corruptedMask);
 
-
-                float rim = 1.0 - smoothstep(0.0, _EdgeWidth, abs(n - _Corruption));
+                float rim = 1.0 - smoothstep(0.0, _EdgeWidth, abs(n - corruption));
 
                 float angle = atan2(normal.y, normal.x);
                 float2 dir = normalize(_RimLightDirection.xy);
@@ -159,17 +202,13 @@
                 float light = 1.0 - saturate(diff / 3.14159);
 
                 float factor = 0.5 + light * 1.0;
-                float3 rimTarget = tintedBase * factor;
+                float3 rimGlow = tintedBase * lerp(1.0, factor, rim);
 
-                float3 rimGlow = lerp(tintedBase, rimTarget, rim);
-
-                float flow = fbm(i.worldPos * _Scale * 4.0 + offset * 2.0 + float3(1, 0, 0) * _Time.y * 0.1);
+                float flow = fbm(i.worldPos * _Scale * 4.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(1, 0, 0) * _Time.y * 0.1);
                 float wetness = smoothstep(0.3, 0.7, flow);
                 float3 wetGlow = rimGlow + wetness * 0.1 * _CorruptionColor.rgb * corruptedMask;
 
-                // Specular highlights
-                float specular = pow(saturate(dot(normal, dir)), _SpecularPower) * (0.5 + 0.5 * veins);
-                float3 specularColor = _SpecularColor.rgb * specular * 0.5;
+                float3 specularColor = _SpecularColor.rgb * pow(saturate(dot(normal, dir)), _SpecularPower) * 0.25 * (1.0 + veins) * corruptedMask;
 
                 return half4(wetGlow + specularColor, _Color.a);
             }
