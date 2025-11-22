@@ -180,17 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9511bc2e39a44e5e98b75bbe3dbc7032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blackboard:
-    m_Blackboard:
-      rid: 795111229236183258
-    m_Source: {fileID: -8017183980898314502, guid: ca03be8ed125a3b4bbf95681c1781e33, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 795111229236183258
-      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        m_Variables: []
+  _blackboard: {fileID: 0}
 --- !u!1 &3347155569434839747
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +491,52 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!1 &8044218016421967256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5377144166704737108}
+  - component: {fileID: 801841488019571957}
+  m_Layer: 0
+  m_Name: Creep
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5377144166704737108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8044218016421967256}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5999945677421747797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &801841488019571957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8044218016421967256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d57908e1a24381a0b6df44c58df9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creepScale: 5
+  _spreadSpeed: 0.2
 --- !u!1 &8498516409130531484
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +576,7 @@ Transform:
   - {fileID: 3109878230236853345}
   - {fileID: 1782618320461168857}
   - {fileID: 6730741564998184652}
+  - {fileID: 5377144166704737108}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8781894501363492540
