@@ -535,8 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d57908e1a24381a0b6df44c58df9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creepScale: 5
-  _spreadSpeed: 0.2
+  _initialSpreadLevel: 0.5
 --- !u!1 &8498516409130531484
 GameObject:
   m_ObjectHideFlags: 0

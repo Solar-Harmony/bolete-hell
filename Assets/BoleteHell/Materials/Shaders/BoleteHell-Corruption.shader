@@ -6,12 +6,13 @@
         _CorruptionColor("Corruption Color", Color) = (0.18, 0.1, 0.27, 1)
         _SmoothMin("Transition Min", Range(0,0.25)) = 0.1
         _SmoothMax("Transition Max", Range(0,0.25)) = 0.15
-
         _Scale ("Noise Scale", Float) = 5.0
         _Octaves ("Noise Octaves", Integer) = 4
         _Persistence ("Noise Persistence", Float) = 0.5
         
         _AnimationSpeed ("Animation Speed", Float) = 0.05
+        
+        _CrawlingSpeed ("Crawling Speed", Float) = 0.1
         
         _EdgeWidth ("Rim Edge Width", Range(0,0.2)) = 0.05
         _RimLightDirection ("Rim Light Direction", Vector) = (1,0,0,0)
@@ -20,6 +21,10 @@
 
         _Color2("Color 2", Color) = (1,1,1,1)
         _Color3("Color 3", Color) = (1,1,1,1)
+        _MucusScale ("Mucus Scale", Float) = 15.0
+        _MucusStrength ("Mucus Strength", Float) = 0.2
+        _MucusBumpStrength ("Mucus Bump Strength", Float) = 1.0
+        _MucusColor ("Mucus Color", Color) = (0.5, 0.8, 1.0, 1)
     }
     
     SubShader
@@ -61,12 +66,17 @@
             int _Octaves;
             float _Persistence;
             float _AnimationSpeed;
+            float _CrawlingSpeed;
             float _EdgeWidth;
             float4 _RimLightDirection;
             float4 _SpecularColor;
             float _SpecularPower;
             float4 _Color2;
             float4 _Color3;
+            float _MucusScale;
+            float _MucusStrength;
+            float _MucusBumpStrength;
+            float4 _MucusColor;
 
 
             float _Corruption;
@@ -148,24 +158,42 @@
                         
             half4 frag(Varyings i) : SV_Target
             {
-                float drift = fbm(i.worldPos * 0.1 + _Time.y * 0.005) * 10.0 - 5.0;
+                float crawlPhase = _Time.y * _CrawlingSpeed + fbm(float3(_Time.y * 0.05, 0, 0)) * 2.0;
+                float crawlOffsetX = sin(crawlPhase) * 2.0 * _CrawlingSpeed;
+                float crawlOffsetY = cos(crawlPhase * 1.5) * 1.0 * _CrawlingSpeed;
+                float crawlOffsetZ = sin(crawlPhase * 0.7) * 0.5 * _CrawlingSpeed;
+                float3 worldPosCrawled = i.worldPos + float3(crawlOffsetX, crawlOffsetY, crawlOffsetZ);
 
-                float n = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float drift = fbm(worldPosCrawled * 0.1 + _Time.y * 0.005) * 10.0 - 5.0;
+
+                float n = fbm(worldPosCrawled * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift));
 
                 float eps = 0.01;
-                float veins = fbm(i.worldPos * _Scale * 8.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
-                float nx = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(eps, 0, 0));
-                float ny = fbm(i.worldPos * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(0, eps, 0));
-                float2 grad = (float2(nx - n, ny - n)) / eps;
-                float bumpStrength = (veins - 0.5) * 0.05;
-                grad += bumpStrength;
-                float2 normal = normalize(float2(-grad.y, grad.x));
-
+                float veins = fbm(worldPosCrawled * _Scale * 8.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float nx = fbm(worldPosCrawled * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(eps, 0, 0));
+                float ny = fbm(worldPosCrawled * _Scale + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(0, eps, 0));
                 float corruption = _Corruption;
                 float corruptedMask = 1.0 - smoothstep(corruption - _SmoothMin, corruption + _SmoothMax, n);
                 corruptedMask = saturate(corruptedMask);
+                float2 grad = (float2(nx - n, ny - n)) / eps;
+                float bumpStrength = (veins - 0.5) * 0.05;
+                grad += bumpStrength * corruptedMask;
 
-                float colorBlend = fbm(i.worldPos * _Scale * 1.5 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float mucusScale = _MucusScale;
+                float mucusNoise = fbm(worldPosCrawled * mucusScale + float3(0, 0, _Time.y * _AnimationSpeed + drift));
+                float epsMucus = 0.1;
+                float mx = fbm(worldPosCrawled * mucusScale + float3(epsMucus, 0, _Time.y * _AnimationSpeed + drift));
+                float my = fbm(worldPosCrawled * mucusScale + float3(0, epsMucus, _Time.y * _AnimationSpeed + drift));
+                float2 gradMucus = (float2(mx - mucusNoise, my - mucusNoise)) / epsMucus;
+                float mucusVisibility = smoothstep(0.5, 1.0, _Corruption);
+                float mucusMaskEarly = smoothstep(0.4, 0.6, mucusNoise) * corruptedMask * mucusVisibility;
+                grad += gradMucus * mucusMaskEarly * _MucusBumpStrength;
+
+                float mucusMask = mucusMaskEarly;
+
+                float2 normal = normalize(float2(-grad.y, grad.x));
+
+                float colorBlend = fbm(worldPosCrawled * _Scale * 1.5 + float3(0, 0, _Time.y * _AnimationSpeed + drift));
                 float3 color1 = _Color.rgb;
                 float3 color2 = _Color2.rgb;
                 float3 color3 = _Color3.rgb;
@@ -180,11 +208,11 @@
                     float t = (colorBlend - 0.66) / 0.34;
                     selectedColor = lerp(color3, color1, t);
                 }
-                float colorNoise = fbm(i.worldPos * _Scale * 3.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.6 - 0.3;
+                float colorNoise = fbm(worldPosCrawled * _Scale * 3.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.6 - 0.3;
                 float3 variedCorruptionColor = selectedColor * (1.0 + colorNoise);
                 variedCorruptionColor = saturate(variedCorruptionColor);
 
-                float smallHueNoise = fbm(i.worldPos * _Scale * 2.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.2 - 0.1;
+                float smallHueNoise = fbm(worldPosCrawled * _Scale * 2.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift)) * 0.2 - 0.1;
                 float3 hsv = RGBtoHSV(variedCorruptionColor);
                 hsv.x += smallHueNoise;
                 variedCorruptionColor = HSVtoRGB(hsv);
@@ -204,11 +232,11 @@
                 float factor = 0.5 + light * 1.0;
                 float3 rimGlow = tintedBase * lerp(1.0, factor, rim);
 
-                float flow = fbm(i.worldPos * _Scale * 4.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(1, 0, 0) * _Time.y * 0.1);
+                float flow = fbm(worldPosCrawled * _Scale * 4.0 + float3(0, 0, _Time.y * _AnimationSpeed + drift) + float3(1, 0, 0) * _Time.y * 0.1);
                 float wetness = smoothstep(0.3, 0.7, flow);
-                float3 wetGlow = rimGlow + wetness * 0.1 * _CorruptionColor.rgb * corruptedMask;
+                float3 wetGlow = rimGlow + wetness * 0.1 * _CorruptionColor.rgb * corruptedMask + mucusMask * _Corruption * _MucusStrength * _MucusColor.rgb;
 
-                float3 specularColor = _SpecularColor.rgb * pow(saturate(dot(normal, dir)), _SpecularPower) * 0.25 * (1.0 + veins) * corruptedMask;
+                float3 specularColor = _SpecularColor.rgb * pow(saturate(dot(normal, dir)), _SpecularPower) * 0.25 * (1.0 + veins + mucusMask * 0.5) * corruptedMask;
 
                 return half4(wetGlow + specularColor, _Color.a);
             }
