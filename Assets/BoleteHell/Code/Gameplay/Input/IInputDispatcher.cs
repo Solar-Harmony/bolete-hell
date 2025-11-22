@@ -9,7 +9,6 @@ namespace BoleteHell.Code.Input
         bool IsBoosting { get; }
         bool IsChargingShot { get; }
         bool IsDrawingShield { get; }
-        bool IsDodging { get; }
         Vector2 MovementDisplacement { get; }
         Vector2 MousePosition { get; }
         Vector2 WorldMousePosition { get; }
@@ -18,6 +17,7 @@ namespace BoleteHell.Code.Input
         event Action OnShieldEnd;
         event Action OnShoot;
         event Action OnInteract;
+        event Action OnDodge;
         event Action<int> OnCycleWeapons;
         event Action<int> OnCycleShield;
     }

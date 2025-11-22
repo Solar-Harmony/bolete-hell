@@ -35,7 +35,7 @@ namespace BoleteHell.Code.AI.Actions
 
         protected override Status OnUpdate()
         {
-            ISceneObject target = _director.FindNearestAlly(_character);
+            ISceneObject target = _director.FindWeakestAlly(_character);
             
             CurrentTarget.Value = target is Enemy npc && npc.Health.Percent < 1.0f
                 ? npc.gameObject
