@@ -1,6 +1,7 @@
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.Droppables;
 using BoleteHell.Code.Gameplay.GameState;
+using BoleteHell.Code.Graphics;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -32,6 +33,9 @@ namespace BoleteHell.Code.Gameplay.Characters
         [Inject]
         private IEntityFinder _entityFinder;
 
+        [Inject]
+        private CreepManager _creep;
+
         private BehaviorGraphAgent _agent;
         private Camera _mainCamera;
         
@@ -43,6 +47,8 @@ namespace BoleteHell.Code.Gameplay.Characters
             
             Health.OnDeath += () =>
             {
+                _creep.SpreadLevel -= 0.01f;
+                
                 dropManager.DropDroplets(gameObject, _dropSettings.dropletContext);
                 gameObject.SetActive(false);
                 Destroy(gameObject);

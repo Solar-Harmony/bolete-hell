@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
@@ -38,7 +37,6 @@ namespace BoleteHell.Code.Input.Controllers
         [SerializeField]
         private Color stutterColor = new Color(1f, 1f, 1f, 0.3f);
 
-        private bool canDodge = true;
         [SerializeField]
         SpriteRenderer spriteRenderer;
 
@@ -75,7 +73,6 @@ namespace BoleteHell.Code.Input.Controllers
 
         private IEnumerator DodgingRoutine()
         {
-            canDodge = false;
             health.IsInvincible = true;
 
             // Get the movement direction from PlayerMovement's current input
@@ -85,7 +82,6 @@ namespace BoleteHell.Code.Input.Controllers
             if (moveDir == Vector2.zero)
             {
                 gameObject.layer = LayerMask.NameToLayer($"Unit");
-                canDodge = true;
                 health.IsInvincible = false;
                 yield break;
             }
@@ -110,7 +106,6 @@ namespace BoleteHell.Code.Input.Controllers
             // Wait for remaining cooldown
             yield return new WaitForSeconds(dodgeRechargeTimer - invincibilityDuration);
             remainingDodges++;
-            canDodge = true;
         }
         
         //This can't possibly be good performance wise
