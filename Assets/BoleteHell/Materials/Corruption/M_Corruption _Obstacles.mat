@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Corruption _Obstacles
+  m_Shader: {fileID: 4800000, guid: b55b3e77cb68486f9c0f885ef4e97b24, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints:
+    - _Octaves: 4
+    m_Floats:
+    - _AnimationSpeed: 0.1
+    - _BubbleBumpStrength: 0.5
+    - _BubbleScale: 10
+    - _BubbleSpeed: 1
+    - _BubbleStrength: 0.5
+    - _BumpStrength: 0.05
+    - _CrawlingSpeed: 0.1
+    - _DetailAnimationSpeed: 0.1
+    - _DetailScale: 3
+    - _EdgeWidth: 0.0604
+    - _EnableExternalAlpha: 0
+    - _FlowScale: 5.93
+    - _FlowSpeed: 4.88
+    - _GlisteningBrightness: 0.2
+    - _GlisteningThreshold: 0.468
+    - _InfluenceRadius: 5
+    - _MucusBumpStrength: 1
+    - _MucusScale: 15
+    - _MucusStrength: 0.2
+    - _NormalEps: 0.01
+    - _Octaves: 3
+    - _OuterRimWidth: 0
+    - _Persistence: 0.56
+    - _PustuleScale: 2
+    - _PustuleStrength: 0.1
+    - _RimIntensity: 0.5
+    - _Scale: -1.3
+    - _SmoothMax: 0.181
+    - _SmoothMin: 0.021
+    - _Smoothness: 0.12
+    - _Smoothness2: 0.12
+    - _SpecularIntensity: 0.5
+    - _SpecularPower: 120
+    - _VeinMax: 0.55
+    - _VeinMin: 0.45
+    - _VeinScale: 8
+    - _WetnessMax: 0.7
+    - _WetnessMin: 0.3
+    - _ZWrite: 0
+    m_Colors:
+    - _BubbleColor: {r: 0.5, g: 0.8, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color2: {r: 0.88679236, g: 0.7473596, b: 0.6776432, a: 1}
+    - _Color3: {r: 0.89783126, g: 0.865872, b: 0.9191374, a: 1}
+    - _CorruptionColor: {r: 0.6300729, g: 0.55770075, b: 0.7196765, a: 1}
+    - _LightCenter: {r: -0.02, g: 0.9, b: -0.06, a: -0.45}
+    - _LightDir: {r: 2.4, g: 0.11, b: -0.09, a: 0}
+    - _MucusColor: {r: 0.5, g: 0.8, b: 1, a: 1}
+    - _PlayerPos: {r: 0, g: 0, b: 0, a: 0}
+    - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
+    - _PlayerVel: {r: 0, g: 0, b: 0, a: 0}
+    - _PlayerVelocity: {r: 0, g: 0, b: 0, a: 0}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.6075091, g: 0.07412386, b: 1, a: 1}
+    - _RimLightDirection: {r: -0.63, g: 0.31, b: 0, a: 0}
+    - _SpecularColor: {r: 0.54408026, g: 0.3901998, b: 0.5849056, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
