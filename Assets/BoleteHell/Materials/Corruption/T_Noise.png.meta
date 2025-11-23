@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 5ba4c6e78ea00254f9794cb7cd6d9aa1
+guid: 70e08a27739c0114d9bf781441749740
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4175500709425676465
-    second: imgonline-com-ua-TextureSeamless-GmAwlbkP7M0_0
+      213: -5138375157232984397
+    second: noise_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -74,8 +74,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureFormat: 9
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: imgonline-com-ua-TextureSeamless-GmAwlbkP7M0_0
+      name: noise_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 474
-        height: 474
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b085b0c5cb52f930800000000000000
-      internalID: 4175500709425676465
+      spriteID: 3be9f6ec403d0b8b0800000000000000
+      internalID: -5138375157232984397
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      imgonline-com-ua-TextureSeamless-GmAwlbkP7M0_0: 4175500709425676465
+      noise_0: -5138375157232984397
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
