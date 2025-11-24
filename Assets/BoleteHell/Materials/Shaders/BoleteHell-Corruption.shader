@@ -10,8 +10,9 @@
         [NoScaleOffset] _NoiseTex ("Noise Texture", 2D) = "white" {}
         [NoScaleOffset] _NoiseNormalsTex ("Noise Normal Map", 2D) = "white" {}
         _NoiseScale ("Noise Scale", Float) = 5.0
-        _ColorNoiseScale ("Color Noise Scale", Float) = 1.6
-        _DetailNormalScale ("Detail Normal Scale", Float) = 0.3
+        _ColorsOffset ("Color Noise Separation", Float) = 1.6
+        _DetailsScale ("Detail Normal Scale", Float) = 0.3
+        _DetailsIntensity ("Detail Normal Intensity", Float) = 1.0
         _BlendRange("Transition Softness", Range(0,0.5)) = 0.15
         
         _OffsetSpeed ("Shift Animation Speed", Float) = 0.05
@@ -19,8 +20,9 @@
         _WarpSpeed ("Warp Animation Speed", Float) = 0.05
         _WarpStrength ("Warp Strength", Float) = 0.1
         
-        _LightDir ("Light Direction", Vector) = (0, 0, -1, -1)
+        _LightDir ("Light Direction", Vector) = (0.1, 0.1, 0.3, -1)
         _SpecularColor ("Specular Color", Color) = (1,1,1,1)
+        _SpecularIntensity ("Specular Intensity", Float) = 1.0
         _Shininess ("Specular Shininess", Float) = 16.0
 
         _RimPower ("Rim Power", Range(0.1,8)) = 2.0
@@ -67,8 +69,9 @@
             sampler2D _NoiseTex;
             sampler2D _NoiseNormalsTex;
             float     _NoiseScale;
-            float     _ColorNoiseScale;
-            float     _DetailNormalScale;
+            float     _ColorsOffset;
+            float     _DetailsScale;
+            float     _DetailsIntensity;
             float     _BlendRange;
             
             float     _OffsetSpeed;
@@ -76,8 +79,9 @@
             float     _WarpSpeed;
             float     _WarpStrength;
             
-            float2    _LightDir;
+            float3    _LightDir;
             float3    _SpecularColor;
+            float     _SpecularIntensity;
             float     _Shininess;
 
             float     _RimPower;
@@ -130,7 +134,7 @@
             float3 sampleNormal2(float2 p, float noise)
             {
                 const float3 flat = float3(0, 0, 1);
-                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p) * _DetailNormalScale));
+                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p) * _DetailsScale));
                 return normalize(lerp(flat, sample, noise));
             }
 
@@ -140,19 +144,28 @@
                 float2 offsetB = float2(0.3, 0.7);
                 float2 offsetC = float2(0.9, 0.5);
 
-                float nA = tex2D(_NoiseTex, getSampleUV(worldPos + offsetA * _ColorNoiseScale)).r;
-                float nB = tex2D(_NoiseTex, getSampleUV(worldPos + offsetB * _ColorNoiseScale)).r;
-                float nC = tex2D(_NoiseTex, getSampleUV(worldPos + offsetC * _ColorNoiseScale)).r;
+                float nA = tex2D(_NoiseTex, getSampleUV(worldPos + offsetA * _ColorsOffset)).r;
+                float nB = tex2D(_NoiseTex, getSampleUV(worldPos + offsetB * _ColorsOffset)).r;
+                float nC = tex2D(_NoiseTex, getSampleUV(worldPos + offsetC * _ColorsOffset)).r;
 
-                nA = smoothstep(0.05, 0.95, nA);
-                nB = smoothstep(0.05, 0.95, nB);
-                nC = smoothstep(0.05, 0.95, nC);
+                nA = smoothstep(0.2, 0.8, nA);
+                nB = smoothstep(0.2, 0.8, nB);
+                nC = smoothstep(0.2, 0.8, nC);
 
-                float3 mixAB = lerp(_CorruptionColor, _CorruptionColorB, nA);
-                float3 mixBC = lerp(_CorruptionColorB, _CorruptionColorC, nB);
-                float3 layeredCorruption = lerp(mixAB, mixBC, nC);
+                // softmax
+                const float sharp = 4.0;
+                float eA = exp(nA * sharp); 
+                float eB = exp(nB * sharp);
+                float eC = exp(nC * sharp);
 
-                return layeredCorruption;
+                float sum = eA + eB + eC;
+                float wA = eA / sum;
+                float wB = eB / sum;
+                float wC = eC / sum;
+
+                return _CorruptionColor * wA +
+                       _CorruptionColorB * wB +
+                       _CorruptionColorC * wC;
             }
                         
             float4 frag(Varyings i) : SV_Target
@@ -163,18 +176,18 @@
                 float3 albedo = computeAlbedo(worldPos);
                 float3 normal = sampleNormal(worldPos, mask);
                 float3 detailNormal = sampleNormal2(worldPos, mask);
-                normal = normalize(normal + detailNormal * 0.1f);
+                normal = normalize(normal + detailNormal * _DetailsIntensity);
 
                 // Lambert diffuse
-                float3 lightDir = normalize(float3(_LightDir, 0.3f));
+                float3 lightDir = normalize(_LightDir);
                 float3 diffuse = albedo * saturate(dot(normal, lightDir));
 
                 // Blinn-Phong specular
                 float3 viewDir = float3(0,0,1);
                 float3 halfVector = normalize(lightDir + viewDir);
-                float3 specular = _SpecularColor * pow(saturate(dot(normal, halfVector)), _Shininess); 
+                float3 specular = _SpecularColor * _SpecularIntensity * pow(saturate(dot(normal, halfVector)), _Shininess);
 
-                // fake "fresnel" (brighter rim)
+                // faux rim lighting
                 float cosTheta = saturate(dot(normal, viewDir));
                 float3 rim = _RimColor * pow(saturate(1.0 - cosTheta), _RimPower) * _RimIntensity;
                 specular += rim;

@@ -118,6 +118,8 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorNoiseScale: 0.04
+    - _ColorsOffset: 1.6
+    - _ColorsSharpness: 4
     - _Corruption: 0.366
     - _CrawlingSpeed: 0.15
     - _Cull: 2
@@ -127,6 +129,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DetailNormalScale: 13.17
     - _DetailScale: 3
+    - _DetailsIntensity: 1
+    - _DetailsScale: 0.3
     - _DripContrast: 0.26
     - _DripScale: 0.22
     - _DripSpeed: 0.24
@@ -160,10 +164,10 @@ Material:
     - _PustuleStrength: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimIntensity: 1.61
-    - _RimPower: 1.11
+    - _RimIntensity: 1.31
+    - _RimPower: 0.66
     - _Scale: 0.21
-    - _Shininess: 500
+    - _Shininess: 2500
     - _SmoothMax: 0.181
     - _SmoothMin: 0.021
     - _Smoothness: 0.12
@@ -171,7 +175,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 2.13
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 0.5
+    - _SpecularIntensity: 1
     - _SpecularPower: 120
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -197,13 +201,13 @@ Material:
     - _Color3: {r: 0.8382749, g: 0, b: 0.3062927, a: 1}
     - _ColorNoiseOffsetA: {r: 0, g: 0.3, b: 0, a: 0}
     - _ColorNoiseOffsetB: {r: 0.2, g: -0.2, b: 0, a: 0}
-    - _CorruptionColor: {r: 0.23450124, g: 0.1084015, b: 0.18613422, a: 1}
+    - _CorruptionColor: {r: 0.42857128, g: 0.18656135, b: 0.33025473, a: 1}
     - _CorruptionColor2: {r: 0.57412386, g: 0.313629, b: 0.22825676, a: 1}
-    - _CorruptionColorB: {r: 0.48787057, g: 0.38945884, b: 0.18607455, a: 1}
-    - _CorruptionColorC: {r: 0.49113646, g: 0.411596, b: 0.57951474, a: 1}
+    - _CorruptionColorB: {r: 0.30458212, g: 0.18841398, b: 0.2066814, a: 1}
+    - _CorruptionColorC: {r: 0.22857577, g: 0.14373259, b: 0.32614553, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightCenter: {r: -0.02, g: 0.9, b: -0.06, a: -0.45}
-    - _LightDir: {r: 0.26, g: -0.07, b: 0.3, a: 0}
+    - _LightDir: {r: -0.07, g: -0.05, b: 0.34, a: 0}
     - _LightDirection: {r: 0.1, g: -0.6, b: -1, a: -1}
     - _MucusColor: {r: 0.74663067, g: 0.6460279, b: 0.56651354, a: 1}
     - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
@@ -212,6 +216,6 @@ Material:
     - _RimColor: {r: 0.8760108, g: 0.75196284, b: 0.59856796, a: 1}
     - _RimLightDirection: {r: -0.63, g: 0.31, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.46060917, g: 0.3928589, b: 0.47708893, a: 1}
+    - _SpecularColor: {r: 0.6819406, g: 0.63503397, b: 0.5064006, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

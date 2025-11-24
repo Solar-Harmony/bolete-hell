@@ -109,7 +109,7 @@ Material:
     - _AnimationSpeed: 0.5
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BlendRange: 0.133
+    - _BlendRange: 0.142
     - _BubbleBumpStrength: 1
     - _BubbleScale: 0.1
     - _BubbleStrength: 0.1
@@ -117,7 +117,9 @@ Material:
     - _BumpStrength: 23.8
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColorNoiseScale: 1.9
+    - _ColorNoiseScale: -0.67
+    - _ColorsOffset: 1
+    - _ColorsSharpness: 4
     - _Corruption: 0.366
     - _CrawlingSpeed: 0.15
     - _Cull: 2
@@ -125,8 +127,10 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailAnimationSpeed: 0.1
     - _DetailNormalMapScale: 1
-    - _DetailNormalScale: 13.17
+    - _DetailNormalScale: -0.87
     - _DetailScale: 3
+    - _DetailsIntensity: -0.13
+    - _DetailsScale: 12
     - _DripContrast: 0.26
     - _DripScale: 0.22
     - _DripSpeed: 0.24
@@ -152,7 +156,7 @@ Material:
     - _NormalEps: 0.01
     - _OcclusionStrength: 1
     - _Octaves: 3
-    - _OffsetSpeed: 0.05
+    - _OffsetSpeed: 0.06
     - _OuterRimWidth: 0
     - _Parallax: 0.005
     - _Persistence: 0.56
@@ -160,10 +164,10 @@ Material:
     - _PustuleStrength: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimIntensity: 1.72
-    - _RimPower: 1.09
+    - _RimIntensity: 0.68
+    - _RimPower: 0.84
     - _Scale: 0.21
-    - _Shininess: 500
+    - _Shininess: 2000
     - _SmoothMax: 0.181
     - _SmoothMin: 0.021
     - _Smoothness: 0.12
@@ -171,7 +175,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 2.13
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 0.5
+    - _SpecularIntensity: 0.23
     - _SpecularPower: 120
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -181,7 +185,7 @@ Material:
     - _VeinMin: 0.45
     - _VeinScale: 8
     - _WarpScale: 1
-    - _WarpSpeed: 0.02
+    - _WarpSpeed: 0.025
     - _WarpStrength: 0.02
     - _Wetness: 1
     - _WetnessMax: 0.7
@@ -197,21 +201,21 @@ Material:
     - _Color3: {r: 0.8382749, g: 0, b: 0.3062927, a: 1}
     - _ColorNoiseOffsetA: {r: 0, g: 0.3, b: 0, a: 0}
     - _ColorNoiseOffsetB: {r: 0.2, g: -0.2, b: 0, a: 0}
-    - _CorruptionColor: {r: 0.46091634, g: 0.17579417, b: 0.35155442, a: 1}
+    - _CorruptionColor: {r: 0.42318046, g: 0.17280816, b: 0.3198521, a: 1}
     - _CorruptionColor2: {r: 0.57412386, g: 0.313629, b: 0.22825676, a: 1}
-    - _CorruptionColorB: {r: 0.4339623, g: 0.33122277, b: 0.12574378, a: 1}
-    - _CorruptionColorC: {r: 0.20187452, g: 0.12399283, b: 0.2884097, a: 1}
+    - _CorruptionColorB: {r: 0.25606465, g: 0.18600921, b: 0.20526206, a: 1}
+    - _CorruptionColorC: {r: 0.3387795, g: 0.28029796, b: 0.40700805, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightCenter: {r: -0.02, g: 0.9, b: -0.06, a: -0.45}
-    - _LightDir: {r: 0.04, g: -0.01, b: 0.3, a: 0}
+    - _LightDir: {r: -0.04, g: -0.11, b: 0.27, a: 0}
     - _LightDirection: {r: 0.1, g: -0.6, b: -1, a: -1}
     - _MucusColor: {r: 0.74663067, g: 0.6460279, b: 0.56651354, a: 1}
     - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
     - _PlayerVelocity: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.8760108, g: 0.75196284, b: 0.59856796, a: 1}
+    - _RimColor: {r: 0.81132066, g: 0.72371805, b: 0.56311333, a: 1}
     - _RimLightDirection: {r: -0.63, g: 0.31, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.46060917, g: 0.3928589, b: 0.47708893, a: 1}
+    - _SpecularColor: {r: 0.7780687, g: 0.6100253, b: 0.8274932, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
