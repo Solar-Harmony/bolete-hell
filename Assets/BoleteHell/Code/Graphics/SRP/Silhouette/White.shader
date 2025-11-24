@@ -15,20 +15,17 @@
            struct Attributes
            {
                float3 positionOS   : POSITION;
-               // float2 uv           : TEXCOORD0;
            };
 
            struct Varyings
            {
                float4  positionCS  : SV_POSITION;
-               // float2  uv          : TEXCOORD0;
            };
 
            Varyings vert(Attributes i)
            {
                Varyings o;
                o.positionCS = TransformObjectToHClip(i.positionOS);
-               // o.uv = i.uv;
                return o;
            }
  

@@ -52,6 +52,7 @@ namespace BoleteHell.Code.Graphics.SRP
 
         protected override void Dispose(bool disposing)
         {
+            CoreUtils.Destroy(_silhouetteMaterial);
             CoreUtils.Destroy(_fakeAOMaterial);
         }
     }

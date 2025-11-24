@@ -125,17 +125,10 @@
                 return 1 - smoothstep(low, high, remapped);
             }
 
-            float3 sampleNormal(float2 p, float noise)
+            float3 sampleNormal(float2 p, float noise, float scale)
             {
                 const float3 flat = float3(0, 0, 1);
-                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p)));
-                return normalize(lerp(flat, sample, noise));
-            }
-
-            float3 sampleNormal2(float2 p, float noise)
-            {
-                const float3 flat = float3(0, 0, 1);
-                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p) * _DetailsScale));
+                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p) * scale));
                 return normalize(lerp(flat, sample, noise));
             }
 
@@ -175,8 +168,8 @@
                 float mask = sampleCorruptionMask(worldPos); // 0 = base color, 1 = corruption material
                 
                 float3 albedo = computeAlbedo(worldPos);
-                float3 normal = sampleNormal(worldPos, mask);
-                float3 detailNormal = sampleNormal2(worldPos, mask);
+                float3 normal = sampleNormal(worldPos, mask, 1.0f);
+                float3 detailNormal = sampleNormal(worldPos, mask, _DetailsScale);
                 normal = normalize(normal + detailNormal * _DetailsIntensity);
 
                 // Lambert diffuse

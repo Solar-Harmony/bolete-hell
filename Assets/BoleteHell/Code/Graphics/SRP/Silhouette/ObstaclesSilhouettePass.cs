@@ -65,7 +65,7 @@ namespace BoleteHell.Code.Rendering.SDF
             silhouetteDesc.autoGenerateMips = false;
             silhouetteDesc.graphicsFormat = GraphicsFormat.R8_UNorm;
             
-            TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, silhouetteDesc, "SDF Silhouette", true);
+            TextureHandle destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, silhouetteDesc, "Obstacles Silhouette", true);
             builder.SetRenderAttachment(destination, 0);
             
             // pass to next pass

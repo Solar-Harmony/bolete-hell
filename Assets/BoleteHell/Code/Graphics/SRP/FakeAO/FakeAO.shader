@@ -25,8 +25,6 @@
             float4 Frag(Varyings input) : SV_Target
             {
                 float silhouette = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, input.texcoord).r;
-                // float3 col = silhouette.rrr * float3(0,1,0);
-                // return float4(col, silhouette);
 
                 float2 dirs[4] = {
                     float2(1, 0),
