@@ -201,10 +201,10 @@ Material:
     - _Color3: {r: 0.8382749, g: 0, b: 0.3062927, a: 1}
     - _ColorNoiseOffsetA: {r: 0, g: 0.3, b: 0, a: 0}
     - _ColorNoiseOffsetB: {r: 0.2, g: -0.2, b: 0, a: 0}
-    - _CorruptionColor: {r: 0.42857128, g: 0.18656135, b: 0.33025473, a: 1}
+    - _CorruptionColor: {r: 0.42745093, g: 0.26058295, b: 0.18823522, a: 0.3647059}
     - _CorruptionColor2: {r: 0.57412386, g: 0.313629, b: 0.22825676, a: 1}
-    - _CorruptionColorB: {r: 0.30458212, g: 0.18841398, b: 0.2066814, a: 1}
-    - _CorruptionColorC: {r: 0.22857577, g: 0.14373259, b: 0.32614553, a: 1}
+    - _CorruptionColorB: {r: 0.30588233, g: 0.21498755, b: 0.18823525, a: 0.08235294}
+    - _CorruptionColorC: {r: 0.32549015, g: 0.145098, b: 0.19706026, a: 0.019607844}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightCenter: {r: -0.02, g: 0.9, b: -0.06, a: -0.45}
     - _LightDir: {r: -0.07, g: -0.05, b: 0.34, a: 0}

@@ -17,6 +17,21 @@ namespace BoleteHell.Code.Graphics.SRP
         
         [Tooltip("Reference resolution height for resolution-independent effects.")]
         public float ReferenceHeight = 1080f;
+        
+        [Tooltip("Enable fake sun shadow pass.")]
+        public bool EnableSunShadow = true;
+        
+        [Tooltip("Sun direction for shadows.")]
+        public Vector3 SunDirection = Vector3.down;
+        
+        [Tooltip("Step size for shadow raymarching.")]
+        public float SunShadowStepSize = 0.01f;
+        
+        [Tooltip("Intensity of the sun shadows.")]
+        public float SunShadowIntensity = 0.5f;
+        
+        [Tooltip("Softness of the sun shadows.")]
+        public float SunShadowSoftness = 0.0f;
     }
     
     public class BoleteRenderFeature : ScriptableRendererFeature
@@ -28,6 +43,8 @@ namespace BoleteHell.Code.Graphics.SRP
         private ObstaclesSilhouettePass _silhouettePass;
         private Material _fakeAOMaterial;
         private FakeAOPass _fakeAOPass;
+        private Material _fakeSunShadowMaterial;
+        private FakeSunShadowPass _fakeSunShadowPass;
 
         public override void Create()
         {
@@ -42,18 +59,27 @@ namespace BoleteHell.Code.Graphics.SRP
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
+            
+            _fakeSunShadowMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Fake Sun Shadow"));
+            _fakeSunShadowPass = new FakeSunShadowPass(_fakeSunShadowMaterial, _settings.SunDirection, _settings.SunShadowStepSize, _settings.SunShadowIntensity, _settings.SunShadowSoftness)
+            {
+                renderPassEvent = RenderPassEvent.AfterRenderingTransparents
+            };
         }
         
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             renderer.EnqueuePass(_silhouettePass);
             renderer.EnqueuePass(_fakeAOPass);
+            if (_settings.EnableSunShadow)
+                renderer.EnqueuePass(_fakeSunShadowPass);
         }
 
         protected override void Dispose(bool disposing)
         {
             CoreUtils.Destroy(_silhouetteMaterial);
             CoreUtils.Destroy(_fakeAOMaterial);
+            CoreUtils.Destroy(_fakeSunShadowMaterial);
         }
     }
 }

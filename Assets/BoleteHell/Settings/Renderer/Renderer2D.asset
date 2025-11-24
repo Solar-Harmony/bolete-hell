@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3c66737d0fac84f992e9198ee2a9c6, type: 3}
   m_Name: SDFRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    renderingLayerMaskName: Lasers
-    tempBlurStrength: 1
 --- !u!114 &-827212778719885579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +28,11 @@ MonoBehaviour:
   _settings:
     RenderingLayerMaskName: Obstacle
     ReferenceHeight: 1080
+    EnableSunShadow: 1
+    SunDirection: {x: 1, y: -1, z: 0}
+    SunShadowStepSize: 0.05
+    SunShadowIntensity: 0.82
+    SunShadowSoftness: 2.82
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,9 +32,8 @@
     
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" "IgnoreProjector" = "True" "PreviewType"="Plane" }
-
-        Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+        Tags { "RenderType" = "Opaque" "PreviewType"="Plane" }
+        
         Cull Off
         ZWrite Off
         ZTest LEqual
