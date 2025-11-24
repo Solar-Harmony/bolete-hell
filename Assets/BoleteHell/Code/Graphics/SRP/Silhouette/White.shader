@@ -1,0 +1,43 @@
+﻿Shader "Bolete Hell/Simple White"
+{
+   SubShader
+   {
+       Tags { "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline" }
+       ZWrite Off Cull Off ZTest Always
+       Pass
+       {
+           HLSLPROGRAM
+           #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+           #pragma vertex vert
+           #pragma fragment frag
+
+           struct Attributes
+           {
+               float3 positionOS   : POSITION;
+               // float2 uv           : TEXCOORD0;
+           };
+
+           struct Varyings
+           {
+               float4  positionCS  : SV_POSITION;
+               // float2  uv          : TEXCOORD0;
+           };
+
+           Varyings vert(Attributes i)
+           {
+               Varyings o;
+               o.positionCS = TransformObjectToHClip(i.positionOS);
+               // o.uv = i.uv;
+               return o;
+           }
+ 
+           float4 frag(Varyings i) : SV_Target
+           {
+               return float4(1, 1, 1, 1);
+           }
+
+           ENDHLSL
+       }
+   }
+}

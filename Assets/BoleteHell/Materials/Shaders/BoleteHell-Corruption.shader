@@ -48,6 +48,7 @@
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             
+            
             struct Attributes
             {
                 float3 positionOS : POSITION;
