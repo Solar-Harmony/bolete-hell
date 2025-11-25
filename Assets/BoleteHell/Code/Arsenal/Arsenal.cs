@@ -61,24 +61,31 @@ namespace BoleteHell.Code.Arsenal
             }
         }
 
-        public void Shoot(Vector2 direction)
+        //Retourne true quand il a terminer de faire ses tires
+        public bool Shoot(Vector2 direction)
         {
             if (cannons.Count == 0)
             {
                 Debug.LogWarning("No raycannon equipped");
-                return;
+                return false;
             }
 
             // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
             var shotParams = new ShotLaunchParams(transform.position, spawnPosition, direction, _owner);
-            
+
+            bool doneFiring = true;
 
             foreach (CannonInstance weapon in GetSelectedWeapon())
             {
-                _cannonService.TryShoot(weapon, shotParams);
+                if (!_cannonService.TryShoot(weapon, shotParams))
+                {
+                    doneFiring = false;
+                }
             }
+
+            return doneFiring;
         }
         
         public float GetProjectileSpeed()

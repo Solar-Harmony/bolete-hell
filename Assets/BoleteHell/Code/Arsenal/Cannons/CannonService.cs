@@ -4,6 +4,7 @@ using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Utils;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
@@ -37,9 +38,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
         
-        public void TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
+        public bool TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
         {
-            if (!cannon.CanShoot) return;
+            if (!cannon.CanShoot) return false;
             
             if (cannon.Config.cannonData.WaitBeforeFiring && !cannon.IsCharged)
             {
@@ -52,10 +53,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
                 }
 
                 ChargeShot(cannon, parameters);
-                return;
+                return false;
             }
             
             FireProjectiles(cannon, parameters);
+            return true;
         }
 
         private Vector2 GetBeamPreviewEndPoint(CannonInstance cannon, ShotLaunchParams parameters)

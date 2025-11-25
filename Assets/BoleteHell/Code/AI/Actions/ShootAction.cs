@@ -41,6 +41,12 @@ namespace BoleteHell.Code.AI.Actions
                 _currentAimDirection = selfTransform.right;
             }
             
+            
+            return Status.Running;
+        }
+
+        protected override Status OnUpdate()
+        {
             Vector2 selfPosition = GameObject.transform.position;
             Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
             Vector2 targetPosition = CurrentTarget.Value.transform.position;
@@ -51,15 +57,13 @@ namespace BoleteHell.Code.AI.Actions
             _targeting.SuggestProjectileDirection(out Vector2 targetDirection, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
             
             _currentAimDirection = Vector2.Lerp(_currentAimDirection, targetDirection, TurnSpeed.Value * Time.deltaTime).normalized;
-            
-            _arsenal.Shoot(_currentAimDirection);
-            
-            return Status.Success;
+
+            return !_arsenal.Shoot(_currentAimDirection) ? Status.Running : Status.Success;
         }
 
         protected override void OnEnd()
-        {
-            _arsenal.OnShootCanceled();
-        }
+         {
+             _arsenal.OnShootCanceled();
+         }
     }
 }
