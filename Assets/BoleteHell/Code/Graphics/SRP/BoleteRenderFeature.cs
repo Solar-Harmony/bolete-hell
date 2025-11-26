@@ -66,7 +66,7 @@ namespace BoleteHell.Code.Graphics.SRP
             };
 
             _fakeAOMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Fake Ambient Occlusion"));
-            _fakeAOPass = new FakeAOPass(_fakeAOMaterial, _settings.ReferenceHeight, _settings.FakeAORadius, _settings.SunDirection)
+            _fakeAOPass = new FakeAOPass(_fakeAOMaterial, _settings.ReferenceHeight, _settings.FakeAORadius)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
