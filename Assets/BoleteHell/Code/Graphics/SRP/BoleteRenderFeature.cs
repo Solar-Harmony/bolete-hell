@@ -39,6 +39,10 @@ namespace BoleteHell.Code.Graphics.SRP
         [ToggleGroup(nameof(EnableSunShadow))]
         [Tooltip("Softness of the sun shadows.")]
         public float SunShadowSoftness = 0.0f;
+
+        [ToggleGroup(nameof(EnableFakeAO))]
+        [Tooltip("Radius for ambient occlusion sampling.")]
+        public float FakeAORadius = 10.0f;
     }
     
     public class BoleteRenderFeature : ScriptableRendererFeature
@@ -62,7 +66,7 @@ namespace BoleteHell.Code.Graphics.SRP
             };
 
             _fakeAOMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Fake Ambient Occlusion"));
-            _fakeAOPass = new FakeAOPass(_fakeAOMaterial, _settings.ReferenceHeight)
+            _fakeAOPass = new FakeAOPass(_fakeAOMaterial, _settings.ReferenceHeight, _settings.FakeAORadius, _settings.SunDirection)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };

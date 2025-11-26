@@ -9,9 +9,13 @@ namespace BoleteHell.Code.Graphics.SRP
     public class FakeAOPass : ScriptableRenderPass
     {
         private readonly float _referenceHeight;
+        private readonly float _radius;
+        private readonly Vector2 _sunDirection;
         private readonly Material _passMaterial;
         
         private static readonly int _referenceHeightId = Shader.PropertyToID("_ReferenceHeight");
+        private static readonly int _radiusId = Shader.PropertyToID("_Radius");
+        private static readonly int _sunDirectionId = Shader.PropertyToID("_SunDirection");
         private static readonly int _silhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
         
         private class FakeAOPassData
@@ -19,12 +23,16 @@ namespace BoleteHell.Code.Graphics.SRP
             public TextureHandle SilhouetteTex;
             public Material Material;
             public float ReferenceHeight;
+            public float Radius;
+            public Vector2 SunDirection;
         }
         
-        public FakeAOPass(Material passMaterial, float referenceHeight)
+        public FakeAOPass(Material passMaterial, float referenceHeight, float radius, Vector2 sunDirection)
         {
             _passMaterial = passMaterial;
             _referenceHeight = referenceHeight;
+            _radius = radius;
+            _sunDirection = sunDirection;
         }
 
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -48,11 +56,15 @@ namespace BoleteHell.Code.Graphics.SRP
             passData.SilhouetteTex = silhouetteTex;
             passData.Material = _passMaterial;
             passData.ReferenceHeight = _referenceHeight;
+            passData.Radius = _radius;
+            passData.SunDirection = _sunDirection;
             
             builder.SetRenderFunc((FakeAOPassData data, RasterGraphContext context) =>
             {
                 data.Material.SetTexture(_silhouetteTexId, data.SilhouetteTex);
                 data.Material.SetFloat(_referenceHeightId, data.ReferenceHeight);
+                data.Material.SetFloat(_radiusId, data.Radius);
+                data.Material.SetVector(_sunDirectionId, data.SunDirection);
                 Blitter.BlitTexture(context.cmd, srcCamColor, new Vector4(1, 1, 0, 0), data.Material, 0);
             });
         }

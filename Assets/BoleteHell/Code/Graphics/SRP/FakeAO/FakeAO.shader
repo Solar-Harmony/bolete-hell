@@ -1,5 +1,10 @@
 ﻿Shader "Bolete Hell/Fake Ambient Occlusion"
 {
+    Properties
+    {
+        _Radius("Radius", Float) = 10.0
+    }
+    
     SubShader
     {
         Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
@@ -21,31 +26,53 @@
             TEXTURE2D(_SilhouetteTex);
             SAMPLER(sampler_SilhouetteTex);
             float _ReferenceHeight;
+            float _Radius;
             
             float4 Frag(Varyings input) : SV_Target
             {
-                float silhouette = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, input.texcoord).r;
+                float center = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, input.texcoord).r;
 
-                float2 dirs[4] = {
-                    float2(1, 0),
-                    float2(-1, 0),
-                    float2(0, 1),
-                    float2(0, -1)
+                // 8 evenly-spaced directions
+                float2 dirs[8] = {
+                    float2(1,0), float2(-1,0),
+                    float2(0,1), float2(0,-1),
+                    normalize(float2( 1,  1)),
+                    normalize(float2(-1,  1)),
+                    normalize(float2( 1, -1)),
+                    normalize(float2(-1, -1))
                 };
 
-                const float intensity = 1.0f;
-                const float radius = 10.0f;
-                
+                const int NUM_DIRS  = 8;
+                const int NUM_STEPS = 6;    
+                const float DECAY   = 0.25; 
+
                 float aoAccum = 0.0f;
-                for (int k = 0; k < 4; ++k)
+                float weightAccum = 0.0f;
+
+                float2 invRes = 1.0 / _ScreenParams.xy;
+
+                for (int d = 0; d < NUM_DIRS; d++)
                 {
-                    float2 offset = dirs[k] * radius / _ScreenParams.xy;
-                    aoAccum += SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, input.texcoord + offset).r;
+                    float2 dir = dirs[d];
+
+                    for (int s = 1; s <= NUM_STEPS; s++)
+                    {
+                        float t = (float)s / NUM_STEPS;
+                        float w = exp(-t / DECAY);
+                        float2 uv = input.texcoord + dir * (_Radius * t) * invRes;
+
+                        float sampleVal = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, uv).r;
+
+                        aoAccum += sampleVal * w;
+                        weightAccum += w;
+                    }
                 }
 
-                float aoFac = aoAccum / 4.0 * intensity;
-                
-                return float4(0, 0, 0, aoFac - silhouette);
+                float ao = aoAccum / weightAccum;
+
+                float finalAO = saturate(ao - center);
+
+                return float4(0, 0, 0, finalAO);
             }
 
             ENDHLSL

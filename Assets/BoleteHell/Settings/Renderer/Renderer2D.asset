@@ -30,10 +30,11 @@ MonoBehaviour:
     ReferenceHeight: 1080
     EnableFakeAO: 1
     EnableSunShadow: 1
-    SunDirection: {x: 0.85953534, y: -0.51107633}
+    SunDirection: {x: 0.8898171, y: -0.45631737}
     SunShadowStepSize: 0.3
     SunShadowIntensity: 0.5
     SunShadowSoftness: 1
+    FakeAORadius: 64
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
