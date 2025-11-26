@@ -29,10 +29,10 @@ MonoBehaviour:
     RenderingLayerMaskName: Obstacle
     ReferenceHeight: 1080
     EnableSunShadow: 1
-    SunDirection: {x: 1, y: -1, z: 0}
-    SunShadowStepSize: 0.05
-    SunShadowIntensity: 0.82
-    SunShadowSoftness: 2.82
+    SunDirection: {x: 0.8807001, y: -0.47367427}
+    SunShadowStepSize: 0.1
+    SunShadowIntensity: 0.5
+    SunShadowSoftness: 1.5
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using BoleteHell.Code.Rendering.SDF;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -18,18 +19,21 @@ namespace BoleteHell.Code.Graphics.SRP
         [Tooltip("Reference resolution height for resolution-independent effects.")]
         public float ReferenceHeight = 1080f;
         
-        [Tooltip("Enable fake sun shadow pass.")]
+        [ToggleGroup(nameof(EnableSunShadow), "Screen-space sun shadow")]
         public bool EnableSunShadow = true;
+
+        [ToggleGroup(nameof(EnableSunShadow))] [AnglePicker]
+        public Vector2 SunDirection = new(0.1f, 0.1f);
         
-        [Tooltip("Sun direction for shadows.")]
-        public Vector3 SunDirection = Vector3.down;
-        
+        [ToggleGroup(nameof(EnableSunShadow))] 
         [Tooltip("Step size for shadow raymarching.")]
         public float SunShadowStepSize = 0.01f;
         
+        [ToggleGroup(nameof(EnableSunShadow))]
         [Tooltip("Intensity of the sun shadows.")]
         public float SunShadowIntensity = 0.5f;
         
+        [ToggleGroup(nameof(EnableSunShadow))]
         [Tooltip("Softness of the sun shadows.")]
         public float SunShadowSoftness = 0.0f;
     }
