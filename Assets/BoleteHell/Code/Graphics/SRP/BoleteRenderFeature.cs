@@ -19,6 +19,9 @@ namespace BoleteHell.Code.Graphics.SRP
         [Tooltip("Reference resolution height for resolution-independent effects.")]
         public float ReferenceHeight = 1080f;
         
+        [ToggleGroup(nameof(EnableFakeAO), "Screen-space \"ambient occlusion\"")]
+        public bool EnableFakeAO = true;
+        
         [ToggleGroup(nameof(EnableSunShadow), "Screen-space sun shadow")]
         public bool EnableSunShadow = true;
 
@@ -74,7 +77,8 @@ namespace BoleteHell.Code.Graphics.SRP
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             renderer.EnqueuePass(_silhouettePass);
-            renderer.EnqueuePass(_fakeAOPass);
+            if (_settings.EnableFakeAO)
+                renderer.EnqueuePass(_fakeAOPass);
             if (_settings.EnableSunShadow)
                 renderer.EnqueuePass(_fakeSunShadowPass);
         }

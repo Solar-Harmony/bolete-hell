@@ -56,7 +56,7 @@
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
-                float3 worldPos : TEXCOORD1;
+                float3 worldPos : TEXCOORD0;
             };
 
             shared float _Corruption;
@@ -91,8 +91,8 @@
             Varyings vert(Attributes v)
             {
                 Varyings o;
-                o.positionCS = TransformObjectToHClip(v.positionOS.xyz);
-                o.worldPos   = TransformObjectToWorld(v.positionOS.xyz);
+                o.positionCS = TransformObjectToHClip(v.positionOS);
+                o.worldPos = TransformObjectToWorld(v.positionOS);
                 return o;
             }
 
