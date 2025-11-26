@@ -22,7 +22,10 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
             LaserProjectileMovement projectileMovement = reservedRenderer.SetupProjectileLaser(currentDirection, laserCombo.GetLaserSpeed());
             projectileMovement.OnCollide += (hit) =>
             {
-                ITargetable.Context context = new(hit.gameObject, instigator, reservedRenderer, projectileMovement.gameObject.transform.position, currentDirection, laserCombo);
+                LayerMask layerMask = ~LayerMask.GetMask("IgnoreProjectile");
+                RaycastHit2D rayHit = Physics2D.Raycast(projectileMovement.gameObject.transform.position,
+                    currentDirection, Mathf.Infinity, layerMask); 
+                ITargetable.Context context = new(hit.gameObject, instigator, reservedRenderer, rayHit, currentDirection, laserCombo);
                 OnHit(context, resp =>
                 {
                     currentDirection = resp.Direction;

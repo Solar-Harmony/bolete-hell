@@ -35,13 +35,12 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                 {
                     if (previousHitCollider && currentHit.collider == previousHitCollider)
                         continue; 
-                    CurrentPos = currentHit.point - CurrentDirection * 0.01f; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
+                    Vector3 hitPos = currentHit.point; //On ajoute un petit offset pour éviter de toucher le collider à nouveau
                     
-                    ITargetable.Context context = new(currentHit.collider.gameObject, instigator, laserInstance, CurrentPos, CurrentDirection, laserCombo);
+                    ITargetable.Context context = new(currentHit.collider.gameObject, instigator, laserInstance, currentHit, CurrentDirection, laserCombo);
                     OnHit(context, altered =>
                     {
                         CurrentDirection = altered.Direction;
-                        _rayPositions.Add(CurrentPos);
 
                         hasInteraction = altered.BlockProjectile || altered.RequestDestroyProjectile;
                         destroy = altered.RequestDestroyProjectile;
@@ -53,6 +52,8 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
                         //Sert surtout car le refract shield doit refaire le raycast a partir du point toucher mais  comme il va dans la même direction général qu'au début
                         //il retouche toujours le même coté touché précédemment
                         //donc je doit lui permettre de skipper le mur touché et faire le check des prochaines choses
+                        _rayPositions.Add(hitPos);
+                        CurrentPos = hitPos;
                         previousHitCollider = currentHit.collider;
                         break;
                     }

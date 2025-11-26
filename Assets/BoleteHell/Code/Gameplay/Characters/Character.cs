@@ -70,8 +70,8 @@ namespace BoleteHell.Code.Gameplay.Characters
 
         private void ProcessHitEffects(ITargetable.Context ctx, LaserCombo laser)
         {
-            _explosionVFXPool.Spawn(ctx.Position, 0.5f, 0.1f);
-            laser.CombinedEffect(ctx.Position, this, ctx.Projectile);
+            _explosionVFXPool.Spawn(ctx.RayHit.point, 0.5f, 0.1f);
+            laser.CombinedEffect(ctx.RayHit.point, this, ctx.Projectile);
 
             if (!_fire) 
                 return;
