@@ -12,10 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3c66737d0fac84f992e9198ee2a9c6, type: 3}
   m_Name: SDFRenderFeature
   m_EditorClassIdentifier: 
+--- !u!114 &-827212778719885579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80f63308caa4e14aa42be4645e818ab, type: 3}
+  m_Name: BoleteRenderFeature
+  m_EditorClassIdentifier: 
   m_Active: 1
-  settings:
-    renderingLayerMaskName: Lasers
-    tempBlurStrength: 1
+  _settings:
+    RenderingLayerMaskName: Obstacle
+    ReferenceHeight: 1080
+    EnableFakeAO: 1
+    EnableSunShadow: 1
+    SunDirection: {x: 0.8898171, y: -0.45631737}
+    SunShadowStepSize: 0.3
+    SunShadowIntensity: 0.5
+    SunShadowSoftness: 1
+    FakeAORadius: 64
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,8 +59,9 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: -3555484719484374845, guid: 57d7c4c16e2765b47a4d2069b311bffe, type: 3}
     probeSamplingDebugTexture: {fileID: 2800000, guid: 24ec0e140fb444a44ab96ee80844e18e, type: 3}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: -827212778719885579}
+  m_RendererFeatureMap: f5c6bc4a5c2685f4
   m_UseNativeRenderPass: 0
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}

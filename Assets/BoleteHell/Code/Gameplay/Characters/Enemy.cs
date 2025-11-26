@@ -51,6 +51,7 @@ namespace BoleteHell.Code.Gameplay.Characters
                 
                 dropManager.DropDroplets(gameObject, _dropSettings.dropletContext);
                 gameObject.SetActive(false);
+                _entityFinder.NotifyEnemyDied(this);
                 Destroy(gameObject);
                 _spriteFragmenter.Fragment(transform, spriteFragmentConfig);
             };
