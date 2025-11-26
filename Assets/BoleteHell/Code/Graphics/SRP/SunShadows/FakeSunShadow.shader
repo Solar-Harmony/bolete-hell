@@ -41,7 +41,9 @@
                 float transmittance = 1.0f;
                 for (int i = 1; i <= steps; ++i)
                 {
-                    float2 offset = sunDirUV * i * _StepSize;
+                    float dither = frac(sin(dot(input.texcoord * 1000 + i * 10, float2(12.9898, 78.233))) * 43758.5453) - 0.5;
+                    float stepPos = i + dither;
+                    float2 offset = sunDirUV * stepPos * _StepSize;
                     float2 sampleUV = input.texcoord + offset;
                     float silhouette = 0;
                     if (sampleUV.x >= 0 && sampleUV.x <= 1 && sampleUV.y >= 0 && sampleUV.y <= 1)
