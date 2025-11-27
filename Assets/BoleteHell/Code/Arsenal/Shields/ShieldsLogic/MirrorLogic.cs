@@ -10,7 +10,6 @@ namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
 
         public Vector2 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)
         {
-            
             return Vector2.Reflect(incomingDirection, hitPoint.normal);
         }
     }

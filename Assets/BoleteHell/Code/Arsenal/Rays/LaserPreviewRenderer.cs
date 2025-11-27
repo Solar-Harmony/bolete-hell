@@ -49,12 +49,11 @@ public class LaserPreviewRenderer : MonoBehaviour, IPoolable<Vector3, Vector3, C
     public void UpdatePreview(Vector3 startPos, Vector3 endPos, float currentTime)
     {
         lineRenderer.SetPosition(0, startPos);
-
         lineRenderer.SetPosition(1, endPos);
-        float chargeRatio = Mathf.Clamp01(currentTime / chargeTime);
-        
-        float width = Mathf.Lerp(minWidth, maxWidth, chargeRatio);
 
+        float chargeRatio = Mathf.Clamp01(currentTime / chargeTime);
+        float width = Mathf.Lerp(minWidth, maxWidth, chargeRatio);
+        
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
     }
