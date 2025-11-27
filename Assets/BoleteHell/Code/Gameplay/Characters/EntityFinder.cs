@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Characters
@@ -20,6 +22,16 @@ namespace BoleteHell.Code.Gameplay.Characters
         public Player GetPlayer()
         {
             return _player;
+        }
+
+        // since enemy will be destroyed when he died we can't pass it itself
+        public record EnemyDiedEventData(string Name);
+        
+        [CanBeNull] public event Action<EnemyDiedEventData> EnemyDied;
+
+        public void NotifyEnemyDied(Enemy enemy)
+        {
+            EnemyDied?.Invoke(new EnemyDiedEventData(enemy.name));
         }
 
         public List<Enemy> GetAllEnemies()

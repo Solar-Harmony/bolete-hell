@@ -32,12 +32,15 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         {
             public bool AllowSpawning = true;
             public float Interval = 5.0f;
+            public int MaxEnemies = 7;
         }
 
         [Inject]
         private Config _config;
         
         private List<SpawnArea> _spawnAreas;
+
+        private int _enemiesSpawned = 0;
         
         private Coroutine _spawnCoroutine = null;
 
@@ -46,6 +49,8 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         private void Start()
         {
             _spawnAreas = new List<SpawnArea>(FindObjectsByType<SpawnArea>(FindObjectsSortMode.None));
+
+            _entities.EnemyDied += _ => _enemiesSpawned--; 
             
             if (_config.AllowSpawning)
                 StartSpawning();
@@ -69,12 +74,16 @@ namespace BoleteHell.Code.Gameplay.SpawnManager
         {
             while (true)
             {
-                Vector2 targetLocation = FindTargetLocation();
-                SpawnArea spawnArea = FindClosestSpawnArea(targetLocation);
-            
-                if (spawnArea)
+                if (_enemiesSpawned < _config.MaxEnemies)
                 {
-                    _spawnManager.Spawn(spawnArea);
+                    Vector2 targetLocation = FindTargetLocation();
+                    SpawnArea spawnArea = FindClosestSpawnArea(targetLocation);
+            
+                    if (spawnArea)
+                    {
+                        _spawnManager.Spawn(spawnArea);
+                        _enemiesSpawned++;
+                    }
                 }
 
                 yield return new WaitForSeconds(_config.Interval);
