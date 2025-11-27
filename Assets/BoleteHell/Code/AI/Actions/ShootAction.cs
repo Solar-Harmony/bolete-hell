@@ -61,7 +61,7 @@ namespace BoleteHell.Code.AI.Actions
             return !_arsenal.Shoot(_currentAimDirection) ? Status.Running : Status.Success;
         }
 
-        protected override void OnEnd()
+         protected override void OnEnd()
          {
              _arsenal.OnShootCanceled();
          }

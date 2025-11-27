@@ -51,7 +51,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             _pool.Enqueue(rayRenderer);
         }
 
-        public LaserInstance Get(IInstigator owner, AffectedSide side)
+        public LaserInstance Get(GameObject owner, AffectedSide side)
         {
             if (_pool.Count == 0)
             {

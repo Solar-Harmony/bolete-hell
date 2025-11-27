@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Spawn List
   m_EditorClassIdentifier: 
   allowedEnemies:
-  - {fileID: 6982038961960877227, guid: 99e191c0b8b27c64abdad62ea56b988e, type: 3}
-  - {fileID: 6982038961960877227, guid: ac51713dd4528a34ab13680836bef7a3, type: 3}
-  - {fileID: 6982038961960877227, guid: 999c81675a38fe648961075c76dffd50, type: 3}
-  - {fileID: 6982038961960877227, guid: 932a46b8869275245a823d63d223fdca, type: 3}
+  - {fileID: 5327821353126393566, guid: 029045c6ee445e84db897dd1392dcd45, type: 3}
+  - {fileID: 817991372973681497, guid: 99b738f8c544e9b48b9f6ed14d23e8cf, type: 3}
+  - {fileID: 7525242316488082644, guid: 1f6b2ee0070621741a9405cf40895131, type: 3}
+  - {fileID: 743405518035771420, guid: 923c9b1da14a82c4282dac73b4eae754, type: 3}

@@ -1304,11 +1304,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1688586710967767985}
   - component: {fileID: 8326415044824130976}
-  - component: {fileID: 2564544298301446155}
   - component: {fileID: -7706689365234032475}
   - component: {fileID: 728234813211920058}
   - component: {fileID: 4450026047873336119}
   - component: {fileID: 5458277079010181547}
+  - component: {fileID: 3936461364443652694}
+  - component: {fileID: 7801308128635164975}
+  - component: {fileID: 1307580236049276637}
+  - component: {fileID: 5155209625979689974}
+  - component: {fileID: 8970055022577587531}
   m_Layer: 11
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -1372,27 +1376,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.44
---- !u!114 &2564544298301446155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8563693215699855702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a0b5eddece24cac86be511792c78f75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 0
-  <GeneralDamageMultiplier>k__BackingField: 1
-  <Energy>k__BackingField:
-    maxEnergy: 150
-    regenRate: 20
-    currentEnergy: 100
-  hitFeedbackEffect: {fileID: 7303950865531914175, guid: 5a7e6ab5f3432784783e071e6e9333cb, type: 3}
-  _bounds: {fileID: 8478053692772356421}
-  deathSprite: {fileID: 21300000, guid: 1a797df68b4c9eb4493f6060f338e729, type: 3}
 --- !u!114 &-7706689365234032475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,7 +1390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 1.19
-  shootWeaponsSimultaneously: 0
   cannons:
   - cannonConfigs:
     - rid: 3883006987907891202
@@ -1504,6 +1486,70 @@ MonoBehaviour:
     - rid: 8554527557946441734
       type: {class: RotateShieldInteraction, ns: BoleteHell.Code.Gameplay.Interactions, asm: Assembly-CSharp}
       data: 
+--- !u!114 &3936461364443652694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be928fabc74f4b5eb763c480965a5351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <GeneralDamageMultiplier>k__BackingField: 1
+--- !u!114 &7801308128635164975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13aa1dabf34a4c0bb9f789d8e89ba126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 0
+--- !u!114 &1307580236049276637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f006e26132da4fa7bed7b441c91865ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathSprite: {fileID: 21300000, guid: 1a797df68b4c9eb4493f6060f338e729, type: 3}
+--- !u!114 &5155209625979689974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a2711d5e4a42f9b10a197e7e54aa92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tags: 03000000
+--- !u!114 &8970055022577587531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2516306c2d094087a1ffaf8b10a68cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1193320144923651803
 PrefabInstance:
   m_ObjectHideFlags: 0

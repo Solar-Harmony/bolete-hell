@@ -1,9 +1,9 @@
-﻿using BoleteHell.Code.Gameplay.Characters;
+﻿using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
-    public class ShieldPreviewFactory : PlaceholderFactory<Character, ShieldData, ShieldPreviewDrawer>
+    public class ShieldPreviewFactory : PlaceholderFactory<GameObject, ShieldData, ShieldPreviewDrawer>
     {
     }
 }

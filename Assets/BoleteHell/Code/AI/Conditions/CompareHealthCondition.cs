@@ -19,7 +19,7 @@ public partial class CompareHealthCondition : Condition
 
     public override bool IsTrue()
     {
-        Entity.Value.GetComponentChecked(out Health healthComponent);
+        Entity.Value.GetComponentChecked(out HealthComponent healthComponent);
         float health = healthComponent.Percent;
         float ratio = N.Value / 100.0f;
         

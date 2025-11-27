@@ -1,31 +1,31 @@
 ﻿using System;
 using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Utils;
+using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
     [Serializable]
     public sealed class SlowStatusEffectConfig : StatusEffectConfig
     {
-        public float slowPercentage = 0.5f;
+        public float SlowPercentage = 0.5f;
     }
     
     public sealed class SlowStatusEffect : IStatusEffect<SlowStatusEffectConfig>
     {
-        public bool CanApply(IStatusEffectTarget target, SlowStatusEffectConfig config)
+        public bool CanApply(GameObject target, SlowStatusEffectConfig config)
         {
-            return target is IMovable;
+            return target.HasComponent<MovementComponent>();
         }
 
-        public void Apply(IStatusEffectTarget target, SlowStatusEffectConfig config)
+        public void Apply(GameObject target, SlowStatusEffectConfig config)
         {
-            var movable = (IMovable)target;
-            movable.MovementSpeed *= (1 - config.slowPercentage);
+            target.GetComponent<MovementComponent>().MovementSpeed *= (1 - config.SlowPercentage);
         }
 
-        public void Unapply(IStatusEffectTarget target, SlowStatusEffectConfig config)
+        public void Unapply(GameObject target, SlowStatusEffectConfig config)
         {
-            var movable = (IMovable)target;
-            movable.MovementSpeed /= (1 - config.slowPercentage);
+            target.GetComponent<MovementComponent>().MovementSpeed /= (1 - config.SlowPercentage);
         }
     }
 }

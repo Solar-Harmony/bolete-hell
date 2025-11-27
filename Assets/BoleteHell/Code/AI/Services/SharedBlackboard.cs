@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Characters;
+﻿using BoleteHell.Code.Gameplay.Characters.Registry;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -11,12 +11,12 @@ namespace BoleteHell.Code.AI.Services
         private RuntimeBlackboardAsset _blackboard;
         
         [Inject]
-        private IEntityFinder _entityFinder;
+        private IEntityRegistry _entityRegistry;
         
-        private void Awake()
+        private void Start()
         {
             Debug.Assert(_blackboard);
-            var player = _entityFinder.GetPlayer().gameObject;
+            var player = _entityRegistry.GetPlayer().gameObject;
             _blackboard.Blackboard.Variables.Find(v => v.Name == "Player").ObjectValue = player;
         }
     }

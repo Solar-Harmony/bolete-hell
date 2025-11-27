@@ -1,40 +1,33 @@
 ﻿using System;
-using BoleteHell.Code.Audio;
-using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Graphics;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
-using Zenject;
+using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
+    using IStatusEffectTarget = GameObject;
     [Serializable]
     public sealed class HealStatusEffectConfig : StatusEffectConfig
     {
         [MinValue(1)]
-        public int healingEachTick = 10;
+        public int HealingEachTick = 10;
     }
     
     public sealed class HealStatusEffect : IStatusEffect<HealStatusEffectConfig>
     {
         public bool CanApply(IStatusEffectTarget target, HealStatusEffectConfig config)
         {
-            return target is IDamageable;
+            return target.HasComponent<HealthComponent>();
         }
 
         public void Apply(IStatusEffectTarget target, HealStatusEffectConfig config)
         {
-            if (target is IDamageable damageable)
-            {
-                damageable.Health.Heal(config.healingEachTick);
-            }
+            target.GetComponent<HealthComponent>().Heal(config.HealingEachTick);
         }
 
         public void Unapply(IStatusEffectTarget target, HealStatusEffectConfig config)
         {
-            if (target is IDamageable damageable)
-            {
-                damageable.Health.TakeDamage(config.healingEachTick);
-            }
+            target.GetComponent<HealthComponent>().TakeDamage(config.HealingEachTick);
         }
     }
 }

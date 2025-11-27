@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using BoleteHell.Code.Gameplay.SpawnManager;
 using BoleteHell.Code.Input;
+using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.GameState
@@ -9,12 +12,36 @@ namespace BoleteHell.Code.Gameplay.GameState
     {
         public event Action OnVictory;
         public event Action<string> OnDefeat;
+
+        [Serializable]
+        public class Config
+        {
+            public bool DefeatWhenAllBasesDestroyed = true;
+        }
         
         [Inject]
         private IInputState _inputState;
 
         [Inject]
         private SpawnController _spawnController;
+
+        [Inject]
+        private IEntityRegistry _entities;
+        
+        [Inject]
+        private Config _config;
+
+        [Inject]
+        public void Construct()
+        {
+            _entities.EntityDied += ((EntityTag[] tags, GameObject obj) e) =>
+            {
+                if (e.tags.Contains(EntityTag.Player))
+                    TriggerDefeat("You have been defeated.");
+                else if (_config.DefeatWhenAllBasesDestroyed && e.tags.Contains(EntityTag.Base) && _entities.GetCount(EntityTag.Base) == 0)
+                    TriggerDefeat("Your bases have been destroyed.");
+            };
+        }
         
         public void TriggerVictory()
         {

@@ -18,7 +18,7 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
  
         private TransientLight.Pool _explosionVFXPool;
 
-        public override void OnHitImpl(Vector2 hitPosition, IDamageable victim, LaserInstance laser)
+        public override void OnHitImpl(Vector2 hitPosition, HealthComponent victim, LaserInstance laser)
         {
             ServiceLocator.Get(out _explosionVFXPool);
 
@@ -34,23 +34,25 @@ namespace BoleteHell.Code.Arsenal.Rays.RayLogic
 
             foreach (Collider2D hit in hits)
             {
-                if (!hit.gameObject.TryGetComponent(out Character character)) 
+                if (!hit.TryGetComponent(out HealthComponent health))
                     continue;
-
-                IFaction faction = character;
-                bool isAffected = faction.IsAffected(laser.AffectedSide, laser.Instigator);
+                
+                bool hasFaction = hit.TryGetComponent(out FactionComponent faction);
+                bool hasInstigatorFaction = laser.Instigator.TryGetComponent(out FactionComponent instigatorFaction);
+                bool isAffected = hasFaction && hasInstigatorFaction && faction.IsAffected(laser.AffectedSide, instigatorFaction);
                 if (!isAffected)
                     continue;
                 
-                int damage = ComputeActualDamage(explosionDamage, character, laser.Instigator);
+                DamageDealerComponent instigator = laser.Instigator.GetComponent<DamageDealerComponent>();
+                int damage = ComputeActualDamage(explosionDamage, health.gameObject, instigator);
                 
                 Scribe.Log(LogHits, "{0} was hit by {1}'s {2}hp explosion and lost {3}hp.",
-                    character.GameObject.name,
-                    laser.Instigator.GameObject.name,
+                    hit.gameObject.name,
+                    laser.Instigator.name,
                     explosionDamage,
                     damage);
                     
-                character.Health.TakeDamage(damage);
+                health.TakeDamage(damage);
             }
         }
 

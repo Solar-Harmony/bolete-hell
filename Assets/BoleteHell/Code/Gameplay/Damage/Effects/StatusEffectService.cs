@@ -23,10 +23,10 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
             return _activeEffects;
         }
 
-        public void AddStatusEffect<T>(IStatusEffectTarget target, T config) where T : StatusEffectConfig
+        public void AddStatusEffect<T>(GameObject target, T config) where T : StatusEffectConfig
         {
-            if (!target.IsValid)
-                return; 
+            if (!target)
+                return;
             
             IStatusEffect effect = _effects.Single(e => e.ConfigType == config.GetType());
 
@@ -82,7 +82,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                 
                 _activeEffects.Remove(effect);
 
-                if (!effect.Target.IsValid)
+                if (!effect.Target)
                     continue;
 
                 if (effect.ApplyIfNeeded(currentTime))

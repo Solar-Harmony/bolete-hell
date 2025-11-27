@@ -50,7 +50,7 @@ namespace BoleteHell.Code.Arsenal.RayData
             return new Color(r / colorList.Count, g / colorList.Count, b / colorList.Count);
         }
 
-        public void CombinedEffect(Vector2 hitPosition, IDamageable hitCharacterHealth, LaserInstance laserInstance)
+        public void CombinedEffect(Vector2 hitPosition, HealthComponent hitCharacterHealth, LaserInstance laserInstance)
         {
             foreach (LaserData data in Data)
             {

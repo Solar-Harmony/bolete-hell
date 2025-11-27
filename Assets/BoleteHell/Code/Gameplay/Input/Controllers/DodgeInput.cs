@@ -42,7 +42,7 @@ namespace BoleteHell.Code.Input.Controllers
 
         private int remainingDodges;
 
-        private Health health;
+        private HealthComponent health;
 
         private void OnEnable()
         {
@@ -58,7 +58,7 @@ namespace BoleteHell.Code.Input.Controllers
         private void Start()
         {
             remainingDodges = maxNumberOfDodges;
-            health = GetComponent<Health>();
+            health = GetComponent<HealthComponent>();
         }
 
         private void Dodging()

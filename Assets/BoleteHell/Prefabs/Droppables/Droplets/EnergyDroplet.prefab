@@ -46,14 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42393d96bf9b1e548a354df6642b4c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect:
-    rid: 7325218740191887454
-  pickupDistance: 2
-  speed: 8
+  _effect:
+    rid: 795111359620055040
+  _pickupDistance: 2
+  _speed: 5
   references:
     version: 2
     RefIds:
-    - rid: 7325218740191887454
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 795111359620055040
       type: {class: GainEnergyStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
       data:
         isTransient: 0
@@ -61,13 +63,8 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 7325218740191887458
-        energyEachTick: 30
-    - rid: 7325218740191887458
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data:
-        maxStacks: 3
-        condition: 0
+          rid: -2
+        EnergyEachTick: 10
 --- !u!212 &3624254693511255549
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Zenject;
@@ -18,7 +19,7 @@ namespace BoleteHell.Code.Input.Controllers
         private Light2D _shipExhaustLight;
 
         [Inject]
-        private IEntityFinder _entities;
+        private IEntityRegistry _entities;
 
         private void Awake()
         {
@@ -30,7 +31,7 @@ namespace BoleteHell.Code.Input.Controllers
         {
             _shipExhaustLight.intensity = input.IsBoosting ? maxLightIntensity / 2.0f : maxLightIntensity;
 
-            float speedFactor = _entities.GetPlayer().MovementSpeed;
+            float speedFactor = _entities.GetPlayer().GetComponent<MovementComponent>().MovementSpeed;
             Vector2 inputDir = input.MovementDisplacement.normalized;
             float speed = input.IsBoosting ? 2.0f * speedFactor : speedFactor;
             Vector2 newPosition = transform.position + (Vector3)inputDir * (speed * Time.fixedDeltaTime);

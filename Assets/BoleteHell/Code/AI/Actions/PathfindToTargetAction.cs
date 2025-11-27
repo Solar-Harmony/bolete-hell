@@ -20,7 +20,7 @@ namespace BoleteHell.Code.AI.Actions
     {
         [SerializeReference] public BlackboardVariable<Transform> Target;
 
-        private Enemy _selfCharacter;
+        private MovementComponent _selfCharacter;
         private AIPath _pathfinder;
 
         protected override Status OnStart()

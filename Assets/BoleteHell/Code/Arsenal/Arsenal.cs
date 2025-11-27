@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Cannons;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Damage;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -28,7 +28,7 @@ namespace BoleteHell.Code.Arsenal
         private int _selectedCannonIndex;
         private readonly List<List<CannonInstance>> _cannonInstances = new();
 
-        private Character _owner;
+        private GameObject _owner;
         
         private void OnDrawGizmosSelected()
         {
@@ -49,8 +49,8 @@ namespace BoleteHell.Code.Arsenal
                 _cannonInstances.Add(instances);
             }
 
-            _owner = GetComponent<Character>();
-            _owner.Health.OnDeath += OnShootCanceled;
+            _owner = gameObject;
+            _owner.GetComponent<HealthComponent>().OnDeath += OnShootCanceled;
         }
        
         private void Update()

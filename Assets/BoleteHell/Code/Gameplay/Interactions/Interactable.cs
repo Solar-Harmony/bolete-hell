@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Interactions
@@ -9,7 +8,7 @@ namespace BoleteHell.Code.Gameplay.Interactions
         [SerializeReference]
         private List<Interaction> interactions = new ();
 
-        public void Interact(Player player)
+        public void Interact(GameObject player)
         {
             foreach (Interaction interaction in interactions)
             {

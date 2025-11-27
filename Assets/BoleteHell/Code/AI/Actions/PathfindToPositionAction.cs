@@ -16,7 +16,7 @@ public partial class PathfindToPositionAction : Action
 {
     [SerializeReference] public BlackboardVariable<Vector2> Position;
 
-    private Enemy _character;
+    private MovementComponent _character;
     private AIPath _pathfinder;
     
     protected override Status OnStart()

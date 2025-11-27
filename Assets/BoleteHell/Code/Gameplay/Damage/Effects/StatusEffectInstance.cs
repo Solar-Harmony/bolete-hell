@@ -10,18 +10,18 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         private int _ticksLeft;
         private readonly IStatusEffect _effect;
         public readonly StatusEffectConfig config;
-        private readonly IStatusEffectTarget _target;
+        private readonly GameObject _target;
 
         // Public properties for debugger access
         public IStatusEffect Effect => _effect;
-        public IStatusEffectTarget Target => _target;
+        public GameObject Target => _target;
         public int TicksLeft => _ticksLeft;
         public string EffectName => _effect.GetType().Name;
         public string TargetName => _target?.ToString() ?? "Unknown";
         public float TimeRemaining => Mathf.Max(0f, ScheduledTime - Time.time);
         public bool IsExpired => _ticksLeft <= 0;
 
-        public StatusEffectInstance(IStatusEffect effect, StatusEffectConfig config, IStatusEffectTarget target)
+        public StatusEffectInstance(IStatusEffect effect, StatusEffectConfig config, GameObject target)
         {
             _effect = effect;
             this.config = config;

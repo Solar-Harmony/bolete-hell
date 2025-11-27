@@ -1,4 +1,4 @@
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,41 +9,41 @@ namespace BoleteHell.Code.Gameplay.Droppables
     public class Droplet : MonoBehaviour
     {
         [field:SerializeReference] [Required]
-        private StatusEffectConfig effect;
+        private StatusEffectConfig _effect;
     
         [SerializeField]
-        private float pickupDistance = 2f;
+        private float _pickupDistance = 2f;
     
         [SerializeField]
-        private float speed = 5f; 
+        private float _speed = 5f; 
     
         [Inject]
         private IStatusEffectService _statusEffectService;
 
         [Inject]
-        private IEntityFinder _entityFinder;
+        private IEntityRegistry _entityRegistry;
 
-        private Player player;
+        private GameObject _player;
         private void Start()
         {
-            player = _entityFinder.GetPlayer();
+            _player = _entityRegistry.GetPlayer();
         }
 
         private void Update()
         {
-            if (!player) return;
-            Vector3 playerPos = player.transform.position;
-            if(Vector2.Distance(playerPos, transform.position) > pickupDistance) return;
+            if (!_player) return;
+            Vector3 playerPos = _player.transform.position;
+            if(Vector2.Distance(playerPos, transform.position) > _pickupDistance) return;
         
             Vector3 direction = (playerPos - transform.position).normalized;
-            transform.position += direction * (speed * Time.deltaTime);
+            transform.position += direction * (_speed * Time.deltaTime);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
         
-            _statusEffectService.AddStatusEffect(player, effect); 
+            _statusEffectService.AddStatusEffect(_player, _effect); 
             Destroy(this.gameObject);
         }
     }

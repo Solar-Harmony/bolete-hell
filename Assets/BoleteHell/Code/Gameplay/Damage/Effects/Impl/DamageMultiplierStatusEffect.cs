@@ -8,36 +8,36 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
     [Serializable]
     public sealed class DamageMultiplierStatusEffectConfig : StatusEffectConfig
     {
-        public float damageMultiplier = 1.5f;
+        public float DamageMultiplier = 1.5f;
 
         /// <summary>
         /// The faction that will take the bonus damage, set to null if general
         /// So a bullet can deal more damage if it hits specifically a shroom, or specifically the player
         /// </summary>
-        public bool isAppliedToFaction;
-        [ShowIf("isAppliedToFaction")][Tooltip("The faction that will take the bonus damage (if Enemy, damage against characters of enemy faction will take more damage)")]
-        public FactionType affectedFaction;
+        public bool IsAppliedToFaction;
+        [ShowIf("IsAppliedToFaction")][Tooltip("The faction that will take the bonus damage (if Enemy, damage against characters of enemy faction will take more damage)")]
+        public FactionType AffectedFaction;
     }
     
     public class DamageMultiplierStatusEffect : IStatusEffect<DamageMultiplierStatusEffectConfig>
     {
-        public bool CanApply(IStatusEffectTarget target, DamageMultiplierStatusEffectConfig config)
+        public bool CanApply(GameObject target, DamageMultiplierStatusEffectConfig config)
         {
-            return target is IDamageDealer;
+            return target.TryGetComponent<DamageDealerComponent>(out _);
         }
 
-        public void Apply(IStatusEffectTarget target, DamageMultiplierStatusEffectConfig config)
+        public void Apply(GameObject target, DamageMultiplierStatusEffectConfig config)
         {
-            IDamageDealer damageDealer = (IDamageDealer)target;
-            FactionType? faction = config.isAppliedToFaction ? config.affectedFaction : null;
-            damageDealer.AddDamageMultiplier(faction, config.damageMultiplier);
+            DamageDealerComponent damageDealer = target.GetComponent<DamageDealerComponent>();
+            FactionType? faction = config.IsAppliedToFaction ? config.AffectedFaction : null;
+            damageDealer.AddDamageMultiplier(faction, config.DamageMultiplier);
         }
 
-        public void Unapply(IStatusEffectTarget target, DamageMultiplierStatusEffectConfig config)
+        public void Unapply(GameObject target, DamageMultiplierStatusEffectConfig config)
         {
-            IDamageDealer damageDealer = (IDamageDealer)target;
-            FactionType? faction = config.isAppliedToFaction ? config.affectedFaction : null;
-            damageDealer.RemoveDamageMultiplier(faction, config.damageMultiplier);
+            DamageDealerComponent damageDealer = target.GetComponent<DamageDealerComponent>();
+            FactionType? faction = config.IsAppliedToFaction ? config.AffectedFaction : null;
+            damageDealer.RemoveDamageMultiplier(faction, config.DamageMultiplier);
         }
     }
 }

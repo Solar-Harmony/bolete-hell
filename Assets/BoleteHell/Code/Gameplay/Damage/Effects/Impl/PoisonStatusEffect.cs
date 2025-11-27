@@ -1,25 +1,27 @@
 ﻿using System;
 using BoleteHell.Code.Audio;
-using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Graphics;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
+    using IStatusEffectTarget = GameObject;
     [Serializable]
     public sealed class PoisonStatusEffectConfig : StatusEffectConfig
     {
         [MinValue(1)]
-        public int damageEachTick = 10;
+        public int DamageEachTick = 10;
 
         protected override StatusEffectComparison Compare(StatusEffectConfig other)
         { 
             if (other is not PoisonStatusEffectConfig otherPoison) 
                 return StatusEffectComparison.CannotCompare;
 
-            var potency = damageEachTick * duration;
-            var otherPotency = otherPoison.damageEachTick * otherPoison.duration;
+            var potency = DamageEachTick * duration;
+            var otherPotency = otherPoison.DamageEachTick * otherPoison.duration;
             
             if (potency > otherPotency)
                 return StatusEffectComparison.Stronger;
@@ -41,29 +43,23 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 
         public bool CanApply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
         {
-            return target is IDamageable;
+            return target.HasComponent<HealthComponent>();
         }
 
         public void Apply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
         {
-            if (target is IDamageable damageable)
-            {
-                damageable.Health.TakeDamage(config.damageEachTick);
-            }
-
-            if (target is ISceneObject sceneObject) 
-            {
-                _audioPlayer.PlaySoundAsync("sfx_poison", sceneObject.Position);
-                _transientLightPool.Spawn(sceneObject.Position, 1.2f, 0.5f);
-            }
+            var healthComp = target.GetComponent<HealthComponent>();
+            healthComp.TakeDamage(config.DamageEachTick);
+            
+            Vector3 pos = target.transform.position;
+            _audioPlayer.PlaySoundAsync("sfx_poison", pos);
+            _transientLightPool.Spawn(pos, 1.2f, 0.5f);
         }
 
         public void Unapply(IStatusEffectTarget target, PoisonStatusEffectConfig config)
         {
-            if (target is IDamageable damageable)
-            {
-                damageable.Health.TakeDamage(-config.damageEachTick);
-            }
+            var healthComp = target.GetComponent<HealthComponent>();
+            healthComp.TakeDamage(-config.DamageEachTick);
         }
     }
 }

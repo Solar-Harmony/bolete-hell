@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
@@ -6,6 +7,6 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
     {
         IReadOnlyList<IStatusEffect> GetStatusEffects();
         IReadOnlyCollection<StatusEffectInstance> GetActiveStatusEffects();
-        void AddStatusEffect<T>(IStatusEffectTarget target, T config) where T : StatusEffectConfig;
+        void AddStatusEffect<T>(GameObject target, T config) where T : StatusEffectConfig;
     }
 }

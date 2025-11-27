@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RayWidth>k__BackingField: 0.2
   <LaserLength>k__BackingField: 0.3
+  Instigator: {fileID: 0}
   isProjectile: 0
 --- !u!120 &8214742768466675644
 LineRenderer:

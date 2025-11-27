@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects
 {
@@ -19,7 +18,6 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         }
         
         [Serializable]
-        [DisplayName("Rip bozo")]
         public class Stacking : StatusEffectStackBehavior
         {
             public int maxStacks = 3;

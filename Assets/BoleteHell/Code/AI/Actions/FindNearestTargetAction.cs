@@ -1,8 +1,6 @@
 using System;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Core;
-using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Utils;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -22,27 +20,18 @@ namespace BoleteHell.Code.AI.Actions
         public BlackboardVariable<GameObject> Target;
         
         private IDirector _director;
-        private Character _character;
 
         protected override Status OnStart()
         {
             ServiceLocator.Get(out _director);
-
-            GameObject.GetComponentChecked(out _character);
-            
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            ISceneObject target = _director.FindNearestTarget(_character);
-            if (target is not MonoBehaviour go)
-            {
-                Debug.LogError($"{GameObject.name} targeted a non MonoBehaviour {target}");
-                return Status.Failure;
-            }
+            GameObject target = _director.FindNearestTarget(GameObject);
 
-            Target.Value = go.gameObject;
+            Target.Value = target;
             return Status.Success;
         }
     }

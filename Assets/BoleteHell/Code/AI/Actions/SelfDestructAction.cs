@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Core;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Utils;
 using Unity.Behavior;
@@ -75,10 +75,10 @@ public partial class SelfDestructAction : Action
         for (int i = 0; i < hitCollidersAmount; i++)
         {
             Collider2D hit = results[i];
-            if (!hit.gameObject.TryGetComponent(out Character character)) 
+            if (!hit.gameObject.TryGetComponent(out HealthComponent health)) 
                 continue;
                     
-            character.Health.TakeDamage(ExplosionDamage);
+            health.TakeDamage(ExplosionDamage);
         }
     }
     

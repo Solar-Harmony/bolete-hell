@@ -1,5 +1,5 @@
-﻿using BoleteHell.Code.Gameplay.Base;
-using BoleteHell.Code.Gameplay.Droppables;
+﻿using BoleteHell.Code.Gameplay.Droppables;
+using BoleteHell.Code.Gameplay.GameState;
 using BoleteHell.Code.Gameplay.SpawnManager;
 using UnityEngine;
 using Zenject;
@@ -11,14 +11,14 @@ namespace BoleteHell.Code.Core
     {
         public DropManager.Config DropManagerConfig;
         public SpawnController.Config SpawnControllerConfig;
-        public BaseService.Config BaseServiceConfig;
+        public GameOutcomeService.Config OutcomeConfig;
         
         public override void InstallBindings()
         {
             Container.BindInstances(
                 DropManagerConfig, 
                 SpawnControllerConfig, 
-                BaseServiceConfig);
+                OutcomeConfig);
         }
     }
 }

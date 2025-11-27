@@ -8,7 +8,7 @@ namespace BoleteHell.Code.AI.Services
         //private string playerLayer = "Unit";
         private string enemyLayer = "PlayerEnemy";
         private float radius = 0.17f;
-        public bool HasLineOfSight(GameObject self, Character target, float viewRange)
+        public bool HasLineOfSight(GameObject self, GameObject target, float viewRange)
         {
             if (!self || !target)
                 return false;
@@ -17,7 +17,8 @@ namespace BoleteHell.Code.AI.Services
             
             //Permet a l'ennemis de ne pas prendre les autre ennemis en compte pour target le joueur ou les bases
             //mais de prendre les autre ennemis en compte quand il target un ennemis
-            string ignoreLayer = target.faction == FactionType.Enemy ? "" : enemyLayer;
+            var faction = self.GetComponent<FactionComponent>();
+            string ignoreLayer = faction.Type == FactionType.Enemy ? "" : enemyLayer;
             LayerMask layerMask = ~LayerMask.GetMask(ignoreLayer, "IgnoreProjectile", "Shield");
             
             //j'avance le cast un peut pour ne pas se hit soit même

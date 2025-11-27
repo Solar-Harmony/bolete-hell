@@ -1,40 +1,34 @@
 ﻿using System;
-using BoleteHell.Code.Audio;
 using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Graphics;
+using BoleteHell.Code.Utils;
 using Sirenix.OdinInspector;
-using Zenject;
+using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
 {
+    using IStatusEffectTarget = GameObject;
     [Serializable]
     public sealed class GainEnergyStatusEffectConfig : StatusEffectConfig
     {
         [MinValue(1)]
-        public int energyEachTick = 10;
+        public int EnergyEachTick = 10;
     }
     
     public sealed class GainEnergyStatusEffect : IStatusEffect<GainEnergyStatusEffectConfig>
     {
         public bool CanApply(IStatusEffectTarget target, GainEnergyStatusEffectConfig config)
         {
-            return target is Character;
+            return target.HasComponent<EnergyComponent>();
         }
 
         public void Apply(IStatusEffectTarget target, GainEnergyStatusEffectConfig config)
         {
-            if (target is Character character)
-            {
-                character.Energy.GainFixedAmount(config.energyEachTick);
-            }
+            target.GetComponent<EnergyComponent>().GainFixedAmount(config.EnergyEachTick);
         }
 
         public void Unapply(IStatusEffectTarget target, GainEnergyStatusEffectConfig config)
         {
-            if (target is Character character)
-            {
-                character.Energy.LoseFixedAmount(config.energyEachTick);
-            }
+            target.GetComponent<EnergyComponent>().LoseFixedAmount(config.EnergyEachTick);
         }
     }
 }

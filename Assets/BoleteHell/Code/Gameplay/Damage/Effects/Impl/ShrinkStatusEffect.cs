@@ -1,5 +1,4 @@
 ﻿using System;
-using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
@@ -7,26 +6,24 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects.Impl
     [Serializable]
     public sealed class ShrinkStatusEffectConfig : StatusEffectConfig
     {
-        public float shrinkPercent = 0.5f;
+        public float ShrinkPercent = 0.5f;
     }
     
     public sealed class ShrinkStatusEffect : IStatusEffect<ShrinkStatusEffectConfig>
     {
-        public bool CanApply(IStatusEffectTarget target, ShrinkStatusEffectConfig config)
+        public bool CanApply(GameObject target, ShrinkStatusEffectConfig config)
         {
-            return target is IMovable;
+            return true;
         }
 
-        public void Apply(IStatusEffectTarget target, ShrinkStatusEffectConfig config)
+        public void Apply(GameObject target, ShrinkStatusEffectConfig config)
         {
-            var go = (MonoBehaviour)target;
-            go.transform.localScale *= (1 - config.shrinkPercent);
+            target.transform.localScale *= (1 - config.ShrinkPercent);
         }
 
-        public void Unapply(IStatusEffectTarget target, ShrinkStatusEffectConfig config)
+        public void Unapply(GameObject target, ShrinkStatusEffectConfig config)
         {
-            var go = (MonoBehaviour)target;
-            go.transform.localScale /= (1 - config.shrinkPercent);
+            target.transform.localScale /= (1 - config.ShrinkPercent);
         }
     }
 }

@@ -19,5 +19,6 @@ MonoBehaviour:
   SpawnControllerConfig:
     AllowSpawning: 1
     Interval: 5
-  BaseServiceConfig:
-    DefeatWhenNoBaseLeft: 0
+    MaxEnemies: 7
+  OutcomeConfig:
+    DefeatWhenAllBasesDestroyed: 0

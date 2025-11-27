@@ -2,7 +2,7 @@ using System;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Utils;
+using BoleteHell.Code.Gameplay.Damage;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -22,23 +22,28 @@ namespace BoleteHell.Code.AI.Actions
         public BlackboardVariable<GameObject> CurrentTarget;
         
         private IDirector _director;
-        private Character _character;
 
         protected override Status OnStart()
         {
             ServiceLocator.Get(out _director);
-            
-            GameObject.GetComponentChecked(out _character);
             
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            ISceneObject target = _director.FindWeakestAlly(_character);
+            GameObject target = _director.FindWeakestAlly(GameObject);
+            if (!target)
+            {
+                CurrentTarget.Value = null;
+                return Status.Success;
+            }
             
-            CurrentTarget.Value = target is Enemy npc && npc.Health.Percent < 1.0f
-                ? npc.gameObject
+            var faction = target.GetComponent<FactionComponent>();
+            var health = target.GetComponent<HealthComponent>();
+            
+            CurrentTarget.Value = faction.Type == FactionType.Enemy && health.Percent < 1.0f
+                ? target
                 : null;
 
             return Status.Success;

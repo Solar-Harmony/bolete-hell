@@ -1,6 +1,6 @@
 using System.Linq;
-using BoleteHell.Code.Gameplay.Base;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
+using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Utils;
 using UnityEngine;
 using Zenject;
@@ -9,44 +9,39 @@ namespace BoleteHell.Code.AI.Services
 {
     public class Director : IDirector
     {
-        [Inject(Id = "Player")]
-        private ISceneObject _player;
-
         [Inject]
-        private IBaseService _bases;
-
-        [Inject]
-        private IEntityFinder _entityFinder;
+        private IEntityRegistry _entityRegistry;
         
-
-        //Pourrais être changer pour un findClosestAlly qui prendrait en compte les faction et chercherais dans tout les entité
-        public ISceneObject FindWeakestAlly(Character self)
+        // TODO: Faudrait consolider ca dans le entity finder
+        public GameObject FindWeakestAlly(GameObject self)
         {
-            return _entityFinder
-                .GetAllEnemies()
+            return _entityRegistry
+                .GetAll(EntityTag.Enemy)
                 .Where(e => e != self)
+                .Select(e => new { GameObject = e, Health = e.GetComponent<HealthComponent>() })
                 .OrderBy(e => e.Health.Percent)
-                .FirstOrDefault(); 
+                .FirstOrDefault()?.GameObject; 
         }
 
         // TODO: Support factions
-        public ISceneObject FindNearestAlly(Character self)
+        public GameObject FindNearestAlly(GameObject self)
         {
-            return _entityFinder
-                .GetAllEnemies()
+            return _entityRegistry
+                .GetAll(EntityTag.Enemy)
                 .Where(e => e != self)
                 .ToList()
-                .FindClosestTo(e => e.Position, self.Position, out float distance);
+                .FindClosestTo(e => e.transform.position, self.transform.position, out float distance);
         }
 
-        public ISceneObject FindNearestTarget(Character self)
+        public GameObject FindNearestTarget(GameObject self)
         {
-            Base closestBase = _bases.GetClosestBase(self.Position, out float distanceToClosestBase);
+            GameObject closestBase = _entityRegistry.GetClosestBase(self.transform.position, out float distanceToClosestBase);
+            GameObject player = _entityRegistry.GetPlayer();
             if (!closestBase)
-                return _player;
+                return player;
             
-            float distanceToPlayer = Vector2.Distance(self.Position, _player.Position);
-            return distanceToPlayer < distanceToClosestBase ? _player : closestBase;
+            float distanceToPlayer = Vector2.Distance(self.transform.position, player.transform.position);
+            return distanceToPlayer < distanceToClosestBase ? player : closestBase.gameObject;
         }
     }
 }

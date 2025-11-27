@@ -2,7 +2,6 @@ using System;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
-using BoleteHell.Code.Arsenal.Shields.ShieldsLogic;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
@@ -19,7 +18,7 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private Coroutine despawnCoroutine;
 
-        private Character _owner;
+        private GameObject _owner;
 
         [Inject]
         private IStatusEffectService _statusEffectService;
@@ -34,7 +33,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             Destroy(gameObject, shieldInfo.despawnTime);
         }
 
-        public void SetLineInfo(ShieldData info, Character owner)
+        public void SetLineInfo(ShieldData info, GameObject owner)
         {
             shieldInfo = info;
             Material mat = new Material(meshRenderer.material)
@@ -45,16 +44,19 @@ namespace BoleteHell.Code.Arsenal.Shields
             _owner = owner;
         }
 
-        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserInstance laserInstance, LaserCombo laser, IFaction instigator)
+        private Vector2 OnRayHitShield(Vector2 incomingDirection, RaycastHit2D hitPoint, LaserInstance laserInstance, LaserCombo laser, GameObject instigator)
         {
             if (shieldInfo.Equals(null))
                 Debug.LogError($"{name} has no lineInfo setup it should be set before calling this");
             
             foreach (ShieldEffect effect in shieldInfo.shieldEffect)
             {
-                if (instigator.IsAffected(effect.affectedSide, _owner))
+                bool hasInstigatorFaction = instigator.TryGetComponent<FactionComponent>(out var instigatorFaction);
+                bool hasOwnerFaction = _owner.TryGetComponent<FactionComponent>(out var ownerFaction);
+                
+                if (hasInstigatorFaction && hasOwnerFaction && instigatorFaction.IsAffected(effect.AffectedSide, ownerFaction))
                 {
-                    _statusEffectService.AddStatusEffect(laserInstance, effect.statusEffectConfig );
+                    _statusEffectService.AddStatusEffect(laserInstance.gameObject, effect.statusEffectConfig );
                 }
             }
             

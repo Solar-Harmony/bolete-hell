@@ -2,15 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Gameplay.Damage.Effects;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays
 {
     //TODO: Va devoir être cleaned up et séparer
     [RequireComponent(typeof(LaserProjectileMovement), typeof(CapsuleCollider2D), typeof(LineRenderer))]
-    public class LaserInstance : MonoBehaviour, IStatusEffectTarget, IMovable, IDamageDealer
+    public class LaserInstance : MonoBehaviour
     {
         [field: SerializeField] 
         public float RayWidth { get; private set; } = 0.2f;
@@ -20,7 +18,7 @@ namespace BoleteHell.Code.Arsenal.Rays
         public float LaserLength { get; private set; } = 0.3f;
 
         //Pour déterminer la faction du laser et ce qu'il devrait pouvoir affecter
-        public IInstigator Instigator;
+        public GameObject Instigator;
         
         [NonSerialized]
         public AffectedSide AffectedSide;
@@ -62,7 +60,7 @@ namespace BoleteHell.Code.Arsenal.Rays
             _movement.enabled = false;
         }
 
-        public void SetFactionInfo(IInstigator owner, AffectedSide side )
+        public void SetFactionInfo(GameObject owner, AffectedSide side )
         {
             Instigator = owner;
             AffectedSide = side;

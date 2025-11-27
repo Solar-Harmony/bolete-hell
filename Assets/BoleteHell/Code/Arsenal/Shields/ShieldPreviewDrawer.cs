@@ -36,7 +36,8 @@ namespace BoleteHell.Code.Arsenal.Shields
         
         private Vector3 xOffset;
 
-        private Character _character;
+        private GameObject _character;
+        private EnergyComponent _energy;
         private ShieldData _shieldData;
 
         [Inject]
@@ -45,12 +46,14 @@ namespace BoleteHell.Code.Arsenal.Shields
         private void Awake()
         {
             mesh = new Mesh();
+            
+            _energy = _character.GetComponent<EnergyComponent>();
 
             GetComponent<MeshFilter>().mesh = mesh;
         }
 
         [Inject]
-        public void Construct(Character character, ShieldData shieldData)
+        public void Construct(GameObject character, ShieldData shieldData)
         {
             _character = character;
             _shieldData = shieldData;
@@ -62,11 +65,11 @@ namespace BoleteHell.Code.Arsenal.Shields
 
             float distance = points.Count == 0 ? 0f : Vector3.Distance(points[^1], mouseWorld);
             float energyRequired = distance * (_shieldData?.EnergyCostPerCm ?? 1f);
-            if (points.Count == 0 || (distance > spaceBetweenPoints && _character?.Energy != null && _character.Energy.CanSpend(energyRequired)))
+            if (points.Count == 0 || (distance > spaceBetweenPoints && _energy && _energy.CanSpend(energyRequired)))
             {
                 if (points.Count > 0)
                 {
-                    _character.Energy.Spend(energyRequired);
+                    _energy.Spend(energyRequired);
                 }
                 AddPointToMesh(mouseWorld);
                 UpdateMesh();

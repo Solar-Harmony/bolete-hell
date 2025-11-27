@@ -1,4 +1,4 @@
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using BoleteHell.Code.Gameplay.Interactions;
 using BoleteHell.Code.Input;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Gameplay.Input.Controllers
         private IInputDispatcher input;
 
         [Inject]
-        private IEntityFinder entityFinder;
+        private IEntityRegistry _entityRegistry;
         
         [SerializeField]
         private float interactionRadius;
@@ -46,7 +46,7 @@ namespace BoleteHell.Code.Gameplay.Input.Controllers
                 }
             }
             
-            closestInteraction?.Interact(entityFinder.GetPlayer());
+            closestInteraction?.Interact(_entityRegistry.GetPlayer());
         }
     }
 }

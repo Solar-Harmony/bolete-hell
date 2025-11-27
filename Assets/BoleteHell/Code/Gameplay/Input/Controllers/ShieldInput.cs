@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.Shields;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using UnityEngine;
 using Zenject;
 
@@ -15,7 +15,7 @@ namespace BoleteHell.Code.Input.Controllers
         private ShieldPreviewFactory _shieldPreviewFactory;
 
         [Inject]
-        private IEntityFinder _entityFinder;
+        private IEntityRegistry _entityRegistry;
         
         [SerializeField] 
         private GameObject shieldPreviewPrefab;
@@ -27,12 +27,12 @@ namespace BoleteHell.Code.Input.Controllers
 
         private ShieldPreviewDrawer _currentShieldPreview;
 
-        private Player _player;
+        private GameObject _player;
 
         private void Start()
         {
             Debug.Assert(shieldPreviewPrefab);
-            _player = _entityFinder.GetPlayer();
+            _player = _entityRegistry.GetPlayer();
         }
 
         private void Update()
@@ -69,7 +69,7 @@ namespace BoleteHell.Code.Input.Controllers
 
         private void StartShield()
         {
-            _currentShieldPreview = _shieldPreviewFactory.Create(_player, GetSelectedShield());
+            _currentShieldPreview = _shieldPreviewFactory.Create(_player.gameObject, GetSelectedShield());
         }
 
         private void DrawShield(Vector3 nextPos)

@@ -4,7 +4,6 @@ using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Code.Arsenal.RayData;
 using BoleteHell.Code.Arsenal.Rays;
-using BoleteHell.Code.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.FiringLogic
@@ -13,7 +12,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
     {
         private readonly List<Vector3> _rayPositions = new();
         
-        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, IInstigator instigator)
+        public override void Shoot(Vector3 bulletSpawnPoint, Vector2 direction, CannonData cannonData, LaserCombo laserCombo, GameObject instigator)
         {
             Collider2D previousHitCollider = null;
             CurrentPos = bulletSpawnPoint;

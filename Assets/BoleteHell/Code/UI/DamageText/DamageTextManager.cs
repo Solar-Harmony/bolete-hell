@@ -1,7 +1,6 @@
+using BoleteHell.Code.Gameplay.Damage;
 using UnityEngine;
 using Zenject;
-using TMPro;
-using BoleteHell.Code.Gameplay.Damage;
 
 public class DamageTextManager : MonoBehaviour
 {
@@ -13,12 +12,12 @@ public class DamageTextManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.OnDamaged += (CharacterTookDamage);
+        HealthComponent.OnDamaged += (CharacterTookDamage);
     }
 
     private void OnDisable()
     {
-        Health.OnDamaged -= (CharacterTookDamage);
+        HealthComponent.OnDamaged -= (CharacterTookDamage);
     }
 
     private void CharacterTookDamage(GameObject character, int damageAmount)

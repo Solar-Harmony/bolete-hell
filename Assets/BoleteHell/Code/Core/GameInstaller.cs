@@ -4,8 +4,7 @@ using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.Shields;
 using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Code.Audio;
-using BoleteHell.Code.Gameplay.Base;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Code.Gameplay.Characters.Registry;
 using BoleteHell.Code.Gameplay.Damage.Effects;
 using BoleteHell.Code.Gameplay.Destructible;
 using BoleteHell.Code.Gameplay.Droppables;
@@ -44,14 +43,6 @@ namespace BoleteHell.Code.Core
         public override void InstallBindings()
         {
             ServiceLocator.Initialize(Container);
-
-            // the player (temp?)
-            var player = FindFirstObjectByType<Player>();
-            Debug.Assert(player);
-            Container
-                .Bind<ISceneObject>()
-                .WithId("Player")
-                .FromInstance(player);
             
             // gameplay
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
@@ -59,8 +50,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<ICannonService>().To<CannonService>().AsSingle();
             Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
-            Container.Bind<IBaseService>().To<BaseService>().AsSingle();
-            Container.Bind<IEntityFinder>().To<EntityFinder>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<IEntityRegistry>().To<EntityRegistry>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
@@ -68,7 +58,7 @@ namespace BoleteHell.Code.Core
             BindStatusEffects();
             
             // factories
-            Container.BindFactory<Character, ShieldData, ShieldPreviewDrawer, ShieldPreviewFactory>()
+            Container.BindFactory<GameObject, ShieldData, ShieldPreviewDrawer, ShieldPreviewFactory>()
                 .FromComponentInNewPrefab(shieldPreviewPrefab);
             
             // input
