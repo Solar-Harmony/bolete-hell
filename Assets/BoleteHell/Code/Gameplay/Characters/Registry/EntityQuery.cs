@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Characters.Registry

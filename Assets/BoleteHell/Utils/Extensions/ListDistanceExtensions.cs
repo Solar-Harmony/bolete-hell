@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils.Extensions
 {
     public static class ListDistanceExtensions
     {

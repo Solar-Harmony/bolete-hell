@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.ShotPatterns;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils;
 using UnityEngine;
 using Zenject;
 

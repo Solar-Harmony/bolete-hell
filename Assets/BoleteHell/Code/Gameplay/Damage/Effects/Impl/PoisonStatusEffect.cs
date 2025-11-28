@@ -1,7 +1,7 @@
 ﻿using System;
 using BoleteHell.Code.Audio;
 using BoleteHell.Code.Graphics;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;

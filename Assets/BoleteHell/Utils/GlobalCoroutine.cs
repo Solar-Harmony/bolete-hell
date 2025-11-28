@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils
 {
     public class GlobalCoroutine : MonoBehaviour, ICoroutineProvider
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;

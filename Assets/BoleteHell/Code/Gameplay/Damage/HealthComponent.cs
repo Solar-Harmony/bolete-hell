@@ -1,5 +1,5 @@
 using System;
-using BoleteHell.Code.BoleteUtils.LogFilter;
+using BoleteHell.Utils.LogFilter;
 using UnityEngine;
 
 namespace BoleteHell.Code.Gameplay.Damage

@@ -1,6 +1,6 @@
 using System;
 using BoleteHell.Code.Arsenal;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;

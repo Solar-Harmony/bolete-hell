@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace BoleteHell.Code.BoleteUtils.LogFilter
+namespace BoleteHell.Utils.LogFilter
 {
     [Serializable]
     public class LogCategory

@@ -1,5 +1,5 @@
 ﻿using System;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

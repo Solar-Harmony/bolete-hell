@@ -13,7 +13,7 @@ using BoleteHell.Code.Gameplay.Input;
 using BoleteHell.Code.Gameplay.SpawnManager;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils;
 using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;

@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Utils;
+﻿using BoleteHell.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Zenject;

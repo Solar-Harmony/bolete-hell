@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils
 {
     public interface IObjectInstantiator
     {

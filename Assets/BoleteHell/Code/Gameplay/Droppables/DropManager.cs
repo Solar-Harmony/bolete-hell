@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;

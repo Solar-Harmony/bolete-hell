@@ -5,7 +5,7 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils
 {
     [UsedImplicitly]
     public class ObjectInstantiator : IObjectInstantiator

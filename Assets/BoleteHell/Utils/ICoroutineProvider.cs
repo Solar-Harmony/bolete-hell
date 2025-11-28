@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils
 {
     public interface ICoroutineProvider
     {

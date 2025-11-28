@@ -2,7 +2,7 @@
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace BoleteHell.Code.BoleteUtils.LogFilter
+namespace BoleteHell.Utils.LogFilter
 {
     public static class Scribe
     {

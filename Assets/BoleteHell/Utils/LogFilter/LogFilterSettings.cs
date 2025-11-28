@@ -3,7 +3,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace BoleteHell.Code.BoleteUtils.LogFilter
+namespace BoleteHell.Utils.LogFilter
 {
     [CreateAssetMenu(fileName = "LogFilterSettings", menuName = "Bolete Hell/Log Filter Settings")]
     public class LogFilterSettings : ScriptableObject

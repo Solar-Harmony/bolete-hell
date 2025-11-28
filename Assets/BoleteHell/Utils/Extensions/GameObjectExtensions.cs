@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BoleteHell.Code.Utils
+namespace BoleteHell.Utils.Extensions
 {
     public static class GameObjectExtensions
     {

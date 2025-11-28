@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BoleteHell.Code.Gameplay.Characters.Registry;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils.Extensions;
 using UnityEngine;
 using Zenject;
 

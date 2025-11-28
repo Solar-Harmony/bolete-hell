@@ -1,5 +1,5 @@
 ﻿using System;
-using BoleteHell.Code.Utils;
+using BoleteHell.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;

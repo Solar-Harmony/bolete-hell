@@ -3,7 +3,7 @@ using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace BoleteHell.BoleteUtils
+namespace BoleteHell.Utils
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class AnglePickerAttribute : Attribute { }
