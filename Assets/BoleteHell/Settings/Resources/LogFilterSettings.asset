@@ -15,7 +15,7 @@ MonoBehaviour:
   CategoryConfigs:
   - Name: Health
     Color: {r: 1, g: 0, b: 0, a: 1}
-    Enabled: 1
+    Enabled: 0
   - Name: Hit Logic
     Color: {r: 0.1, g: 0.6, b: 0.1, a: 1}
-    Enabled: 1
+    Enabled: 0
