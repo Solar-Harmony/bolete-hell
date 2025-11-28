@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: AI_Sniper
   m_EditorClassIdentifier: 
   Graphs:
-  - rid: 795111350007758851
+  - rid: 795111383214588007
   RootGraph:
-    rid: 795111350007758851
+    rid: 795111383214588007
   m_DebugInfo: {fileID: -381781518915465436}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 795111350007758851
+    - rid: 795111383214588007
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         AuthoringAssetID:
@@ -30,66 +30,66 @@ MonoBehaviour:
           m_Value1: 16826519069906893402
         m_DebugInfo: {fileID: 0}
         BlackboardReference:
-          rid: 795111350007758852
+          rid: 795111383214588008
         BlackboardGroupReferences: []
         Root:
-          rid: 795111350007758853
+          rid: 795111383214588009
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
-          rid: 795111350007758854
+          rid: 795111383214588010
         m_EndedNodes:
-          rid: 795111350007758855
-        m_VersionTimestamp: 638997970549025536
-    - rid: 795111350007758852
+          rid: 795111383214588011
+        m_VersionTimestamp: 638999237541830973
+    - rid: 795111383214588008
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
-          rid: 795111350007758856
+          rid: 795111383214588012
         m_Source: {fileID: 6247436901105087396}
-    - rid: 795111350007758853
+    - rid: 795111383214588009
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 14335294909109986808
           m_Value1: 17398964118181281550
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
           rid: -2
         m_Child:
-          rid: 795111350007758857
+          rid: 795111383214588013
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 795111350007758854
+    - rid: 795111383214588010
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
-    - rid: 795111350007758855
+    - rid: 795111383214588011
       type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
       data: 
-    - rid: 795111350007758856
+    - rid: 795111383214588012
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 795111350007758858
-        - rid: 795111350007758859
-        - rid: 795111350007758860
-    - rid: 795111350007758857
+        - rid: 795111383214588014
+        - rid: 795111383214588015
+        - rid: 795111383214588016
+    - rid: 795111383214588013
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 3498340303957268353
           m_Value1: 10742304623904262797
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758853
+          rid: 795111383214588009
         m_Child:
-          rid: 795111350007758861
+          rid: 795111383214588017
         m_Conditions:
-        - rid: 795111350007758862
+        - rid: 795111383214588018
         m_RequiresAllConditions: 0
-    - rid: 795111350007758858
+    - rid: 795111383214588014
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -97,7 +97,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 0}
-    - rid: 795111350007758859
+    - rid: 795111383214588015
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -105,7 +105,7 @@ MonoBehaviour:
           m_Value1: 11301596354734271912
         Name: CurrentTarget
         m_Value: {fileID: 0}
-    - rid: 795111350007758860
+    - rid: 795111383214588016
       type: {class: 'BlackboardVariable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -113,150 +113,150 @@ MonoBehaviour:
           m_Value1: 13209947239892938298
         Name: FleePosition
         m_Value: {x: 0, y: 0}
-    - rid: 795111350007758861
+    - rid: 795111383214588017
       type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 4916363732128457975
           m_Value1: 9904764017228332346
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758857
+          rid: 795111383214588013
         m_Children:
-        - rid: 795111350007758863
-        - rid: 795111350007758864
+        - rid: 795111383214588019
+        - rid: 795111383214588020
         m_Conditions:
-        - rid: 795111350007758865
+        - rid: 795111383214588021
         m_RequiresAllConditions: 0
         True:
-          rid: 795111350007758863
+          rid: 795111383214588019
         False:
-          rid: 795111350007758864
+          rid: 795111383214588020
         m_CurrentChild:
           rid: -2
-    - rid: 795111350007758862
-      type: {class: FoundNewTargetCondition, ns: BoleteHell.Code.AI.Conditions, asm: Assembly-CSharp}
+    - rid: 795111383214588018
+      type: {class: FoundNewTargetCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         Target:
-          rid: 795111350007758859
-    - rid: 795111350007758863
+          rid: 795111383214588015
+    - rid: 795111383214588019
       type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 7474087082551722522
           m_Value1: 5348752008481202103
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758861
+          rid: 795111383214588017
         m_Children:
-        - rid: 795111350007758866
-        - rid: 795111350007758867
-    - rid: 795111350007758864
+        - rid: 795111383214588022
+        - rid: 795111383214588023
+    - rid: 795111383214588020
       type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 1577529219745227705
           m_Value1: 17783010034673694778
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758861
+          rid: 795111383214588017
         m_Children:
-        - rid: 795111350007758868
-        - rid: 795111350007758869
+        - rid: 795111383214588024
+        - rid: 795111383214588025
         m_Conditions:
-        - rid: 795111350007758870
+        - rid: 795111383214588026
         m_RequiresAllConditions: 0
         True:
-          rid: 795111350007758868
+          rid: 795111383214588024
         False:
-          rid: 795111350007758869
+          rid: 795111383214588025
         m_CurrentChild:
           rid: -2
-    - rid: 795111350007758865
+    - rid: 795111383214588021
       type: {class: CheckDistanceCondition, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         Transform:
-          rid: 795111350007758871
+          rid: 795111383214588027
         Target:
-          rid: 795111350007758872
+          rid: 795111383214588028
         Operator:
-          rid: 795111350007758873
+          rid: 795111383214588029
         Threshold:
-          rid: 795111350007758874
-    - rid: 795111350007758866
+          rid: 795111383214588030
+    - rid: 795111383214588022
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 15057624512226228940
           m_Value1: 16534966847090607315
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758863
+          rid: 795111383214588019
         m_Child:
-          rid: 795111350007758875
+          rid: 795111383214588031
         m_Conditions:
-        - rid: 795111350007758876
+        - rid: 795111383214588032
         m_RequiresAllConditions: 0
-    - rid: 795111350007758867
-      type: {class: ShootAction, ns: BoleteHell.Code.AI.Actions, asm: Assembly-CSharp}
+    - rid: 795111383214588023
+      type: {class: ShootAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
           m_Value0: 6196930008548771228
           m_Value1: 1363181447899915570
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758863
+          rid: 795111383214588019
         CurrentTarget:
-          rid: 795111350007758859
+          rid: 795111383214588015
         TurnSpeed:
-          rid: 795111350007758877
-    - rid: 795111350007758868
-      type: {class: PathfindToPositionAction, ns: , asm: Assembly-CSharp}
+          rid: 795111383214588033
+    - rid: 795111383214588024
+      type: {class: PathfindToPositionAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
           m_Value0: 6409274506512420303
           m_Value1: 3604609261711139025
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758864
+          rid: 795111383214588020
         Position:
-          rid: 795111350007758860
-    - rid: 795111350007758869
-      type: {class: ShootAction, ns: BoleteHell.Code.AI.Actions, asm: Assembly-CSharp}
+          rid: 795111383214588016
+    - rid: 795111383214588025
+      type: {class: ShootAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
           m_Value0: 1937600799154142771
           m_Value1: 1879077697164831260
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758864
+          rid: 795111383214588020
         CurrentTarget:
-          rid: 795111350007758859
+          rid: 795111383214588015
         TurnSpeed:
-          rid: 795111350007758878
-    - rid: 795111350007758870
-      type: {class: CanFleeCondition, ns: , asm: Assembly-CSharp}
+          rid: 795111383214588034
+    - rid: 795111383214588026
+      type: {class: CanFleeCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         Distance:
-          rid: 795111350007758879
+          rid: 795111383214588035
         CurrentTarget:
-          rid: 795111350007758859
+          rid: 795111383214588015
         FleePosition:
-          rid: 795111350007758860
-    - rid: 795111350007758871
+          rid: 795111383214588016
+    - rid: 795111383214588027
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -265,8 +265,8 @@ MonoBehaviour:
         Name: 
         m_Value: {fileID: 0}
         m_LinkedVariable:
-          rid: 795111350007758858
-    - rid: 795111350007758872
+          rid: 795111383214588014
+    - rid: 795111383214588028
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -275,8 +275,8 @@ MonoBehaviour:
         Name: 
         m_Value: {fileID: 0}
         m_LinkedVariable:
-          rid: 795111350007758859
-    - rid: 795111350007758873
+          rid: 795111383214588015
+    - rid: 795111383214588029
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -284,7 +284,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 2
-    - rid: 795111350007758874
+    - rid: 795111383214588030
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -292,28 +292,28 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111350007758875
-      type: {class: PathfindToTargetAction, ns: BoleteHell.Code.AI.Actions, asm: Assembly-CSharp}
+    - rid: 795111383214588031
+      type: {class: PathfindToTargetAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
           m_Value0: 86946743676053160
           m_Value1: 6699810948421724947
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         m_Parent:
-          rid: 795111350007758866
+          rid: 795111383214588022
         Target:
-          rid: 795111350007758880
-    - rid: 795111350007758876
-      type: {class: HasLineOfSightCondition, ns: BoleteHell.Code.AI.Conditions, asm: Assembly-CSharp}
+          rid: 795111383214588036
+    - rid: 795111383214588032
+      type: {class: HasLineOfSightCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
-          rid: 795111350007758851
+          rid: 795111383214588007
         Target:
-          rid: 795111350007758859
+          rid: 795111383214588015
         ViewRange:
-          rid: 795111350007758881
-    - rid: 795111350007758877
+          rid: 795111383214588037
+    - rid: 795111383214588033
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -321,7 +321,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111350007758878
+    - rid: 795111383214588034
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -329,7 +329,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111350007758879
+    - rid: 795111383214588035
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -337,7 +337,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111350007758880
+    - rid: 795111383214588036
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -346,8 +346,8 @@ MonoBehaviour:
         Name: 
         m_Value: {fileID: 0}
         m_LinkedVariable:
-          rid: 795111350007758859
-    - rid: 795111350007758881
+          rid: 795111383214588015
+    - rid: 795111383214588037
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -398,7 +398,7 @@ MonoBehaviour:
   - rid: 3883007131117159206
   - rid: 3883007131117159413
   - rid: 3883007149187006549
-  m_VersionTimestamp: 638997970549025536
+  m_VersionTimestamp: 638999237541830973
   m_DebugInfo: {fileID: -381781518915465436}
   m_RuntimeGraph: {fileID: -8870313207143250243}
   AssetID:
@@ -480,6 +480,13 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+  - Name: Conditional Guard
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 10845871997924083670
+      m_Value1: 4041440894818793834
+    Variables: []
+    NamedChildren: []
   - Name: Flee
     Story: '[Self] flee [distance] units away from [target]'
     RuntimeTypeID:
@@ -518,13 +525,6 @@ MonoBehaviour:
         m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
-    NamedChildren: []
-  - Name: Conditional Guard
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10845871997924083670
-      m_Value1: 4041440894818793834
-    Variables: []
     NamedChildren: []
   - Name: Sequence
     Story: 
@@ -1215,8 +1215,8 @@ MonoBehaviour:
         m_FieldValues: []
         <ConditionModels>k__BackingField:
         - ConditionType:
-            m_SerializableType: CanFleeCondition, Assembly-CSharp, Version=0.0.0.0,
-              Culture=neutral, PublicKeyToken=null
+            m_SerializableType: BoleteHell.AI.Conditions.CanFleeCondition, BoleteAI,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
           ConditionTypeID:
             m_Value0: 15255791040351403718
             m_Value1: 17596881675249958229
@@ -1390,8 +1390,8 @@ MonoBehaviour:
         - rid: 3883007131117159414
         - rid: 3883007131117159415
         NodeType:
-          m_SerializableType: BoleteHell.Code.AI.Actions.ShootAction, Assembly-CSharp,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Actions.ShootAction, BoleteAI, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 14696599572089096223
           m_Value1: 4173363149089251346
@@ -1458,8 +1458,8 @@ MonoBehaviour:
         - rid: 3883007149187006550
         - rid: 3883007149187006551
         NodeType:
-          m_SerializableType: PathfindToPositionAction, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Actions.PathfindToPositionAction, BoleteAI,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 4483500357117635661
           m_Value1: 13540595933448658843
@@ -1506,8 +1506,8 @@ MonoBehaviour:
         - rid: 5920447943071236899
         - rid: 5920447943071236900
         NodeType:
-          m_SerializableType: BoleteHell.Code.AI.Actions.ShootAction, Assembly-CSharp,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Actions.ShootAction, BoleteAI, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 14696599572089096223
           m_Value1: 4173363149089251346
@@ -1564,8 +1564,8 @@ MonoBehaviour:
         - rid: 5920447943071236996
         - rid: 5920447943071236997
         NodeType:
-          m_SerializableType: BoleteHell.Code.AI.Actions.PathfindToTargetAction,
-            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Actions.PathfindToTargetAction, BoleteAI,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 14856967005021225643
           m_Value1: 3708820439056927761
@@ -1637,8 +1637,8 @@ MonoBehaviour:
       type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
         ConditionType:
-          m_SerializableType: BoleteHell.Code.AI.Conditions.HasLineOfSightCondition,
-            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Conditions.HasLineOfSightCondition, BoleteAI,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         ConditionTypeID:
           m_Value0: 15039558301635156833
           m_Value1: 1422753092700864915
@@ -1715,8 +1715,8 @@ MonoBehaviour:
       type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
         ConditionType:
-          m_SerializableType: BoleteHell.Code.AI.Conditions.FoundNewTargetCondition,
-            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_SerializableType: BoleteHell.AI.Conditions.FoundNewTargetCondition, BoleteAI,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         ConditionTypeID:
           m_Value0: 13464617657023644838
           m_Value1: 8092171234024434275

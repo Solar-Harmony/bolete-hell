@@ -1,6 +1,6 @@
 using System.Linq;
+using BoleteHell.AI.Services;
 using BoleteHell.Audio;
-using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.Shields;
 using BoleteHell.Code.Arsenal.ShotPatterns;
