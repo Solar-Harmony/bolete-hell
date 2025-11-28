@@ -1,8 +1,8 @@
 using System;
 using BoleteHell.Code.Arsenal.RayData;
+using BoleteHell.Code.BoleteUtils.LogFilter;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Utils.LogFilter;
 using JetBrains.Annotations;
 using UnityEngine;
 

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using BoleteHell.Code.BoleteUtils.LogFilter;
 using BoleteHell.Code.Core;
 using BoleteHell.Code.Gameplay.Characters;
 using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
-using BoleteHell.Code.Utils.LogFilter;
 using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Rays.RayLogic
