@@ -1,5 +1,5 @@
 ﻿using BoleteHell.Code.Gameplay.Damage;
-using BoleteHell.Code.Gameplay.Destructible;
+using BoleteHell.Gameplay.Destructible;
 using UnityEngine;
 using Zenject;
 
