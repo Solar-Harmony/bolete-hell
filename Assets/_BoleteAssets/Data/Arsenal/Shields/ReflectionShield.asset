@@ -23,13 +23,23 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 795111371258462328
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data:
+        maxStacks: 3
+        condition: 0
+    - rid: 795111371258462329
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data:
+        maxStacks: 3
+        condition: 0
     - rid: 8554527307954126935
       type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
       data: 
     - rid: 8554527557946441826
       type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:
-        affectedSide: 0
+        AffectedSide: 0
         <statusEffectConfig>k__BackingField:
           rid: 8554527577513132033
     - rid: 8554527577513132033
@@ -40,14 +50,14 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 20
         stackBehavior:
-          rid: 8554527581187342429
-        damageMultiplier: 1.5
-        isAppliedToFaction: 0
-        affectedFaction: 1
+          rid: 795111371258462329
+        DamageMultiplier: 1.5
+        IsAppliedToFaction: 0
+        AffectedFaction: 0
     - rid: 8554527581187342426
       type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
       data:
-        affectedSide: 1
+        AffectedSide: 0
         <statusEffectConfig>k__BackingField:
           rid: 8554527581187342427
     - rid: 8554527581187342427
@@ -58,17 +68,7 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 20
         stackBehavior:
-          rid: 8554527581187342428
-        damageMultiplier: 1.5
-        isAppliedToFaction: 1
-        affectedFaction: 0
-    - rid: 8554527581187342428
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data:
-        maxStacks: 3
-        condition: 0
-    - rid: 8554527581187342429
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data:
-        maxStacks: 3
-        condition: 0
+          rid: 795111371258462328
+        DamageMultiplier: 1.5
+        IsAppliedToFaction: 0
+        AffectedFaction: 0

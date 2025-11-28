@@ -35,10 +35,10 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 5
         stackBehavior:
-          rid: 795111210494984193
-        slowPercentage: 0.2
-    - rid: 795111210494984193
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+          rid: 795111371258462332
+        SlowPercentage: 0.5
+    - rid: 795111371258462332
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data:
         maxStacks: 3
         condition: 0

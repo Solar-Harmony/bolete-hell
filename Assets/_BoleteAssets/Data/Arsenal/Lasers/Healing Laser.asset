@@ -22,6 +22,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 795111371258462330
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data:
+        maxStacks: 3
+        condition: 0
     - rid: 3883007125988573184
       type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
       data:
@@ -35,8 +40,5 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 3883007125988573186
-        healingEachTick: 3
-    - rid: 3883007125988573186
-      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data: 
+          rid: 795111371258462330
+        HealingEachTick: 10

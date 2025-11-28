@@ -30,10 +30,10 @@ MonoBehaviour:
         initialDelay: 0
         tickInterval: 5
         stackBehavior:
-          rid: 420089553201922137
-        shrinkPercent: 0.5
-    - rid: 420089553201922137
-      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
+          rid: 795111371258462331
+        ShrinkPercent: 0.5
+    - rid: 795111371258462331
+      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data: 
     - rid: 8651057760533741568
       type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}

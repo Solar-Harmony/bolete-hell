@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: Shared
   m_EditorClassIdentifier: 
-  VersionTimestamp: 638993363854033800
+  VersionTimestamp: 638998892337121909
   AssetID:
     m_Value0: 13016288930004075466
     m_Value1: 3683514317729626555
@@ -32,7 +32,7 @@ MonoBehaviour:
           m_Value0: 3701127571191947074
           m_Value1: 12695217430448222987
         Name: Player
-        m_Value: {fileID: 0}
+        m_Value: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
     m_Value1: 3683514317729626555
   m_Variables:
   - rid: 795111226832585246
-  m_VersionTimestamp: 638993363854033800
+  m_VersionTimestamp: 638998892337121909
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: -8017183980898314502}
@@ -66,4 +66,4 @@ MonoBehaviour:
         Name: Player
         IsExposed: 1
         m_IsShared: 1
-        m_Value: {fileID: 0}
+        m_Value: {fileID: 9803254034568238, guid: f2e05b6e0e6af7444b1c8571a10b593e, type: 3}
