@@ -1,0 +1,10 @@
+﻿{
+  "name": "BoleteGameplay",
+  "references": [
+    
+  ],
+  "autoReferenced": true,
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}
