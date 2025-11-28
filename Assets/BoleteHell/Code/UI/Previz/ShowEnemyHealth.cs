@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Damage;
+﻿using BoleteHell.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.UI.Previz

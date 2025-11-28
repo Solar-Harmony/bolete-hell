@@ -1,8 +1,7 @@
 using System;
 using BoleteHell.Code.AI.Services;
 using BoleteHell.Code.Core;
-using BoleteHell.Code.Gameplay.Characters;
-using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Gameplay.Characters;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;

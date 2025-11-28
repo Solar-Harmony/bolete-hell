@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Characters.Registry;
+﻿using BoleteHell.Gameplay.Characters.Registry;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;

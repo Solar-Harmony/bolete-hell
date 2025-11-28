@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.Characters;
+﻿using BoleteHell.Gameplay.Characters;
 using UnityEngine;
 
 namespace BoleteHell.Code.AI.Services

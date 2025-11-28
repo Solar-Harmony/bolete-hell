@@ -1,5 +1,5 @@
 using System;
-using BoleteHell.Code.Gameplay.Characters;
+using BoleteHell.Gameplay.Characters;
 using BoleteHell.Utils.Extensions;
 using Pathfinding;
 using Unity.Behavior;

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Code.Core;
-using BoleteHell.Code.Gameplay.Damage;
 using BoleteHell.Code.Graphics;
+using BoleteHell.Gameplay.Characters;
 using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;

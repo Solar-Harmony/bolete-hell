@@ -68,10 +68,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.71
-  cannons: []
-  references:
-    version: 2
-    RefIds: []
+  cannons:
+  - cannonConfigs:
+    - laserDatas:
+      - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+      cannonData: {fileID: 11400000, guid: 8ca6313793b105141a3f6034e7aa81c2, type: 2}
+      usePatternMaster: 1
+      bulletPatterns: []
+      shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!50 &4327110905113141562
 Rigidbody2D:
   serializedVersion: 5

@@ -1,5 +1,5 @@
 using System;
-using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Gameplay.Characters;
 using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;

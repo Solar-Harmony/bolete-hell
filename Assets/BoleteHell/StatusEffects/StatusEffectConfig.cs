@@ -30,7 +30,7 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         
         [BoxGroup(GroupName)]
         [SerializeReference]
-        public StatusEffectStackBehavior stackBehavior;
+        public StatusEffectStackBehavior stackBehavior = new StatusEffectStackBehavior.Ignore();
 
         public float duration => initialDelay + (numTicks - 1) * tickInterval;
         

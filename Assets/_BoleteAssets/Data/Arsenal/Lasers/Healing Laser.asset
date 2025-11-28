@@ -15,30 +15,30 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 0, g: 1, b: 0.6566355, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
-    rid: 3883007125988573184
+    rid: 795111371258462390
   AffectedSide: 1
   <baseDamage>k__BackingField: 0
   <MovementSpeed>k__BackingField: 3
   references:
     version: 2
     RefIds:
-    - rid: 795111371258462330
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
-      data:
-        maxStacks: 3
-        condition: 0
-    - rid: 3883007125988573184
-      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
+    - rid: 795111371258462390
+      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: BoleteGameplay}
       data:
         statusEffectConfig:
-          rid: 3883007125988573185
-    - rid: 3883007125988573185
-      type: {class: HealStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+          rid: 795111371258462391
+    - rid: 795111371258462391
+      type: {class: HealStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
         numTicks: 1
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 795111371258462330
-        HealingEachTick: 10
+          rid: 795111371258462393
+        HealingEachTick: 2
+    - rid: 795111371258462393
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data:
+        maxStacks: 3
+        condition: 0

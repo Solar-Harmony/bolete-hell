@@ -1,6 +1,6 @@
 using System.Linq;
-using BoleteHell.Code.Gameplay.Characters.Registry;
-using BoleteHell.Code.Gameplay.Damage;
+using BoleteHell.Gameplay.Characters;
+using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Utils.Extensions;
 using UnityEngine;
 using Zenject;

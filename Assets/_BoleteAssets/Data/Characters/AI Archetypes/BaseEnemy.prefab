@@ -80,21 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: {fileID: 0}
   spawnRadius: 0.79
-  cannons:
-  - cannonConfigs:
-    - rid: 3883006987907891201
+  cannons: []
   references:
     version: 2
-    RefIds:
-    - rid: 3883006987907891201
-      type: {class: CannonConfig, ns: BoleteHell.Code.Arsenal.Cannons, asm: Assembly-CSharp}
-      data:
-        laserDatas:
-        - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
-        cannonData: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
-        usePatternMaster: 1
-        bulletPatterns: []
-        shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    RefIds: []
 --- !u!212 &4735358013702089654
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -15,30 +15,28 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 0, g: 1, b: 0.9440994, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.4
   <Logic>k__BackingField:
-    rid: 420089553201922048
+    rid: 795111371258462380
   AffectedSide: 2
   <baseDamage>k__BackingField: 5
   <MovementSpeed>k__BackingField: 2
   references:
     version: 2
     RefIds:
-    - rid: 420089553201922048
-      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
+    - rid: 795111371258462380
+      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: BoleteGameplay}
       data:
         statusEffectConfig:
-          rid: 420089553201922049
-    - rid: 420089553201922049
-      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+          rid: 795111371258462381
+    - rid: 795111371258462381
+      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
-        isTransient: 1
-        numTicks: 2
+        isTransient: 0
+        numTicks: 1
         initialDelay: 0
-        tickInterval: 5
+        tickInterval: 1
         stackBehavior:
-          rid: 795111371258462332
+          rid: 795111371258462382
         SlowPercentage: 0.5
-    - rid: 795111371258462332
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
-      data:
-        maxStacks: 3
-        condition: 0
+    - rid: 795111371258462382
+      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data: 

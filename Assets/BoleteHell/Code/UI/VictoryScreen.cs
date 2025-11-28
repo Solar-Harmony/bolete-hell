@@ -1,4 +1,4 @@
-﻿using BoleteHell.Code.Gameplay.GameState;
+﻿using BoleteHell.Gameplay.GameState;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;

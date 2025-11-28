@@ -15,30 +15,30 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 0.16582623, g: 0.64420474, b: 0.27601868, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
-    rid: 8651057760533741568
+    rid: 795111371258462386
   AffectedSide: 2
   <baseDamage>k__BackingField: 5
   <MovementSpeed>k__BackingField: 3
   references:
     version: 2
     RefIds:
-    - rid: 795111371258462369
+    - rid: 795111371258462386
+      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: BoleteGameplay}
+      data:
+        statusEffectConfig:
+          rid: 795111371258462387
+    - rid: 795111371258462387
+      type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
+      data:
+        isTransient: 0
+        numTicks: 1
+        initialDelay: 0
+        tickInterval: 1
+        stackBehavior:
+          rid: 795111371258462395
+        DamageEachTick: 10
+    - rid: 795111371258462395
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data:
         maxStacks: 3
         condition: 0
-    - rid: 8651057760533741568
-      type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: Assembly-CSharp}
-      data:
-        statusEffectConfig:
-          rid: 8651058191220867157
-    - rid: 8651058191220867157
-      type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
-      data:
-        isTransient: 0
-        numTicks: 5
-        initialDelay: 0
-        tickInterval: 1
-        stackBehavior:
-          rid: 795111371258462369
-        DamageEachTick: 10
