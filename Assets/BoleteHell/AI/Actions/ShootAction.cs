@@ -48,18 +48,28 @@ namespace BoleteHell.AI.Actions
 
         protected override Status OnUpdate()
         {
-            Vector2 selfPosition = GameObject.transform.position;
-            Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
-            Vector2 targetPosition = CurrentTarget.Value.transform.position;
-            Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
-                ? rb.linearVelocity
-                : Vector2.zero;
-            float projectileSpeed = _arsenal.GetProjectileSpeed();
-            _targeting.SuggestProjectileDirection(out Vector2 targetDirection, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
+            if (!CurrentTarget.Value)
+                return Status.Failure;
             
-            _currentAimDirection = Vector2.Lerp(_currentAimDirection, targetDirection, TurnSpeed.Value * Time.deltaTime).normalized;
+            if (_arsenal.IsReadyToShoot())
+            {
+                Vector2 selfPosition = GameObject.transform.position;
+                Vector2 selfVelocity = _pathfinder?.desiredVelocity ?? Vector2.zero;
+                Vector2 targetPosition = CurrentTarget.Value.transform.position;
+                Vector2 targetVelocity = CurrentTarget.Value.TryGetComponent(out Rigidbody2D rb)
+                    ? rb.linearVelocity
+                    : Vector2.zero;
+                float projectileSpeed = _arsenal.GetProjectileSpeed();
+                _targeting.SuggestProjectileDirection(out Vector2 targetDirection, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
+                _currentAimDirection = Vector2.Lerp(_currentAimDirection, targetDirection, TurnSpeed.Value * Time.deltaTime).normalized;
+                _arsenal.Shoot(_currentAimDirection);
+                return Status.Success;
+            }
 
-            return !_arsenal.Shoot(_currentAimDirection) ? Status.Running : Status.Success;
+            // simplify so we don't calculate the whole thing at once
+            Vector2 simpleTargetDirection = (CurrentTarget.Value.transform.position - GameObject.transform.position).normalized;
+            _currentAimDirection = Vector2.Lerp(_currentAimDirection, simpleTargetDirection, TurnSpeed.Value * Time.deltaTime).normalized;
+            return Status.Running;
         }
 
          protected override void OnEnd()

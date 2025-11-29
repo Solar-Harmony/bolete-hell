@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Gameplay.Characters;
 using Sirenix.OdinInspector;
@@ -55,37 +56,36 @@ namespace BoleteHell.Code.Arsenal
        
         private void Update()
         {
-            foreach (CannonInstance weapon in GetSelectedWeapon())
+            foreach (CannonInstance weapon in GetSelectedWeapons())
             {
                 _cannonService.Tick(weapon);
             }
         }
 
-        //Retourne true quand il a terminer de faire ses tires
-        public bool Shoot(Vector2 direction)
+        public bool IsReadyToShoot()
+        {
+            return GetSelectedWeapons().All(weapon => weapon.CanShoot);
+        }
+
+        public void Shoot(Vector2 direction)
         {
             if (cannons.Count == 0)
             {
-                Debug.LogWarning("No raycannon equipped");
-                return false;
+                Debug.LogWarning("Cannot shoot: no cannon in arsenal.");
+                return;
             }
 
-            // TODO: We could just use the circle collider radius but then wouldn't work with non-circular colliders
+            if (!IsReadyToShoot())
+                return;
+            
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
             var shotParams = new ShotLaunchParams(transform.position, spawnPosition, direction, _owner);
-
-            bool doneFiring = true;
-
-            foreach (CannonInstance weapon in GetSelectedWeapon())
+            
+            foreach (CannonInstance weapon in GetSelectedWeapons())
             {
-                if (!_cannonService.TryShoot(weapon, shotParams))
-                {
-                    doneFiring = false;
-                }
+                _cannonService.TryShoot(weapon, shotParams);
             }
-
-            return doneFiring;
         }
         
         public float GetProjectileSpeed()
@@ -96,7 +96,7 @@ namespace BoleteHell.Code.Arsenal
                 return 0.0f;
             }
             
-            List<CannonInstance> selectedWeapon = GetSelectedWeapon();
+            List<CannonInstance> selectedWeapon = GetSelectedWeapons();
             
             CannonData data = selectedWeapon[0].Config.cannonData;
             return data.firingType switch
@@ -118,7 +118,7 @@ namespace BoleteHell.Code.Arsenal
             _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
         }
     
-        public List<CannonInstance> GetSelectedWeapon()
+        public List<CannonInstance> GetSelectedWeapons()
         {
             if (_selectedCannonIndex < 0 || _selectedCannonIndex >= cannons.Count)
             {
@@ -147,7 +147,7 @@ namespace BoleteHell.Code.Arsenal
     
         public void OnShootCanceled()
         {
-            List<CannonInstance> selectedWeapons = GetSelectedWeapon();
+            List<CannonInstance> selectedWeapons = GetSelectedWeapons();
             if (selectedWeapons == null) 
                 return;
             

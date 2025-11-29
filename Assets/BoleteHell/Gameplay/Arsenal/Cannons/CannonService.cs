@@ -36,26 +36,24 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
         
-        public bool TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
+        public void TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
         {
-            if (!cannon.CanShoot) return false;
+            if (!cannon.CanShoot)
+                return;
             
             if (cannon.Config.cannonData.WaitBeforeFiring && !cannon.IsCharged)
             {
                 if (!beamPreview)
                 {
-                    //Setup du preview
-                    //Le preview ne montre pas les réflections et refractions etc
+                    // NOTE: Le preview ne montre pas les réflections et refractions etc
                     beamPreview = _pool.Spawn(parameters.SpawnPosition, GetBeamPreviewEndPoint(cannon, parameters), cannon.LaserCombo.CombinedColor,
                         cannon.Config.cannonData.chargeTime);
                 }
 
                 ChargeShot(cannon, parameters);
-                return false;
             }
             
             FireProjectiles(cannon, parameters);
-            return true;
         }
 
         private Vector2 GetBeamPreviewEndPoint(CannonInstance cannon, ShotLaunchParams parameters)

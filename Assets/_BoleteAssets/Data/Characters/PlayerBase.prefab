@@ -1393,7 +1393,7 @@ MonoBehaviour:
   cannons:
   - cannonConfigs:
     - laserDatas:
-      - {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+      - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
       cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
       usePatternMaster: 1
       bulletPatterns: []
