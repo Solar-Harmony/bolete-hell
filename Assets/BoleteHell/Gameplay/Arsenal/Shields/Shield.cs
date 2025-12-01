@@ -54,7 +54,7 @@ namespace BoleteHell.Code.Arsenal.Shields
             {
                 bool hasInstigatorFaction = instigator.TryGetComponent<FactionComponent>(out var instigatorFaction);
                 bool hasOwnerFaction = _owner.TryGetComponent<FactionComponent>(out var ownerFaction);
-                
+
                 if (hasInstigatorFaction && hasOwnerFaction && instigatorFaction.IsAffected(effect.AffectedSide, ownerFaction))
                 {
                     _statusEffectService.AddStatusEffect(laserInstance.gameObject, effect.statusEffectConfig );

@@ -12,7 +12,7 @@ namespace BoleteHell.Gameplay.InputControllers
         private IInputDispatcher input;
 
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
         
         [SerializeField]
         private float interactionRadius;
@@ -46,7 +46,7 @@ namespace BoleteHell.Gameplay.InputControllers
                 }
             }
             
-            closestInteraction?.Interact(_entityRegistry.GetPlayer());
+            closestInteraction?.Interact(_entities.GetPlayer());
         }
     }
 }

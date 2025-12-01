@@ -88,7 +88,7 @@ namespace BoleteHell.Gameplay.SpawnManager
 
         private SpawnArea FindClosestSpawnArea(Vector2 location)
         {
-            return _spawnAreas.FindClosestTo(sa => sa.transform.position, location, out _);
+            return _spawnAreas.TakeClosestTo(sa => sa.transform.position, location, out _);
         }
 
         private Vector2 FindTargetLocation()

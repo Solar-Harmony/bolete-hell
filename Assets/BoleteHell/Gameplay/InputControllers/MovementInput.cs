@@ -11,9 +11,6 @@ namespace BoleteHell.Gameplay.InputControllers
     {
         [Inject] 
         private IInputDispatcher input;
-        
-        [field: SerializeField] 
-        private float maxLightIntensity = 5.0f;
 
         private Rigidbody2D _rb;
         // private Light2D _shipExhaustLight;

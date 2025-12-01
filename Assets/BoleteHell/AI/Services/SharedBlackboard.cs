@@ -11,12 +11,12 @@ namespace BoleteHell.AI.Services
         private RuntimeBlackboardAsset _blackboard;
         
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
         
         private void Start()
         {
             Debug.Assert(_blackboard);
-            var player = _entityRegistry.GetPlayer().gameObject;
+            var player = _entities.GetPlayer().gameObject;
             _blackboard.Blackboard.Variables.Find(v => v.Name == "Player").ObjectValue = player;
         }
     }

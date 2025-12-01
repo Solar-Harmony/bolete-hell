@@ -32,6 +32,12 @@ namespace BoleteHell.Gameplay.Characters
                 return;
             }
 
+            if (!ctx.Instigator)
+            {
+                callback?.Invoke(new ITargetable.Response(ctx));
+                return;
+            }
+
             bool otherIsFaction = ctx.Instigator.TryGetComponent<FactionComponent>(out var otherFaction);
             bool isAffected = otherIsFaction && _faction.IsAffected(ctx.Projectile.AffectedSide, otherFaction);
             if (!isAffected)

@@ -6,9 +6,6 @@ using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
-
-   
-
     /// <summary>
     ///     Classe qui permet de déterminer les informations spécifique a un shield
     /// </summary>

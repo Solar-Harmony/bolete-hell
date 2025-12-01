@@ -10,7 +10,7 @@ namespace BoleteHell.Gameplay.SpawnManager
         private DiContainer _container; // TODO: Temporary, we should make a simple factory
 
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
 
         private int counter;
         public bool Spawn(SpawnArea spawnArea)
@@ -49,7 +49,7 @@ namespace BoleteHell.Gameplay.SpawnManager
             
             GameObject enemy = _container.InstantiatePrefab(prefabToSpawn, parameters);
             enemy.transform.name = enemy.name + $"{counter}";
-            _entityRegistry.Register(new []{ EntityTag.Enemy }, enemy);
+            _entities.Register(new []{ EntityTag.Enemy }, enemy);
             counter++;
         }
     }

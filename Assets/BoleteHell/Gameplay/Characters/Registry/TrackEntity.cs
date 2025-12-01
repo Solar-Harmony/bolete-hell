@@ -14,11 +14,12 @@ namespace BoleteHell.Gameplay.Characters.Registry
         [Inject]
         private IEntityRegistry _registry;
         
-        private HealthComponent _health;
-
         [SerializeField]
         private EntityTag[] _tags = Array.Empty<EntityTag>();
-        
+
+        private HealthComponent _health;
+        private bool _unregistered = false;
+
         private void Awake()
         {
             _health = GetComponent<HealthComponent>();
@@ -26,19 +27,43 @@ namespace BoleteHell.Gameplay.Characters.Registry
         
         private void OnEnable()
         {
+            _unregistered = false;
             _registry.Register(_tags, gameObject);
-            _health.OnDeath += OnDeath;
+            
+            if (_health)
+            {
+                _health.OnDeath += OnDeath;
+            }
         }
-        
+
         private void OnDeath()
         {
-            _registry.Unregister(_tags, gameObject);
+            Unregister();
         }
         
+        // This triggers:
+        // - When obj.SetActive(false) is called
+        // - When Destroy(obj) is called
+        // - When the scene is unloaded
+        // Since we destroy objects upon death, it also works when an entity dies.
+        // TODO: If we ever implement Enemy NPC pooling, we will need to adjust this.
         private void OnDisable()
         {
+            Unregister();
+            
+            if (_health)
+            {
+                _health.OnDeath -= OnDeath;
+            }
+        }
+
+        private void Unregister()
+        {
+            if (_unregistered)
+                return;
+            
+            _unregistered = true;
             _registry.Unregister(_tags, gameObject);
-            _health.OnDeath -= OnDeath;
         }
     }
 }

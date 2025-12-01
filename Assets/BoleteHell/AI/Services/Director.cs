@@ -10,33 +10,27 @@ namespace BoleteHell.AI.Services
     public class Director : IDirector
     {
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
         
-        // TODO: Faudrait consolider ca dans le entity finder
         public GameObject FindWeakestAlly(GameObject self)
         {
-            return _entityRegistry
-                .GetAll(EntityTag.Enemy)
-                .Where(e => e != self)
-                .Select(e => new { GameObject = e, Health = e.GetComponent<HealthComponent>() })
-                .OrderBy(e => e.Health.Percent)
-                .FirstOrDefault()?.GameObject; 
+            return _entities
+                .WithTag(EntityTag.Enemy)
+                .TakeBest((HealthComponent h) => h.Percent);
         }
 
-        // TODO: Support factions
         public GameObject FindNearestAlly(GameObject self)
         {
-            return _entityRegistry
-                .GetAll(EntityTag.Enemy)
+            return _entities
+                .WithTag(EntityTag.Enemy)
                 .Where(e => e != self)
-                .ToList()
-                .FindClosestTo(e => e.transform.position, self.transform.position, out float distance);
+                .TakeClosestTo(self, out _);
         }
 
         public GameObject FindNearestTarget(GameObject self)
         {
-            GameObject closestBase = _entityRegistry.GetClosestBase(self.transform.position, out float distanceToClosestBase);
-            GameObject player = _entityRegistry.GetPlayer();
+            GameObject closestBase = _entities.GetClosestBase(self.transform.position, out float distanceToClosestBase);
+            GameObject player = _entities.GetPlayer();
             if (!closestBase)
                 return player;
             

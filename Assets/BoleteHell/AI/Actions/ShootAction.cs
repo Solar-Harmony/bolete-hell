@@ -74,7 +74,7 @@ namespace BoleteHell.AI.Actions
 
          protected override void OnEnd()
          {
-             _arsenal.OnShootCanceled();
+             _arsenal?.OnShootCanceled();
          }
     }
 }

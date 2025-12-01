@@ -14,61 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <color>k__BackingField: {r: 0, g: 0.79662085, b: 1, a: 1}
   <onHitLogic>k__BackingField:
-    rid: 8554527307954126935
+    rid: 5809585285616631808
   despawnTime: 5
   <shieldEffect>k__BackingField:
-  - rid: 8554527557946441826
-  - rid: 8554527581187342426
+  - AffectedSide: 0
+    <statusEffectConfig>k__BackingField:
+      rid: 5809585285616631809
   <EnergyCostPerCm>k__BackingField: 20
   references:
     version: 2
     RefIds:
-    - rid: 795111371258462328
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
-      data:
-        maxStacks: 3
-        condition: 0
-    - rid: 795111371258462329
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
-      data:
-        maxStacks: 3
-        condition: 0
-    - rid: 8554527307954126935
-      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: Assembly-CSharp}
+    - rid: 5809585285616631808
+      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: BoleteGameplay}
       data: 
-    - rid: 8554527557946441826
-      type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data:
-        AffectedSide: 0
-        <statusEffectConfig>k__BackingField:
-          rid: 8554527577513132033
-    - rid: 8554527577513132033
-      type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
+    - rid: 5809585285616631809
+      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 2
+        numTicks: 1
         initialDelay: 0
-        tickInterval: 20
+        tickInterval: 1
         stackBehavior:
-          rid: 795111371258462329
-        DamageMultiplier: 1.5
-        IsAppliedToFaction: 0
-        AffectedFaction: 0
-    - rid: 8554527581187342426
-      type: {class: ShieldEffect, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: Assembly-CSharp}
-      data:
-        AffectedSide: 0
-        <statusEffectConfig>k__BackingField:
-          rid: 8554527581187342427
-    - rid: 8554527581187342427
-      type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Code.Gameplay.Damage.Effects.Impl, asm: Assembly-CSharp}
-      data:
-        isTransient: 1
-        numTicks: 2
-        initialDelay: 0
-        tickInterval: 20
-        stackBehavior:
-          rid: 795111371258462328
-        DamageMultiplier: 1.5
-        IsAppliedToFaction: 0
-        AffectedFaction: 0
+          rid: 5809585285616631810
+        SlowPercentage: 0.5
+    - rid: 5809585285616631810
+      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data: 

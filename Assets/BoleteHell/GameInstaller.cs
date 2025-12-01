@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using BoleteHell.AI.Services;
 using BoleteHell.Audio;
@@ -106,8 +107,8 @@ namespace BoleteHell.Code.Core
 
         private void BindStatusEffects()
         {
-            typeof(IStatusEffect).Assembly
-                .GetTypes()
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(asm => asm.GetTypes())
                 .Where(t => typeof(IStatusEffect).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
                 .ForEach(type =>
                 { 

@@ -27,6 +27,12 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
         {
             if (!target)
                 return;
+
+            if (config == null)
+            {
+                Debug.LogErrorFormat("Cannot apply status effect to {0}: config is missing.", target.name);
+                return;
+            }
             
             IStatusEffect effect = _effects.Single(e => e.ConfigType == config.GetType());
 

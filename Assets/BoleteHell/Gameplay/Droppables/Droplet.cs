@@ -21,12 +21,12 @@ namespace BoleteHell.Gameplay.Droppables
         private IStatusEffectService _statusEffectService;
 
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
 
         private GameObject _player;
         private void Start()
         {
-            _player = _entityRegistry.GetPlayer();
+            _player = _entities.GetPlayer();
         }
 
         private void Update()

@@ -16,7 +16,7 @@ namespace BoleteHell.Gameplay.InputControllers
         private ShieldPreviewFactory _shieldPreviewFactory;
 
         [Inject]
-        private IEntityRegistry _entityRegistry;
+        private IEntityRegistry _entities;
         
         [SerializeField] 
         private GameObject shieldPreviewPrefab;
@@ -33,7 +33,7 @@ namespace BoleteHell.Gameplay.InputControllers
         private void Start()
         {
             Debug.Assert(shieldPreviewPrefab);
-            _player = _entityRegistry.GetPlayer();
+            _player = _entities.GetPlayer();
         }
 
         private void Update()
