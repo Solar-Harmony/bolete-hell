@@ -1,0 +1,10 @@
+﻿{
+  "name": "BoleteStatusEffects",
+  "references": [
+  
+  ],
+  "autoReferenced": true,
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

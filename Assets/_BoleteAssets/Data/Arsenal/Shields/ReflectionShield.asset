@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604794fded01c8943a45fbfe5f2acd44, type: 3}
+  m_Name: ReflectionShield
+  m_EditorClassIdentifier: 
+  <color>k__BackingField: {r: 0, g: 0.79662085, b: 1, a: 1}
+  <onHitLogic>k__BackingField:
+    rid: 5809585285616631808
+  despawnTime: 5
+  <shieldEffect>k__BackingField:
+  - AffectedSide: 0
+    <statusEffectConfig>k__BackingField:
+      rid: 5809585285616631809
+  <EnergyCostPerCm>k__BackingField: 20
+  references:
+    version: 2
+    RefIds:
+    - rid: 5809585285616631808
+      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: BoleteGameplay}
+      data: 
+    - rid: 5809585285616631809
+      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
+      data:
+        isTransient: 0
+        numTicks: 1
+        initialDelay: 0
+        tickInterval: 1
+        stackBehavior:
+          rid: 5809585285616631810
+        SlowPercentage: 0.5
+    - rid: 5809585285616631810
+      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data: 
