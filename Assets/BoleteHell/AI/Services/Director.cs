@@ -1,5 +1,7 @@
 using System.Linq;
+using BoleteHell.AI.Services.Group;
 using BoleteHell.Gameplay.Characters;
+using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Utils.Extensions;
 using UnityEngine;
@@ -11,6 +13,9 @@ namespace BoleteHell.AI.Services
     {
         [Inject]
         private IEntityRegistry _entities;
+
+        [Inject]
+        private IAIGroupService _groups;
         
         public GameObject FindWeakestAlly(GameObject self)
         {
@@ -29,13 +34,7 @@ namespace BoleteHell.AI.Services
 
         public GameObject FindNearestTarget(GameObject self)
         {
-            GameObject closestBase = _entities.GetClosestBase(self.transform.position, out float distanceToClosestBase);
-            GameObject player = _entities.GetPlayer();
-            if (!closestBase)
-                return player;
-            
-            float distanceToPlayer = Vector2.Distance(self.transform.position, player.transform.position);
-            return distanceToPlayer < distanceToClosestBase ? player : closestBase.gameObject;
+            return _groups.GetGroup(self.GetComponent<AIGroupComponent>().GroupID).LuiQuilFautButer;
         }
     }
 }

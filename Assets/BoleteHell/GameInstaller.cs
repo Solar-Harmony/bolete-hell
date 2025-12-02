@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using BoleteHell.AI.Services;
+using BoleteHell.AI.Services.Group;
 using BoleteHell.Audio;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.Shields;
@@ -56,6 +57,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<ISpawnService>().To<SpawnManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
             BindStatusEffects();
             

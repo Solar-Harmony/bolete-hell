@@ -1,4 +1,5 @@
-﻿using BoleteHell.Gameplay.Characters.Registry;
+﻿using BoleteHell.AI.Services.Group;
+using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Gameplay.SpawnManager;
 using Pathfinding;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace BoleteHell.AI.Services
         [SerializeField]
         private SpawnList _duhaime;
         
+        [Inject]
+        private IAIGroupService _groupService;
+        
         private void Start()
         {
             Vector3 bottomLeft = _camera.ViewportToWorldPoint(new Vector3(0, 0, _camera.nearClipPlane));
@@ -32,9 +36,16 @@ namespace BoleteHell.AI.Services
             Vector2? spawnPosition2 = FindNearestNavigablePos(topRight);
             Debug.Assert(spawnPosition1 != null);
             Debug.Assert(spawnPosition2 != null);
+
+            int groupID1 = _groupService.CreateGroup();
+            int groupID2 = _groupService.CreateGroup();
+            AIGroup group1 = _groupService.GetGroup(groupID1);
+            AIGroup group2 = _groupService.GetGroup(groupID2);
+            group1.LuiQuilFautButer = _entities.GetClosestBase(spawnPosition1.Value, out _);
+            group2.LuiQuilFautButer = _entities.GetPlayer().gameObject;
             
-            _spawner.Spawn(_yanick, spawnPosition1.Value);
-            _spawner.Spawn(_duhaime, spawnPosition2.Value);
+            _spawner.Spawn(_yanick, spawnPosition1.Value, groupID1);
+            _spawner.Spawn(_duhaime, spawnPosition2.Value, groupID2);
         }
 
         private Vector2? FindNearestNavigablePos(Vector2 pos)

@@ -18,6 +18,6 @@ namespace BoleteHell.Gameplay.SpawnManager
         /// <param name="list"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool Spawn(SpawnList list, Vector2 position);
+        public bool Spawn(SpawnList list, Vector2 position, int groupID = -1);
     }
 }

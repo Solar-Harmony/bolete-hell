@@ -1,3 +1,4 @@
+using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Gameplay.Characters.Registry;
 using UnityEngine;
 using Zenject;
@@ -26,6 +27,32 @@ namespace BoleteHell.Gameplay.SpawnManager
                 return false;
 
             SpawnSelectedEnemy(spawnArea.spawnList, spawnArea);
+            return true;
+        }
+
+        public bool Spawn(SpawnList list, Vector2 position, int groupID)
+        {
+            if (!list || list.allowedEnemies.Length == 0)
+            {
+                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
+                return false;
+            }
+            
+            GameObjectCreationParameters parameters = new()
+            {
+                Position = position
+            };
+
+            foreach (var prefabToSpawn in list.allowedEnemies)
+            {
+                GameObject enemy = _container.InstantiatePrefab(prefabToSpawn, parameters);
+                enemy.transform.name = enemy.name + $"{_counter}";
+                enemy.GetComponent<AIGroupComponent>().GroupID = groupID;
+                
+                _entities.Register(new []{ EntityTag.Enemy }, enemy);
+                _counter++;
+            }
+            
             return true;
         }
 
