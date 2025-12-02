@@ -53,7 +53,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IEntityRegistry>().To<EntityRegistry>().FromNewComponentOnRoot().AsSingle();
-            Container.Bind<SpawnManager>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<ISpawnService>().To<SpawnManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();

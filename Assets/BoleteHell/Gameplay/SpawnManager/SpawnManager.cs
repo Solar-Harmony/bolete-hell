@@ -4,7 +4,7 @@ using Zenject;
 
 namespace BoleteHell.Gameplay.SpawnManager
 {
-    public class SpawnManager : MonoBehaviour
+    public class SpawnManager : MonoBehaviour, ISpawnService
     {
         [Inject]
         private DiContainer _container; // TODO: Temporary, we should make a simple factory
@@ -12,7 +12,7 @@ namespace BoleteHell.Gameplay.SpawnManager
         [Inject]
         private IEntityRegistry _entities;
 
-        private int counter;
+        private int _counter;
         public bool Spawn(SpawnArea spawnArea)
         {
             if (!spawnArea.spawnList || spawnArea.spawnList.allowedEnemies.Length == 0)
@@ -26,6 +26,30 @@ namespace BoleteHell.Gameplay.SpawnManager
                 return false;
 
             SpawnSelectedEnemy(spawnArea.spawnList, spawnArea);
+            return true;
+        }
+
+        public bool Spawn(SpawnList list, Vector2 position)
+        {
+            if (!list || list.allowedEnemies.Length == 0)
+            {
+                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
+                return false;
+            }
+            
+            GameObjectCreationParameters parameters = new()
+            {
+                Position = position
+            };
+
+            foreach (var prefabToSpawn in list.allowedEnemies)
+            {
+                GameObject enemy = _container.InstantiatePrefab(prefabToSpawn, parameters);
+                enemy.transform.name = enemy.name + $"{_counter}";
+                _entities.Register(new []{ EntityTag.Enemy }, enemy);
+                _counter++;
+            }
+            
             return true;
         }
 
@@ -48,9 +72,9 @@ namespace BoleteHell.Gameplay.SpawnManager
             };
             
             GameObject enemy = _container.InstantiatePrefab(prefabToSpawn, parameters);
-            enemy.transform.name = enemy.name + $"{counter}";
+            enemy.transform.name = enemy.name + $"{_counter}";
             _entities.Register(new []{ EntityTag.Enemy }, enemy);
-            counter++;
+            _counter++;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿{
   "name": "BoleteAI",
   "references": [
-    "BoleteGameplay",
+    "GUID:4a12286e38004cefb2b1e4bba9efb361",
     "GUID:73907d139b13f8a43b7e3e95c329d30a",
     "GUID:9fe43832803244ddab18df4ff46d27e4",
     "GUID:efa45043feb7e4147a305b73b5cea642"
