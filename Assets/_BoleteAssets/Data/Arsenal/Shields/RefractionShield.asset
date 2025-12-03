@@ -15,7 +15,7 @@ MonoBehaviour:
   <color>k__BackingField: {r: 0.21538448, g: 0, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 5809585283772711023
-  despawnTime: 5
+  despawnTime: 10
   <shieldEffect>k__BackingField:
   - AffectedSide: 0
     <statusEffectConfig>k__BackingField:

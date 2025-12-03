@@ -27,7 +27,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
             if (cannon.CanShoot) 
                 return;
             
-            if (cannon.AttackTimer < cannon.Config.cannonData.cooldown)
+            float currentCooldown = cannon.Config.cannonData.rampsUpFiringSpeed ? 
+                cannon.Config.cannonData.GetRampedUpCooldown(cannon.ShotCount) : 
+                cannon.Config.cannonData.cooldown;
+            
+            if (cannon.AttackTimer < currentCooldown)
             {
                 cannon.AttackTimer += Time.deltaTime;
             }
@@ -36,7 +40,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
                 cannon.CanShoot = true;
             }
         }
-        
+
         public bool TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
         {
             if (!cannon.CanShoot)
@@ -153,6 +157,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
             cannon.ChargeTimer = 0;
             cannon.CurrentFiringLogic?.FinishFiring();
+            cannon.ShotCount = 0;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         [Required] [field:SerializeReference] 
         public IShieldHitLogic onHitLogic { get; private set; }
-        
+
         [SerializeField]
         public float despawnTime = 3f;
         

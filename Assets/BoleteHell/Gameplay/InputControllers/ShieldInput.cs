@@ -45,14 +45,14 @@ namespace BoleteHell.Gameplay.InputControllers
         {
             input.OnShieldStart += StartShield;
             input.OnShieldEnd += FinishShield;
-            //input.OnCycleShield += CycleShields;
+            input.OnCycleShield += CycleShields;
         }
 
         private void OnDisable()
         {
             input.OnShieldStart -= StartShield;
             input.OnShieldEnd -= FinishShield;
-            //input.OnCycleShield -= CycleShields;
+            input.OnCycleShield -= CycleShields;
         }
 
         //Pourrais être hardcodé pour que Q = refraction,E = reflexion, R = diffractio

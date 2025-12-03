@@ -10,6 +10,7 @@ using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Shields
 {
+    [RequireComponent(typeof(MeshRenderer), typeof(HealthComponent))]
     public class Shield : MonoBehaviour, ITargetable
     {
         [SerializeField] 
@@ -21,17 +22,31 @@ namespace BoleteHell.Code.Arsenal.Shields
 
         private GameObject _owner;
 
+        private HealthComponent health;
+
         [Inject]
         private IStatusEffectService _statusEffectService;
 
         private void Awake()
         {
             meshRenderer = GetComponent<MeshRenderer>();
+            //Présentement le nobmre de max hp est obliger d'être pareil pour chaque shield car il esst défini dans le prefab
+            //Chaque shield a le même prefab et est modifier selon son shieldData
+            
+            //Il faudrait définir le max hp dans les shieldData et override le maxHp de HealthComponent
+            //mais ça peut rendre la modification du max hp des shields moins intuitif car modifier le healthComponent ne va pas changer la vie réellement 
+            health = GetComponent<HealthComponent>();
+            health.OnDeath += DestroyShield;
         }
 
         private void Start()
         {
             Destroy(gameObject, shieldInfo.despawnTime);
+        }
+
+        private void DestroyShield()
+        {
+            Destroy(gameObject);
         }
 
         public void SetLineInfo(ShieldData info, GameObject owner)
@@ -61,6 +76,8 @@ namespace BoleteHell.Code.Arsenal.Shields
                 }
             }
             
+            health.TakeDamage(1);
+            
             laserInstance.MakeLaserNeutral();
             
             return shieldInfo.onHitLogic.ExecuteRay(incomingDirection, hitPoint, laser.CombinedRefractiveIndex);
@@ -79,6 +96,11 @@ namespace BoleteHell.Code.Arsenal.Shields
             callback?.Invoke(ctx.Projectile.isProjectile || !shieldInfo.onHitLogic.ShouldBlocklaser
                 ? new ITargetable.Response(ctx) { Direction = newDirection }
                 : new ITargetable.Response(ctx) { Direction = newDirection, BlockProjectile = true });
+        }
+
+        private void OnDestroy()
+        {
+            health.OnDeath -= DestroyShield;
         }
     }
 }

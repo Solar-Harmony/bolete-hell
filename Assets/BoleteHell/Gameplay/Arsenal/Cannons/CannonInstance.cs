@@ -16,7 +16,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         public float ChargeTimer = 0f;
         public bool CanShoot = false;
         public bool IsCharged = false;
-        //Mis ici car c'est la seule chose instancier pas entité
+        //Mis ici car j'ai besoin d'une liste par instance de cannon
         [HideInInspector]
         public List<LaserPreviewRenderer> reservedPreviewRenderers = new ();
 
