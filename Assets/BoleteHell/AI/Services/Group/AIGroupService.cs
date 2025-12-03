@@ -40,6 +40,10 @@ namespace BoleteHell.AI.Services.Group
             healthComponent.OnDeath += () =>
             {
                 group.NumMembers--;
+                if (group.NumMembers <= 0)
+                {
+                    _groups.Remove(groupID);
+                }
             };
         }
 
