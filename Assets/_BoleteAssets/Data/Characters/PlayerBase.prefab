@@ -1313,6 +1313,7 @@ GameObject:
   - component: {fileID: 1307580236049276637}
   - component: {fileID: 5155209625979689974}
   - component: {fileID: 8970055022577587531}
+  - component: {fileID: 1064723696165791868}
   m_Layer: 11
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -1462,12 +1463,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactions:
-  - rid: -2
+  - rid: 5809585316302159957
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 5809585316302159957
+      type: {class: RotateShieldInteraction, ns: BoleteHell.Gameplay.Interactions, asm: BoleteGameplay}
+      data: 
 --- !u!114 &3936461364443652694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,6 +1534,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2516306c2d094087a1ffaf8b10a68cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1064723696165791868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563693215699855702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fca10ba6001047a2af124b028804e455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 6038035397517986442}
 --- !u!1001 &1193320144923651803
 PrefabInstance:
   m_ObjectHideFlags: 0
