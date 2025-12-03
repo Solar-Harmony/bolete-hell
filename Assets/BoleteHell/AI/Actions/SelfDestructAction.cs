@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BoleteHell.Gameplay.Characters;
+using BoleteHell.Utils;
 using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;
@@ -19,9 +20,12 @@ namespace BoleteHell.AI.Actions
         [SerializeReference] public BlackboardVariable<int> ExplosionDamage;
         [SerializeReference] public BlackboardVariable<GameObject> ExplosionObject;
 
-        private Renderer _renderer;
+        private MainRenderer _rendererRef;
+        private MaterialPropertyBlock _propertyBlock;
         private Color _originalColor;
         private float _countdown;
+        
+        private static readonly int _colorId = Shader.PropertyToID("_Color");
     
         // private TransientLight.Pool _explosionVFXPool;
 
@@ -29,8 +33,14 @@ namespace BoleteHell.AI.Actions
         {
             // ServiceLocator.Get(out _explosionVFXPool);
         
-            GameObject.GetComponentChecked(out _renderer);
-            _originalColor = _renderer.material.color;
+            GameObject.GetComponentChecked(out _rendererRef);
+            
+            _propertyBlock = new MaterialPropertyBlock();
+            _rendererRef.Renderer.GetPropertyBlock(_propertyBlock);
+            _originalColor = _propertyBlock.GetColor(_colorId);
+            if (_originalColor == Color.clear)
+                _originalColor = _rendererRef.Renderer.sharedMaterial.color;
+            
             _countdown = TimeBeforeExplosion;
         
             return Status.Running;
@@ -57,7 +67,9 @@ namespace BoleteHell.AI.Actions
             float flashFrequency = Mathf.Lerp(0.8f, 0.1f, t);
             float flashPhase = Mathf.PingPong(Time.time * (1f / flashFrequency), 1f);
 
-            _renderer.material.color = Color.Lerp(_originalColor, Color.red, flashPhase);
+            Color flashColor = Color.Lerp(_originalColor, Color.red, flashPhase);
+            _propertyBlock.SetColor(_colorId, flashColor);
+            _rendererRef.Renderer.SetPropertyBlock(_propertyBlock);
         }
     
         private void Explode()

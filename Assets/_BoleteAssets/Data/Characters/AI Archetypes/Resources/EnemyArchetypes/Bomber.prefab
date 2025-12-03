@@ -170,9 +170,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4330915771769829985, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipToSample.position.z
+      value: 1.0947189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330915771769829985, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipFromSample.position.z
+      value: 1.0947189
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057959314667780093, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipToSample.position.z
+      value: 1.1716495
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057959314667780093, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipFromSample.position.z
+      value: 1.1716495
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.b
+      value: 0.08846559
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.g
+      value: 0.55033094
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.r
+      value: 0.92452824
+      objectReference: {fileID: 0}
     - target: {fileID: 6982038961960877227, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Name
-      value: Bombeur
+      value: Bomber
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}

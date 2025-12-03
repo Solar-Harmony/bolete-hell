@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace Dreamteck.Splines
 {
@@ -526,6 +525,11 @@ namespace Dreamteck.Splines
             normal.Normalize();
             center /= count;
 
+            // BOLETE DIVERGENCE: Prevent degenerate normal that causes log spam
+            if (normal.sqrMagnitude < 1e-8f)
+                normal = Vector3.up;
+            // END BOLETE DIVERGENCE
+            
             Quaternion rot = Quaternion.LookRotation(normal, Vector3.up);
             Vector3 up = rot * Vector3.up;
             Vector3 right = rot * Vector3.right;
