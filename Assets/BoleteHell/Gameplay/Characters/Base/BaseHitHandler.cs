@@ -37,16 +37,21 @@ namespace BoleteHell.Gameplay.Characters.Base
                 return;
             }
 
-            var thisFaction = GetComponent<FactionComponent>();
-            var instigatorFaction = ctx.Instigator.GetComponent<FactionComponent>();
-            if (thisFaction.IsAffected(ctx.Projectile.AffectedSide, instigatorFaction))
-                return;
+            if (ctx.Instigator)
+            {
+                var thisFaction = GetComponent<FactionComponent>();
+                
+                var instigatorFaction = ctx.Instigator.GetComponent<FactionComponent>();
+                if (thisFaction.IsAffected(ctx.Projectile.AffectedSide, instigatorFaction))
+                    return;
+                
+                var instigatorHealth = ctx.Instigator.GetComponent<HealthComponent>();
+                if (instigatorHealth.IsDead) 
+                    return;
+                
+                _blackboard.SetVariableValue("Target", ctx.Instigator);
+            }
             
-            var instigatorHealth = ctx.Instigator.GetComponent<HealthComponent>();
-            if (instigatorHealth.IsDead) 
-                return;
-            
-            _blackboard.SetVariableValue("Target", ctx.Instigator);
             if (_deaggroCoroutine != null)
             {
                 StopCoroutine(_deaggroCoroutine);

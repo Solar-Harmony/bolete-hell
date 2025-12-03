@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BoleteHell.Code.Core;
+using BoleteHell.Code.Graphics;
 using BoleteHell.Gameplay.Characters;
 using BoleteHell.Utils;
 using BoleteHell.Utils.Extensions;
@@ -27,11 +29,11 @@ namespace BoleteHell.AI.Actions
         
         private static readonly int _colorId = Shader.PropertyToID("_Color");
     
-        // private TransientLight.Pool _explosionVFXPool;
+        private TransientLight.Pool _explosionVFXPool;
 
         protected override Status OnStart()
         {
-            // ServiceLocator.Get(out _explosionVFXPool);
+            ServiceLocator.Get(out _explosionVFXPool);
         
             GameObject.GetComponentChecked(out _rendererRef);
             
@@ -56,7 +58,15 @@ namespace BoleteHell.AI.Actions
                 return Status.Running;
         
             Explode();
-            Object.Destroy(GameObject);
+            
+            if (GameObject.TryGetComponent(out HealthComponent health))
+            {
+                health.TakeDamage(health.CurrentHealth);
+            }
+            else
+            {
+                Object.Destroy(GameObject);
+            }
         
             return Status.Success;
         }
@@ -96,14 +106,13 @@ namespace BoleteHell.AI.Actions
     
         private void DrawVisuals(Vector2 hitPosition)
         {
-            // trop la flemme
-            // if (!ExplosionObject.Value)
-            // {
-            //     Debug.LogWarning("Explosion hit missing its explosion visual effect");
-            //     return;
-            // }
-            //
-            // _explosionVFXPool.Spawn(hitPosition, ExplosionRadius, 0.1f);
+            if (!ExplosionObject.Value)
+            {
+                Debug.LogWarning("Explosion hit missing its explosion visual effect");
+                return;
+            }
+            
+            _explosionVFXPool.Spawn(hitPosition, ExplosionRadius, 0.1f);
         }
     }
 }
