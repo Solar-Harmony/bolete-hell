@@ -67,25 +67,29 @@ namespace BoleteHell.Code.Arsenal
             return GetSelectedWeapons().All(weapon => weapon.CanShoot);
         }
 
-        public void Shoot(Vector2 direction)
+        public bool Shoot(Vector2 direction)
         {
             if (cannons.Count == 0)
             {
                 Debug.LogWarning("Cannot shoot: no cannon in arsenal.");
-                return;
+                return false;
             }
-
-            if (!IsReadyToShoot())
-                return;
             
             Vector2 spawnOrigin = spawnDistance ? spawnDistance.position : transform.position;
             Vector2 spawnPosition = spawnOrigin + direction * spawnRadius;
             var shotParams = new ShotLaunchParams(transform.position, spawnPosition, direction, _owner);
             
+            bool doneFiring = true;
+
             foreach (CannonInstance weapon in GetSelectedWeapons())
             {
-                _cannonService.TryShoot(weapon, shotParams);
+                if (!_cannonService.TryShoot(weapon, shotParams))
+                {
+                    doneFiring = false;
+                }
             }
+
+            return doneFiring;
         }
         
         public float GetProjectileSpeed()

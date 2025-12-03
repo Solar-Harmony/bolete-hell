@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BoleteHell.Code.Arsenal.ShotPatterns;
 using BoleteHell.Utils;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace BoleteHell.Code.Arsenal.Cannons
@@ -19,8 +21,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
 
         [Inject]
         private LaserPreviewRenderer.Pool _pool;
-
-        private LaserPreviewRenderer beamPreview;
+        
         public void Tick(CannonInstance cannon)
         {
             if (cannon.CanShoot) 
@@ -36,24 +37,38 @@ namespace BoleteHell.Code.Arsenal.Cannons
             }
         }
         
-        public void TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
+        public bool TryShoot(CannonInstance cannon, ShotLaunchParams parameters)
         {
             if (!cannon.CanShoot)
-                return;
+                return false;
             
+            List<ShotLaunchParams> setupProjectiles = new List<ShotLaunchParams>();
+            foreach (ShotPatternData patternData in cannon.Config.GetBulletPatterns())
+            {
+                setupProjectiles.AddRange(SetupProjectiles(cannon, parameters, patternData));
+            }
+
+            if (!cannon.IsCharged)
+                return false;
+            
+            Fire(cannon, setupProjectiles, parameters.Instigator);
+            return true;
+        }
+
+        //Pourrais peut-etre avoir un bool sur les shotparams qui détermine si le projectile est pret a etre tirer
+        //Permettrais d'avoir des pattern qui tire des beam et des projectile en même temps sans faire attendre les projectile car ils ne charge pas
+        //Pas nécéssaire pour le moment car les patterns sont spécifique a un firing type
+        private List<ShotLaunchParams> SetupProjectiles(CannonInstance cannon, ShotLaunchParams parameters, ShotPatternData patternData)
+        {
+            List<ShotLaunchParams> projectiles =
+                _patternService.ComputeSpawnPoints(patternData, parameters, cannon.ShotCount);
+
             if (cannon.Config.cannonData.WaitBeforeFiring && !cannon.IsCharged)
             {
-                if (!beamPreview)
-                {
-                    // NOTE: Le preview ne montre pas les réflections et refractions etc
-                    beamPreview = _pool.Spawn(parameters.SpawnPosition, GetBeamPreviewEndPoint(cannon, parameters), cannon.LaserCombo.CombinedColor,
-                        cannon.Config.cannonData.chargeTime);
-                }
-
-                ChargeShot(cannon, parameters);
+                ChargeShot(cannon, projectiles);
             }
-            
-            FireProjectiles(cannon, parameters);
+
+            return projectiles;
         }
 
         private Vector2 GetBeamPreviewEndPoint(CannonInstance cannon, ShotLaunchParams parameters)
@@ -70,55 +85,71 @@ namespace BoleteHell.Code.Arsenal.Cannons
             return hit ? hit.point : parameters.SpawnPosition + parameters.SpawnDirection * cannon.Config.cannonData.maxRayDistance;
         }
 
-        private void FireProjectiles(CannonInstance cannon, ShotLaunchParams parameters)
+
+        private static void SetupNextShot(CannonInstance cannon)
         {
-            foreach (ShotPatternData patternData in cannon.Config.GetBulletPatterns())
-            {
-                List<ShotLaunchParams> projectiles = _patternService.ComputeSpawnPoints(patternData, parameters, cannon.ShotCount);
-                
-                for (int i = 0; i < patternData.burstShotCount; i++)
-                {
-                    _coroutine.StartCoroutine(RoutineFire(cannon, projectiles, patternData, parameters.Instigator));
-                }
-            }
-            
             cannon.ShotCount++;
             cannon.CanShoot = false;
-            cannon.IsCharged = false;
+            cannon.IsCharged = !cannon.Config.cannonData.WaitBeforeFiring;
             cannon.AttackTimer = 0f;
             cannon.ChargeTimer = 0f;
         }
 
-        private void ChargeShot(CannonInstance cannon, ShotLaunchParams parameters)
+        private void ChargeShot(CannonInstance cannon, List<ShotLaunchParams> projectiles)
         {
-            if (cannon.ChargeTimer < cannon.Config.cannonData.chargeTime)
+            if(cannon.reservedPreviewRenderers.Count == 0)
+                CreateRenderers(cannon, projectiles);
+
+            for (int i = projectiles.Count - 1 ; i >= 0; i--)
             {
-                beamPreview.UpdatePreview(parameters.SpawnPosition, GetBeamPreviewEndPoint(cannon, parameters), cannon.ChargeTimer);
-                cannon.ChargeTimer += Time.deltaTime;
+                ShotLaunchParams parameters = projectiles[i];
+
+                if (cannon.ChargeTimer < cannon.Config.cannonData.chargeTime)
+                {
+                    cannon.reservedPreviewRenderers[i].UpdatePreview(
+                        parameters.SpawnPosition,
+                        GetBeamPreviewEndPoint(cannon, parameters),
+                        cannon.ChargeTimer);
+                }
+                else
+                {
+                    cannon.reservedPreviewRenderers[i].Despawn();
+                    cannon.reservedPreviewRenderers.RemoveAt(i);
+                    cannon.IsCharged = true;
+                }
             }
-            else
+            
+            cannon.ChargeTimer += Time.deltaTime;
+        }
+
+        private void CreateRenderers(CannonInstance cannon, List<ShotLaunchParams> projectiles)
+        {
+            foreach (ShotLaunchParams projectile in projectiles)
             {
-                beamPreview.Despawn();
-                beamPreview = null;
-                cannon.IsCharged = true;
+                cannon.reservedPreviewRenderers.Add(_pool.Spawn(
+                    projectile.SpawnPosition,
+                    GetBeamPreviewEndPoint(cannon, projectile),
+                    cannon.LaserCombo.CombinedColor,
+                    cannon.Config.cannonData.chargeTime));
             }
         }
 
-        private IEnumerator RoutineFire(CannonInstance cannon, List<ShotLaunchParams> projectileLaunchData, ShotPatternData patternData, GameObject instigator)
+        private void Fire(CannonInstance cannon, List<ShotLaunchParams> projectileLaunchData, GameObject instigator)
         {
             foreach (ShotLaunchParams launchData in projectileLaunchData)
             {
                 cannon.CurrentFiringLogic?.Shoot(launchData.SpawnPosition, launchData.SpawnDirection, cannon.Config.cannonData, cannon.LaserCombo, instigator);
             }
-            yield return new WaitForSeconds(patternData.burstShotCooldown);
+
+            SetupNextShot(cannon);
         }
 
         public void FinishFiring(CannonInstance cannon)
         {
-            if (beamPreview)
+            foreach (LaserPreviewRenderer reservedPreviewRenderer in cannon.reservedPreviewRenderers.ToList())
             {
-                beamPreview.Despawn();
-                beamPreview = null;
+                reservedPreviewRenderer.Despawn();
+                cannon.reservedPreviewRenderers.Remove(reservedPreviewRenderer);
             }
             cannon.ChargeTimer = 0;
             cannon.CurrentFiringLogic?.FinishFiring();
