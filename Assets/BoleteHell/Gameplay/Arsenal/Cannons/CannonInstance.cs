@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoleteHell.Code.Arsenal.FiringLogic;
 using BoleteHell.Code.Arsenal.RayData;
+using UnityEngine;
 
 namespace BoleteHell.Code.Arsenal.Cannons
 {
@@ -14,6 +16,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
         public float ChargeTimer = 0f;
         public bool CanShoot = false;
         public bool IsCharged = false;
+        //Mis ici car c'est la seule chose instancier pas entité
+        [HideInInspector]
+        public List<LaserPreviewRenderer> reservedPreviewRenderers = new ();
 
         public CannonInstance(CannonConfig config)
         {

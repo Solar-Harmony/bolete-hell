@@ -62,8 +62,7 @@ namespace BoleteHell.AI.Actions
                 float projectileSpeed = _arsenal.GetProjectileSpeed();
                 _targeting.SuggestProjectileDirection(out Vector2 targetDirection, projectileSpeed, selfPosition, selfVelocity, targetPosition, targetVelocity);
                 _currentAimDirection = Vector2.Lerp(_currentAimDirection, targetDirection, TurnSpeed.Value * Time.deltaTime).normalized;
-                _arsenal.Shoot(_currentAimDirection);
-                return Status.Success;
+                return !_arsenal.Shoot(_currentAimDirection) ? Status.Running : Status.Success;
             }
 
             // simplify so we don't calculate the whole thing at once

@@ -24,14 +24,15 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         [Unit(Units.Degree)]
         public int constantRotation;
     
-        [Header("Burst parameters")]
-    
-        [Tooltip("Number of shots in a burst")]
-        [Range(1, 3)]
-        public int burstShotCount = 1;
-    
-        [Tooltip("FireRate between individual shots in a burst")]
-        [Min(0)] [Unit(Units.Second)]
-        public float burstShotCooldown;
+        //Pas gerer pour l'instant
+        // [Header("Burst parameters")]
+        //
+        // [Tooltip("Number of shots in a burst")]
+        // [Range(1, 3)]
+        // public int burstShotCount = 1;
+        //
+        // [Tooltip("FireRate between individual shots in a burst")]
+        // [Min(0)] [Unit(Units.Second)]
+        // public float burstShotCooldown;
     }
 }
