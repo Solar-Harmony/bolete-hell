@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateMethod: 0
   _spline: {fileID: -7077992100956332028}
-  _autoUpdate: 1
+  _autoUpdate: 0
   _rotationModifier:
     blend: 1
     useClippedPercent: 0
@@ -278,14 +278,14 @@ MonoBehaviour:
   buildOnAwake: 1
   buildOnEnable: 0
   _baked: 0
-  _markDynamic: 1
+  _markDynamic: 0
   _size: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _offset: {x: 0, y: 0, z: 0}
   _normalMethod: 1
-  _calculateTangents: 1
-  _useSplineSize: 1
-  _useSplineColor: 1
+  _calculateTangents: 0
+  _useSplineSize: 0
+  _useSplineColor: 0
   _rotation: 0
   _flipFaces: 0
   _doubleSided: 0

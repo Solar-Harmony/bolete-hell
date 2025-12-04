@@ -881,7 +881,7 @@ MonoBehaviour:
   _size: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _offset: {x: 0, y: 0, z: 0}
-  _normalMethod: 0
+  _normalMethod: 1
   _calculateTangents: 0
   _useSplineSize: 0
   _useSplineColor: 0
@@ -1648,7 +1648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateMethod: 0
   _spline: {fileID: 5578043488928999497}
-  _autoUpdate: 1
+  _autoUpdate: 0
   _rotationModifier:
     blend: 1
     useClippedPercent: 0
