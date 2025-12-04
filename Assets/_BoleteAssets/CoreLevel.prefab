@@ -626,6 +626,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialSpreadLevel: 1
+  _rippleTarget: {fileID: 5267389742430674868}
+  _rippleSpawnInterval: 0.08
+  _rippleLifetime: 1.5
+  _minVelocityForRipple: 0.5
+  _rippleForwardOffset: 0.8
   _applyOutsidePlayMode: 0
 --- !u!1 &8167761027039391717
 GameObject:

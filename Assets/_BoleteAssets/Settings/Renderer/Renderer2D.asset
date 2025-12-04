@@ -108,7 +108,7 @@ MonoBehaviour:
     EnableFakeAO: 1
     EnableSunShadow: 1
     SunDirection: {x: 0.7661915, y: -0.64261234}
-    SunShadowStepSize: 0.25
+    SunShadowStepSize: 0.1
     SunShadowIntensity: 0.5
     SunShadowSoftness: 0.45
     FakeAORadius: 64

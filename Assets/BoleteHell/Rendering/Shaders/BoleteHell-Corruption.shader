@@ -28,6 +28,13 @@
         _RimPower ("Rim Power", Range(0.1,8)) = 2.0
         _RimIntensity ("Rim Intensity", Range(0,4)) = 1.0
         _RimColor ("Rim Color", Color) = (1,1,1,1)
+        
+        [Header(Interactive Ripple)]
+        _RippleRadius ("Ripple Radius", Float) = 5.0
+        _RippleFrequency ("Ripple Frequency", Float) = 8.0
+        _RippleSpeed ("Ripple Speed", Float) = 3.0
+        _RippleStrength ("Ripple Strength", Float) = 0.15
+        _RippleLifetime ("Ripple Lifetime", Float) = 1.5
     }
     
     SubShader
@@ -61,6 +68,11 @@
 
             shared float _Corruption;
             
+            #define MAX_RIPPLES 8
+            float4 _RippleData[MAX_RIPPLES];
+            int _RippleCount;
+            float _RippleLifetime;
+            
             float3    _Color;
             float3    _CorruptionColor;
             float3    _CorruptionColorB;
@@ -88,6 +100,11 @@
             float     _RimIntensity;
             float3    _RimColor;
             
+            float     _RippleRadius;
+            float     _RippleFrequency;
+            float     _RippleSpeed;
+            float     _RippleStrength;
+            
             Varyings vert(Attributes v)
             {
                 Varyings o;
@@ -96,8 +113,55 @@
                 return o;
             }
 
+            float2 computeRippleOffset(float2 worldPos)
+            {
+                float2 totalOffset = float2(0, 0);
+                
+                float corruptionScale = saturate(_Corruption);
+                if (corruptionScale < 0.01)
+                    return totalOffset;
+                
+                for (int i = 0; i < MAX_RIPPLES; i++)
+                {
+                    float4 ripple = _RippleData[i];
+                    float2 ripplePos = ripple.xy;
+                    float spawnTime = ripple.z;
+                    float intensity = ripple.w;
+                    
+                    float age = _Time.y - spawnTime;
+                    if (age < 0 || age > _RippleLifetime)
+                        continue;
+                    
+                    float2 toRipple = worldPos - ripplePos;
+                    float dist = length(toRipple);
+                    
+                    if (dist < 0.001)
+                        continue;
+                    
+                    float scaledRadius = _RippleRadius * corruptionScale;
+                    float expandingRadius = scaledRadius * (age / _RippleLifetime);
+                    float ringDist = abs(dist - expandingRadius);
+                    float ringWidth = 1.5 * corruptionScale;
+                    float ringMask = saturate(1.0 - ringDist / ringWidth);
+                    
+                    float ageFade = 1.0 - (age / _RippleLifetime);
+                    ageFade = pow(ageFade, 0.7);
+                    
+                    float2 dir = toRipple / dist;
+                    float wave = sin(dist * _RippleFrequency - age * _RippleSpeed * 6.0);
+                    wave = wave * 0.3 + 0.7;
+                    
+                    totalOffset += dir * wave * ringMask * ageFade * intensity * _RippleStrength * corruptionScale;
+                }
+                
+                return totalOffset;
+            }
+
             float2 getSampleUV(float2 worldPos)
             {
+                float2 rippleOffset = computeRippleOffset(worldPos);
+                worldPos += rippleOffset;
+                
                 float2 uv = worldPos * _NoiseScale;
 
                 float offsetX = sin(uv.x + _Time.y * _OffsetSpeed);
@@ -156,9 +220,12 @@
                 float wB = eB / sum;
                 float wC = eC / sum;
 
-                return _CorruptionColor * wA +
-                       _CorruptionColorB * wB +
-                       _CorruptionColorC * wC;
+                float3 corruptionColor =
+                    _CorruptionColor * wA
+                  + _CorruptionColorB * wB
+                  + _CorruptionColorC * wC;
+
+                return corruptionColor;
             }
                         
             float4 frag(Varyings i) : SV_Target
@@ -184,7 +251,7 @@
                 float cosTheta = saturate(dot(normal, viewDir));
                 float3 rim = _RimColor * pow(saturate(1.0 - cosTheta), _RimPower) * _RimIntensity;
                 specular += rim;
-
+                
                 return float4(lerp(_Color, diffuse + specular, mask), 1.0);
             }
 
