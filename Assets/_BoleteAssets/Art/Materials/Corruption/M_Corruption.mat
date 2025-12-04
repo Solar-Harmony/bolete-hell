@@ -107,6 +107,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AnimationSpeed: 0.5
+    - _BaseColorInfluence: 0.582
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendRange: 0.142
@@ -169,7 +170,7 @@ Material:
     - _RippleDecay: 0.08
     - _RippleFrequency: 5
     - _RippleLifetime: 1.5
-    - _RippleRadius: 3
+    - _RippleRadius: 2.5
     - _RippleSpeed: 3
     - _RippleStrength: 0.1
     - _Scale: 0.21
