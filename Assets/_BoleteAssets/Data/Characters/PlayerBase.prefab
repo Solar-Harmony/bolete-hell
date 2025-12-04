@@ -538,6 +538,7 @@ GameObject:
   - component: {fileID: 4076320667282356599}
   - component: {fileID: 4743476438884343131}
   - component: {fileID: 4942738744886628950}
+  - component: {fileID: 4002476136368522322}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -561,8 +562,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0019506, y: 0.433}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: -0.008, y: 0.011}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4743476438884343131
 MeshRenderer:
@@ -703,6 +704,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4743476438884343131}
   m_maskType: 0
+--- !u!114 &4002476136368522322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666371616709042297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &2896536126263095480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,7 +1391,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.44
+  m_Radius: 1.07
 --- !u!114 &-7706689365234032475
 MonoBehaviour:
   m_ObjectHideFlags: 0

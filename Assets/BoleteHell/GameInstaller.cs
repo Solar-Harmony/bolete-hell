@@ -17,6 +17,7 @@ using BoleteHell.Gameplay.Droppables;
 using BoleteHell.Gameplay.GameState;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Utils;
+using BoleteHell.Utils.Advisor;
 using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
@@ -59,6 +60,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
+            Container.Bind<ITutorialService>().To<Tutorial>().FromComponentInHierarchy().AsSingle();
             BindStatusEffects();
             
             // factories
