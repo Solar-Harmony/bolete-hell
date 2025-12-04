@@ -17,7 +17,7 @@ namespace BoleteHell.AI.Services
             
             //Permet a l'ennemis de ne pas prendre les autre ennemis en compte pour target le joueur ou les bases
             //mais de prendre les autre ennemis en compte quand il target un ennemis
-            var faction = self.GetComponent<FactionComponent>();
+            var faction = target.GetComponent<FactionComponent>();
             string ignoreLayer = faction.Type == FactionType.Enemy ? "" : enemyLayer;
             LayerMask layerMask = ~LayerMask.GetMask(ignoreLayer, "IgnoreProjectile", "Shield");
             

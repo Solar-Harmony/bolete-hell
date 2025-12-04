@@ -90,6 +90,14 @@ PrefabInstance:
       propertyPath: managedReferences[795111359620055125].GUID.m_Value1
       value: 2543800744231755274
       objectReference: {fileID: 0}
+    - target: {fileID: 3500938891576973719, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: slowdownDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500938891576973719, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: endReachedDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4023435176609027149, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
