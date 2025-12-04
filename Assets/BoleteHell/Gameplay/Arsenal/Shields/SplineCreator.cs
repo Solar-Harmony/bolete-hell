@@ -9,13 +9,9 @@ namespace BoleteHell.Code.Arsenal.Shields
     [RequireComponent(typeof(SplineExtrude))]
     public class SplineCreator : MonoBehaviour
     {
-        public EdgeCollider2D startCap;
-        public EdgeCollider2D endCap;
-
         private CompositeCollider2D _composite;
-        private EdgeCollider2D _leftEdge;
+        private PolygonCollider2D _polygonCollider;
         private MeshFilter _meshFilter;
-        private EdgeCollider2D _rightEdge;
         private Spline _spline;
 
         private SplineContainer _splineContainer;
@@ -32,32 +28,14 @@ namespace BoleteHell.Code.Arsenal.Shields
             _spline = _splineContainer.Spline;
             _composite = GetComponent<CompositeCollider2D>();
 
-            // Je dois créer 2 edgeColliders enfant du Composite collider pour faire un collider2D qui suit le spline
             LayerMask shieldLayer = LayerMask.NameToLayer("Shield");
-
-            var leftObj = new GameObject("EdgeCollider1");
-            leftObj.transform.parent = transform;
-            leftObj.layer = shieldLayer;
-            _leftEdge = leftObj.AddComponent<EdgeCollider2D>();
-            _leftEdge.tag = ShieldTag;
             
-            var rightObj = new GameObject("EdgeCollider2");
-            rightObj.transform.parent = transform;
-            rightObj.layer = shieldLayer;
-            _rightEdge = rightObj.AddComponent<EdgeCollider2D>();
-            _rightEdge.tag = ShieldTag;
-
-            var startObj = new GameObject("CapCollider1");
-            startObj.transform.parent = transform;
-            startObj.layer = shieldLayer;
-            startCap = startObj.AddComponent<EdgeCollider2D>();
-            startCap.tag = ShieldTag;
-
-            var endObj = new GameObject("CapCollider2");
-            endObj.transform.parent = transform;
-            endObj.layer = shieldLayer;
-            endCap = endObj.AddComponent<EdgeCollider2D>();
-            endCap.tag = ShieldTag;
+            var polyCol = new GameObject("Polygon Collider");
+            polyCol.transform.parent = transform;
+            polyCol.layer = shieldLayer;
+            _polygonCollider = polyCol.AddComponent<PolygonCollider2D>();
+            _polygonCollider.tag = ShieldTag;
+            _polygonCollider.compositeOperation = Collider2D.CompositeOperation.Merge;
         }
 
         private void OnDrawGizmos()
@@ -116,6 +94,8 @@ namespace BoleteHell.Code.Arsenal.Shields
 
                 if (i == 0)
                 {
+                    //Estimation de la tangente en prennant la direction entre 2 points de la courbe
+                    //On doit l'estimer car on a pas la fonction exacte qui forme la courbe donc on ne peut pas get la dérivé d'un point précis
                     var tangent = ((Vector2)sampledPositions[i + 1] - (Vector2)sampledPositions[i]).normalized;
                     offset = Perpendicular(tangent) * width;
                 }
@@ -145,11 +125,14 @@ namespace BoleteHell.Code.Arsenal.Shields
                 rightPoints[i] = pos - offset;
             }
 
-            _leftEdge.points = leftPoints;
-            _rightEdge.points = rightPoints;
+            //Fix le probleme avec le compositeCollider qui ne reconnait pas ses child colliders
+            //j'utilisait mal le compositeCollider je pense
+            List<Vector2> polygonPath = new();
+            polygonPath.AddRange(leftPoints);
+            for (int i = rightPoints.Length - 1; i >= 0; i--)
+                polygonPath.Add(rightPoints[i]);
 
-            startCap.points = new[] { leftPoints[0], rightPoints[0] };
-            endCap.points = new[] { rightPoints[sampleCount - 1], leftPoints[sampleCount - 1] };
+            _polygonCollider.SetPath(0, polygonPath.ToArray());
         }
 
         private Vector2 Perpendicular(Vector2 v)
