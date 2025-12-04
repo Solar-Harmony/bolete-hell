@@ -1,0 +1,14 @@
+#main {
+    transition-property: translate;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+    translate: -45% 0;
+}
+
+#main.show {
+    translate: 0 0;
+}
+
+#main.bottom {
+    flex-direction: column-reverse;
+}

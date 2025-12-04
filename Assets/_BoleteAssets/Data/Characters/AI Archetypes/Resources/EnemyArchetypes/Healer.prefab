@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7688827710458240183
+--- !u!1001 &615347685584533631
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -5673025283711493893, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8870313207143250243, guid: c915b595db3a34545afa2280f1cd83e9, type: 2}
+      objectReference: {fileID: -8870313207143250243, guid: ca7454e39aa352a4da1221ea1a1f33e8, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: cannons.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: 'managedReferences[795111359620055127]'
+      propertyPath: 'managedReferences[795111359620055126]'
       value: Assembly-CSharp BoleteHell.Code.Arsenal.Cannons.CannonConfig
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: 'managedReferences[795111371258462401]'
+      propertyPath: 'managedReferences[795111371258462400]'
       value: BoleteGameplay BoleteHell.Code.Arsenal.Cannons.CannonConfig
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
@@ -29,59 +29,59 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111359620055127].cannonData
+      propertyPath: managedReferences[795111359620055126].cannonData
       value: 
-      objectReference: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+      objectReference: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111371258462401].cannonData
+      propertyPath: managedReferences[795111371258462400].cannonData
       value: 
-      objectReference: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+      objectReference: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: 'cannons.Array.data[0].cannonConfigs.Array.data[0]'
-      value: 795111371258462401
+      value: 795111371258462400
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111359620055127].usePatternMaster
+      propertyPath: managedReferences[795111359620055126].usePatternMaster
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111371258462401].usePatternMaster
+      propertyPath: managedReferences[795111371258462400].usePatternMaster
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111359620055127].shotPatternMaster
+      propertyPath: managedReferences[795111359620055126].shotPatternMaster
       value: 
       objectReference: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111371258462401].shotPatternMaster
+      propertyPath: managedReferences[795111371258462400].shotPatternMaster
       value: 
       objectReference: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111359620055127].laserDatas.Array.size
+      propertyPath: managedReferences[795111359620055126].laserDatas.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111371258462401].laserDatas.Array.size
+      propertyPath: managedReferences[795111371258462400].laserDatas.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: cannons.Array.data[0].cannonConfigs.Array.data[0].cannonData
       value: 
-      objectReference: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+      objectReference: {fileID: 11400000, guid: 59244fc31f1dc4d4bbdfa20befa63312, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: 'managedReferences[795111359620055127].laserDatas.Array.data[0]'
+      propertyPath: 'managedReferences[795111359620055126].laserDatas.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+      objectReference: {fileID: 11400000, guid: 98faa597e34d3a54ebcee8192956329e, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: 'managedReferences[795111371258462401].laserDatas.Array.data[0]'
+      propertyPath: 'managedReferences[795111371258462400].laserDatas.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 05d35c7fd499b95449f62a3afafea9f3, type: 2}
+      objectReference: {fileID: 11400000, guid: 98faa597e34d3a54ebcee8192956329e, type: 2}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111359620055127].bulletPatterns.Array.size
+      propertyPath: managedReferences[795111359620055126].bulletPatterns.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
-      propertyPath: managedReferences[795111371258462401].bulletPatterns.Array.size
+      propertyPath: managedReferences[795111371258462400].bulletPatterns.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 2877549176397520493, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: 'cannons.Array.data[0].cannonConfigs.Array.data[0].laserDatas.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
+      objectReference: {fileID: 11400000, guid: 98faa597e34d3a54ebcee8192956329e, type: 2}
     - target: {fileID: 4023435176609027149, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -180,9 +180,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4330915771769829985, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipToSample.position.z
+      value: 1.0947189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330915771769829985, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipFromSample.position.z
+      value: 1.0947189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735358013702089654, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: m_Color.b
+      value: 0.22419132
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735358013702089654, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6549864
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735358013702089654, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: m_Color.r
+      value: 0.1403542
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057959314667780093, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipToSample.position.z
+      value: 1.1716495
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057959314667780093, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: _clipFromSample.position.z
+      value: 1.1716495
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.b
+      value: 0.18102524
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.g
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118137064349902336, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: Color.r
+      value: 0.36476946
+      objectReference: {fileID: 0}
     - target: {fileID: 6982038961960877227, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Name
-      value: Sniper
+      value: Healer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

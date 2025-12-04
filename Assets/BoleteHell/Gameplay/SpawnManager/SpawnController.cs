@@ -18,7 +18,7 @@ namespace BoleteHell.Gameplay.SpawnManager
     public class SpawnController : MonoBehaviour
     {
         [Inject]
-        private SpawnManager _spawnManager;
+        private ISpawnService _spawnManager;
         
         [Inject]
         private IEntityRegistry _entities;

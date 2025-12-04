@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using BoleteHell.AI.Services;
+using BoleteHell.AI.Services.Group;
 using BoleteHell.Audio;
 using BoleteHell.Code.Arsenal.Cannons;
 using BoleteHell.Code.Arsenal.Shields;
@@ -16,6 +17,7 @@ using BoleteHell.Gameplay.Droppables;
 using BoleteHell.Gameplay.GameState;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Utils;
+using BoleteHell.Utils.Advisor;
 using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
@@ -53,10 +55,12 @@ namespace BoleteHell.Code.Core
             Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IEntityRegistry>().To<EntityRegistry>().FromNewComponentOnRoot().AsSingle();
-            Container.Bind<SpawnManager>().FromNewComponentOnRoot().AsSingle();
+            Container.Bind<ISpawnService>().To<SpawnManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
+            Container.Bind<ITutorialService>().To<Tutorial>().FromComponentInHierarchy().AsSingle();
             BindStatusEffects();
             
             // factories
