@@ -29,8 +29,8 @@ Material:
     - _DetailsScale: 2.52
     - _NoiseScale: 0.04
     - _OffsetSpeed: 0
-    - _RippleFrequency: 8
-    - _RippleRadius: 0
+    - _RippleFrequency: 0.1
+    - _RippleRadius: 1
     - _RippleStrength: 0.15
     m_Colors: []
   m_BuildTextureStacks: []
