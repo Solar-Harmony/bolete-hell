@@ -168,10 +168,10 @@ Material:
     - _RimIntensity: 0.68
     - _RimPower: 0.84
     - _RippleDecay: 0.08
-    - _RippleFrequency: 5
+    - _RippleFrequency: 8
     - _RippleLifetime: 1.5
-    - _RippleRadius: 2.5
-    - _RippleSpeed: 3
+    - _RippleRadius: 3
+    - _RippleSpeed: 1
     - _RippleStrength: 0.1
     - _Scale: 0.21
     - _Shininess: 2000
