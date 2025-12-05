@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1066278310178707433}
   - component: {fileID: -7077992100956332028}
   - component: {fileID: 6202966957537358867}
-  - component: {fileID: 7592886975360037547}
+  - component: {fileID: 7454527749472470282}
   - component: {fileID: 7586376362338869267}
   - component: {fileID: 576180338976705918}
   - component: {fileID: -3793088510932194491}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5080979106228210044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -159,19 +159,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: {r: 0.51482475, g: 0.51482475, b: 0.51482475, a: 1}
---- !u!114 &7592886975360037547
-MonoBehaviour:
+--- !u!210 &7454527749472470282
+SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5080979106228210044}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92d1bea1f2f475e99299aba3bf10b67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LayerOffset: -100
+  m_SortingLayerID: -1653101421
+  m_SortingLayer: -1
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!33 &7586376362338869267
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -239,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateMethod: 0
   _spline: {fileID: -7077992100956332028}
-  _autoUpdate: 1
+  _autoUpdate: 0
   _rotationModifier:
     blend: 1
     useClippedPercent: 0
@@ -257,14 +256,14 @@ MonoBehaviour:
     useClippedPercent: 0
     keys: []
   _clipFromSample:
-    position: {x: -5, y: 5, z: 100}
+    position: {x: -5, y: 5, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.70710677, y: 0.70710677, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
   _clipToSample:
-    position: {x: -5, y: 5, z: 100}
+    position: {x: -5, y: 5, z: 0}
     up: {x: 0, y: 0, z: -1}
     forward: {x: 0.70710677, y: 0.70710677, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -279,14 +278,14 @@ MonoBehaviour:
   buildOnAwake: 1
   buildOnEnable: 0
   _baked: 0
-  _markDynamic: 1
+  _markDynamic: 0
   _size: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _offset: {x: 0, y: 0, z: 0}
   _normalMethod: 1
-  _calculateTangents: 1
-  _useSplineSize: 1
-  _useSplineColor: 1
+  _calculateTangents: 0
+  _useSplineSize: 0
+  _useSplineColor: 0
   _rotation: 0
   _flipFaces: 0
   _doubleSided: 0

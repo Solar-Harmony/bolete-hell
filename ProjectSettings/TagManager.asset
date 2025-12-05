@@ -41,11 +41,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Terrain
+    uniqueID: 2641865875
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Overlay
+  - name: Obstacles
     uniqueID: 1494024763
+    locked: 0
+  - name: Level Text
+    uniqueID: 3341042871
     locked: 0
   m_RenderingLayers:
   - Default

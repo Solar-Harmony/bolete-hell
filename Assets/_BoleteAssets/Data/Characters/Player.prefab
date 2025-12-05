@@ -313,6 +313,7 @@ MonoBehaviour:
     <fragmentsX>k__BackingField: 4
     <fragmentsY>k__BackingField: 4
     <explosionForce>k__BackingField: 1
+    <minFragmentSize>k__BackingField: 0.15
 --- !u!114 &5800640726141296455
 MonoBehaviour:
   m_ObjectHideFlags: 0

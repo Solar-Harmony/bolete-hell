@@ -1,4 +1,4 @@
-﻿Shader "Bolete Hell/Fake Ambient Occlusion"
+﻿Shader "Bolete Hell/Internal/Fake Ambient Occlusion"
 {
     Properties
     {
