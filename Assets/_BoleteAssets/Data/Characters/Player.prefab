@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 8113299609235406626}
   - component: {fileID: 8976721167221909215}
   - component: {fileID: -2896426453427459091}
+  - component: {fileID: 2471000404904255701}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -365,6 +366,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27832e7a84947768e6c2980fe16aa6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2471000404904255701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9803254034568238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9892a20d6204440a9fc60382cd405741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rippleSpawnInterval: 0.08
+  _minVelocityForRipple: 0.5
+  _rippleForwardOffset: 1.2
+  _velocitySmoothTime: 0.1
 --- !u!1 &1762079061245450209
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,6 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shadowObject: {fileID: 5285806468048236680}
   _shadowDirection: {x: 0.81942093, y: -0.57319224}
+  _shadowLength: 0.5
 --- !u!1001 &7194848541375068502
 PrefabInstance:
   m_ObjectHideFlags: 0

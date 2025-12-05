@@ -17,6 +17,7 @@ using BoleteHell.Gameplay.Destructible;
 using BoleteHell.Gameplay.Droppables;
 using BoleteHell.Gameplay.GameState;
 using BoleteHell.Gameplay.SpawnManager;
+using BoleteHell.Rendering.Ripples;
 using BoleteHell.Utils;
 using BoleteHell.Utils.Advisor;
 using UnityEngine;
@@ -58,6 +59,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<ISpawnService>().To<SpawnManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<RippleManager>().FromNewComponentOnRoot().AsSingle();
             Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
             Container.Bind<ITutorialService>().To<Tutorial>().FromComponentInHierarchy().AsSingle();

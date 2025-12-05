@@ -30,13 +30,6 @@
         _RimColor ("Rim Color", Color) = (1,1,1,1)
         
         _BaseColorInfluence ("Base Color Influence", Range(0,1)) = 0.6
-
-        [Header(Interactive Ripple)]
-        _RippleRadius ("Ripple Radius", Float) = 5.0
-        _RippleFrequency ("Ripple Frequency", Float) = 8.0
-        _RippleSpeed ("Ripple Speed", Float) = 3.0
-        _RippleStrength ("Ripple Strength", Float) = 0.15
-        _RippleLifetime ("Ripple Lifetime", Float) = 1.5
     }
     
     SubShader
@@ -55,7 +48,6 @@
             #pragma vertex vert
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            
 
             struct Attributes
             {
@@ -70,10 +62,8 @@
 
             shared float _Corruption;
             
-            #define MAX_RIPPLES 8
-            float4 _RippleData[MAX_RIPPLES];
-            int _RippleCount;
-            float _RippleLifetime;
+            sampler2D _RippleTexture;
+            float4 _RippleTextureBounds;
             
             float3    _Color;
             float3    _CorruptionColor;
@@ -102,10 +92,6 @@
             float     _RimIntensity;
             float3    _RimColor;
 
-            float     _RippleRadius;
-            float     _RippleFrequency;
-            float     _RippleSpeed;
-            float     _RippleStrength;
             float     _BaseColorInfluence;
 
             Varyings vert(Attributes v)
@@ -116,76 +102,39 @@
                 return o;
             }
 
-            void computeRippleOffsetAndNormal(float2 worldPos, out float2 totalOffset, out float3 rippleNormal)
+            void sampleRippleTexture(float2 worldPos, out float2 rippleOffset, out float3 rippleNormal)
             {
-                totalOffset = float2(0, 0);
+                rippleOffset = float2(0, 0);
                 rippleNormal = float3(0, 0, 1);
 
                 float corruptionScale = saturate(_Corruption);
                 if (corruptionScale < 0.01)
                     return;
 
-                float2 normalAccum = float2(0, 0);
+                float2 boundsMin = _RippleTextureBounds.xy;
+                float2 boundsMax = _RippleTextureBounds.zw;
+                float2 boundsSize = boundsMax - boundsMin;
 
-                UNITY_UNROLLX(MAX_RIPPLES)
-                for (int i = 0; i < MAX_RIPPLES; i++)
-                {
-                    float4 ripple = _RippleData[i];
-                    float2 ripplePos = ripple.xy;
-                    float spawnTime = ripple.z;
-                    float intensity = ripple.w;
-                    
-                    float age = _Time.y - spawnTime;
-                    if (age < 0 || age > _RippleLifetime)
-                        continue;
-                    
-                    float2 toRipple = worldPos - ripplePos;
-                    float dist = length(toRipple);
+                if (boundsSize.x < 0.001 || boundsSize.y < 0.001)
+                    return;
 
-                    if (dist < 0.001)
-                        continue;
-                    
-                    float scaledRadius = _RippleRadius * corruptionScale;
-                    float expandingRadius = scaledRadius * (age / _RippleLifetime);
-                    float ringDist = abs(dist - expandingRadius);
-
-                    float ringWidth = 2.0 * corruptionScale;
-                    float falloff = exp(-ringDist * ringDist / (ringWidth * ringWidth));
-                    
-                    float ageNorm = age / _RippleLifetime;
-                    float ageFade = 1.0 - ageNorm;
-                    float ageIn = saturate(ageNorm * 10.0);
-                    ageFade *= ageIn;
-                    ageFade = ageFade * ageFade;
-                    
-                    float weight = falloff * ageFade * intensity;
-                    
-                    float2 dir = toRipple / dist;
-                    float phase = dist * _RippleFrequency - age * _RippleSpeed * 6.0;
-                    float wave = sin(phase) + 0.3 * sin(phase * 2.3 + 1.0);
-                    
-                    totalOffset += dir * wave * weight * _RippleStrength * corruptionScale;
-
-                    float waveDerivative = cos(phase) + 0.3 * 2.3 * cos(phase * 2.3 + 1.0);
-                    normalAccum += dir * waveDerivative * weight * corruptionScale;
-                }
-
-                const float intensity = 0.3f;
-                rippleNormal = normalize(float3(-normalAccum.x * intensity, -normalAccum.y * intensity, 1.0));
+                float2 uv = saturate((worldPos - boundsMin) / boundsSize);
+                float4 rippleData = tex2Dlod(_RippleTexture, float4(uv, 0, 0));
+                rippleOffset = rippleData.xy;
+                float2 encodedNormal = rippleData.zw * 2.0 - 1.0;
+                
+                const float normalIntensity = 0.3f;
+                rippleNormal = normalize(float3(-encodedNormal.x * normalIntensity, -encodedNormal.y * normalIntensity, 1.0));
             }
 
-            float2 getSampleUV(float2 worldPos)
+            float2 getSampleUV(float2 worldPos, float2 rippleOffset)
             {
-                float2 rippleOffset;
-                float3 rippleNormal;
-                computeRippleOffsetAndNormal(worldPos, rippleOffset, rippleNormal);
                 worldPos += rippleOffset;
-
                 float2 uv = worldPos * _NoiseScale;
 
                 float offsetX = sin(uv.x + _Time.y * _OffsetSpeed);
                 float offsetY = sin(uv.y + _Time.y * _OffsetSpeed);
-                uv += float2(offsetX, offsetY) * 0.1; // arbitrary scale
+                uv += float2(offsetX, offsetY) * 0.1;
 
                 float2 warp = tex2D(_NoiseTex, uv * _WarpScale + _Time.y * _WarpSpeed).rg * 2.0 - 1.0;
                 uv += warp * _WarpStrength;
@@ -193,25 +142,25 @@
                 return uv;
             }
 
-            float sampleCorruptionMask(float2 p)
+            float sampleCorruptionMask(float2 p, float2 rippleOffset)
             {
-                float n = tex2D(_NoiseTex, getSampleUV(p)).r;
-                float remapped = smoothstep(0.0, 1.0, n); // help with non uniform noise
+                if (_Corruption < 0.01)
+                    return 0.0f;
+
+                float n = tex2D(_NoiseTex, getSampleUV(p, rippleOffset)).r;
+                float remapped = smoothstep(0.0, 1.0, n);
 
                 float low = saturate(_Corruption - _BlendRange);
                 float high = saturate(_Corruption + _BlendRange);
 
-                if (_Corruption < 0.01)
-                    return 0.0f;
-
                 return 1 - smoothstep(low, high, remapped);
             }
 
-            float3 sampleNormal(float2 p, float noise, float scale)
+            float3 sampleNormal(float2 p, float noise, float scale, float2 rippleOffset)
             {
                 const float3 flat = float3(0, 0, 1);
-                float3 sample = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p) * scale));
-                return normalize(lerp(flat, sample, noise));
+                float3 n = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p, rippleOffset) * scale));
+                return normalize(lerp(flat, n, noise));
             }
 
             float3 applyBaseColorInfluence(float3 corruptionResult, float3 baseColor, float mask)
@@ -222,21 +171,20 @@
                 return lerp(corruptionResult, combined, _BaseColorInfluence * mask);
             }
 
-            float3 computeAlbedo(float2 worldPos)
+            float3 computeAlbedo(float2 worldPos, float2 rippleOffset)
             {
                 float2 offsetA = float2(0.2, 0.4);
                 float2 offsetB = float2(0.3, 0.7);
                 float2 offsetC = float2(0.9, 0.5);
 
-                float nA = tex2D(_NoiseTex, getSampleUV(worldPos + offsetA * _ColorsOffset)).r;
-                float nB = tex2D(_NoiseTex, getSampleUV(worldPos + offsetB * _ColorsOffset)).r;
-                float nC = tex2D(_NoiseTex, getSampleUV(worldPos + offsetC * _ColorsOffset)).r;
+                float nA = tex2D(_NoiseTex, getSampleUV(worldPos + offsetA * _ColorsOffset, rippleOffset)).r;
+                float nB = tex2D(_NoiseTex, getSampleUV(worldPos + offsetB * _ColorsOffset, rippleOffset)).r;
+                float nC = tex2D(_NoiseTex, getSampleUV(worldPos + offsetC * _ColorsOffset, rippleOffset)).r;
 
                 nA = smoothstep(0.2, 0.8, nA);
                 nB = smoothstep(0.2, 0.8, nB);
                 nC = smoothstep(0.2, 0.8, nC);
 
-                // softmax
                 const float sharp = 4.0;
                 float eA = exp(nA * sharp);
                 float eB = exp(nB * sharp);
@@ -247,29 +195,25 @@
                 float wB = eB / sum;
                 float wC = eC / sum;
 
-                float3 corruptionColor =
-                    _CorruptionColor * wA
-                  + _CorruptionColorB * wB
-                  + _CorruptionColorC * wC;
-
-                return corruptionColor;
+                return _CorruptionColor * wA + _CorruptionColorB * wB + _CorruptionColorC * wC;
             }
                         
             float4 frag(Varyings i) : SV_Target
             {
                 float2 worldPos = i.worldPos.xy;
-                float mask = sampleCorruptionMask(worldPos);
+                
+                float2 rippleOffset;
+                float3 rippleNormal;
+                sampleRippleTexture(worldPos, rippleOffset, rippleNormal);
+                
+                float mask = sampleCorruptionMask(worldPos, rippleOffset);
                 
                 if (mask < 0.001)
                     return float4(_Color, 1.0);
                 
-                float2 rippleOffset;
-                float3 rippleNormal;
-                computeRippleOffsetAndNormal(worldPos, rippleOffset, rippleNormal);
-                
-                float3 albedo = computeAlbedo(worldPos);
-                float3 normal = sampleNormal(worldPos, mask, 1.0f);
-                float3 detailNormal = sampleNormal(worldPos, mask, _DetailsScale);
+                float3 albedo = computeAlbedo(worldPos, rippleOffset);
+                float3 normal = sampleNormal(worldPos, mask, 1.0f, rippleOffset);
+                float3 detailNormal = sampleNormal(worldPos, mask, _DetailsScale, rippleOffset);
                 normal = normalize(normal + detailNormal * _DetailsIntensity);
                 
                 float3 baseNormal = normal;

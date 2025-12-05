@@ -13,6 +13,9 @@ namespace BoleteHell.Rendering.VFX
         [AnglePicker]
         private Vector2 _shadowDirection = new(0.1f, 0.1f);
 
+        [SerializeField]
+        private float _shadowLength = 0.5f;
+
         private void Awake()
         {
             Debug.Assert(_shadowObject);
@@ -20,7 +23,7 @@ namespace BoleteHell.Rendering.VFX
 
         private void Update()
         {
-            Vector3 shadowOffset = new Vector3(_shadowDirection.x, 0.0f, _shadowDirection.y).normalized * 0.1f;
+            Vector3 shadowOffset = -new Vector3(_shadowDirection.x, 0.0f, _shadowDirection.y).normalized * _shadowLength;
             _shadowObject.transform.position = shadowOffset;
         }
     }
