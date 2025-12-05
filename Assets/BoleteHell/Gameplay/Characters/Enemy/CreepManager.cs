@@ -29,7 +29,10 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         private float _minVelocityForRipple = 0.5f;
 
         [SerializeField]
-        private float _rippleForwardOffset = 0.8f;
+        private float _rippleForwardOffset = 1.2f;
+
+        [SerializeField]
+        private float _velocitySmoothTime = 0.1f;
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -58,6 +61,8 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         private float _timeSinceLastRipple = 0f;
         private Vector3 _lastPosition;
         private Vector3 _velocity;
+        private Vector3 _smoothedVelocity;
+        private Vector3 _velocityRef;
 
         private void Start()
         {
@@ -77,6 +82,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
 
             Vector3 currentPos = _rippleTarget.position;
             _velocity = (currentPos - _lastPosition) / Time.deltaTime;
+            _smoothedVelocity = Vector3.SmoothDamp(_smoothedVelocity, _velocity, ref _velocityRef, _velocitySmoothTime);
             float speed = _velocity.magnitude;
             _lastPosition = currentPos;
 
@@ -85,9 +91,9 @@ namespace BoleteHell.Gameplay.Characters.Enemy
             float dynamicInterval = Mathf.Lerp(_rippleSpawnInterval * 2f, _rippleSpawnInterval * 0.5f, Mathf.Clamp01(speed / 10f));
 
             if (speed > _minVelocityForRipple && _timeSinceLastRipple >= dynamicInterval)
-            {
-                float intensity = Mathf.Clamp01(speed / 8f);
-                Vector3 forwardOffset = _velocity.normalized * _rippleForwardOffset;
+            {   
+                float intensity = Mathf.Clamp01(0.5f + speed / 6f);
+                Vector3 forwardOffset = _smoothedVelocity.normalized * _rippleForwardOffset;
                 Vector3 ripplePos = currentPos + forwardOffset;
                 _ripples[_currentRippleIndex] = new Vector4(ripplePos.x, ripplePos.y, Time.time, intensity);
                 _currentRippleIndex = (_currentRippleIndex + 1) % _maxRipples;

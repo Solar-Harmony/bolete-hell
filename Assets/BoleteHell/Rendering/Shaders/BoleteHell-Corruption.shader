@@ -116,13 +116,16 @@
                 return o;
             }
 
-            float2 computeRippleOffset(float2 worldPos)
+            void computeRippleOffsetAndNormal(float2 worldPos, out float2 totalOffset, out float3 rippleNormal)
             {
-                float2 totalOffset = float2(0, 0);
+                totalOffset = float2(0, 0);
+                rippleNormal = float3(0, 0, 1);
 
                 float corruptionScale = saturate(_Corruption);
                 if (corruptionScale < 0.01)
-                    return totalOffset;
+                    return;
+
+                float2 normalAccum = float2(0, 0);
 
                 UNITY_UNROLLX(MAX_RIPPLES)
                 for (int i = 0; i < MAX_RIPPLES; i++)
@@ -145,25 +148,37 @@
                     float scaledRadius = _RippleRadius * corruptionScale;
                     float expandingRadius = scaledRadius * (age / _RippleLifetime);
                     float ringDist = abs(dist - expandingRadius);
-                    float ringWidth = 1.5 * corruptionScale;
-                    float ringMask = saturate(1.0 - ringDist / ringWidth);
+
+                    float ringWidth = 2.0 * corruptionScale;
+                    float falloff = exp(-ringDist * ringDist / (ringWidth * ringWidth));
                     
-                    float ageFade = 1.0 - (age / _RippleLifetime);
-                    ageFade = pow(ageFade, 0.7);
+                    float ageNorm = age / _RippleLifetime;
+                    float ageFade = 1.0 - ageNorm;
+                    float ageIn = saturate(ageNorm * 10.0);
+                    ageFade *= ageIn;
+                    ageFade = ageFade * ageFade;
+                    
+                    float weight = falloff * ageFade * intensity;
                     
                     float2 dir = toRipple / dist;
-                    float wave = sin(dist * _RippleFrequency - age * _RippleSpeed * 6.0);
-                    wave = wave * 0.3 + 0.7;
+                    float phase = dist * _RippleFrequency - age * _RippleSpeed * 6.0;
+                    float wave = sin(phase) + 0.3 * sin(phase * 2.3 + 1.0);
                     
-                    totalOffset += dir * wave * ringMask * ageFade * intensity * _RippleStrength * corruptionScale;
+                    totalOffset += dir * wave * weight * _RippleStrength * corruptionScale;
+
+                    float waveDerivative = cos(phase) + 0.3 * 2.3 * cos(phase * 2.3 + 1.0);
+                    normalAccum += dir * waveDerivative * weight * corruptionScale;
                 }
-                
-                return totalOffset;
+
+                const float intensity = 0.3f;
+                rippleNormal = normalize(float3(-normalAccum.x * intensity, -normalAccum.y * intensity, 1.0));
             }
 
             float2 getSampleUV(float2 worldPos)
             {
-                float2 rippleOffset = computeRippleOffset(worldPos);
+                float2 rippleOffset;
+                float3 rippleNormal;
+                computeRippleOffsetAndNormal(worldPos, rippleOffset, rippleNormal);
                 worldPos += rippleOffset;
 
                 float2 uv = worldPos * _NoiseScale;
@@ -243,24 +258,39 @@
             float4 frag(Varyings i) : SV_Target
             {
                 float2 worldPos = i.worldPos.xy;
-                float mask = sampleCorruptionMask(worldPos); // 0 = base color, 1 = corruption material
+                float mask = sampleCorruptionMask(worldPos);
+                
+                if (mask < 0.001)
+                    return float4(_Color, 1.0);
+                
+                float2 rippleOffset;
+                float3 rippleNormal;
+                computeRippleOffsetAndNormal(worldPos, rippleOffset, rippleNormal);
                 
                 float3 albedo = computeAlbedo(worldPos);
                 float3 normal = sampleNormal(worldPos, mask, 1.0f);
                 float3 detailNormal = sampleNormal(worldPos, mask, _DetailsScale);
                 normal = normalize(normal + detailNormal * _DetailsIntensity);
+                
+                float3 baseNormal = normal;
+                float3 ripplePerturbation = rippleNormal - float3(0, 0, 1);
+                normal = normalize(normal + ripplePerturbation * mask);
+                
+                float rippleIntensity = length(ripplePerturbation);
 
                 // Lambert diffuse
                 float3 lightDir = normalize(_LightDir);
                 float3 diffuse = albedo * saturate(dot(normal, lightDir));
 
-                // Blinn-Phong specular
+                // Blinn-Phong specular with boosted ripple highlights
                 float3 viewDir = float3(0,0,1);
                 float3 halfVector = normalize(lightDir + viewDir);
-                float3 specular = _SpecularColor * _SpecularIntensity * pow(saturate(dot(normal, halfVector)), _Shininess);
+                float specPower = _Shininess * (1.0 + rippleIntensity * 2.0);
+                float3 specular = _SpecularColor * _SpecularIntensity * pow(saturate(dot(normal, halfVector)), specPower);
+                specular *= 1.0 + rippleIntensity * 1.5;
 
-                // faux rim lighting
-                float cosTheta = saturate(dot(normal, viewDir));
+                // faux rim lighting (use base normal to avoid ripple artifacts)
+                float cosTheta = saturate(dot(baseNormal, viewDir));
                 float3 rim = _RimColor * pow(saturate(1.0 - cosTheta), _RimPower) * _RimIntensity;
                 specular += rim;
 
