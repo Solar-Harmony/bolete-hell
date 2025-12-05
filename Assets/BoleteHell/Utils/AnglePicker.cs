@@ -1,13 +1,16 @@
 ﻿using System;
-using Sirenix.OdinInspector.Editor;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+using Sirenix.OdinInspector.Editor;
+#endif
 
 namespace BoleteHell.Utils
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class AnglePickerAttribute : Attribute { }
 
+#if UNITY_EDITOR
     public class AnglePickerDrawer : OdinValueDrawer<Vector2>
     {
         protected override void DrawPropertyLayout(GUIContent label)
@@ -82,4 +85,5 @@ namespace BoleteHell.Utils
             Handles.EndGUI();
         }
     }
+#endif
 }

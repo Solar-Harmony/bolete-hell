@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.AI.Services;
 using BoleteHell.AI.Services.Group;
@@ -18,7 +19,6 @@ using BoleteHell.Gameplay.GameState;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Utils;
 using BoleteHell.Utils.Advisor;
-using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 
@@ -111,13 +111,14 @@ namespace BoleteHell.Code.Core
 
         private void BindStatusEffects()
         {
-            AppDomain.CurrentDomain.GetAssemblies()
+            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(asm => asm.GetTypes())
-                .Where(t => typeof(IStatusEffect).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
-                .ForEach(type =>
-                { 
-                    Container.Bind<IStatusEffect>().To(type).AsSingle();
-                });
+                .Where(t => typeof(IStatusEffect).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
+                
+            foreach (var type in types)
+            { 
+                Container.Bind<IStatusEffect>().To(type).AsSingle();
+            }
             
             Container.BindInterfacesTo<StatusEffectService>().AsSingle();
         }

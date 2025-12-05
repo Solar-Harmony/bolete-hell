@@ -1,9 +1,9 @@
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
 #if UNITY_EDITOR
 namespace Dreamteck {
-    using UnityEngine;
-    using UnityEditor;
-    using System.IO;
-
     public static class ScriptableObjectUtility
     {
         public static T CreateAsset<T>(string name = "", bool selectAfterCreation = true) where T : ScriptableObject
@@ -17,6 +17,7 @@ namespace Dreamteck {
         {
             ScriptableObject asset = ScriptableObject.CreateInstance(type);
             SaveAsset<ScriptableObject>(asset, name, selectAfterCreation);
+            
             return asset;
         }
 
