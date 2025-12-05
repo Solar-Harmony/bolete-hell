@@ -118,7 +118,6 @@
 
             float2 computeRippleOffset(float2 worldPos)
             {
-                return worldPos;
                 float2 totalOffset = float2(0, 0);
 
                 float corruptionScale = saturate(_Corruption);

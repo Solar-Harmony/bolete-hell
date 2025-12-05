@@ -25,7 +25,7 @@ namespace BoleteHell.AI.Actions
         protected override Status OnStart()
         {
             ServiceLocator.Get(out _director);
-            
+             
             return Status.Running;
         }
 

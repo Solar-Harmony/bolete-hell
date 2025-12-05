@@ -1,4 +1,4 @@
-﻿Shader "Bolete Hell/Fake Sun Shadow"
+﻿Shader "Bolete Hell/Internal/Fake Sun Shadow"
 {
     Properties
     {

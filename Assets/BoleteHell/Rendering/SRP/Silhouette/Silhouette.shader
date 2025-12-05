@@ -1,4 +1,4 @@
-﻿Shader "Bolete Hell/Simple White"
+﻿Shader "Bolete Hell/Internal/Silhouette"
 {
    SubShader
    {
