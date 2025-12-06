@@ -49,7 +49,7 @@ namespace BoleteHell.Rendering.Ripples
                 Vector3 forwardOffset = _smoothedVelocity.normalized * _rippleForwardOffset;
                 Vector3 ripplePos = currentPos + forwardOffset;
 
-                _rippleManager.EmitRipple(new Vector2(ripplePos.x, ripplePos.y), intensity);
+                _rippleManager?.EmitRipple(new Vector2(ripplePos.x, ripplePos.y), intensity);
                 _timeSinceLastRipple = 0f;
             }
         }

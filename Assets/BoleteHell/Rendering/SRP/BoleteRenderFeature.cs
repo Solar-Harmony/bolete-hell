@@ -51,12 +51,8 @@ namespace BoleteHell.Rendering.SRP
         public bool EnableRippleCompute = true;
 
         [ToggleGroup(nameof(EnableRippleCompute))]
-        [Tooltip("Resolution of the ripple texture.")]
+        [Tooltip("Resolution of the ripple texture. Higher = more detail but slower.")]
         public int RippleTextureResolution = 128;
-
-        [ToggleGroup(nameof(EnableRippleCompute))]
-        [Tooltip("World extent covered by the ripple texture.")]
-        public float RippleWorldExtent = 25f;
 
         [ToggleGroup(nameof(EnableRippleCompute))]
         public float RippleRadius = 5f;
@@ -69,9 +65,6 @@ namespace BoleteHell.Rendering.SRP
 
         [ToggleGroup(nameof(EnableRippleCompute))]
         public float RippleStrength = 0.15f;
-
-        [ToggleGroup(nameof(EnableRippleCompute))]
-        public float RippleLifetime = 1.5f;
         
         private const string _groupName = "Materials";
         
@@ -132,9 +125,7 @@ namespace BoleteHell.Rendering.SRP
                     RippleRadius = _settings.RippleRadius,
                     RippleFrequency = _settings.RippleFrequency,
                     RippleSpeed = _settings.RippleSpeed,
-                    RippleStrength = _settings.RippleStrength,
-                    RippleLifetime = _settings.RippleLifetime,
-                    WorldExtent = _settings.RippleWorldExtent
+                    RippleStrength = _settings.RippleStrength
                 };
             }
             

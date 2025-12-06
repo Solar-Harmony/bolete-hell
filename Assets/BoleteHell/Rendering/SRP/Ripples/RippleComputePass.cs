@@ -43,13 +43,13 @@ namespace BoleteHell.Rendering.SRP.Ripples
         private static readonly int _globalRippleTexId = Shader.PropertyToID("_RippleTexture");
         private static readonly int _globalRippleDataId = Shader.PropertyToID("_RippleData");
         private static readonly int _globalRippleCountId = Shader.PropertyToID("_RippleCount");
+        private static readonly int _globalRippleTextureBoundsId = Shader.PropertyToID("_RippleTextureBounds");
+        private static readonly int _globalRippleLifetimeId = Shader.PropertyToID("_RippleLifetime");
 
         public float RippleRadius { get; set; } = 5f;
         public float RippleFrequency { get; set; } = 8f;
         public float RippleSpeed { get; set; } = 3f;
         public float RippleStrength { get; set; } = 0.15f;
-        public float RippleLifetime { get; set; } = 1.5f;
-        public float WorldExtent { get; set; } = 25f;
 
         private class PassData
         {
@@ -85,16 +85,10 @@ namespace BoleteHell.Rendering.SRP.Ripples
             if (_computeShader == null)
                 return;
 
-            UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
-            Vector3 camPos = cameraData.camera.transform.position;
-
-            float halfExtent = WorldExtent;
-            Vector4 worldBounds = new Vector4(
-                camPos.x - halfExtent,
-                camPos.y - halfExtent,
-                camPos.x + halfExtent,
-                camPos.y + halfExtent
-            );
+            Vector4 worldBounds = Shader.GetGlobalVector(_globalRippleTextureBoundsId);
+            
+            if (worldBounds.z - worldBounds.x < 0.001f || worldBounds.w - worldBounds.y < 0.001f)
+                return;
 
             Vector4[] globalRippleData = Shader.GetGlobalVectorArray(_globalRippleDataId);
             int rippleCount = Shader.GetGlobalInt(_globalRippleCountId);
@@ -134,7 +128,7 @@ namespace BoleteHell.Rendering.SRP.Ripples
                 passData.WorldBounds = worldBounds;
                 passData.RippleCount = rippleCount;
                 passData.Time = Time.time;
-                passData.RippleLifetime = RippleLifetime;
+                passData.RippleLifetime = Shader.GetGlobalFloat(_globalRippleLifetimeId);
                 passData.RippleRadius = RippleRadius;
                 passData.RippleFrequency = RippleFrequency;
                 passData.RippleSpeed = RippleSpeed;

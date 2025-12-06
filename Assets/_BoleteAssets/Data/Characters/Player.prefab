@@ -382,6 +382,7 @@ MonoBehaviour:
   _minVelocityForRipple: 0.5
   _rippleForwardOffset: 1.2
   _velocitySmoothTime: 0.1
+  _rippleRadius: 3
 --- !u!1 &1762079061245450209
 GameObject:
   m_ObjectHideFlags: 0

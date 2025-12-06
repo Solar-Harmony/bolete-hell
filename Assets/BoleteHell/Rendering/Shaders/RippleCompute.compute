@@ -40,9 +40,10 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
     float corruptionScale = saturate(_Corruption);
     
-    if (corruptionScale >= 0.01)
+    if (corruptionScale >= 0.01 && _RippleCount > 0)
     {
-        for (int i = 0; i < _RippleCount && i < MAX_RIPPLES; i++)
+        int rippleCount = min(_RippleCount, MAX_RIPPLES);
+        for (int i = 0; i < rippleCount; i++)
         {
             RippleInput ripple = _Ripples[i];
             float2 ripplePos = ripple.position;

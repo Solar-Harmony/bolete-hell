@@ -37,12 +37,10 @@ MonoBehaviour:
     FakeAORadius: 64
     EnableRippleCompute: 1
     RippleTextureResolution: 256
-    RippleWorldExtent: 25
     RippleRadius: 5
     RippleFrequency: 8
     RippleSpeed: 3
     RippleStrength: 0.15
-    RippleLifetime: 1.5
     SilhouetteMaterial: {fileID: 0}
     FakeAOMaterial: {fileID: 0}
     FakeSunShadowMaterial: {fileID: 0}
@@ -125,13 +123,11 @@ MonoBehaviour:
     SunShadowSoftness: 0.45
     FakeAORadius: 64
     EnableRippleCompute: 1
-    RippleTextureResolution: 256
-    RippleWorldExtent: 25
-    RippleRadius: 5
-    RippleFrequency: 8
-    RippleSpeed: 3
+    RippleTextureResolution: 512
+    RippleRadius: 2
+    RippleFrequency: 4
+    RippleSpeed: 0.75
     RippleStrength: 0.15
-    RippleLifetime: 1.5
     SilhouetteMaterial: {fileID: 2100000, guid: c913750fcca9a9b488a50ca56a142350, type: 2}
     FakeAOMaterial: {fileID: 2100000, guid: 3de7be5fe3d8e584e91fe880f497fb5a, type: 2}
     FakeSunShadowMaterial: {fileID: 2100000, guid: f7bbf9b4691d4b94dac7bc3e849a22f6, type: 2}

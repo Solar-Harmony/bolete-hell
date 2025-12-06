@@ -127,27 +127,38 @@
                 rippleNormal = normalize(float3(-encodedNormal.x * normalIntensity, -encodedNormal.y * normalIntensity, 1.0));
             }
 
-            float2 getSampleUV(float2 worldPos, float2 rippleOffset)
+            float2 computeWarpOffset(float2 baseUV)
+            {
+                return tex2D(_NoiseTex, baseUV * _WarpScale + _Time.y * _WarpSpeed).rg * 2.0 - 1.0;
+            }
+
+            float2 getBaseUV(float2 worldPos, float2 rippleOffset)
             {
                 worldPos += rippleOffset;
                 float2 uv = worldPos * _NoiseScale;
-
                 float offsetX = sin(uv.x + _Time.y * _OffsetSpeed);
                 float offsetY = sin(uv.y + _Time.y * _OffsetSpeed);
-                uv += float2(offsetX, offsetY) * 0.1;
-
-                float2 warp = tex2D(_NoiseTex, uv * _WarpScale + _Time.y * _WarpSpeed).rg * 2.0 - 1.0;
-                uv += warp * _WarpStrength;
-
-                return uv;
+                return uv + float2(offsetX, offsetY) * 0.1;
             }
 
-            float sampleCorruptionMask(float2 p, float2 rippleOffset)
+            float2 applyWarp(float2 baseUV, float2 warpOffset)
+            {
+                return baseUV + warpOffset * _WarpStrength;
+            }
+
+            float2 getSampleUV(float2 worldPos, float2 rippleOffset)
+            {
+                float2 baseUV = getBaseUV(worldPos, rippleOffset);
+                float2 warp = computeWarpOffset(baseUV);
+                return applyWarp(baseUV, warp);
+            }
+
+            float sampleCorruptionMask(float2 sampleUV)
             {
                 if (_Corruption < 0.01)
                     return 0.0f;
 
-                float n = tex2D(_NoiseTex, getSampleUV(p, rippleOffset)).r;
+                float n = tex2D(_NoiseTex, sampleUV).r;
                 float remapped = smoothstep(0.0, 1.0, n);
 
                 float low = saturate(_Corruption - _BlendRange);
@@ -156,10 +167,10 @@
                 return 1 - smoothstep(low, high, remapped);
             }
 
-            float3 sampleNormal(float2 p, float noise, float scale, float2 rippleOffset)
+            float3 sampleNormal(float2 sampleUV, float noise, float scale)
             {
                 const float3 flat = float3(0, 0, 1);
-                float3 n = UnpackNormal(tex2D(_NoiseNormalsTex, getSampleUV(p, rippleOffset) * scale));
+                float3 n = UnpackNormal(tex2D(_NoiseNormalsTex, sampleUV * scale));
                 return normalize(lerp(flat, n, noise));
             }
 
@@ -171,15 +182,15 @@
                 return lerp(corruptionResult, combined, _BaseColorInfluence * mask);
             }
 
-            float3 computeAlbedo(float2 worldPos, float2 rippleOffset)
+            float3 computeAlbedo(float2 baseUV, float2 warpOffset)
             {
-                float2 offsetA = float2(0.2, 0.4);
-                float2 offsetB = float2(0.3, 0.7);
-                float2 offsetC = float2(0.9, 0.5);
+                float2 offsetA = float2(0.2, 0.4) * _ColorsOffset * _NoiseScale;
+                float2 offsetB = float2(0.3, 0.7) * _ColorsOffset * _NoiseScale;
+                float2 offsetC = float2(0.9, 0.5) * _ColorsOffset * _NoiseScale;
 
-                float nA = tex2D(_NoiseTex, getSampleUV(worldPos + offsetA * _ColorsOffset, rippleOffset)).r;
-                float nB = tex2D(_NoiseTex, getSampleUV(worldPos + offsetB * _ColorsOffset, rippleOffset)).r;
-                float nC = tex2D(_NoiseTex, getSampleUV(worldPos + offsetC * _ColorsOffset, rippleOffset)).r;
+                float nA = tex2D(_NoiseTex, applyWarp(baseUV + offsetA, warpOffset)).r;
+                float nB = tex2D(_NoiseTex, applyWarp(baseUV + offsetB, warpOffset)).r;
+                float nC = tex2D(_NoiseTex, applyWarp(baseUV + offsetC, warpOffset)).r;
 
                 nA = smoothstep(0.2, 0.8, nA);
                 nB = smoothstep(0.2, 0.8, nB);
@@ -206,14 +217,18 @@
                 float3 rippleNormal;
                 sampleRippleTexture(worldPos, rippleOffset, rippleNormal);
                 
-                float mask = sampleCorruptionMask(worldPos, rippleOffset);
+                float2 baseUV = getBaseUV(worldPos, rippleOffset);
+                float2 warpOffset = computeWarpOffset(baseUV);
+                float2 sampleUV = applyWarp(baseUV, warpOffset);
+                
+                float mask = sampleCorruptionMask(sampleUV);
                 
                 if (mask < 0.001)
                     return float4(_Color, 1.0);
                 
-                float3 albedo = computeAlbedo(worldPos, rippleOffset);
-                float3 normal = sampleNormal(worldPos, mask, 1.0f, rippleOffset);
-                float3 detailNormal = sampleNormal(worldPos, mask, _DetailsScale, rippleOffset);
+                float3 albedo = computeAlbedo(baseUV, warpOffset);
+                float3 normal = sampleNormal(sampleUV, mask, 1.0f);
+                float3 detailNormal = sampleNormal(sampleUV, mask, _DetailsScale);
                 normal = normalize(normal + detailNormal * _DetailsIntensity);
                 
                 float3 baseNormal = normal;

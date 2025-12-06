@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BoleteHell.Rendering.Ripples
@@ -17,10 +18,8 @@ namespace BoleteHell.Rendering.Ripples
         private float _rippleLifetime = 1.5f;
 
         [SerializeField]
-        private float _cullDistance = 30f;
-
-        [SerializeField]
-        private float _worldExtent = 25f;
+        [Tooltip("Extra padding beyond camera bounds for ripple texture coverage.")]
+        private float _boundsMargin = 5f;
 
         private readonly RippleData[] _activeRipples = new RippleData[MaxRipplesInBuffer];
         private int _activeCount = 0;
@@ -30,7 +29,6 @@ namespace BoleteHell.Rendering.Ripples
         private int _sortCount = 0;
 
         private Camera _mainCamera;
-        private float _cullDistanceSq;
 
         public float RippleLifetime => _rippleLifetime;
 
@@ -42,10 +40,15 @@ namespace BoleteHell.Rendering.Ripples
             public int CompareTo(RippleSortEntry other) => Score.CompareTo(other.Score);
         }
 
+        private sealed class RippleSortComparer : IComparer<RippleSortEntry>
+        {
+            public static readonly RippleSortComparer Instance = new();
+            public int Compare(RippleSortEntry x, RippleSortEntry y) => x.Score.CompareTo(y.Score);
+        }
+
         private void Awake()
         {
             _mainCamera = Camera.main;
-            _cullDistanceSq = _cullDistance * _cullDistance;
             ClearShaderData();
         }
 
@@ -107,28 +110,45 @@ namespace BoleteHell.Rendering.Ripples
 
         private void UpdateShaderData()
         {
-            Vector2 cameraPos = _mainCamera ? (Vector2)_mainCamera.transform.position : Vector2.zero;
+            if (!_mainCamera)
+            {
+                _mainCamera = Camera.main;
+                if (!_mainCamera) return;
+            }
+
+            Vector2 cameraPos = _mainCamera.transform.position;
             float currentTime = Time.time;
 
+            float halfHeight = _mainCamera.orthographicSize + _boundsMargin;
+            float halfWidth = halfHeight * _mainCamera.aspect + _boundsMargin;
+            float extent = Mathf.Max(halfWidth, halfHeight);
+
             Vector4 worldBounds = new Vector4(
-                cameraPos.x - _worldExtent,
-                cameraPos.y - _worldExtent,
-                cameraPos.x + _worldExtent,
-                cameraPos.y + _worldExtent
+                cameraPos.x - extent,
+                cameraPos.y - extent,
+                cameraPos.x + extent,
+                cameraPos.y + extent
             );
             Shader.SetGlobalVector(_rippleTextureBoundsId, worldBounds);
+
+            float minX = worldBounds.x;
+            float minY = worldBounds.y;
+            float maxX = worldBounds.z;
+            float maxY = worldBounds.w;
 
             _sortCount = 0;
             for (int i = 0; i < _activeCount; i++)
             {
                 ref var ripple = ref _activeRipples[i];
-                float dx = ripple.Position.x - cameraPos.x;
-                float dy = ripple.Position.y - cameraPos.y;
-                float distSq = dx * dx + dy * dy;
                 
-                if (distSq <= _cullDistanceSq)
+                if (ripple.Position.x >= minX && ripple.Position.x <= maxX &&
+                    ripple.Position.y >= minY && ripple.Position.y <= maxY)
                 {
+                    float dx = ripple.Position.x - cameraPos.x;
+                    float dy = ripple.Position.y - cameraPos.y;
+                    float distSq = dx * dx + dy * dy;
                     float age = currentTime - ripple.SpawnTime;
+                    
                     _sortBuffer[_sortCount++] = new RippleSortEntry
                     {
                         Index = i,
@@ -138,7 +158,7 @@ namespace BoleteHell.Rendering.Ripples
             }
 
             if (_sortCount > 1)
-                Array.Sort(_sortBuffer, 0, _sortCount);
+                Array.Sort(_sortBuffer, 0, _sortCount, RippleSortComparer.Instance);
 
             int count = Mathf.Min(_sortCount, MaxRipplesToShader);
 
