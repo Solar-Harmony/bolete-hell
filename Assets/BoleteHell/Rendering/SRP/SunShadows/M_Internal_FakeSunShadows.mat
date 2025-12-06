@@ -44,8 +44,8 @@ Material:
     - _EnableExternalAlpha: 0
     - _Radius: 10
     - _ShadowIntensity: 0.5
-    - _ShadowSoftness: 0.45
-    - _StepSize: 0.1
+    - _ShadowSoftness: 0.8
+    - _StepSize: 0.15
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

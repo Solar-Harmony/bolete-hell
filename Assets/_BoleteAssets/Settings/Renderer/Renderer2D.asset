@@ -118,9 +118,9 @@ MonoBehaviour:
     EnableFakeAO: 1
     EnableSunShadow: 1
     SunDirection: {x: 0.7661915, y: -0.64261234}
-    SunShadowStepSize: 0.1
+    SunShadowStepSize: 0.15
     SunShadowIntensity: 0.5
-    SunShadowSoftness: 0.45
+    SunShadowSoftness: 0.8
     FakeAORadius: 64
     EnableRippleCompute: 1
     RippleTextureResolution: 512

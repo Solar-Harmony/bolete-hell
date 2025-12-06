@@ -2,7 +2,7 @@
 {
     Properties
     {
-        [MainColor] _Color("Color", Color) = (1,1,1,1)
+        _Color("Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -39,15 +39,15 @@
                 float4 _Color;
             CBUFFER_END
             
-            Varyings vert(Attributes IN)
+            Varyings vert(Attributes i)
             {
-                Varyings OUT;
-                OUT.positionCS = TransformObjectToHClip(IN.positionOS);
-                OUT.extraData = IN.extraData;
-                return OUT;
+                Varyings o;
+                o.positionCS = TransformObjectToHClip(i.positionOS);
+                o.extraData = i.extraData;
+                return o;
             }
 
-            float4 frag(Varyings IN) : SV_Target
+            float4 frag(Varyings o) : SV_Target
             {
                 return _Color;
             }

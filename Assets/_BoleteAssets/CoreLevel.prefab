@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d57908e1a24381a0b6df44c58df9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialSpreadLevel: 1
+  _initialSpreadLevel: 0
   _worldLightDirection: {x: 0.1, y: 0.1, z: 0.3}
   _applyOutsidePlayMode: 0
 --- !u!1 &8167761027039391717
