@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Graphs:
   - rid: 795111383214588007
-  RootGraph:
-    rid: 795111383214588007
   m_DebugInfo: {fileID: -381781518915465436}
+  m_WasCompileWithPlaceholderNode: 0
   references:
     version: 2
     RefIds:
@@ -28,39 +27,25 @@ MonoBehaviour:
         AuthoringAssetID:
           m_Value0: 6067539312758822345
           m_Value1: 16826519069906893402
-        m_DebugInfo: {fileID: 0}
+        m_DebugInfo: {fileID: -381781518915465436}
         BlackboardReference:
           rid: 795111383214588008
         BlackboardGroupReferences: []
         Root:
-          rid: 795111383214588009
+          rid: 5809585378271953226
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
           rid: 795111383214588010
         m_EndedNodes:
           rid: 795111383214588011
-        m_VersionTimestamp: 638999237541830973
+        m_VersionTimestamp: 639005473962739197
     - rid: 795111383214588008
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
           rid: 795111383214588012
         m_Source: {fileID: 6247436901105087396}
-    - rid: 795111383214588009
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 14335294909109986808
-          m_Value1: 17398964118181281550
-        Graph:
-          rid: 795111383214588007
-        m_Parent:
-          rid: -2
-        m_Child:
-          rid: 795111383214588013
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
     - rid: 795111383214588010
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
@@ -74,21 +59,6 @@ MonoBehaviour:
         - rid: 795111383214588014
         - rid: 795111383214588015
         - rid: 795111383214588016
-    - rid: 795111383214588013
-      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 3498340303957268353
-          m_Value1: 10742304623904262797
-        Graph:
-          rid: 795111383214588007
-        m_Parent:
-          rid: 795111383214588009
-        m_Child:
-          rid: 795111383214588017
-        m_Conditions:
-        - rid: 795111383214588018
-        m_RequiresAllConditions: 0
     - rid: 795111383214588014
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -113,7 +83,36 @@ MonoBehaviour:
           m_Value1: 13209947239892938298
         Name: FleePosition
         m_Value: {x: 0, y: 0}
-    - rid: 795111383214588017
+    - rid: 5809585378271953226
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14335294909109986808
+          m_Value1: 17398964118181281550
+        Graph:
+          rid: 795111383214588007
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 5809585378271953227
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 5809585378271953227
+      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 3498340303957268353
+          m_Value1: 10742304623904262797
+        Graph:
+          rid: 795111383214588007
+        m_Parent:
+          rid: 5809585378271953226
+        m_Child:
+          rid: 5809585378271953228
+        m_Conditions:
+        - rid: 5809585378271953229
+        m_RequiresAllConditions: 0
+    - rid: 5809585378271953228
       type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -122,27 +121,27 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588013
+          rid: 5809585378271953227
         m_Children:
-        - rid: 795111383214588019
-        - rid: 795111383214588020
+        - rid: 5809585378271953230
+        - rid: 5809585378271953231
         m_Conditions:
-        - rid: 795111383214588021
+        - rid: 5809585378271953232
         m_RequiresAllConditions: 0
         True:
-          rid: 795111383214588019
+          rid: 5809585378271953230
         False:
-          rid: 795111383214588020
+          rid: 5809585378271953231
         m_CurrentChild:
           rid: -2
-    - rid: 795111383214588018
+    - rid: 5809585378271953229
       type: {class: FoundNewTargetCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
           rid: 795111383214588007
         Target:
           rid: 795111383214588015
-    - rid: 795111383214588019
+    - rid: 5809585378271953230
       type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -151,11 +150,11 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588017
+          rid: 5809585378271953228
         m_Children:
-        - rid: 795111383214588022
-        - rid: 795111383214588023
-    - rid: 795111383214588020
+        - rid: 5809585378271953233
+        - rid: 5809585378271953234
+    - rid: 5809585378271953231
       type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -164,33 +163,33 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588017
+          rid: 5809585378271953228
         m_Children:
-        - rid: 795111383214588024
-        - rid: 795111383214588025
+        - rid: 5809585378271953235
+        - rid: 5809585378271953236
         m_Conditions:
-        - rid: 795111383214588026
+        - rid: 5809585378271953237
         m_RequiresAllConditions: 0
         True:
-          rid: 795111383214588024
+          rid: 5809585378271953235
         False:
-          rid: 795111383214588025
+          rid: 5809585378271953236
         m_CurrentChild:
           rid: -2
-    - rid: 795111383214588021
+    - rid: 5809585378271953232
       type: {class: CheckDistanceCondition, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         Graph:
           rid: 795111383214588007
         Transform:
-          rid: 795111383214588027
+          rid: 5809585378271953238
         Target:
-          rid: 795111383214588028
+          rid: 5809585378271953239
         Operator:
-          rid: 795111383214588029
+          rid: 5809585378271953240
         Threshold:
-          rid: 795111383214588030
-    - rid: 795111383214588022
+          rid: 5809585378271953241
+    - rid: 5809585378271953233
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -199,13 +198,13 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588019
+          rid: 5809585378271953230
         m_Child:
-          rid: 795111383214588031
+          rid: 5809585378271953242
         m_Conditions:
-        - rid: 795111383214588032
+        - rid: 5809585378271953243
         m_RequiresAllConditions: 0
-    - rid: 795111383214588023
+    - rid: 5809585378271953234
       type: {class: ShootAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -214,12 +213,12 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588019
+          rid: 5809585378271953230
         CurrentTarget:
           rid: 795111383214588015
         TurnSpeed:
-          rid: 795111383214588033
-    - rid: 795111383214588024
+          rid: 5809585378271953244
+    - rid: 5809585378271953235
       type: {class: PathfindToPositionAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -228,10 +227,10 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588020
+          rid: 5809585378271953231
         Position:
           rid: 795111383214588016
-    - rid: 795111383214588025
+    - rid: 5809585378271953236
       type: {class: ShootAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -240,23 +239,23 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588020
+          rid: 5809585378271953231
         CurrentTarget:
           rid: 795111383214588015
         TurnSpeed:
-          rid: 795111383214588034
-    - rid: 795111383214588026
+          rid: 5809585378271953245
+    - rid: 5809585378271953237
       type: {class: CanFleeCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
           rid: 795111383214588007
         Distance:
-          rid: 795111383214588035
+          rid: 5809585378271953246
         CurrentTarget:
           rid: 795111383214588015
         FleePosition:
           rid: 795111383214588016
-    - rid: 795111383214588027
+    - rid: 5809585378271953238
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -266,7 +265,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 795111383214588014
-    - rid: 795111383214588028
+    - rid: 5809585378271953239
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -276,7 +275,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 795111383214588015
-    - rid: 795111383214588029
+    - rid: 5809585378271953240
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -284,7 +283,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 2
-    - rid: 795111383214588030
+    - rid: 5809585378271953241
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -292,7 +291,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111383214588031
+    - rid: 5809585378271953242
       type: {class: PathfindToTargetAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -301,10 +300,10 @@ MonoBehaviour:
         Graph:
           rid: 795111383214588007
         m_Parent:
-          rid: 795111383214588022
+          rid: 5809585378271953233
         Target:
-          rid: 795111383214588036
-    - rid: 795111383214588032
+          rid: 5809585378271953247
+    - rid: 5809585378271953243
       type: {class: HasLineOfSightCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
@@ -312,8 +311,8 @@ MonoBehaviour:
         Target:
           rid: 795111383214588015
         ViewRange:
-          rid: 795111383214588037
-    - rid: 795111383214588033
+          rid: 5809585378271953248
+    - rid: 5809585378271953244
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -321,7 +320,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111383214588034
+    - rid: 5809585378271953245
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -329,7 +328,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111383214588035
+    - rid: 5809585378271953246
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -337,7 +336,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 795111383214588036
+    - rid: 5809585378271953247
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -347,7 +346,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 795111383214588015
-    - rid: 795111383214588037
+    - rid: 5809585378271953248
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -398,7 +397,8 @@ MonoBehaviour:
   - rid: 3883007131117159206
   - rid: 3883007131117159413
   - rid: 3883007149187006549
-  m_VersionTimestamp: 638999237541830973
+  m_VersionTimestamp: 639005473962739197
+  m_SerializedVersion: 1
   m_DebugInfo: {fileID: -381781518915465436}
   m_RuntimeGraph: {fileID: -8870313207143250243}
   AssetID:
@@ -411,13 +411,18 @@ MonoBehaviour:
   m_NodeModelsInfo:
   - Name: On Start
     Story: 
+    RuntimeTypeString: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 3335272451348827663
       m_Value1: 11549843281177505721
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Shoot
     Story: 'Shoot at [CurrentTarget]'
+    RuntimeTypeString: BoleteHell.AI.Actions.ShootAction, BoleteAI, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 14696599572089096223
       m_Value1: 4173363149089251346
@@ -433,8 +438,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Pathfind to target
     Story: 'Pathfind towards [Target]'
+    RuntimeTypeString: BoleteHell.AI.Actions.PathfindToTargetAction, BoleteAI, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 14856967005021225643
       m_Value1: 3708820439056927761
@@ -445,22 +453,31 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Abort
     Story: 
+    RuntimeTypeString: Unity.Behavior.AbortModifier, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 11694760734451091187
       m_Value1: 13156989698943900053
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Try In Order
     Story: 
+    RuntimeTypeString: Unity.Behavior.SelectorComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 11477120919463386923
       m_Value1: 7730102824742023565
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Conditional Branch
     Story: 
+    RuntimeTypeString: Unity.Behavior.BranchingConditionComposite, Unity.Behavior,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 12334964803190848789
       m_Value1: 14608808926743427008
@@ -468,8 +485,11 @@ MonoBehaviour:
     NamedChildren:
     - True
     - False
+    IsPlaceholder: 0
   - Name: Pathfind to position
     Story: 'Pathfind towards [Position]'
+    RuntimeTypeString: BoleteHell.AI.Actions.PathfindToPositionAction, BoleteAI,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 4483500357117635661
       m_Value1: 13540595933448658843
@@ -480,318 +500,15 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
-  - Name: Conditional Guard
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10845871997924083670
-      m_Value1: 4041440894818793834
-    Variables: []
-    NamedChildren: []
-  - Name: Flee
-    Story: '[Self] flee [distance] units away from [target]'
-    RuntimeTypeID:
-      m_Value0: 10689306186212337667
-      m_Value1: 6290551969181590406
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Distance
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Find suitable target
-    Story: '[Agent] finds nearest target, stores in [Target]'
-    RuntimeTypeID:
-      m_Value0: 14856967005021225643
-      m_Value1: 106145917324305
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Sequence
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10181448252506100447
-      m_Value1: 8737116843063128493
-    Variables: []
-    NamedChildren: []
-  - Name: Inverter
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 1967250899303387600
-      m_Value1: 15806081860663257984
-    Variables: []
-    NamedChildren: []
-  - Name: Cooldown
-    Story: Cooldowns for [duration] seconds after execution
-    RuntimeTypeID:
-      m_Value0: 11996061466798456745
-      m_Value1: 7008150615564501899
-    Variables:
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Selector
-    Story: Execute children until one succeeds
-    RuntimeTypeID:
-      m_Value0: 7717707798954045006
-      m_Value1: 3182668214086331367
-    Variables: []
-    NamedChildren: []
-  - Name: Repeat
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3696095273264312494
-      m_Value1: 14191201703811421854
-    Variables: []
-    NamedChildren: []
-  - Name: Restart
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 13639978763537614925
-      m_Value1: 3904329925062786712
-    Variables: []
-    NamedChildren: []
-  - Name: Run In Parallel
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 6216542881172158703
-      m_Value1: 2191282456596108218
-    Variables: []
-    NamedChildren: []
-  - Name: Repeat While
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 17299482495328769724
-      m_Value1: 1892732619013874548
-    Variables: []
-    NamedChildren: []
-  - Name: Switch
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 7697158487413557231
-      m_Value1: 14836087705204215232
-    Variables:
-    - Name: EnumVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Set Variable Value
-    Story: 'Set [Variable] value to [Value]'
-    RuntimeTypeID:
-      m_Value0: 5494721648866555964
-      m_Value1: 18024545711220129068
-    Variables:
-    - Name: Variable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Value
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Predict Shooting Direction
-    Story: '[Self] predicts shoot direction to hit [Player]'
-    RuntimeTypeID:
-      m_Value0: 3890143861608179357
-      m_Value1: 6666146578709771491
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Player
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait (Range) (Seconds)
-    Story: Wait between [Min] and [Max] seconds
-    RuntimeTypeID:
-      m_Value0: 1357124955953561018
-      m_Value1: 15647026721769409965
-    Variables:
-    - Name: Min
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Max
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait (Seconds)
-    Story: Wait for [SecondsToWait] seconds
-    RuntimeTypeID:
-      m_Value0: 7729581452106168333
-      m_Value1: 8820302366443624372
-    Variables:
-    - Name: SecondsToWait
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Shoot at (prototype)
-    Story: '[Self] shoots [ProjectilePrefab] at [Target]'
-    RuntimeTypeID:
-      m_Value0: 13130190468003749209
-      m_Value1: 363234523772485146
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: ProjectilePrefab
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Log Variable
-    Story: Log [variable] to the console
-    RuntimeTypeID:
-      m_Value0: 14362779694071371193
-      m_Value1: 7707181868946836709
-    Variables:
-    - Name: Variable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Navigate To Target
-    Story: '[Agent] navigates to [Target]'
-    RuntimeTypeID:
-      m_Value0: 14505029119854362939
-      m_Value1: 1167385928027178409
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: SlowDownDistance
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: m_TargetPositionMode
-      Type:
-        m_SerializableType: Unity.Behavior.NavigateToTargetAction+TargetPositionMode,
-          Unity.Behavior, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Instantiate Object
-    Story: 'Instantiate [Object]'
-    RuntimeTypeID:
-      m_Value0: 1546622996092940372
-      m_Value1: 304591401739151594
-    Variables:
-    - Name: Object
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: InstantiatedObject
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: TargetUsage
-      Type:
-        m_SerializableType: Unity.Behavior.InstantiateObjectAction+TargetMode, Unity.Behavior,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: RunInBackground
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Set Velocity
-    Story: 'Set [Target] ''s velocity to [Velocity]'
-    RuntimeTypeID:
-      m_Value0: 13788716259394858110
-      m_Value1: 6892906217354059016
-    Variables:
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.Rigidbody, UnityEngine.PhysicsModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Velocity
-      Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: 7476848768316110616}
   m_CommandBuffer:
     m_Commands: []
   m_SubgraphsInfo: []
+  m_BlackboardMissingManagedRef: 0
+  m_GraphMissingManagedRef: 0
+  m_HasMissingTypeInManagedRef: 0
   references:
     version: 2
     RefIds:

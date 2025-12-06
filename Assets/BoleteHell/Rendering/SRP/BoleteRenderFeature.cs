@@ -1,5 +1,6 @@
 using System;
 using BoleteHell.Rendering.SRP.FakeAO;
+using BoleteHell.Rendering.SRP.Ripples;
 using BoleteHell.Rendering.SRP.Silhouette;
 using BoleteHell.Rendering.SRP.SunShadows;
 using BoleteHell.Utils;
@@ -45,6 +46,25 @@ namespace BoleteHell.Rendering.SRP
         [ToggleGroup(nameof(EnableFakeAO))]
         [Tooltip("Radius for ambient occlusion sampling.")]
         public float FakeAORadius = 10.0f;
+
+        [ToggleGroup(nameof(EnableRippleCompute), "Ripple Compute Shader")]
+        public bool EnableRippleCompute = true;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        [Tooltip("Resolution of the ripple texture. Higher = more detail but slower.")]
+        public int RippleTextureResolution = 128;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleRadius = 5f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleFrequency = 8f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleSpeed = 3f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleStrength = 0.15f;
         
         private const string _groupName = "Materials";
         
@@ -59,6 +79,10 @@ namespace BoleteHell.Rendering.SRP
         [FoldoutGroup(_groupName)]
         [Required] [SerializeField]
         public Material FakeSunShadowMaterial;
+
+        [FoldoutGroup(_groupName)]
+        [SerializeField]
+        public ComputeShader RippleComputeShader;
     }
     
     public class BoleteRenderFeature : ScriptableRendererFeature
@@ -69,6 +93,7 @@ namespace BoleteHell.Rendering.SRP
         private ObstaclesSilhouettePass _silhouettePass;
         private FakeAOPass _fakeAOPass;
         private FakeSunShadowPass _fakeSunShadowPass;
+        private RippleComputePass _rippleComputePass;
 
         private bool _initialized = false;
 
@@ -91,6 +116,18 @@ namespace BoleteHell.Rendering.SRP
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
+
+            if (_settings.RippleComputeShader)
+            {
+                _rippleComputePass = new RippleComputePass(_settings.RippleComputeShader, _settings.RippleTextureResolution)
+                {
+                    renderPassEvent = RenderPassEvent.BeforeRendering,
+                    RippleRadius = _settings.RippleRadius,
+                    RippleFrequency = _settings.RippleFrequency,
+                    RippleSpeed = _settings.RippleSpeed,
+                    RippleStrength = _settings.RippleStrength
+                };
+            }
             
             _initialized = true;
         }
@@ -99,6 +136,9 @@ namespace BoleteHell.Rendering.SRP
         {
             if (!_initialized)
                 return;
+
+            if (_settings.EnableRippleCompute && _rippleComputePass != null)
+                renderer.EnqueuePass(_rippleComputePass);
             
             renderer.EnqueuePass(_silhouettePass);
             
