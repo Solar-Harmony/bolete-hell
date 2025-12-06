@@ -82,6 +82,7 @@ namespace BoleteHell.Utils.Extensions
             TKey Selector(GameObject obj) => keySelector(obj?.GetComponent<TComponent>() ?? throw new InvalidOperationException($"GameObject {obj?.name} does not have component of type {typeof(TComponent)}"));
         }
         
+        // ReSharper disable Unity.PerformanceAnalysis
         private static TSource ByImpl<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, bool isMax)
         {
             if (source == null)

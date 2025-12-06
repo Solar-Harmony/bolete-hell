@@ -1,6 +1,8 @@
 using System;
+using BoleteHell.Gameplay.Characters.Enemy.Factory;
 using BoleteHell.Utils.LogFilter;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Gameplay.Characters
 {
@@ -19,6 +21,9 @@ namespace BoleteHell.Gameplay.Characters
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
         public static event Action<GameObject, int> OnHealed;
+        
+        [Inject]
+        private EnemyPool _enemyPool;
 
         private static readonly LogCategory _logHealth = new("Health", new Color(0.58f, 0.07f, 0f));
         
@@ -36,6 +41,15 @@ namespace BoleteHell.Gameplay.Characters
             {
                 OnDeath?.Invoke();
                 OnDeath = null;
+                
+                if (TryGetComponent<ICustomDestroy>(out var poolable))
+                {
+                    poolable.Destroy();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         

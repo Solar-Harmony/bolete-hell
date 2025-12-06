@@ -2,7 +2,6 @@
 using System.Linq;
 using BoleteHell.Code.Input;
 using BoleteHell.Gameplay.Characters.Registry;
-using BoleteHell.Gameplay.SpawnManager;
 using UnityEngine;
 using Zenject;
 
@@ -21,9 +20,6 @@ namespace BoleteHell.Gameplay.GameState
         
         [Inject]
         private IInputState _inputState;
-
-        [Inject]
-        private SpawnController _spawnController;
 
         [Inject]
         private IEntityRegistry _entities;
@@ -58,7 +54,6 @@ namespace BoleteHell.Gameplay.GameState
         private void EndGame()
         {
             _inputState.DisableInput();
-            _spawnController.StopSpawning();
         }
     }
 }

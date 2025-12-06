@@ -12,6 +12,7 @@ using BoleteHell.Code.Gameplay.Input;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Code.Input;
 using BoleteHell.Gameplay.Characters.Enemy;
+using BoleteHell.Gameplay.Characters.Enemy.Factory;
 using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Gameplay.Destructible;
 using BoleteHell.Gameplay.Droppables;
@@ -51,13 +52,12 @@ namespace BoleteHell.Code.Core
             
             // gameplay
             Container.Bind<IGameOutcomeService>().To<GameOutcomeService>().AsSingle();
-            Container.Bind<IDirector>().To<Director>().AsSingle();
             Container.Bind<ICannonService>().To<CannonService>().AsSingle();
             Container.Bind<IShotPatternService>().To<ShotPatternService>().AsSingle();
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IEntityRegistry>().To<EntityRegistry>().FromNewComponentOnRoot().AsSingle();
-            Container.Bind<ISpawnService>().To<SpawnManager>().FromNewComponentOnRoot().AsSingle();
-            Container.Bind<SpawnController>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<ISpawnService>().To<SpawnService>().AsSingle();
+            Container.Bind<SpawnAreaController>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<RippleManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
@@ -82,6 +82,8 @@ namespace BoleteHell.Code.Core
             Container.Bind<ICoroutineProvider>().To<GlobalCoroutine>().FromNewComponentOnRoot().AsSingle();
             
             // pools
+            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle();
+            
             Container.BindMemoryPool<TransientLight, TransientLight.Pool>()
                 .WithInitialSize(10)
                 .WithMaxSize(50)

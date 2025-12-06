@@ -1828,6 +1828,7 @@ GameObject:
   - component: {fileID: 726100587602813459}
   - component: {fileID: 2420177354530890555}
   - component: {fileID: 663910842235853150}
+  - component: {fileID: 6423257584744604540}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -2319,3 +2320,15 @@ MonoBehaviour:
   _minVelocityForRipple: 0.5
   _rippleForwardOffset: 1.2
   _velocitySmoothTime: 0.1
+--- !u!114 &6423257584744604540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d10eb500ab43c080baa449afc9de8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
