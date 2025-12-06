@@ -20,11 +20,11 @@ namespace BoleteHell.Rendering.VFX
         {
             Debug.Assert(_shadowObject);
         }
-
-        private void Update()
+        
+        private void LateUpdate()
         {
-            Vector3 shadowOffset = -new Vector3(_shadowDirection.x, 0.0f, _shadowDirection.y).normalized * _shadowLength;
-            _shadowObject.transform.position = shadowOffset;
+            Vector3 shadowOffset = _shadowDirection.normalized * _shadowLength;
+            _shadowObject.transform.position = _shadowObject.transform.parent.position + shadowOffset;
         }
     }
 }

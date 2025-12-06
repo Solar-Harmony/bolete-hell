@@ -90,7 +90,7 @@ namespace BoleteHell.AI.Actions
             Vector2 position = GameObject.transform.position;
             
             DrawVisuals(position);
-            _rippleManager?.EmitRipple(position, 10f);
+            _rippleManager?.EmitRipple(position, 5.0f);
             
             var filter = new ContactFilter2D();
             filter.SetLayerMask(~0);

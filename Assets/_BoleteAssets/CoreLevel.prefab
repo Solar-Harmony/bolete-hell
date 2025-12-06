@@ -626,6 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialSpreadLevel: 1
+  _worldLightDirection: {x: 0.1, y: 0.1, z: 0.3}
   _applyOutsidePlayMode: 0
 --- !u!1 &8167761027039391717
 GameObject:
@@ -763,8 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rippleLifetime: 1.5
-  _cullDistance: 30
-  _worldExtent: 25
+  _boundsMargin: 5
 --- !u!1 &8781894501363492540
 GameObject:
   m_ObjectHideFlags: 0
