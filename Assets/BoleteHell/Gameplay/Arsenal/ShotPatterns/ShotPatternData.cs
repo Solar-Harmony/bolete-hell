@@ -22,7 +22,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
 
         [Tooltip("Rotation value every shot")]
         [Unit(Units.Degree)]
-        public int constantRotation;
+        public float constantRotation;
         
         public float startingDistance;
 

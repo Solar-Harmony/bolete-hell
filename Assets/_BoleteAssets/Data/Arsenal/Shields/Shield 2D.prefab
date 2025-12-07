@@ -175,8 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af0914a22a20e14b824354275c13566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startCap: {fileID: 0}
-  endCap: {fileID: 0}
 --- !u!114 &6653453790906301197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,4 +273,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsInvincible>k__BackingField: 0
-  <MaxHealth>k__BackingField: 5
+  <MaxHealth>k__BackingField: 10

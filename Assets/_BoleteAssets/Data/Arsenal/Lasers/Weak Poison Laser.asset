@@ -17,7 +17,7 @@ MonoBehaviour:
   <Logic>k__BackingField:
     rid: 795111371258462383
   AffectedSide: 2
-  <baseDamage>k__BackingField: 5
+  <baseDamage>k__BackingField: 3
   <MovementSpeed>k__BackingField: 3
   references:
     version: 2
@@ -31,12 +31,14 @@ MonoBehaviour:
       type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 1
+        numTicks: 3
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 795111371258462385
-        DamageEachTick: 10
-    - rid: 795111371258462385
-      type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
-      data: 
+          rid: 2169932487267975255
+        DamageEachTick: 1
+    - rid: 2169932487267975255
+      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data:
+        maxStacks: 3
+        condition: 0

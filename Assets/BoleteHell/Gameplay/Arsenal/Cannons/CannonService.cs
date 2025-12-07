@@ -152,12 +152,14 @@ namespace BoleteHell.Code.Arsenal.Cannons
         {
             foreach (LaserPreviewRenderer reservedPreviewRenderer in cannon.reservedPreviewRenderers.ToList())
             {
+                if(!reservedPreviewRenderer) continue;
+                
                 reservedPreviewRenderer.Despawn();
+                
                 cannon.reservedPreviewRenderers.Remove(reservedPreviewRenderer);
             }
             cannon.ChargeTimer = 0;
             cannon.CurrentFiringLogic?.FinishFiring();
-            cannon.ShotCount = 0;
         }
     }
 }

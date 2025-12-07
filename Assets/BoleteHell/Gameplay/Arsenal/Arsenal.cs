@@ -64,7 +64,7 @@ namespace BoleteHell.Code.Arsenal
 
         public bool IsReadyToShoot()
         {
-            return GetSelectedWeapons().All(weapon => weapon.CanShoot);
+            return GetSelectedWeapons().Any(weapon => weapon.CanShoot);
         }
 
         public bool Shoot(Vector2 direction)

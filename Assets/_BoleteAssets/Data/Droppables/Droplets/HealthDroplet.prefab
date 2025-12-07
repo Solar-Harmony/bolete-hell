@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effect:
     rid: 795111371258462376
-  _pickupDistance: 2
+  _pickupDistance: 1
   _speed: 5
   references:
     version: 2
