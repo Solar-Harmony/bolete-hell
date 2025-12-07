@@ -17,8 +17,11 @@ MonoBehaviour:
     - {fileID: 3476611043504849278, guid: 7a222cc10f4fb1642a64e7999a19bfe7, type: 3}
     - {fileID: 560586752497531280, guid: 892a0737f9c0a56418030b68742b3079, type: 3}
   SpawnControllerConfig:
-    AllowSpawning: 0
-    Interval: 5
-    MaxEnemies: 7
+    CostTable: {fileID: 11400000, guid: da831a0b1a197814e9b58a78604371dd, type: 2}
+    TickInterval: 2
+    MaxConcurrentEnemies: 10
+    InitialMoney: 1000
+    MoneyPerSecond: 10
+    BossFightDistance: 25
   OutcomeConfig:
     DefeatWhenAllBasesDestroyed: 0

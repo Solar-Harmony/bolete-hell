@@ -1827,6 +1827,8 @@ GameObject:
   - component: {fileID: -9064392505486838912}
   - component: {fileID: 726100587602813459}
   - component: {fileID: 2420177354530890555}
+  - component: {fileID: 663910842235853150}
+  - component: {fileID: 6423257584744604540}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -2033,6 +2035,7 @@ MonoBehaviour:
   m_Graph: {fileID: -8870313207143250243, guid: 244496790adeb594e864a73c248a4912, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 5920448562586189824
+  m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -2299,5 +2302,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31c6c0d980c2462799e270bd057bc2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &663910842235853150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9892a20d6204440a9fc60382cd405741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rippleSpawnInterval: 0.08
+  _minVelocityForRipple: 0.5
+  _rippleForwardOffset: 1.2
+  _velocitySmoothTime: 0.1
+--- !u!114 &6423257584744604540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982038961960877227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d10eb500ab43c080baa449afc9de8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

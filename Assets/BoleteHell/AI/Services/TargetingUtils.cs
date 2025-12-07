@@ -5,9 +5,9 @@ namespace BoleteHell.AI.Services
 {
     public class TargetingUtils : ITargetingUtils
     {
-        //private string playerLayer = "Unit";
-        private string enemyLayer = "PlayerEnemy";
-        private float radius = 0.17f;
+        private const string _enemyLayer = "PlayerEnemy";
+        private const float _radius = 0.17f;
+
         public bool HasLineOfSight(GameObject self, GameObject target, float viewRange)
         {
             if (!self || !target)
@@ -18,11 +18,11 @@ namespace BoleteHell.AI.Services
             //Permet a l'ennemis de ne pas prendre les autre ennemis en compte pour target le joueur ou les bases
             //mais de prendre les autre ennemis en compte quand il target un ennemis
             var faction = target.GetComponent<FactionComponent>();
-            string ignoreLayer = faction.Type == FactionType.Enemy ? "" : enemyLayer;
+            string ignoreLayer = faction.Type == FactionType.Enemy ? "" : _enemyLayer;
             LayerMask layerMask = ~LayerMask.GetMask(ignoreLayer, "IgnoreProjectile", "Shield");
             
             //j'avance le cast un peut pour ne pas se hit soit même
-            RaycastHit2D hit = Physics2D.CircleCast(self.transform.position + direction.normalized * 0.8f, radius, direction.normalized, viewRange, layerMask);
+            RaycastHit2D hit = Physics2D.CircleCast(self.transform.position + direction.normalized * 0.8f, _radius, direction.normalized, viewRange, layerMask);
             Debug.DrawRay(self.transform.position + direction.normalized * 0.8f, direction.normalized * viewRange);
             return hit.collider && hit.collider.gameObject == target.gameObject;
         }

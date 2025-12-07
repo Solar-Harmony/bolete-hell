@@ -1,7 +1,8 @@
 using System;
-using BoleteHell.AI.Services;
 using BoleteHell.Code.Core;
 using BoleteHell.Gameplay.Characters;
+using BoleteHell.Gameplay.Characters.Registry;
+using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -20,18 +21,21 @@ namespace BoleteHell.AI.Actions
         [SerializeReference]
         public BlackboardVariable<GameObject> CurrentTarget;
         
-        private IDirector _director;
+        private IEntityRegistry _entities;
 
         protected override Status OnStart()
         {
-            ServiceLocator.Get(out _director);
+            ServiceLocator.Get(out _entities);
              
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            GameObject target = _director.FindWeakestAlly(GameObject);
+            GameObject target = _entities
+                .WithTag(EntityTag.Enemy)
+                .WithHighest((HealthComponent h) => h.Percent);
+            
             if (!target)
             {
                 CurrentTarget.Value = null;

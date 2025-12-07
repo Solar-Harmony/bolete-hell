@@ -1,5 +1,5 @@
 using System;
-using BoleteHell.AI.Services;
+using BoleteHell.AI.Services.Group;
 using BoleteHell.Code.Core;
 using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Utils.Extensions;
@@ -21,12 +21,12 @@ namespace BoleteHell.AI.Actions
         [SerializeReference]
         public BlackboardVariable<GameObject> Target;
         
-        private IDirector _director;
+        private IAIGroupService _groups;
         private AIGroupComponent _groupComponent;
 
         protected override Status OnStart()
         {
-            ServiceLocator.Get(out _director);
+            ServiceLocator.Get(out _groups);
             GameObject.GetComponentChecked(out _groupComponent);
             
             return Status.Running;
@@ -34,7 +34,7 @@ namespace BoleteHell.AI.Actions
 
         protected override Status OnUpdate()
         {
-            GameObject target = _director.FindTarget(GameObject, _groupComponent.GroupID);
+            GameObject target = _groups.GetGroup(_groupComponent.GroupID).Target;
 
             Target.Value = target;
             return Status.Success;

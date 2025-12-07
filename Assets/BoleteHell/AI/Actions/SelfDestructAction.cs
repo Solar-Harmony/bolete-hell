@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BoleteHell.Code.Core;
 using BoleteHell.Code.Graphics;
 using BoleteHell.Gameplay.Characters;
+using BoleteHell.Rendering.Ripples;
 using BoleteHell.Utils;
 using BoleteHell.Utils.Extensions;
 using Unity.Behavior;
@@ -30,10 +31,12 @@ namespace BoleteHell.AI.Actions
         private static readonly int _colorId = Shader.PropertyToID("_Color");
     
         private TransientLight.Pool _explosionVFXPool;
+        private RippleManager _rippleManager;
 
         protected override Status OnStart()
         {
             ServiceLocator.Get(out _explosionVFXPool);
+            ServiceLocator.Get(out _rippleManager);
         
             GameObject.GetComponentChecked(out _rendererRef);
             
@@ -84,13 +87,16 @@ namespace BoleteHell.AI.Actions
     
         private void Explode()
         {
-            DrawVisuals(GameObject.transform.position);
+            Vector2 position = GameObject.transform.position;
+            
+            DrawVisuals(position);
+            _rippleManager?.EmitRipple(position, 5.0f);
             
             var filter = new ContactFilter2D();
             filter.SetLayerMask(~0);
             
             var results = new List<Collider2D>();
-            int hitCollidersAmount = Physics2D.OverlapCircle(GameObject.transform.position, ExplosionRadius, filter, results);
+            int hitCollidersAmount = Physics2D.OverlapCircle(position, ExplosionRadius, filter, results);
             if (hitCollidersAmount <= 0)
                 return;
 

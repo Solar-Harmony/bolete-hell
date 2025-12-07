@@ -55,7 +55,6 @@ namespace BoleteHell.Code.Arsenal.Rays
         {
             if (_pool.Count == 0)
             {
-                Debug.LogWarning("Pool empty adding more");
                 for (int i = 0; i < currentPoolSize; i++)
                 {
                     AddObjectToPool();

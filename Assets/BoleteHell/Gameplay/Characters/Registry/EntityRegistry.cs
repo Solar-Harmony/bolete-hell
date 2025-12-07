@@ -36,7 +36,7 @@ namespace BoleteHell.Gameplay.Characters.Registry
         public GameObject GetWeakestEliteAlive()
         {
             return WithTag(EntityTag.EliteEnemy)
-                .TakeWorst((HealthComponent h) => h.CurrentHealth);
+                .WithLowest((HealthComponent h) => h.CurrentHealth);
         }
         
         public GameObject GetClosestBase(Vector2 pos, out float distance)
@@ -48,7 +48,7 @@ namespace BoleteHell.Gameplay.Characters.Registry
         public GameObject GetWeakestBase()
         {
             return WithTag(EntityTag.Base)
-                .TakeWorst((HealthComponent h) => h.CurrentHealth);
+                .WithLowest((HealthComponent h) => h.CurrentHealth);
         }
 
         public void Register(EntityTag[] tags, GameObject entity)
@@ -59,6 +59,8 @@ namespace BoleteHell.Gameplay.Characters.Registry
                 {
                     throw new InvalidOperationException("Multiple player entities registered.");
                 }
+                
+                Debug.AssertFormat(!_entities[type].Contains(entity), "Entity '{0}' is already registered!", entity.gameObject.name);
                 
                 _entities[type].Add(entity);
             }

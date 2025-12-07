@@ -52,6 +52,9 @@ namespace BoleteHell.Code.Arsenal.Shields
             
             foreach (ShieldEffect effect in shieldInfo.shieldEffect)
             {
+                if (!instigator || !_owner)
+                    continue;
+                
                 bool hasInstigatorFaction = instigator.TryGetComponent<FactionComponent>(out var instigatorFaction);
                 bool hasOwnerFaction = _owner.TryGetComponent<FactionComponent>(out var ownerFaction);
 

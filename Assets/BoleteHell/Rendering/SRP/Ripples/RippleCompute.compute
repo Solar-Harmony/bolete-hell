@@ -1,0 +1,92 @@
+﻿#pragma kernel CSMain
+
+#define MAX_RIPPLES 32
+
+struct RippleInput
+{
+    float2 position;
+    float spawnTime;
+    float intensity;
+};
+
+RWTexture2D<float4> _RippleOutput;
+StructuredBuffer<RippleInput> _Ripples;
+
+float _Time;
+float _RippleLifetime;
+float _RippleRadius;
+float _RippleFrequency;
+float _RippleSpeed;
+float _RippleStrength;
+float _Corruption;
+
+int _RippleCount;
+float4 _WorldBounds; // minX, minY, maxX, maxY
+
+float4 _Resolution;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint2 res = uint2(_Resolution.xy);
+    if (id.x >= res.x || id.y >= res.y)
+        return;
+
+    float2 uv = float2(id.xy) / float2(res - 1);
+    float2 worldPos = lerp(_WorldBounds.xy, _WorldBounds.zw, uv);
+
+    float2 totalOffset = float2(0, 0);
+    float2 normalAccum = float2(0, 0);
+
+    float corruptionScale = saturate(_Corruption);
+    
+    if (corruptionScale >= 0.01 && _RippleCount > 0)
+    {
+        int rippleCount = min(_RippleCount, MAX_RIPPLES);
+        for (int i = 0; i < rippleCount; i++)
+        {
+            RippleInput ripple = _Ripples[i];
+            float2 ripplePos = ripple.position;
+            float spawnTime = ripple.spawnTime;
+            float intensity = ripple.intensity;
+
+            float age = _Time - spawnTime;
+            if (age < 0 || age > _RippleLifetime)
+                continue;
+
+            float2 toRipple = worldPos - ripplePos;
+            float dist = length(toRipple);
+
+            if (dist < 0.001)
+                continue;
+
+            float scaledRadius = _RippleRadius * corruptionScale;
+            float expandingRadius = scaledRadius * (age / _RippleLifetime);
+            float ringDist = abs(dist - expandingRadius);
+
+            float ringWidth = 2.0 * corruptionScale;
+            float falloff = exp(-ringDist * ringDist / (ringWidth * ringWidth));
+
+            float ageNorm = age / _RippleLifetime;
+            float ageFade = 1.0 - ageNorm;
+            float ageIn = saturate(ageNorm * 10.0);
+            ageFade *= ageIn;
+            ageFade = ageFade * ageFade;
+
+            float weight = falloff * ageFade * intensity;
+
+            float2 dir = toRipple / dist;
+            float phase = dist * _RippleFrequency - age * _RippleSpeed * 6.0;
+            float wave = sin(phase) + 0.3 * sin(phase * 2.3 + 1.0);
+
+            totalOffset += dir * wave * weight * _RippleStrength * corruptionScale;
+
+            float waveDerivative = cos(phase) + 0.3 * 2.3 * cos(phase * 2.3 + 1.0);
+            normalAccum += dir * waveDerivative * weight * corruptionScale;
+        }
+    }
+
+    float2 encodedNormal = normalAccum * 0.5 + 0.5;
+    _RippleOutput[id.xy] = float4(totalOffset, encodedNormal);
+}
+
