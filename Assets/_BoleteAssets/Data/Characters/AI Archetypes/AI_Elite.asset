@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Graphs:
   - rid: 795111383214587946
-  RootGraph:
-    rid: 795111383214587946
   m_DebugInfo: {fileID: -381781518915465436}
+  m_WasCompileWithPlaceholderNode: 0
   references:
     version: 2
     RefIds:
@@ -28,39 +27,25 @@ MonoBehaviour:
         AuthoringAssetID:
           m_Value0: 15317769827141284305
           m_Value1: 4089782470570457289
-        m_DebugInfo: {fileID: 0}
+        m_DebugInfo: {fileID: -381781518915465436}
         BlackboardReference:
           rid: 795111383214587947
         BlackboardGroupReferences: []
         Root:
-          rid: 795111383214587948
+          rid: 5809585378271953278
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
           rid: 795111383214587949
         m_EndedNodes:
           rid: 795111383214587950
-        m_VersionTimestamp: 638999237441521156
+        m_VersionTimestamp: 639005475535732529
     - rid: 795111383214587947
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
           rid: 795111383214587951
         m_Source: {fileID: 6247436901105087396}
-    - rid: 795111383214587948
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 14335294909109986808
-          m_Value1: 17398964118181281550
-        Graph:
-          rid: 795111383214587946
-        m_Parent:
-          rid: -2
-        m_Child:
-          rid: 795111383214587952
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
     - rid: 795111383214587949
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
@@ -73,19 +58,6 @@ MonoBehaviour:
         m_Variables:
         - rid: 795111383214587953
         - rid: 795111383214587954
-    - rid: 795111383214587952
-      type: {class: ParallelAllComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 8473481240345862287
-          m_Value1: 8224933123834885004
-        Graph:
-          rid: 795111383214587946
-        m_Parent:
-          rid: 795111383214587948
-        m_Children:
-        - rid: 795111383214587955
-        - rid: 795111383214587956
     - rid: 795111383214587953
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -102,7 +74,74 @@ MonoBehaviour:
           m_Value1: 11301596354734271912
         Name: CurrentTarget
         m_Value: {fileID: 0}
-    - rid: 795111383214587955
+    - rid: 5809585378271953268
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 5809585378271953271
+      type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 3
+    - rid: 5809585378271953272
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 100
+    - rid: 5809585378271953275
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 5
+    - rid: 5809585378271953277
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 10
+    - rid: 5809585378271953278
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14335294909109986808
+          m_Value1: 17398964118181281550
+        Graph:
+          rid: 795111383214587946
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 5809585378271953279
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 5809585378271953279
+      type: {class: ParallelAllComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 8473481240345862287
+          m_Value1: 8224933123834885004
+        Graph:
+          rid: 795111383214587946
+        m_Parent:
+          rid: 5809585378271953278
+        m_Children:
+        - rid: 5809585378271953280
+        - rid: 5809585378271953281
+    - rid: 5809585378271953280
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -111,11 +150,11 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587952
+          rid: 5809585378271953279
         m_Children:
-        - rid: 795111383214587957
-        - rid: 795111383214587958
-    - rid: 795111383214587956
+        - rid: 5809585378271953282
+        - rid: 5809585378271953283
+    - rid: 5809585378271953281
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -124,13 +163,13 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587952
+          rid: 5809585378271953279
         m_Child:
-          rid: 795111383214587959
+          rid: 5809585378271953284
         m_Conditions:
-        - rid: 795111383214587960
+        - rid: 5809585378271953285
         m_RequiresAllConditions: 0
-    - rid: 795111383214587957
+    - rid: 5809585378271953282
       type: {class: ConditionalGuardAction, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -139,11 +178,11 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587955
+          rid: 5809585378271953280
         m_Conditions:
-        - rid: 795111383214587961
+        - rid: 5809585378271953286
         m_RequiresAllConditions: 0
-    - rid: 795111383214587958
+    - rid: 5809585378271953283
       type: {class: SetSelectedWeaponAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -152,10 +191,10 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587955
+          rid: 5809585378271953280
         Index:
-          rid: 795111383214587962
-    - rid: 795111383214587959
+          rid: 5809585378271953268
+    - rid: 5809585378271953284
       type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -164,18 +203,18 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587956
+          rid: 5809585378271953281
         m_Children:
-        - rid: 795111383214587963
-        - rid: 795111383214587964
-    - rid: 795111383214587960
+        - rid: 5809585378271953287
+        - rid: 5809585378271953288
+    - rid: 5809585378271953285
       type: {class: FoundNewTargetCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
           rid: 795111383214587946
         Target:
           rid: 795111383214587954
-    - rid: 795111383214587961
+    - rid: 5809585378271953286
       type: {class: CompareHealthCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
@@ -183,18 +222,10 @@ MonoBehaviour:
         Entity:
           rid: 795111383214587953
         X:
-          rid: 795111383214587965
+          rid: 5809585378271953271
         N:
-          rid: 795111383214587966
-    - rid: 795111383214587962
-      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 1
-    - rid: 795111383214587963
+          rid: 5809585378271953272
+    - rid: 5809585378271953287
       type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -203,13 +234,13 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587959
+          rid: 5809585378271953284
         m_Child:
-          rid: 795111383214587967
+          rid: 5809585378271953289
         m_Conditions:
-        - rid: 795111383214587968
+        - rid: 5809585378271953290
         m_RequiresAllConditions: 0
-    - rid: 795111383214587964
+    - rid: 5809585378271953288
       type: {class: ShootAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -218,28 +249,12 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587959
+          rid: 5809585378271953284
         CurrentTarget:
           rid: 795111383214587954
         TurnSpeed:
-          rid: 795111383214587969
-    - rid: 795111383214587965
-      type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 3
-    - rid: 795111383214587966
-      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 100
-    - rid: 795111383214587967
+          rid: 5809585378271953275
+    - rid: 5809585378271953289
       type: {class: PathfindToTargetAction, ns: BoleteHell.AI.Actions, asm: BoleteAI}
       data:
         ID:
@@ -248,10 +263,10 @@ MonoBehaviour:
         Graph:
           rid: 795111383214587946
         m_Parent:
-          rid: 795111383214587963
+          rid: 5809585378271953287
         Target:
-          rid: 795111383214587970
-    - rid: 795111383214587968
+          rid: 5809585378271953291
+    - rid: 5809585378271953290
       type: {class: HasLineOfSightCondition, ns: BoleteHell.AI.Conditions, asm: BoleteAI}
       data:
         Graph:
@@ -259,16 +274,8 @@ MonoBehaviour:
         Target:
           rid: 795111383214587954
         ViewRange:
-          rid: 795111383214587971
-    - rid: 795111383214587969
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 5
-    - rid: 795111383214587970
+          rid: 5809585378271953277
+    - rid: 5809585378271953291
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -278,14 +285,6 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 795111383214587954
-    - rid: 795111383214587971
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 10
 --- !u!114 &-381781518915465436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +322,8 @@ MonoBehaviour:
   - rid: 795110976313623241
   - rid: 795110977859747996
   - rid: 795110978031190086
-  m_VersionTimestamp: 638999237441521156
+  m_VersionTimestamp: 639005475535732529
+  m_SerializedVersion: 1
   m_DebugInfo: {fileID: -381781518915465436}
   m_RuntimeGraph: {fileID: -8870313207143250243}
   AssetID:
@@ -336,13 +336,18 @@ MonoBehaviour:
   m_NodeModelsInfo:
   - Name: On Start
     Story: 
+    RuntimeTypeString: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 3335272451348827663
       m_Value1: 11549843281177505721
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Shoot
     Story: 'Shoot at [CurrentTarget]'
+    RuntimeTypeString: BoleteHell.AI.Actions.ShootAction, BoleteAI, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 14696599572089096223
       m_Value1: 4173363149089251346
@@ -358,8 +363,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Pathfind to target
     Story: 'Pathfind towards [Target]'
+    RuntimeTypeString: BoleteHell.AI.Actions.PathfindToTargetAction, BoleteAI, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 14856967005021225643
       m_Value1: 3708820439056927761
@@ -370,22 +378,31 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Abort
     Story: 
+    RuntimeTypeString: Unity.Behavior.AbortModifier, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 11694760734451091187
       m_Value1: 13156989698943900053
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Try In Order
     Story: 
+    RuntimeTypeString: Unity.Behavior.SelectorComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 11477120919463386923
       m_Value1: 7730102824742023565
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Change weapon
     Story: 'Switch to weapon at index [Index]'
+    RuntimeTypeString: BoleteHell.AI.Actions.SetSelectedWeaponAction, BoleteAI, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 17413307126785730452
       m_Value1: 15502355850370094588
@@ -396,333 +413,35 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Conditional Guard
     Story: 
+    RuntimeTypeString: Unity.Behavior.ConditionalGuardAction, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 10845871997924083670
       m_Value1: 4041440894818793834
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Run In Parallel
     Story: 
+    RuntimeTypeString: Unity.Behavior.ParallelAllComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 6216542881172158703
       m_Value1: 2191282456596108218
     Variables: []
     NamedChildren: []
-  - Name: Conditional Branch
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 12334964803190848789
-      m_Value1: 14608808926743427008
-    Variables: []
-    NamedChildren:
-    - True
-    - False
-  - Name: Run In Parallel Until Any Succeeds
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3118052729764074030
-      m_Value1: 1388175790504016299
-    Variables: []
-    NamedChildren: []
-  - Name: Sequence
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10181448252506100447
-      m_Value1: 8737116843063128493
-    Variables: []
-    NamedChildren: []
-  - Name: Run In Parallel Until Any Completes
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 17241237265361179876
-      m_Value1: 2160530408019457471
-    Variables: []
-    NamedChildren: []
-  - Name: Wait For All
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 7660367652061089412
-      m_Value1: 18313906318609194151
-    Variables: []
-    NamedChildren: []
-  - Name: Random
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 15586748977048568638
-      m_Value1: 1886799870276249994
-    Variables: []
-    NamedChildren: []
-  - Name: Find suitable target
-    Story: '[Agent] finds nearest target, stores in [Target]'
-    RuntimeTypeID:
-      m_Value0: 14856967005021225643
-      m_Value1: 106145917324305
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Inverter
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 1967250899303387600
-      m_Value1: 15806081860663257984
-    Variables: []
-    NamedChildren: []
-  - Name: Cooldown
-    Story: Cooldowns for [duration] seconds after execution
-    RuntimeTypeID:
-      m_Value0: 11996061466798456745
-      m_Value1: 7008150615564501899
-    Variables:
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Selector
-    Story: Execute children until one succeeds
-    RuntimeTypeID:
-      m_Value0: 7717707798954045006
-      m_Value1: 3182668214086331367
-    Variables: []
-    NamedChildren: []
-  - Name: Repeat
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3696095273264312494
-      m_Value1: 14191201703811421854
-    Variables: []
-    NamedChildren: []
-  - Name: Restart
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 13639978763537614925
-      m_Value1: 3904329925062786712
-    Variables: []
-    NamedChildren: []
-  - Name: Repeat While
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 17299482495328769724
-      m_Value1: 1892732619013874548
-    Variables: []
-    NamedChildren: []
-  - Name: Switch
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 7697158487413557231
-      m_Value1: 14836087705204215232
-    Variables:
-    - Name: EnumVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Set Variable Value
-    Story: 'Set [Variable] value to [Value]'
-    RuntimeTypeID:
-      m_Value0: 5494721648866555964
-      m_Value1: 18024545711220129068
-    Variables:
-    - Name: Variable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Value
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Predict Shooting Direction
-    Story: '[Self] predicts shoot direction to hit [Player]'
-    RuntimeTypeID:
-      m_Value0: 3890143861608179357
-      m_Value1: 6666146578709771491
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Player
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait (Range) (Seconds)
-    Story: Wait between [Min] and [Max] seconds
-    RuntimeTypeID:
-      m_Value0: 1357124955953561018
-      m_Value1: 15647026721769409965
-    Variables:
-    - Name: Min
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Max
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait (Seconds)
-    Story: Wait for [SecondsToWait] seconds
-    RuntimeTypeID:
-      m_Value0: 7729581452106168333
-      m_Value1: 8820302366443624372
-    Variables:
-    - Name: SecondsToWait
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Shoot at (prototype)
-    Story: '[Self] shoots [ProjectilePrefab] at [Target]'
-    RuntimeTypeID:
-      m_Value0: 13130190468003749209
-      m_Value1: 363234523772485146
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: ProjectilePrefab
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Log Variable
-    Story: Log [variable] to the console
-    RuntimeTypeID:
-      m_Value0: 14362779694071371193
-      m_Value1: 7707181868946836709
-    Variables:
-    - Name: Variable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Navigate To Target
-    Story: '[Agent] navigates to [Target]'
-    RuntimeTypeID:
-      m_Value0: 14505029119854362939
-      m_Value1: 1167385928027178409
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: SlowDownDistance
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: m_TargetPositionMode
-      Type:
-        m_SerializableType: Unity.Behavior.NavigateToTargetAction+TargetPositionMode,
-          Unity.Behavior, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Instantiate Object
-    Story: 'Instantiate [Object]'
-    RuntimeTypeID:
-      m_Value0: 1546622996092940372
-      m_Value1: 304591401739151594
-    Variables:
-    - Name: Object
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: InstantiatedObject
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: TargetUsage
-      Type:
-        m_SerializableType: Unity.Behavior.InstantiateObjectAction+TargetMode, Unity.Behavior,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: RunInBackground
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Set Velocity
-    Story: 'Set [Target] ''s velocity to [Velocity]'
-    RuntimeTypeID:
-      m_Value0: 13788716259394858110
-      m_Value1: 6892906217354059016
-    Variables:
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.Rigidbody, UnityEngine.PhysicsModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Velocity
-      Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: 7476848768316110616}
   m_CommandBuffer:
     m_Commands: []
   m_SubgraphsInfo: []
+  m_BlackboardMissingManagedRef: 0
+  m_GraphMissingManagedRef: 0
+  m_HasMissingTypeInManagedRef: 0
   references:
     version: 2
     RefIds:

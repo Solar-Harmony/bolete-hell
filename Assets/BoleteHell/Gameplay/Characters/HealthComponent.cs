@@ -1,10 +1,12 @@
 using System;
+using BoleteHell.Gameplay.Characters.Enemy.Factory;
 using BoleteHell.Utils.LogFilter;
 using UnityEngine;
+using Zenject;
 
 namespace BoleteHell.Gameplay.Characters
 {
-    public class HealthComponent : MonoBehaviour, ISerializationCallbackReceiver
+    public class HealthComponent : MonoBehaviour
     {
         [field: SerializeField]
         public bool IsInvincible { get; set; } = false;
@@ -19,9 +21,17 @@ namespace BoleteHell.Gameplay.Characters
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
         public static event Action<GameObject, int> OnHealed;
+        
+        [Inject]
+        private EnemyPool _enemyPool;
 
         private static readonly LogCategory _logHealth = new("Health", new Color(0.58f, 0.07f, 0f));
-        
+
+        private void OnEnable()
+        {
+            CurrentHealth = MaxHealth;
+        }
+
         public bool IsDead => CurrentHealth <= 0;
         public void TakeDamage(int damageAmount)
         {
@@ -36,6 +46,15 @@ namespace BoleteHell.Gameplay.Characters
             {
                 OnDeath?.Invoke();
                 OnDeath = null;
+                
+                if (TryGetComponent<ICustomDestroy>(out var poolable))
+                {
+                    poolable.Destroy();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         
@@ -47,16 +66,6 @@ namespace BoleteHell.Gameplay.Characters
             CurrentHealth = Math.Min(MaxHealth, CurrentHealth + healAmount);
             Scribe.Log(_logHealth, $"Gained {healAmount} hp");
             OnHealed?.Invoke(gameObject, healAmount);
-        }
-
-        public void OnBeforeSerialize()
-        {
-            
-        }
-
-        public void OnAfterDeserialize()
-        {
-            CurrentHealth = MaxHealth;
         }
     }
 }

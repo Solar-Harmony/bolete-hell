@@ -1,10 +1,11 @@
 using System;
 using BoleteHell.Rendering.SRP.FakeAO;
+using BoleteHell.Rendering.SRP.Ripples;
 using BoleteHell.Rendering.SRP.Silhouette;
 using BoleteHell.Rendering.SRP.SunShadows;
+using BoleteHell.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 // extensions du render pipeline
@@ -27,7 +28,7 @@ namespace BoleteHell.Rendering.SRP
         [ToggleGroup(nameof(EnableSunShadow), "Screen-space sun shadow")]
         public bool EnableSunShadow = true;
 
-        [ToggleGroup(nameof(EnableSunShadow))] //[AnglePicker]
+        [ToggleGroup(nameof(EnableSunShadow))] [AnglePicker]
         public Vector2 SunDirection = new(0.1f, 0.1f);
         
         [ToggleGroup(nameof(EnableSunShadow))] 
@@ -45,6 +46,43 @@ namespace BoleteHell.Rendering.SRP
         [ToggleGroup(nameof(EnableFakeAO))]
         [Tooltip("Radius for ambient occlusion sampling.")]
         public float FakeAORadius = 10.0f;
+
+        [ToggleGroup(nameof(EnableRippleCompute), "Ripple Compute Shader")]
+        public bool EnableRippleCompute = true;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        [Tooltip("Resolution of the ripple texture. Higher = more detail but slower.")]
+        public int RippleTextureResolution = 128;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleRadius = 5f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleFrequency = 8f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleSpeed = 3f;
+
+        [ToggleGroup(nameof(EnableRippleCompute))]
+        public float RippleStrength = 0.15f;
+        
+        private const string _groupName = "Materials";
+        
+        [FoldoutGroup(_groupName)]
+        [Required] [SerializeField]
+        public Material SilhouetteMaterial;
+        
+        [FoldoutGroup(_groupName)]
+        [Required] [SerializeField]
+        public Material FakeAOMaterial;
+        
+        [FoldoutGroup(_groupName)]
+        [Required] [SerializeField]
+        public Material FakeSunShadowMaterial;
+
+        [FoldoutGroup(_groupName)]
+        [SerializeField]
+        public ComputeShader RippleComputeShader;
     }
     
     public class BoleteRenderFeature : ScriptableRendererFeature
@@ -52,48 +90,63 @@ namespace BoleteHell.Rendering.SRP
         [SerializeField]
         private BoleteRenderingSettings _settings = new();
         
-        private Material _silhouetteMaterial;
         private ObstaclesSilhouettePass _silhouettePass;
-        private Material _fakeAOMaterial;
         private FakeAOPass _fakeAOPass;
-        private Material _fakeSunShadowMaterial;
         private FakeSunShadowPass _fakeSunShadowPass;
+        private RippleComputePass _rippleComputePass;
+
+        private bool _initialized = false;
 
         public override void Create()
         {
-            _silhouetteMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Simple White"));
-            _silhouettePass = new ObstaclesSilhouettePass(_settings.RenderingLayerMaskName, _silhouetteMaterial)
+            if (!_settings.SilhouetteMaterial || !_settings.FakeAOMaterial || !_settings.FakeSunShadowMaterial)
+                return;
+                
+            _silhouettePass = new ObstaclesSilhouettePass(_settings.RenderingLayerMaskName, _settings.SilhouetteMaterial)
             {
                 renderPassEvent = RenderPassEvent.BeforeRendering
             };
 
-            _fakeAOMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Fake Ambient Occlusion"));
-            _fakeAOPass = new FakeAOPass(_fakeAOMaterial, _settings.ReferenceHeight, _settings.FakeAORadius)
+            _fakeAOPass = new FakeAOPass(_settings.FakeAOMaterial, _settings.ReferenceHeight, _settings.FakeAORadius)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _fakeSunShadowMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Bolete Hell/Fake Sun Shadow"));
-            _fakeSunShadowPass = new FakeSunShadowPass(_fakeSunShadowMaterial, _settings.SunDirection, _settings.SunShadowStepSize, _settings.SunShadowIntensity, _settings.SunShadowSoftness)
+            _fakeSunShadowPass = new FakeSunShadowPass(_settings.FakeSunShadowMaterial, _settings.SunDirection, _settings.SunShadowStepSize, _settings.SunShadowIntensity, _settings.SunShadowSoftness)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
+
+            if (_settings.RippleComputeShader)
+            {
+                _rippleComputePass = new RippleComputePass(_settings.RippleComputeShader, _settings.RippleTextureResolution)
+                {
+                    renderPassEvent = RenderPassEvent.BeforeRendering,
+                    RippleRadius = _settings.RippleRadius,
+                    RippleFrequency = _settings.RippleFrequency,
+                    RippleSpeed = _settings.RippleSpeed,
+                    RippleStrength = _settings.RippleStrength
+                };
+            }
+            
+            _initialized = true;
         }
         
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
+            if (!_initialized)
+                return;
+
+            if (_settings.EnableRippleCompute && _rippleComputePass != null)
+                renderer.EnqueuePass(_rippleComputePass);
+            
             renderer.EnqueuePass(_silhouettePass);
+            
             if (_settings.EnableFakeAO)
                 renderer.EnqueuePass(_fakeAOPass);
+            
             if (_settings.EnableSunShadow)
                 renderer.EnqueuePass(_fakeSunShadowPass);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            CoreUtils.Destroy(_silhouetteMaterial);
-            CoreUtils.Destroy(_fakeAOMaterial);
-            CoreUtils.Destroy(_fakeSunShadowMaterial);
         }
     }
 }

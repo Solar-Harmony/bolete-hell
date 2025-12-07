@@ -13,12 +13,6 @@ namespace BoleteHell.Gameplay.Characters.Registry
         Base
     }
     
-    public enum SuperlativeQuery
-    {
-        Lowest,
-        Highest
-    }
-    
     public interface IEntityRegistry
     {
         GameObject GetPlayer();

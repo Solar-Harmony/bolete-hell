@@ -115,7 +115,6 @@ namespace BoleteHell.Code.Arsenal
         {
             if (cannons.Count <= 1)
             {
-                Debug.LogWarning("No weapons to cycle trough");
                 return;
             }
 

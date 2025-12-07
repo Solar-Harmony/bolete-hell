@@ -28,8 +28,6 @@ namespace BoleteHell.Gameplay.Characters
 
         private void OnDeath()
         {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
             _spriteFragmenter.Fragment(transform, _spriteFragmentConfig);
         }
 

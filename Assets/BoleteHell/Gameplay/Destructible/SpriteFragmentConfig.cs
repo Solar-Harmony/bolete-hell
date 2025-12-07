@@ -8,7 +8,7 @@ namespace BoleteHell.Gameplay.Destructible
     {
         [Header("General config")]
         [field: SerializeField] 
-        public SpriteRenderer sr { get; private set; }
+        public Renderer renderer { get; private set; }
         
         [field: SerializeField] 
         public Rigidbody2D parentRb { get; private set; }
@@ -25,5 +25,8 @@ namespace BoleteHell.Gameplay.Destructible
 
         [field: SerializeField] 
         public float explosionForce { get; private set; } = 1.0f;
+
+        [field: SerializeField]
+        public float minFragmentSize { get; private set; } = 0.15f;
     }
 }
