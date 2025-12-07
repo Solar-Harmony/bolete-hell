@@ -29,7 +29,7 @@ namespace BoleteHell.AI.Conditions
 
         public override bool IsTrue()
         {
-            GameObject target = _groups.GetGroup(_groupComponent.GroupID).Target;
+            GameObject target = _groupComponent.TargetOverride ?? _groups.GetGroup(_groupComponent.GroupID).Target;
             
             if (Target.Value == target) 
                 return false;

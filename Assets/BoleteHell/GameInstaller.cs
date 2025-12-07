@@ -57,7 +57,7 @@ namespace BoleteHell.Code.Core
             Container.Bind<IAudioPlayer>().To<AudioPlayer>().AsSingle();
             Container.Bind<IEntityRegistry>().To<EntityRegistry>().FromNewComponentOnRoot().AsSingle();
             Container.BindInterfacesAndSelfTo<SpawnService>().AsSingle();
-            Container.Bind<Overlord>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<AIDirector>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CreepManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<RippleManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();

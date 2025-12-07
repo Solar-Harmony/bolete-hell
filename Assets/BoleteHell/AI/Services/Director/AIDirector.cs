@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BoleteHell.AI.Services.Group;
+using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Utils.Extensions;
@@ -8,10 +9,11 @@ using BoleteHell.Utils.LogFilter;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace BoleteHell.AI.Services
 {
-    public class Overlord : MonoBehaviour
+    public class AIDirector : MonoBehaviour
     {
         [Inject]
         private IEntityRegistry _entities;
@@ -26,7 +28,8 @@ namespace BoleteHell.AI.Services
         private Config _config;
 
         private double _money;
-        private AIGroup _group;
+        
+        private AIGroup _attackPlayerGroup;
 
         private static readonly LogCategory _logAIController = new("AI Controller", Color.red);
 
@@ -48,8 +51,8 @@ namespace BoleteHell.AI.Services
         private void Start()
         {
             _money = _config.InitialMoney;
-            _group = _groupService.CreateGroup();
-            _group.Target = _entities.GetPlayer();
+            _attackPlayerGroup = _groupService.CreateGroup();
+            _attackPlayerGroup.Target = _entities.GetPlayer();
             InvokeRepeating(nameof(Tick), _config.TickInterval, _config.TickInterval);
         }
 
@@ -57,14 +60,27 @@ namespace BoleteHell.AI.Services
         {
             _money += _config.MoneyPerSecond * Time.deltaTime;
         }
-
-        /*
-         * logique:
-         * - spawn from the nearest spawner
-         * - pick the most expensive enemy
-         * - if in a boss fight (near boss), stop the spawning
-         */
+        
         private void Tick()
+        {
+            TryDirectEnemyToBase();
+            TrySpawnEnemy();
+        }
+
+        private void TryDirectEnemyToBase()
+        {
+            if (Random.value < 0.1f) 
+                return;
+            
+            var enemy = _entities.GetRandom(EntityTag.Enemy);
+            if (!enemy) 
+                return;
+            
+            GameObject nearestBase = _entities.GetClosestBase(enemy.transform.position, out _);
+            enemy.GetComponent<AIGroupComponent>().TargetOverride = nearestBase;
+        }
+
+        private void TrySpawnEnemy()
         {
             int numEnemies = _entities.GetCount(EntityTag.Enemy);
             if (numEnemies >= _config.MaxConcurrentEnemies)
@@ -79,7 +95,7 @@ namespace BoleteHell.AI.Services
             
             Vector2 playerPos = _entities.GetPlayer().transform.position;
 
-            if (_spawner.SpawnInArea(new SpawnParams(enemyToSpawn.Prefab, playerPos, _group.GroupID)))
+            if (_spawner.SpawnInArea(new SpawnParams(enemyToSpawn.Prefab, playerPos, _attackPlayerGroup.GroupID)))
             {
                 Scribe.Log(_logAIController, "Spawned '{0}' for {1}$.", enemyToSpawn.Prefab.name, enemyToSpawn.Cost);
             }
@@ -93,5 +109,20 @@ namespace BoleteHell.AI.Services
 
             return distance <= _config.BossFightDistance;
         }
+
+        private void OnGUI()
+        {
+            string text = $"AI Money: {_money:F1}$";
+            GUIStyle style = new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.UpperRight
+            };
+
+            Vector2 size = style.CalcSize(new GUIContent(text));
+            Rect rect = new Rect(Screen.width - size.x - 10, 10, size.x, size.y);
+
+            GUI.Label(rect, text, style);
+        }
+
     }
 }
