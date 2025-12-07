@@ -2182,90 +2182,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66297935a6f148d5802b79f2c769f335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropSettings:
-    dropletContext:
-      dropChance: 60
-      min: 1
-      max: 3
-      dropCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.0026893616
-          value: 0.14465332
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.36919573
-          value: 0.27387828
-          inSlope: 0.48182428
-          outSlope: 0.48182428
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.6491916
-          value: 0.4240877
-          inSlope: 0.637271
-          outSlope: 0.637271
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.42913142
-          outWeight: 0.5661031
-        - serializedVersion: 3
-          time: 0.9280391
-          value: 0.69159174
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.9840151
-          value: 1.0047472
-          inSlope: -0.18762852
-          outSlope: -0.18762852
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 1
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    goldContext:
-      dropChance: 60
-      min: 1
-      max: 1
-      dropCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+  _lootTable:
+    DropTable:
+    - DropCount: 0
+      PercentageChance: 40
+    - DropCount: 1
+      PercentageChance: 60
 --- !u!114 &-9064392505486838912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,7 +2200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9f33a16f114b38984f2ef0d56ab8a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroupID: -1
 --- !u!114 &726100587602813459
 MonoBehaviour:
   m_ObjectHideFlags: 0

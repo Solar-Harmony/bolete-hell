@@ -12,7 +12,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
     public class LootComponent : MonoBehaviour
     {
         [SerializeField]
-        private DropSettings _dropSettings;
+        private LootTable _lootTable;
         
         [Inject]
         private IDropManager _dropManager;
@@ -21,7 +21,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         {
             GetComponent<HealthComponent>().OnDeath += () =>
             {
-                _dropManager.DropDroplets(gameObject, _dropSettings.dropletContext);
+                _dropManager.TryDropLoot(gameObject, _lootTable);
             };
         }
     }

@@ -3,6 +3,7 @@ using System.Linq;
 using BoleteHell.AI.Services.Group;
 using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Gameplay.Characters.Registry;
+using BoleteHell.Gameplay.GameState;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Utils.Extensions;
 using BoleteHell.Utils.LogFilter;
@@ -23,6 +24,9 @@ namespace BoleteHell.AI.Services
         
         [Inject]
         private IAIGroupService _groupService;
+
+        [Inject]
+        private IGameOutcomeService _outcome;
         
         [Inject]
         private Config _config;
@@ -53,6 +57,9 @@ namespace BoleteHell.AI.Services
             _money = _config.InitialMoney;
             _attackPlayerGroup = _groupService.CreateGroup();
             _attackPlayerGroup.Target = _entities.GetPlayer();
+            _outcome.OnVictory += () => CancelInvoke(nameof(Tick));
+            _outcome.OnDefeat += _ => CancelInvoke(nameof(Tick));
+            
             InvokeRepeating(nameof(Tick), _config.TickInterval, _config.TickInterval);
         }
 
@@ -123,6 +130,5 @@ namespace BoleteHell.AI.Services
 
             GUI.Label(rect, text, style);
         }
-
     }
 }

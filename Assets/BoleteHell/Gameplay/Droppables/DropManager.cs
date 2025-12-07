@@ -7,28 +7,13 @@ using Random = UnityEngine.Random;
 
 namespace BoleteHell.Gameplay.Droppables
 {
-    public enum DropCategory
-    {
-        ShieldUpgrade,
-        WeaponUpgrade
-    }
-
     public class DropManager : IDropManager
     {
-        //Peut-être faire un dictionnaire <DropCategory, droplist>
-        //Permet d'associer une valeur d'enum a une drop list
-        //Chaque drop list contient les drops de base de chaque catégories 
-        //Il faudrait une manière de séparer les drop par rareté
-        //Peut-être une liste par rareté ou des tags sur les drops 
-        //Quand un ennemi meurt il call drop avec son contexte
-        //permet de décider quel catégories il peut dropper (Avec le DropCategory enum)  
-        //Permet d'ajouter des objets aux catégories
-        //Donc un ennemis pourrais avoir des chances de dropper un objet spécifique que seul ce type d'ennemis peut dropper
-
         [Serializable]
         public class Config
         {
             public List<GameObject> Droplets;
+            public float DropletDropRadius = 0.5f;
         }
         
         [Inject]
@@ -36,36 +21,24 @@ namespace BoleteHell.Gameplay.Droppables
         
         [Inject]
         private IObjectInstantiator _instantiator;
-
-        private float dropletDropRadius = 1.5f;
         
-        public void Drop(GameObject dropSource, DropSettings ctx)
+        public void TryDropLoot(GameObject dropSource, LootTable lootTable)
         {
-            throw new NotImplementedException();
-        }
-
-        public void DropDroplets(GameObject dropSource, DropRangeContext ctx)
-        {
-            //Pourrais être plus contextuel et dropper selon ce que le joueur manque le plus
-           
-            if (Random.value * 100 > ctx.dropChance) return;
+            int dropCount = lootTable.GetDropCount();
+            if (dropCount == 0)
+                return;
             
-            for (int i = 0; i < ctx.GetValueInRange(); i++)
+            for (int i = 0; i < dropCount; i++)
             {
                 int randomDropIndex = Random.Range(0, _config.Droplets.Count);
                 
-                Vector2 randomOffset = Random.insideUnitCircle * dropletDropRadius;
+                Vector2 randomOffset = Random.insideUnitCircle * _config.DropletDropRadius;
                 
                 Vector3 position = dropSource.transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
                 position.z = -1;
                 
                 _instantiator.InstantiateWithInjection(_config.Droplets[randomDropIndex], position, dropSource.transform.rotation, null);
             }
-        }
-
-        public void DropGold(GameObject dropSource, DropRangeContext ctx)
-        {
-            throw new NotImplementedException();
         }
     }
 }
