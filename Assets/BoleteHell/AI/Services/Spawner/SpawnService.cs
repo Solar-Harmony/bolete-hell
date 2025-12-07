@@ -1,73 +1,53 @@
 using BoleteHell.Gameplay.Characters.Enemy.Factory;
 using BoleteHell.Gameplay.Characters.Registry;
+using BoleteHell.Utils.Extensions;
+using Pathfinding;
 using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Gameplay.SpawnManager
 {
-    public class SpawnService : ISpawnService
+    public class SpawnService : ISpawnService, IInitializable
     {
         [Inject]
         private IEntityRegistry _entities;
         
         [Inject]
         private EnemyPool _enemyPool;
-
-        private int _counter;
         
-        public bool Spawn(SpawnArea spawnArea)
+        [Inject]
+        private Camera _camera;
+        
+        private SpawnArea[] _spawnAreas;
+
+        public void Initialize()
         {
-            if (!spawnArea.spawnList || spawnArea.spawnList.allowedEnemies.Length == 0)
-            {
-                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
-                return false;
-            }
-            
-            GameObject[] entries = spawnArea.spawnList.allowedEnemies;
-            if (entries == null || entries.Length == 0)
+            _spawnAreas = Object.FindObjectsByType<SpawnArea>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        }
+
+        public bool SpawnInArea(SpawnParams parameters)
+        {
+            if (_spawnAreas.Length == 0)
                 return false;
             
-            SpawnSelectedEnemy(spawnArea.spawnList, spawnArea);
+            Vector2 targetLocation = _entities.GetPlayer().transform.position;
+            SpawnArea spawnArea = _spawnAreas.TakeClosestTo(sa => sa.transform.position, targetLocation, out _);
+            Vector2 candidatePos = GetRandomSpawnPosition(spawnArea);
+            
+            return SpawnAt(parameters with { position = candidatePos });
+        }
+
+        public bool SpawnAt(SpawnParams parameters)
+        {
+            Vector2? navigablePos = FindNearestNavigablePos(parameters.position);
+            if (navigablePos == null)
+                return false;
+            
+            _enemyPool.Spawn(parameters.prefab, navigablePos.Value, parameters.groupID);
             return true;
         }
 
-        public bool Spawn(SpawnList list, Vector2 position, int groupID)
-        {
-            if (!list || list.allowedEnemies.Length == 0)
-            {
-                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
-                return false;
-            }
-
-            foreach (var prefabToSpawn in list.allowedEnemies)
-            {
-                _enemyPool.Spawn(prefabToSpawn, position, groupID);
-                _entities.Register(new []{ EntityTag.Enemy }, prefabToSpawn);
-                _counter++;
-            }
-            
-            return true;
-        }
-
-        public bool Spawn(SpawnList list, Vector2 position)
-        {
-            if (!list || list.allowedEnemies.Length == 0)
-            {
-                Debug.LogWarning("Tried to spawn from an empty spawnlist. Aborting spawn.");
-                return false;
-            }
-
-            foreach (var prefabToSpawn in list.allowedEnemies)
-            {
-                EnemyPoolable enemy = _enemyPool.Spawn(prefabToSpawn, position);
-                _entities.Register(new []{ EntityTag.Enemy }, enemy.gameObject);
-                _counter++;
-            }
-            
-            return true;
-        }
-
-        private static Vector2 GetSpawnPosition(SpawnArea spawnArea)
+        private static Vector2 GetRandomSpawnPosition(SpawnArea spawnArea)
         {
             Vector2 dir2D = Random.insideUnitCircle.normalized;
             float dist = Random.Range(spawnArea.minSpawnRadius, spawnArea.maxSpawnRadius);
@@ -75,14 +55,22 @@ namespace BoleteHell.Gameplay.SpawnManager
             return center2D + dir2D * dist;
         }
 
-        private void SpawnSelectedEnemy(SpawnList allowedEnemies, SpawnArea spawnArea)
+
+        private Vector2? FindNearestNavigablePos(Vector2 pos)
         {
-            int index = Random.Range(0, allowedEnemies.allowedEnemies.Length);
-            GameObject prefabToSpawn = allowedEnemies.allowedEnemies[index];
+            GameObject player = _entities.GetPlayer();
+            Debug.Assert(player);
+            Debug.Assert(AstarPath.active);
+            Debug.Assert(_camera);
+
+            NNInfo nearestNode = AstarPath.active.GetNearest(pos, NNConstraint.Default);
             
-            EnemyPoolable enemy = _enemyPool.Spawn(prefabToSpawn,  GetSpawnPosition(spawnArea));
-            _entities.Register(new []{ EntityTag.Enemy }, enemy.gameObject);
-            _counter++;
+            if (nearestNode.node != null)
+            {
+                return nearestNode.position;
+            }
+
+            return null;
         }
     }
 }

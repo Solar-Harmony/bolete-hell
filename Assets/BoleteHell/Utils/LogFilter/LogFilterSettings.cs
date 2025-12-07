@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -41,6 +43,8 @@ namespace BoleteHell.Utils.LogFilter
         
         private void RebuildCache()
         {
+            DiscoverAllLogCategories();
+            
             List<LogCategory> categories = LogCategory.GetAllCategories();
             
             HashSet<string> newIds = categories.Select(c => c.Name).ToHashSet();
@@ -53,6 +57,30 @@ namespace BoleteHell.Utils.LogFilter
             foreach (LogCategory category in CategoryConfigs)
             {
                 LogCategory.GetCategoriesDictionary()[category.Name] = category;
+            }
+        }
+        
+        private static void DiscoverAllLogCategories()
+        {
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+            
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.FullName.StartsWith("Bolete"))
+                    continue;
+
+                foreach (Type type in assembly.GetTypes())
+                {
+                    foreach (FieldInfo field in type.GetFields(flags))
+                    {
+                        if (field.FieldType != typeof(LogCategory))
+                            continue;
+                        if (!field.IsStatic)
+                            continue;
+                        
+                        _ = field.GetValue(null);
+                    }
+                }
             }
         }
     }

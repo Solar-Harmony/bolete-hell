@@ -44,19 +44,19 @@ namespace BoleteHell.Utils.Extensions
     /// </summary>
     public static class EnumerableMinMaxExtensions
     {
-        public static TSource TakeBest<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
+        public static TSource WithHighest<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
         {
             return ByImpl(source, keySelector, isMax: false);
         }
         
-        public static TSource TakeWorst<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
+        public static TSource WithLowest<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
         {
             return ByImpl(source, keySelector, isMax: true);
         }
         
         // these overloads accept a Component in the selector lambda so you get rid of GetComponent boilerplate
         // e.g. .TakeBest((HealthComponent h) => h.CurrentHealth)
-        public static GameObject TakeBest<TKey, TComponent>(
+        public static GameObject WithHighest<TKey, TComponent>(
             this IEnumerable<GameObject> source,
             Func<TComponent, TKey> keySelector
         ) where TComponent : Component
@@ -64,7 +64,7 @@ namespace BoleteHell.Utils.Extensions
             return ByImplGameObject(source, keySelector, isMax: false);
         }
 
-        public static GameObject TakeWorst<TKey, TComponent>(
+        public static GameObject WithLowest<TKey, TComponent>(
             this IEnumerable<GameObject> source,
             Func<TComponent, TKey> keySelector
         ) where TComponent : Component

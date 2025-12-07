@@ -34,7 +34,7 @@ namespace BoleteHell.AI.Actions
         {
             GameObject target = _entities
                 .WithTag(EntityTag.Enemy)
-                .TakeBest((HealthComponent h) => h.Percent);
+                .WithHighest((HealthComponent h) => h.Percent);
             
             if (!target)
             {

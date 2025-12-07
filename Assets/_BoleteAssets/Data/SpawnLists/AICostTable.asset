@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85355a51397a47bbbdfa1371a21659ec, type: 3}
+  m_Name: AICostTable
+  m_EditorClassIdentifier: 
+  Entries:
+  - Prefab: {fileID: 7525242316488082644, guid: 1f6b2ee0070621741a9405cf40895131, type: 3}
+    Cost: 500
+  - Prefab: {fileID: 743405518035771420, guid: 923c9b1da14a82c4282dac73b4eae754, type: 3}
+    Cost: 400
+  - Prefab: {fileID: 5327821353126393566, guid: 029045c6ee445e84db897dd1392dcd45, type: 3}
+    Cost: 300
+  - Prefab: {fileID: 817991372973681497, guid: 99b738f8c544e9b48b9f6ed14d23e8cf, type: 3}
+    Cost: 100

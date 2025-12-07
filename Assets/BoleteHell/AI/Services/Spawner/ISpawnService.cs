@@ -3,21 +3,14 @@ using UnityEngine;
 
 namespace BoleteHell.Gameplay.SpawnManager
 {
+    public record SpawnParams(GameObject prefab, Vector2 position, int groupID);
+    
     public interface ISpawnService
     {
-        /// <summary>
-        /// Spawn an entity around the chosen spawn area.
-        /// </summary>
-        /// <param name="spawnArea">A spawn area object, placed in the world.</param>
-        /// <returns>Whether spawning succeeded or failed.</returns>
-        public bool Spawn(SpawnArea spawnArea);
-
-        /// <summary>
-        /// Spawn all entities in a spawn list at a given position.
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        public bool Spawn(SpawnList list, Vector2 position, int groupID = -1);
+        // Try to spawn an enemy at the nearest spawn area. 
+        public bool SpawnInArea(SpawnParams parameters);
+        
+        // Try to spawn an enemy at the exact given position.
+        public bool SpawnAt(SpawnParams parameters);
     }
 }
