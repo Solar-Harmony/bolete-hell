@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BoleteHell.Code.Gameplay.Damage.Effects;
+using UnityEngine;
 using Zenject;
 
 namespace BoleteHell.Gameplay.Characters.Enemy.Factory
@@ -8,6 +9,9 @@ namespace BoleteHell.Gameplay.Characters.Enemy.Factory
         [Inject]
         private Pool _pool;
 
+        [Inject]
+        private IStatusEffectService _statusEffects;
+
         public void OnSpawned(Vector3 position, int groupID)
         {
             transform.position = position;
@@ -16,7 +20,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy.Factory
 
         public void OnDespawned()
         {
-            
+            _statusEffects.ClearStatusEffects(gameObject);
         }
 
         public void Destroy()

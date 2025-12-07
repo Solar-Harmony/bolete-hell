@@ -73,6 +73,16 @@ namespace BoleteHell.Code.Gameplay.Damage.Effects
                     return;
             }
         }
+        
+        public void ClearStatusEffects(GameObject target)
+        {
+            var effectsToRemove = _activeEffects.Where(e => e.Target == target).ToList();
+            foreach (var effect in effectsToRemove)
+            {
+                effect.UnapplyIfNeeded();
+                _activeEffects.Remove(effect);
+            }
+        }
 
         public void Tick()
         {

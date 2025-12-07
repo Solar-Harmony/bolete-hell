@@ -11,7 +11,7 @@ namespace BoleteHell.AI.Services.Group
         
         private readonly Dictionary<int, AIGroup> _groups = new();
         
-        public int CreateGroup()
+        public AIGroup CreateGroup()
         {
             int groupID = _nextGroupID;
             
@@ -22,7 +22,7 @@ namespace BoleteHell.AI.Services.Group
             _groups.Add(groupID, newGroup);
             
             _nextGroupID++;
-            return groupID;
+            return newGroup;
         }
 
         public void AddToGroup(int groupID, GameObject obj)

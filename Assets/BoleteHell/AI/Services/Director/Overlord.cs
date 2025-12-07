@@ -26,7 +26,7 @@ namespace BoleteHell.AI.Services
         private Config _config;
 
         private double _money;
-        private int _groupID;
+        private AIGroup _group;
 
         private static readonly LogCategory _logAIController = new("AI Controller", Color.red);
 
@@ -48,7 +48,8 @@ namespace BoleteHell.AI.Services
         private void Start()
         {
             _money = _config.InitialMoney;
-            _groupID = _groupService.CreateGroup();
+            _group = _groupService.CreateGroup();
+            _group.Target = _entities.GetPlayer();
             InvokeRepeating(nameof(Tick), _config.TickInterval, _config.TickInterval);
         }
 
@@ -78,7 +79,7 @@ namespace BoleteHell.AI.Services
             
             Vector2 playerPos = _entities.GetPlayer().transform.position;
 
-            if (_spawner.SpawnInArea(new SpawnParams(enemyToSpawn.Prefab, playerPos, _groupID)))
+            if (_spawner.SpawnInArea(new SpawnParams(enemyToSpawn.Prefab, playerPos, _group.GroupID)))
             {
                 Scribe.Log(_logAIController, "Spawned '{0}' for {1}$.", enemyToSpawn.Prefab.name, enemyToSpawn.Cost);
             }
