@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 8833217652067245739}
   - component: {fileID: -7735479623250359012}
   - component: {fileID: 1536071927711564797}
-  - component: {fileID: 3814531209225375410}
   - component: {fileID: 1417967757637309638}
   - component: {fileID: 3256522817369665580}
   - component: {fileID: 3368297632294500312}
@@ -208,19 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsInvincible>k__BackingField: 0
   <MaxHealth>k__BackingField: 50
---- !u!114 &3814531209225375410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9803254034568238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0552d95d3a4d6c545a74595e9500155b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionRadius: 2
 --- !u!114 &1417967757637309638
 MonoBehaviour:
   m_ObjectHideFlags: 0

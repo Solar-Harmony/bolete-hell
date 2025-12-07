@@ -64,7 +64,7 @@ namespace BoleteHell.Code.Arsenal
 
         public bool IsReadyToShoot()
         {
-            return GetSelectedWeapons().All(weapon => weapon.CanShoot);
+            return GetSelectedWeapons().Any(weapon => weapon.CanShoot);
         }
 
         public bool Shoot(Vector2 direction)
@@ -118,7 +118,7 @@ namespace BoleteHell.Code.Arsenal
                 return;
             }
 
-            _selectedCannonIndex = (_selectedCannonIndex + value + cannons.Count) % cannons.Count;
+            SetSelectedWeaponIndex((_selectedCannonIndex + value + cannons.Count) % cannons.Count);
         }
     
         public List<CannonInstance> GetSelectedWeapons()
@@ -146,6 +146,7 @@ namespace BoleteHell.Code.Arsenal
             }
 
             _selectedCannonIndex = index;
+            OnShootCanceled();
         }
     
         public void OnShootCanceled()

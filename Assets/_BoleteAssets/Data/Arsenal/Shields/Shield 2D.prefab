@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6653453790906301197}
   - component: {fileID: 5188484837974591193}
   - component: {fileID: 6627328919865755733}
+  - component: {fileID: 4677927435345288793}
   m_Layer: 10
   m_Name: Shield 2D
   m_TagString: Shield
@@ -174,8 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af0914a22a20e14b824354275c13566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startCap: {fileID: 0}
-  endCap: {fileID: 0}
 --- !u!114 &6653453790906301197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 442c9c547095b4d42b97cb325e88f61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineInfo: {fileID: 11400000, guid: 67c3e6d11be5c8546b73f04a26d85b54, type: 2}
+  shieldInfo: {fileID: 0}
 --- !u!50 &5188484837974591193
 Rigidbody2D:
   serializedVersion: 5
@@ -261,3 +260,17 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 2023966897301175169}
+--- !u!114 &4677927435345288793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023966897301175169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca7ac6c28c56b43a8bb1b66f9ce4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInvincible>k__BackingField: 0
+  <MaxHealth>k__BackingField: 10

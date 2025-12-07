@@ -21,9 +21,9 @@ public class LaserPreviewRenderer : MonoBehaviour, IPoolable<Vector3, Vector3, C
 
     public void OnDespawned()
     {
-        lineRenderer.positionCount = 0;
-        lineRenderer.startWidth = minWidth;
-        lineRenderer.endWidth = minWidth;
+        // lineRenderer.positionCount = 0;
+        // lineRenderer.startWidth = minWidth;
+        // lineRenderer.endWidth = minWidth;
     }
 
     public void OnSpawned(Vector3 startPos, Vector3 endPos, Color lineColor, float totalChargeTime)

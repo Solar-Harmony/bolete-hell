@@ -7,7 +7,7 @@ namespace BoleteHell.Code.Arsenal.Shields.ShieldsLogic
     public class RefractLogic : IShieldHitLogic
     {
         [SerializeField] private float materialRefractiveIndice = 2.417f;
-
+        
         [field:SerializeField]public bool ShouldBlocklaser { get; set; } = true;
 
         public Vector2 ExecuteRay(Vector3 incomingDirection, RaycastHit2D hitPoint, float lightRefractiveIndice)

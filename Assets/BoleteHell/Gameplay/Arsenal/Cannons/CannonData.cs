@@ -14,6 +14,19 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] [Min(0)] [Unit(Units.Second)]
         public float cooldown;
         
+        [Tooltip("If the weapon has a ramp up for its firing speed(start slow and shoots faster the longer it shoots)")]
+        public bool rampsUpFiringSpeed;
+
+        [Tooltip("Number of shots that need to be shot before the ramp up is done")]
+        [ShowIf("rampsUpFiringSpeed")]
+        public int nbShotsBeforeRampedUp;
+        
+        [Tooltip("Time between shots at the end of the ramp up")]
+        [ShowIf("rampsUpFiringSpeed")]
+        public float finalTimeBetweenShots;
+        
+        //A chaque tir faire réduire une valeur de cooldown courrant ou augmenter le AttackTimer 
+        
         [Tooltip("Time during which the shot input must be pressed before allowing fire")] 
         [SerializeField] [ShowIf(nameof(firingType), FiringTypes.Charged)] [Unit(Units.Second)] [Min(0)]
         public float chargeTime;
@@ -44,5 +57,13 @@ namespace BoleteHell.Code.Arsenal.Cannons
             FiringTypes.Charged => true,
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        public float GetRampedUpCooldown(int nbShots)
+        {
+            int currentShot = Mathf.Clamp(nbShots, 0, nbShotsBeforeRampedUp);
+            float dif = cooldown - finalTimeBetweenShots;
+            float changePerShot = dif / nbShotsBeforeRampedUp;
+            return cooldown - changePerShot * currentShot;
+        }
     }
 }

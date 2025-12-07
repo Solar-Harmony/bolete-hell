@@ -15,9 +15,9 @@ MonoBehaviour:
   <color>k__BackingField: {r: 0.21538448, g: 0, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 5809585283772711023
-  despawnTime: 5
+  despawnTime: 10
   <shieldEffect>k__BackingField:
-  - AffectedSide: 0
+  - AffectedSide: 2
     <statusEffectConfig>k__BackingField:
       rid: 5809585283772711008
   - AffectedSide: 0
@@ -31,9 +31,9 @@ MonoBehaviour:
       type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 1
+        numTicks: 2
         initialDelay: 0
-        tickInterval: 1
+        tickInterval: 3
         stackBehavior:
           rid: 5809585283772711009
         SlowPercentage: 0.5
@@ -44,9 +44,9 @@ MonoBehaviour:
       type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 1
+        numTicks: 2
         initialDelay: 0
-        tickInterval: 1
+        tickInterval: 15
         stackBehavior:
           rid: 5809585283772711011
         DamageMultiplier: 1.1

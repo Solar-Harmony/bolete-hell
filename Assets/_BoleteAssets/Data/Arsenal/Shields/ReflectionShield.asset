@@ -15,28 +15,30 @@ MonoBehaviour:
   <color>k__BackingField: {r: 0, g: 0.79662085, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 5809585285616631808
-  despawnTime: 5
+  despawnTime: 10
   <shieldEffect>k__BackingField:
-  - AffectedSide: 0
+  - AffectedSide: 1
     <statusEffectConfig>k__BackingField:
-      rid: 5809585285616631809
+      rid: 2169932550177816576
   <EnergyCostPerCm>k__BackingField: 20
   references:
     version: 2
     RefIds:
-    - rid: 5809585285616631808
-      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: BoleteGameplay}
-      data: 
-    - rid: 5809585285616631809
-      type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
+    - rid: 2169932550177816576
+      type: {class: DamageMultiplierStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 1
+        numTicks: 2
         initialDelay: 0
-        tickInterval: 1
+        tickInterval: 15
         stackBehavior:
-          rid: 5809585285616631810
-        SlowPercentage: 0.5
-    - rid: 5809585285616631810
+          rid: 2169932550177816577
+        DamageMultiplier: 1.3
+        IsAppliedToFaction: 1
+        AffectedFaction: 0
+    - rid: 2169932550177816577
       type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+      data: 
+    - rid: 5809585285616631808
+      type: {class: MirrorLogic, ns: BoleteHell.Code.Arsenal.Shields.ShieldsLogic, asm: BoleteGameplay}
       data: 

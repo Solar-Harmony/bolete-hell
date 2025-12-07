@@ -12,11 +12,11 @@ namespace BoleteHell.Code.Arsenal.Cannons
         public readonly CannonConfig Config;
         public readonly FiringLogic.FiringLogic CurrentFiringLogic;
         public int ShotCount = 0;
-        public float AttackTimer = 100f;
+        public float AttackTimer = 0f;
         public float ChargeTimer = 0f;
         public bool CanShoot = false;
         public bool IsCharged = false;
-        //Mis ici car c'est la seule chose instancier pas entité
+        //Mis ici car j'ai besoin d'une liste par instance de cannon
         [HideInInspector]
         public List<LaserPreviewRenderer> reservedPreviewRenderers = new ();
 

@@ -17,8 +17,7 @@ namespace BoleteHell.Code.Arsenal.FiringLogic
         public virtual void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             // always ignore hits with the instigator (for now)
-            ITargetable handler = ctx.HitObject.GetComponent<ITargetable>()
-                                  ?? ctx.HitObject.GetComponentInParent<ITargetable>(); // TODO : needed because of shield, child colliders are not registered to composite collider correctly but i couldn't get it working
+            ITargetable handler = ctx.HitObject.GetComponent<ITargetable>();
 
             handler?.OnHit(ctx, response =>
             {
