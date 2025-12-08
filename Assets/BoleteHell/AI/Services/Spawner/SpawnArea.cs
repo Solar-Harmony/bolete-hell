@@ -9,10 +9,7 @@ namespace BoleteHell.Gameplay.SpawnManager
         
         [Tooltip("max distance in radius")]
         public float maxSpawnRadius = 50f;
-        
-        [Tooltip("Type of enemy list (can be organzied by biome later)")]
-        public SpawnList spawnList;
-        
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
