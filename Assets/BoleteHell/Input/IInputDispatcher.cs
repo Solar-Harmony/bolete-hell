@@ -20,5 +20,6 @@ namespace BoleteHell.Code.Input
         event Action OnDodge;
         event Action<int> OnCycleWeapons;
         event Action<int> OnCycleShield;
+        event Action OnReloadGame;
     }
 }

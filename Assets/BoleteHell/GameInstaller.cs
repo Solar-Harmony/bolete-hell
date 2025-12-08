@@ -17,6 +17,7 @@ using BoleteHell.Gameplay.Characters.Registry;
 using BoleteHell.Gameplay.Destructible;
 using BoleteHell.Gameplay.Droppables;
 using BoleteHell.Gameplay.GameState;
+using BoleteHell.Gameplay.InputControllers;
 using BoleteHell.Gameplay.SpawnManager;
 using BoleteHell.Rendering.Ripples;
 using BoleteHell.Utils;
@@ -73,6 +74,7 @@ namespace BoleteHell.Code.Core
             Container.BindInterfacesAndSelfTo<InputActionsWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputDispatcher>().AsSingle();
             Container.Bind<IInputState>().To<InputState>().AsSingle();
+            Container.Bind<DebugInput>().FromComponentInHierarchy().AsSingle();
 
             // utils
             Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();

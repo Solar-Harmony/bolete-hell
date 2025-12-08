@@ -35,6 +35,7 @@ namespace BoleteHell.Code.Input
         public event Action OnDodge;
         public event Action<int> OnCycleWeapons;
         public event Action<int> OnCycleShield;
+        public event Action OnReloadGame;
         
         public void Initialize()
         {
@@ -48,6 +49,7 @@ namespace BoleteHell.Code.Input
             Actions.Player.DrawShield.started += OnShieldStartHandler;
             Actions.Player.DrawShield.canceled += OnShieldEndHandler;
             Actions.Player.CycleWeapons.performed += OnCycleWeaponsHandler;
+            Actions.Player.ReloadGame.performed += OnReloadGameHandler;
         }
         
         public void Dispose()
@@ -62,6 +64,7 @@ namespace BoleteHell.Code.Input
             Actions.Player.DrawShield.started -= OnShieldStartHandler;
             Actions.Player.DrawShield.canceled -= OnShieldEndHandler;
             Actions.Player.CycleWeapons.performed -= OnCycleWeaponsHandler;
+            Actions.Player.ReloadGame.performed -= OnReloadGameHandler;
         }
         
         private void OnShootHandler(InputAction.CallbackContext ctx) => OnShoot?.Invoke();
@@ -71,6 +74,7 @@ namespace BoleteHell.Code.Input
         private void OnCyclePreviousShieldHandler(InputAction.CallbackContext ctx) => OnCycleShield?.Invoke(-1);
         private void OnShieldStartHandler(InputAction.CallbackContext ctx) => OnShieldStart?.Invoke();
         private void OnShieldEndHandler(InputAction.CallbackContext ctx) => OnShieldEnd?.Invoke();
+        private void OnReloadGameHandler(InputAction.CallbackContext ctx) => OnReloadGame?.Invoke();
         private void OnCycleWeaponsHandler(InputAction.CallbackContext ctx)
         {
             float y = ctx.ReadValue<Vector2>().y;
