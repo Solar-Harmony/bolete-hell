@@ -74,17 +74,19 @@ MonoBehaviour:
   - cannonConfigs:
     - laserDatas:
       - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
+      cannonData: {fileID: 11400000, guid: 7c81601ba72b684468b1230d6797782c, type: 2}
+      usePatternMaster: 1
+      bulletPatterns: []
+      shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    <EnergyCost>k__BackingField: 50
+  - cannonConfigs:
+    - laserDatas:
+      - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
       cannonData: {fileID: 11400000, guid: 8ca6313793b105141a3f6034e7aa81c2, type: 2}
       usePatternMaster: 1
       bulletPatterns: []
       shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
-  - cannonConfigs:
-    - laserDatas:
-      - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
-      cannonData: {fileID: 11400000, guid: 7fd0c16424028cc469b1b5c3576a9d97, type: 2}
-      usePatternMaster: 1
-      bulletPatterns: []
-      shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+    <EnergyCost>k__BackingField: 0
 --- !u!50 &4327110905113141562
 Rigidbody2D:
   serializedVersion: 5
