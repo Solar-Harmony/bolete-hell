@@ -2184,10 +2184,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lootTable:
     DropTable:
-    - DropCount: 0
-      PercentageChance: 40
     - DropCount: 1
-      PercentageChance: 60
+      PercentageChance: 90
+    - DropCount: 2
+      PercentageChance: 10
+  _healthDroplet: {fileID: 560586752497531280, guid: 892a0737f9c0a56418030b68742b3079, type: 3}
+  _energyDroplet: {fileID: 3476611043504849278, guid: 7a222cc10f4fb1642a64e7999a19bfe7, type: 3}
 --- !u!114 &-9064392505486838912
 MonoBehaviour:
   m_ObjectHideFlags: 0

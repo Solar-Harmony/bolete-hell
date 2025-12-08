@@ -4,6 +4,6 @@ namespace BoleteHell.Gameplay.Droppables
 {
     public interface IDropManager
     {
-        public void TryDropLoot(GameObject dropSource, LootTable ctx);
+        public void Drop(GameObject dropSource, GameObject droplet, LootTable ctx);
     }
 }

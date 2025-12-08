@@ -8,23 +8,22 @@ namespace BoleteHell.Gameplay.Characters
 {
     public class HealthComponent : MonoBehaviour
     {
-        [field: SerializeField]
+        [field: SerializeField] 
         public bool IsInvincible { get; set; } = false;
         
         [field: SerializeField] 
         public int MaxHealth { get; private set; } = 50;
+        
+        [Inject] 
+        private EnemyPool _enemyPool;
     
         public int CurrentHealth { get; private set; }
-        
         public float Percent => (float)CurrentHealth / MaxHealth;
     
         public event Action OnDeath;
         public static event Action<GameObject, int> OnDamaged;
         public static event Action<GameObject, int> OnHealed;
         
-        [Inject]
-        private EnemyPool _enemyPool;
-
         private static readonly LogCategory _logHealth = new("Health", new Color(0.58f, 0.07f, 0f));
 
         private void OnEnable()

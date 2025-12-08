@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace BoleteHell.Gameplay.Droppables
 {
     [Serializable]
-    public struct LootTableEntry
+    public class LootTableEntry
     {
         [Min(0)]
         public int DropCount;
@@ -37,14 +37,12 @@ namespace BoleteHell.Gameplay.Droppables
 
         /// <summary>
         /// Rolls the weighted table and returns a drop count.
-        /// Assumes the sum of PercentageChance is 100.
         /// </summary>
         public int GetDropCount()
         {
             if (DropTable == null || DropTable.Count == 0)
                 return 0;
 
-            // The validator ensures the sum is 100, so we roll between 0 and 100.
             float roll = Random.Range(0f, 100f);
             float cumulative = 0f;
             
@@ -55,7 +53,7 @@ namespace BoleteHell.Gameplay.Droppables
                     return entry.DropCount;
             }
 
-            // Fallback for floating point inaccuracies, though it should be rare.
+            // fallback for floating point inaccuracies, though it should be rare.
             return DropTable[^1].DropCount;
         }
     }
