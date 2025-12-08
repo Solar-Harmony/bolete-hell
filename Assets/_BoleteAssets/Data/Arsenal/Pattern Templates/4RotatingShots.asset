@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: 4RotatingShots
   m_EditorClassIdentifier: 
   patterns:
-  - numberOfBulletShot: 6
+  - numberOfBulletShot: 4
     maxAngleRange: 360
     startingRotation: 0
     constantRotation: 30
     followOwnerLookingDirection: 0
-    startingDistance: 0
-    reverseMovementDirection: 0

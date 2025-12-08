@@ -10,6 +10,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [SerializeField] 
         public FiringTypes firingType;
         
+        [SerializeField] [Min(0)]
+        public float energyCostFire;
+        
         [Tooltip("Delay after a shot before being able to shoot again")] 
         [SerializeField] [Min(0)] [Unit(Units.Second)]
         private float cooldown;

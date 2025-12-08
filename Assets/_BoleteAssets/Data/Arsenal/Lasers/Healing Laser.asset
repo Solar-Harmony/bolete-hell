@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: Healing Laser
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0, g: 1, b: 0.6566355, a: 1}
+  <Color>k__BackingField: {r: 0, g: 1, b: 0.55417347, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
     rid: 795111371258462390

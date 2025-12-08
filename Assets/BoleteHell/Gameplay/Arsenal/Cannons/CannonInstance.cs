@@ -14,6 +14,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         public int ShotCount = 0;
         public float AttackTimer = 0f;
         public float ChargeTimer = 0f;
+        public float CooldownModifier = 1f;
         public bool CanShoot = false;
         public bool IsCharged = false;
         //Mis ici car j'ai besoin d'une liste par instance de cannon

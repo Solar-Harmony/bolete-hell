@@ -9,9 +9,12 @@ namespace BoleteHell.Gameplay.InputControllers
     [RequireComponent(typeof(Rigidbody2D))]
     public class MovementInput : MonoBehaviour
     {
+        [SerializeField]
+        private float boostMultiplier = 1.5f;
+        
         [Inject] 
         private IInputDispatcher input;
-
+        
         private Rigidbody2D _rb;
         // private Light2D _shipExhaustLight;
 
@@ -30,7 +33,7 @@ namespace BoleteHell.Gameplay.InputControllers
 
             float speedFactor = _entities.GetPlayer().GetComponent<MovementComponent>().MovementSpeed;
             Vector2 inputDir = input.MovementDisplacement.normalized;
-            float speed = input.IsBoosting ? 2.0f * speedFactor : speedFactor;
+            float speed = input.IsBoosting ? boostMultiplier * speedFactor : speedFactor;
             Vector2 newPosition = transform.position + (Vector3)inputDir * (speed * Time.fixedDeltaTime);
 
             Vector2 mousePos = input.MousePosition;
