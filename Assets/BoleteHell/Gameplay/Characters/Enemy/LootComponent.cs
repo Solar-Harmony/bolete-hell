@@ -19,7 +19,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         [SerializeField] private GameObject _healthDroplet;
         [SerializeField] private GameObject _energyDroplet;
         
-        private void Awake()
+        private void OnEnable()
         {
             var player = _entities.GetPlayer();
             var health = player.GetComponent<HealthComponent>();

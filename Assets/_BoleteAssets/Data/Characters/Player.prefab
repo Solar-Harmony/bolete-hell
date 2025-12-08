@@ -78,6 +78,13 @@ MonoBehaviour:
       usePatternMaster: 1
       bulletPatterns: []
       shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+  - cannonConfigs:
+    - laserDatas:
+      - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
+      cannonData: {fileID: 11400000, guid: 7fd0c16424028cc469b1b5c3576a9d97, type: 2}
+      usePatternMaster: 1
+      bulletPatterns: []
+      shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
 --- !u!50 &4327110905113141562
 Rigidbody2D:
   serializedVersion: 5
@@ -256,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxEnergy: 150
-  RegenRate: 5
   CurrentEnergy: 100
+  RegenRate: 5
 --- !u!114 &3368297632294500312
 MonoBehaviour:
   m_ObjectHideFlags: 0

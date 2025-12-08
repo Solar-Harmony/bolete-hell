@@ -48,7 +48,7 @@ namespace BoleteHell.Gameplay.Characters
                 
                 if (TryGetComponent<ICustomDestroy>(out var poolable))
                 {
-                    poolable.Destroy();
+                    poolable.ReturnToPool();
                 }
                 else
                 {
