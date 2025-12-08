@@ -29,7 +29,6 @@ public partial class SpawnEnemiesAtLocationsAction : Action
             _spawnService.SpawnAt(new SpawnParams(enemy, Locations.Value[randomLocationIndex].transform.position, 0));
         }
 
-        Debug.Log("Spawned enemies");
         return Status.Success;
     }
 }

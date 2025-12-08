@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class CapturePointComponent : MonoBehaviour
 {
-    [Range(0, 59)]
-    public int minutes;
-
-    [Range(0, 59)]
-    public int seconds;
+    [Range(0, 360)]
+    public int totalSeconds;
     
     [SerializeField]
     private BossTimer visualTimer;
-
-    private float totalSeconds => minutes * 60f + seconds;
 
     private float remainingTime;
     
