@@ -15,7 +15,7 @@ MonoBehaviour:
   firingType: 0
   cooldown: 1
   rampsUpFiringSpeed: 1
-  nbShotsBeforeRampedUp: 8
+  nbShotsBeforeRampedUp: 15
   finalTimeBetweenShots: 0.05
   chargeTime: 0
   maxNumberOfBounces: 0

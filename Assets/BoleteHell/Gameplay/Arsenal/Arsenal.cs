@@ -106,7 +106,7 @@ namespace BoleteHell.Code.Arsenal
             return data.firingType switch
             {
                 FiringTypes.Automatic => selectedWeapon[0].LaserCombo.GetLaserSpeed(),
-                FiringTypes.Charged => data.cooldown,
+                FiringTypes.Charged => data.GetCooldown(selectedWeapon[0].ShotCount),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

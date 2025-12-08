@@ -27,9 +27,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             if (cannon.CanShoot) 
                 return;
             
-            float currentCooldown = cannon.Config.cannonData.rampsUpFiringSpeed ? 
-                cannon.Config.cannonData.GetRampedUpCooldown(cannon.ShotCount) : 
-                cannon.Config.cannonData.cooldown;
+            float currentCooldown =  cannon.Config.cannonData.GetCooldown(cannon.ShotCount);
             
             if (cannon.AttackTimer < currentCooldown)
             {

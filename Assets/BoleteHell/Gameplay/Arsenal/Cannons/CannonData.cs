@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         
         [Tooltip("Delay after a shot before being able to shoot again")] 
         [SerializeField] [Min(0)] [Unit(Units.Second)]
-        public float cooldown;
+        private float cooldown;
         
         [Tooltip("If the weapon has a ramp up for its firing speed(start slow and shoots faster the longer it shoots)")]
         public bool rampsUpFiringSpeed;
@@ -24,6 +24,18 @@ namespace BoleteHell.Code.Arsenal.Cannons
         [Tooltip("Time between shots at the end of the ramp up")]
         [ShowIf("rampsUpFiringSpeed")]
         public float finalTimeBetweenShots;
+        
+        //Mis ici car ça ne fait pas de sens d'avoir des control de cooldown dans les pattern quand ils sont tous tirer en même temps
+        //Avoir un pattern avec un burst et un autre pattern sans burst dans le même cannon causerais des comportement non désiré
+        [Header("Burst parameters")]
+        
+        [Tooltip("Number of shots in a burst")]
+        [Range(1, 10)]
+        public int nbBurstShots = 1;
+        
+        [Tooltip("Time before the next burst starts")]
+        [Min(0)] [Unit(Units.Second)]
+        public float timeBetweenBursts;
         
         //A chaque tir faire réduire une valeur de cooldown courrant ou augmenter le AttackTimer 
         
@@ -57,10 +69,32 @@ namespace BoleteHell.Code.Arsenal.Cannons
             FiringTypes.Charged => true,
             _ => throw new ArgumentOutOfRangeException()
         };
-        
-        public float GetRampedUpCooldown(int nbShots)
+
+
+        public float GetCooldown(int nbShot)
         {
-            int currentShot = Mathf.Clamp(nbShots, 0, nbShotsBeforeRampedUp);
+            if (nbBurstShots > 1)
+            {
+                return GetBurstCooldown(nbShot);
+            }
+            
+            if (rampsUpFiringSpeed)
+            {
+                return GetRampedUpCooldown(nbShot);
+            }
+
+            return cooldown;
+        }
+
+        private float GetBurstCooldown(int nbShot)
+        {
+            bool lastShotOfBurst = nbShot % nbBurstShots == 0;
+            return lastShotOfBurst ? timeBetweenBursts : cooldown;
+        }
+
+        private float GetRampedUpCooldown(int nbShot)
+        {
+            int currentShot = Mathf.Clamp(nbShot, 0, nbShotsBeforeRampedUp);
             float dif = cooldown - finalTimeBetweenShots;
             float changePerShot = dif / nbShotsBeforeRampedUp;
             return cooldown - changePerShot * currentShot;
