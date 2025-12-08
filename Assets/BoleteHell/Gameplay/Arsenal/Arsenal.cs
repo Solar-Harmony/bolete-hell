@@ -144,9 +144,8 @@ namespace BoleteHell.Code.Arsenal
                 Debug.LogWarning("Invalid weapon index");
                 return;
             }
-
-            _selectedCannonIndex = index;
             OnShootCanceled();
+            _selectedCannonIndex = index;
         }
     
         public void OnShootCanceled()
