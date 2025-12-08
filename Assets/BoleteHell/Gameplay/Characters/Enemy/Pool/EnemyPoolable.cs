@@ -23,7 +23,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy.Factory
             _statusEffects.ClearStatusEffects(gameObject);
         }
 
-        public void Destroy()
+        public void ReturnToPool()
         {
             _pool.Despawn(this);
         }

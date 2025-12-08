@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxEnergy: 150
-  RegenRate: 5
   CurrentEnergy: 100
+  RegenRate: 5
 --- !u!114 &3368297632294500312
 MonoBehaviour:
   m_ObjectHideFlags: 0

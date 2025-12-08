@@ -1,7 +1,8 @@
 ﻿{
   "name": "BoleteUtils",
   "references": [
-    "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+    "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+    "GUID:2fdef4a859838e3449b625605ab13c25"
   ],
   "autoReferenced": true,
   "includePlatforms": [],

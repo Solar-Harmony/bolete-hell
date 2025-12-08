@@ -34,7 +34,7 @@ namespace BoleteHell.AI.Actions
 
         protected override Status OnUpdate()
         {
-            GameObject target = _groups.GetGroup(_groupComponent.GroupID).Target;
+            GameObject target = _groupComponent.TargetOverride ?? _groups.GetGroup(_groupComponent.GroupID).Target;
 
             Target.Value = target;
             return Status.Success;

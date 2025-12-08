@@ -1,20 +1,18 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace BoleteHell.Gameplay.Characters
 {
     [DisallowMultipleComponent]
     public class EnergyComponent : MonoBehaviour 
     {
-        [SerializeField]
-        public float MaxEnergy = 150f;
+        [SerializeField] public float MaxEnergy = 150f;
+        [SerializeField] public float CurrentEnergy = 100f;
+        [SuffixLabel("energy/s")]
+        [SerializeField] public float RegenRate = 20f;
         
-        [SerializeField]
-        [Tooltip("energy/s")]
-        public float RegenRate = 20f;
+        public float Percent => CurrentEnergy / MaxEnergy;
         
-        [SerializeField]
-        public float CurrentEnergy = 100f;
-
         public bool CanSpend(float amount) => CurrentEnergy >= amount;
 
         public bool Spend(float amount)

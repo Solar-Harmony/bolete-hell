@@ -25,6 +25,7 @@ namespace BoleteHell.Gameplay.Characters
         {
             _outcome.OnDefeat += OnDefeat;
             _health.OnDeath += OnDefeat;
+            _agent.enabled = true;
         }
         
         private void OnDefeat()

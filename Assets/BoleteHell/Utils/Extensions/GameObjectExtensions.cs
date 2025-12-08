@@ -14,6 +14,14 @@ namespace BoleteHell.Utils.Extensions
             throw new MissingComponentException($"GameObject '{obj.name}' is missing a {typeof(T).Name} component.");
         }
         
+        public static void GetComponentChecked<T>(this Component source, out T component) where T : Component
+        {
+            if (source.TryGetComponent(out component)) 
+                return;
+            
+            throw new MissingComponentException($"GameObject '{source.name}' is missing a {typeof(T).Name} component.");
+        }
+        
         public static bool HasComponent<T>(this GameObject target) where T : Component
         {
             return target.TryGetComponent<T>(out _);

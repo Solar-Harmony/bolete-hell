@@ -8,7 +8,7 @@ namespace BoleteHell.Gameplay.Droppables
 {
     public class Droplet : MonoBehaviour
     {
-        [field:SerializeReference] [Required]
+        [field: SerializeReference] [Required]
         private StatusEffectConfig _effect;
     
         [SerializeField]
@@ -31,9 +31,12 @@ namespace BoleteHell.Gameplay.Droppables
 
         private void Update()
         {
-            if (!_player) return;
+            if (!_player) 
+                return;
+            
             Vector3 playerPos = _player.transform.position;
-            if(Vector2.Distance(playerPos, transform.position) > _pickupDistance) return;
+            if (Vector2.Distance(playerPos, transform.position) > _pickupDistance) 
+                return;
         
             Vector3 direction = (playerPos - transform.position).normalized;
             transform.position += direction * (_speed * Time.deltaTime);
@@ -41,10 +44,11 @@ namespace BoleteHell.Gameplay.Droppables
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.CompareTag("Player")) return;
+            if (!other.CompareTag("Player")) 
+                return;
         
             _statusEffectService.AddStatusEffect(_player, _effect); 
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

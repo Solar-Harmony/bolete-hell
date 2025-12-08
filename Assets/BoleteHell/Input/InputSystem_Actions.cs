@@ -125,6 +125,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload Game"",
+                    ""type"": ""Button"",
+                    ""id"": ""6607a42a-fb00-4112-b8af-1aab3c9ebc8b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -444,6 +453,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55c61370-909b-424e-a5f9-9aea63e0a2ab"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Reload Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1042,6 +1062,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_MousePos2D = m_Player.FindAction("MousePos2D", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_ReloadGame = m_Player.FindAction("Reload Game", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1132,6 +1153,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MousePos2D;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_ReloadGame;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1147,6 +1169,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @MousePos2D => m_Wrapper.m_Player_MousePos2D;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @ReloadGame => m_Wrapper.m_Player_ReloadGame;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1189,6 +1212,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @ReloadGame.started += instance.OnReloadGame;
+            @ReloadGame.performed += instance.OnReloadGame;
+            @ReloadGame.canceled += instance.OnReloadGame;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1226,6 +1252,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @ReloadGame.started -= instance.OnReloadGame;
+            @ReloadGame.performed -= instance.OnReloadGame;
+            @ReloadGame.canceled -= instance.OnReloadGame;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1419,6 +1448,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnMousePos2D(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnReloadGame(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

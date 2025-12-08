@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoleteHell.Utils.Extensions;
+using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BoleteHell.Gameplay.Characters.Registry
 {
@@ -31,6 +33,19 @@ namespace BoleteHell.Gameplay.Characters.Registry
         public int GetCount(EntityTag entityTag)
         {
             return _entities[entityTag].Count;
+        }
+
+        [CanBeNull]
+        public GameObject GetRandom(EntityTag entityTag)
+        {
+            List<GameObject> entities = _entities[entityTag];
+            if (entities.Count == 0)
+            {
+                return null;
+            }
+            
+            int index = Random.Range(0, entities.Count);
+            return entities[index];
         }
 
         public GameObject GetWeakestEliteAlive()
