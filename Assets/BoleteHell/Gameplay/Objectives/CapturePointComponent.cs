@@ -1,4 +1,5 @@
 using System;
+using BoleteHell.Utils.Progress;
 using UnityEngine;
 
 public class CapturePointComponent : MonoBehaviour
@@ -8,6 +9,9 @@ public class CapturePointComponent : MonoBehaviour
 
     [Range(0, 59)]
     public int seconds;
+    
+    [SerializeField]
+    private BossTimer visualTimer;
 
     private float totalSeconds => minutes * 60f + seconds;
 
@@ -16,30 +20,29 @@ public class CapturePointComponent : MonoBehaviour
     private Collider2D _collider2D;
     private bool timerIsRunning;
 
+
     public static event Action OnCaptured;
+    
     private void Awake()
     {
         remainingTime = totalSeconds;
         _collider2D = GetComponent<Collider2D>();
         Debug.Assert(_collider2D && _collider2D.isTrigger, "Capture point is missing a trigger collider");
+        visualTimer.Indeterminate = false;
+        visualTimer.Progress = 0f;
     }
 
     private void Update()
     {
         if (timerIsRunning)
         {
-            remainingTime -= Time.deltaTime;
-            
-            if (remainingTime <= 0)
-            {
-                OnCaptured?.Invoke();
-            }
+            UpdateRemainingTime(-Time.deltaTime);
         }
         else
         {
-            if (remainingTime <= totalSeconds)
+            if (remainingTime < totalSeconds)
             {
-                remainingTime += Time.deltaTime*2;
+                UpdateRemainingTime(Time.deltaTime);
             }
         }
     }
@@ -57,6 +60,17 @@ public class CapturePointComponent : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             timerIsRunning = false;
+        }
+    }
+
+    private void UpdateRemainingTime(float delta)
+    {
+        remainingTime += delta;
+        visualTimer.Progress = (totalSeconds % remainingTime) / totalSeconds;
+            
+        if (remainingTime <= 0)
+        {
+            OnCaptured?.Invoke();
         }
     }
 }
