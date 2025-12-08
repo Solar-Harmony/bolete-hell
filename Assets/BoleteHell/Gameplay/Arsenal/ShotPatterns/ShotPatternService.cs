@@ -38,7 +38,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         {
             Quaternion rotation2D = Quaternion.Euler(0, 0, currentAngle + pattern.startingRotation + (shotCount * pattern.constantRotation));
             
-            Vector2 direction = rotation2D * parameters.SpawnDirection;
+            Vector2 direction = rotation2D * (pattern.followOwnerLookingDirection ? parameters.SpawnDirection : Vector2.right);
             Vector2 spawnPosition = parameters.CenterPos + (direction.normalized * spawnDistance);
             
             return parameters with { SpawnDirection = direction, SpawnPosition = spawnPosition };

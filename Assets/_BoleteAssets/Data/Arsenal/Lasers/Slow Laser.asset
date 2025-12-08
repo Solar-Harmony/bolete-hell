@@ -30,13 +30,13 @@ MonoBehaviour:
     - rid: 795111371258462381
       type: {class: SlowStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
-        isTransient: 0
-        numTicks: 1
+        isTransient: 1
+        numTicks: 2
         initialDelay: 0
-        tickInterval: 1
+        tickInterval: 3
         stackBehavior:
-          rid: 795111371258462382
+          rid: 2169932573336404080
         SlowPercentage: 0.5
-    - rid: 795111371258462382
+    - rid: 2169932573336404080
       type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data: 

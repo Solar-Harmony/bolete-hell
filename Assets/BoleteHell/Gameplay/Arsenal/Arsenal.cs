@@ -106,7 +106,7 @@ namespace BoleteHell.Code.Arsenal
             return data.firingType switch
             {
                 FiringTypes.Automatic => selectedWeapon[0].LaserCombo.GetLaserSpeed(),
-                FiringTypes.Charged => data.cooldown,
+                FiringTypes.Charged => data.GetCooldown(selectedWeapon[0].ShotCount),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -144,9 +144,8 @@ namespace BoleteHell.Code.Arsenal
                 Debug.LogWarning("Invalid weapon index");
                 return;
             }
-
-            _selectedCannonIndex = index;
             OnShootCanceled();
+            _selectedCannonIndex = index;
         }
     
         public void OnShootCanceled()

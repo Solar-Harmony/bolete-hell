@@ -10,6 +10,9 @@ namespace BoleteHell.Utils.Progress
         [Range(0f, 1f)]
         [ShowIf("@!Indeterminate")]
         public float Progress = 0f;
+
+        public Color gainingProgressColor;
+        public Color losingProgressColor;
         
         public bool Indeterminate = true;
         
@@ -19,9 +22,19 @@ namespace BoleteHell.Utils.Progress
 
         private PathGenerator _path;
         
+        //Litéralement copier le materialProperties mais le component est dans un autre assembly et j'ai peur de tout casser si je touche a ça
+        private MaterialPropertyBlock _propertyBlock;
+        private MeshRenderer _meshRenderer;
+        
+        private float previousProgress = 0f;
+        private static readonly int ColorId = Shader.PropertyToID("_Color");
+
         private void Awake()
         {
             this.GetComponentChecked(out _path);
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _propertyBlock = new MaterialPropertyBlock();
+            _meshRenderer.SetPropertyBlock(_propertyBlock);
         }
         
         private void Update()
@@ -30,6 +43,9 @@ namespace BoleteHell.Utils.Progress
             {
                 _path.clipFrom = 0f;
                 _path.clipTo = Progress;
+                _propertyBlock.SetColor(ColorId, Progress > previousProgress ? gainingProgressColor : losingProgressColor);
+                _meshRenderer.SetPropertyBlock(_propertyBlock);
+                previousProgress = Progress;
                 return;
             }
 

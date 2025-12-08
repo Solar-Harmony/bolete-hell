@@ -23,20 +23,7 @@ namespace BoleteHell.Code.Arsenal.ShotPatterns
         [Tooltip("Rotation value every shot")]
         [Unit(Units.Degree)]
         public float constantRotation;
-        
-        public float startingDistance;
 
-        public bool reverseMovementDirection;
-
-        //Pas gerer pour l'instant
-        // [Header("Burst parameters")]
-        //
-        // [Tooltip("Number of shots in a burst")]
-        // [Range(1, 3)]
-        // public int burstShotCount = 1;
-        //
-        // [Tooltip("FireRate between individual shots in a burst")]
-        // [Min(0)] [Unit(Units.Second)]
-        // public float burstShotCooldown;
+        public bool followOwnerLookingDirection = true;
     }
 }
