@@ -2,6 +2,6 @@
 {
     public interface ICustomDestroy
     {
-        void Destroy();
+        void ReturnToPool();
     }
 }

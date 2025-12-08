@@ -21,4 +21,7 @@ MonoBehaviour:
     Enabled: 0
   - Name: AI Controller
     Color: {r: 0.9784366, g: 0.67772824, b: 0.046152547, a: 1}
+    Enabled: 0
+  - Name: Drop
+    Color: {r: 0, g: 1, b: 1, a: 1}
     Enabled: 1

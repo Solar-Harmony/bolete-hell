@@ -10,7 +10,7 @@ namespace BoleteHell.Code.Core
     public class GameSettings : ScriptableObjectInstaller
     {
         public DropManager.Config DropManagerConfig;
-        public Overlord.Config SpawnControllerConfig;
+        public AIDirector.Config SpawnControllerConfig;
         public GameOutcomeService.Config OutcomeConfig;
         
         public override void InstallBindings()

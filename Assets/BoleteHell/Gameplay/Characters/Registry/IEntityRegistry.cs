@@ -18,6 +18,7 @@ namespace BoleteHell.Gameplay.Characters.Registry
         GameObject GetPlayer();
         IEnumerable<GameObject> WithTag(EntityTag tag);
         int GetCount(EntityTag tag);
+        GameObject GetRandom(EntityTag tag);
         [CanBeNull] GameObject GetWeakestEliteAlive();
         
         // Returns the base with the lowest distance to the given position, or null if there are no bases.

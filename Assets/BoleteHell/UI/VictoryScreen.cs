@@ -36,15 +36,12 @@ namespace BoleteHell.Code.UI
         
         private readonly string[] _defeatTexts = 
         {
-            "L RIZZ",
-            "RIP BOZO GET BETTER",
-            "GIT GUD",
-            "IMAGINE BEING SO BAD",
-            "LOL GG WP",
-            "BRUH WTF WAS THAT L",
-            "BRO IS COOKED",
-            "THAT WAS TRASH FR NO CAP",
-            "TOO EZ",
+            "GAME OVER",
+            "ALL OVER NOW",
+            "IT ENDS HERE",
+            "END OF THE ROAD",
+            "YOU HAVE LOST",
+            "DEFEAT!"
         };
 
         private string GetDefeatText()

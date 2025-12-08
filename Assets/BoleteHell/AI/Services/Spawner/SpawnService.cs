@@ -55,7 +55,6 @@ namespace BoleteHell.Gameplay.SpawnManager
             return center2D + dir2D * dist;
         }
 
-
         private Vector2? FindNearestNavigablePos(Vector2 pos)
         {
             GameObject player = _entities.GetPlayer();
