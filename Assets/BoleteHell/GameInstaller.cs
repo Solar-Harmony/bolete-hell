@@ -63,7 +63,8 @@ namespace BoleteHell.Code.Core
             Container.Bind<RippleManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IAIGroupService>().To<AIGroupService>().AsSingle();
             Container.Bind<IDropManager>().To<DropManager>().AsSingle();
-            Container.Bind<ITutorialService>().To<Tutorial>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<Tutorial>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<TutorialPopup>().FromComponentInHierarchy().AsSingle();
             BindStatusEffects();
             
             // factories

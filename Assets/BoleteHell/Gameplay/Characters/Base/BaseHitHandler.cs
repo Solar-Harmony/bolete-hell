@@ -2,6 +2,7 @@
 using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Gameplay.Characters.Registry;
+using BoleteHell.Utils.Advisor;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,12 @@ namespace BoleteHell.Gameplay.Characters.Base
 
         [Inject]
         private IEntityRegistry _cache;
+
+        [Inject]
+        private TutorialPopup _tutorial;
+        
+        [Inject]
+        private Tutorial.Speakers _speakers;
         
         private BlackboardReference _blackboard;
         private Coroutine _deaggroCoroutine;
@@ -30,6 +37,11 @@ namespace BoleteHell.Gameplay.Characters.Base
         public override void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             base.OnHit(ctx, callback);
+
+            if (_health.Percent < 0.25f)
+            {
+                _tutorial.Show(new(_speakers.BaseAdvisor, "We cannot hold for much longer, commander!", PreventDuplicates: true));
+            }
             
             if (_health.IsDead)
             {

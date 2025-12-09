@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   DropManagerConfig:
-    Droplets:
-    - {fileID: 3476611043504849278, guid: 7a222cc10f4fb1642a64e7999a19bfe7, type: 3}
-    - {fileID: 560586752497531280, guid: 892a0737f9c0a56418030b68742b3079, type: 3}
+    DropletDropRadius: 0.5
   SpawnControllerConfig:
     CostTable: {fileID: 11400000, guid: da831a0b1a197814e9b58a78604371dd, type: 2}
     TickInterval: 2
@@ -25,3 +23,13 @@ MonoBehaviour:
     BossFightDistance: 25
   OutcomeConfig:
     DefeatWhenAllBasesDestroyed: 0
+  TutorialSpeakers:
+    MainAdvisor:
+      Name: Cpl. Yanvois
+      Avatar: {fileID: 2800000, guid: 1a02efd9f7744e2408f1e37c1ec53005, type: 3}
+    TechAdvisor:
+      Name: Tin Can
+      Avatar: {fileID: 2800000, guid: e33353905a6e1ec4d9c0c59872d13dd0, type: 3}
+    BaseAdvisor:
+      Name: Base Captain
+      Avatar: {fileID: 2800000, guid: 17a194babe47df849b5c7aa2922d3824, type: 3}

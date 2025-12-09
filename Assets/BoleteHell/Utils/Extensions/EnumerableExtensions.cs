@@ -46,12 +46,12 @@ namespace BoleteHell.Utils.Extensions
     {
         public static TSource WithHighest<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
         {
-            return ByImpl(source, keySelector, isMax: false);
+            return ByImpl(source, keySelector, isMax: true);
         }
         
         public static TSource WithLowest<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) 
         {
-            return ByImpl(source, keySelector, isMax: true);
+            return ByImpl(source, keySelector, isMax: false);
         }
         
         // these overloads accept a Component in the selector lambda so you get rid of GetComponent boilerplate
@@ -61,7 +61,7 @@ namespace BoleteHell.Utils.Extensions
             Func<TComponent, TKey> keySelector
         ) where TComponent : Component
         {
-            return ByImplGameObject(source, keySelector, isMax: false);
+            return ByImplGameObject(source, keySelector, isMax: true);
         }
 
         public static GameObject WithLowest<TKey, TComponent>(
@@ -69,7 +69,7 @@ namespace BoleteHell.Utils.Extensions
             Func<TComponent, TKey> keySelector
         ) where TComponent : Component
         {
-            return ByImplGameObject(source, keySelector, isMax: true);
+            return ByImplGameObject(source, keySelector, isMax: false);
         }
         
         private static GameObject ByImplGameObject<TKey, TComponent>(
