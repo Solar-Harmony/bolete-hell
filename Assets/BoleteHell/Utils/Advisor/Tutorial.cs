@@ -30,7 +30,7 @@ namespace BoleteHell.Utils.Advisor
         {
             yield return _popup.ShowAsync(new(_speakers.MainAdvisor, "Sir, the situation is critical. The BOLETES are closing in on our base!"));
             yield return _popup.ShowAsync(new(_speakers.TechAdvisor, "An obvious result of your mismanagement. If we had-", 0.2f));
-            yield return _popup.ShowAsync(new(_speakers.MainAdvisor, "Toi, ferme ta yeule. Commander, defend our base! Tin Can and I will find the source the attack.", 1.5f));
+            yield return _popup.ShowAsync(new(_speakers.MainAdvisor, "Toi, arrête de parler. Commander, defend our base! Tin Can and I will find the source the attack.", 1.5f));
             yield return _popup.ShowAsync(new(_speakers.TechAdvisor, "WASD to move,\nLEFT CLICK to shoot.\n\nYou're welcome.", 3.0f));
         }
     }

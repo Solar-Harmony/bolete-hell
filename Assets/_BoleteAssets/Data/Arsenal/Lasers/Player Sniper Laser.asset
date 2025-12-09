@@ -33,7 +33,7 @@ MonoBehaviour:
         isTransient: 0
         numTicks: 2
         initialDelay: 0
-        tickInterval: 3
+        tickInterval: 5
         stackBehavior:
           rid: 2169932578501689903
         SlowPercentage: 0.5

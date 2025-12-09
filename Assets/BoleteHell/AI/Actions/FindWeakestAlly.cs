@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using BoleteHell.Code.Core;
 using BoleteHell.Gameplay.Characters;
 using BoleteHell.Gameplay.Characters.Registry;
@@ -33,8 +34,10 @@ namespace BoleteHell.AI.Actions
         protected override Status OnUpdate()
         {
             GameObject target = _entities
-                .WithTag(EntityTag.Enemy)
-                .WithHighest((HealthComponent h) => h.Percent);
+                .WithTag(EntityTag.Enemy).ToList()
+                .OrderBy(e => e.GetComponent<HealthComponent>().Percent)
+                .FirstOrDefault();
+
             
             if (!target)
             {

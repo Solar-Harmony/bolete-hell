@@ -53,7 +53,7 @@ namespace BoleteHell.Gameplay.GameState
 
         private void EndGame()
         {
-            _inputState.DisableInput();
+            //_inputState.DisableInput();
         }
     }
 }

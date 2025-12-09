@@ -206,6 +206,10 @@ PrefabInstance:
       propertyPath: Color.r
       value: 0.92452824
       objectReference: {fileID: 0}
+    - target: {fileID: 6291684394609303712, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
+      propertyPath: <MovementSpeed>k__BackingField
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6982038961960877227, guid: fe769e228550e9d448180cbdcbb10511, type: 3}
       propertyPath: m_Name
       value: Bomber

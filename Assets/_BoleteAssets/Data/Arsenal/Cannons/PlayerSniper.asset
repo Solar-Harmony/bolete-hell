@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firingType: 1
   energyCostFire: 25
-  cooldown: 0
+  cooldown: 0.5
   rampsUpFiringSpeed: 0
   nbShotsBeforeRampedUp: 0
   finalTimeBetweenShots: 0

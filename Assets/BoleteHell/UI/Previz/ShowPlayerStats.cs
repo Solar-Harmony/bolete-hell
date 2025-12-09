@@ -21,9 +21,9 @@ namespace BoleteHell.Code.UI.Previz
             GUI.skin.label.alignment = TextAnchor.UpperCenter;
             float labelWidth = 300;
             float centerX = (Screen.width - labelWidth) / 2;
-            GUI.Label(new Rect(centerX, 10, labelWidth, 80), "Health: " + _health.CurrentHealth);
-            GUI.Label(new Rect(centerX, 50, labelWidth, 80),
-                $"Energy: {_energy?.CurrentEnergy:F0} / {_energy?.MaxEnergy}");
+            // GUI.Label(new Rect(centerX, 10, labelWidth, 80), "Health: " + _health.CurrentHealth);
+            // GUI.Label(new Rect(centerX, 50, labelWidth, 80),
+            //     $"Energy: {_energy?.CurrentEnergy:F0} / {_energy?.MaxEnergy}");
         }
     }
 }

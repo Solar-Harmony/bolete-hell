@@ -42,7 +42,7 @@ namespace BoleteHell.AI.Services
             [Required]
             public CostTable CostTable;
             public float TickInterval = 5.0f;
-            public int MaxConcurrentEnemies = 10;
+            public int MaxConcurrentEnemies = 8;
             public int InitialMoney = 1000;
             public int MoneyPerSecond = 10;
             
@@ -139,16 +139,16 @@ namespace BoleteHell.AI.Services
 
         private void OnGUI()
         {
-            string text = $"AI Money: {_money:F1}$";
-            GUIStyle style = new GUIStyle(GUI.skin.label)
-            {
-                alignment = TextAnchor.UpperRight
-            };
-
-            Vector2 size = style.CalcSize(new GUIContent(text));
-            Rect rect = new Rect(Screen.width - size.x - 10, 10, size.x, size.y);
-
-            GUI.Label(rect, text, style);
+            // string text = $"AI Money: {_money:F1}$";
+            // GUIStyle style = new GUIStyle(GUI.skin.label)
+            // {
+            //     alignment = TextAnchor.UpperRight
+            // };
+            //
+            // Vector2 size = style.CalcSize(new GUIContent(text));
+            // Rect rect = new Rect(Screen.width - size.x - 10, 10, size.x, size.y);
+            //
+            // GUI.Label(rect, text, style);
         }
     }
 }
