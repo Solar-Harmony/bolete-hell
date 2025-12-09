@@ -38,12 +38,12 @@ namespace BoleteHell.Gameplay.Characters.Base
         {
             base.OnHit(ctx, callback);
 
-            if (_health.Percent < 0.9f)
-            {   
-                _tutorial.Show(new(_speakers.BaseAdvisor, "Here they come! Defend the base！", PreventDuplicates: true));
-            }
+            // if (_health.Percent < 0.9f)
+            // {   
+            //     _tutorial.Show(new(_speakers.BaseAdvisor, "Here they come! Defend the base！", PreventDuplicates: true));
+            // }
             
-            if (_health.Percent < 0.25f)
+            if (_health.Percent < 0.3f)
             {
                 _tutorial.Show(new(_speakers.BaseAdvisor, "We cannot hold for much longer, commander!", PreventDuplicates: true));
             }

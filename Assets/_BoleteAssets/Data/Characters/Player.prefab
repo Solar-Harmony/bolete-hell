@@ -70,10 +70,19 @@ MonoBehaviour:
   spawnDistance: {fileID: 0}
   spawnRadius: 0.71
   cannons:
-  - cannonConfigs:
+  - Name: Melee
+    cannonConfigs:
     - laserDatas:
       - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
       cannonData: {fileID: 11400000, guid: 8ca6313793b105141a3f6034e7aa81c2, type: 2}
+      usePatternMaster: 1
+      bulletPatterns: []
+      shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
+  - Name: Sniper
+    cannonConfigs:
+    - laserDatas:
+      - {fileID: 11400000, guid: 4df826d57fbbf8146aa33ca386bf93ab, type: 2}
+      cannonData: {fileID: 11400000, guid: e5184507ddcf3c643bfcfac0750179ad, type: 2}
       usePatternMaster: 1
       bulletPatterns: []
       shotPatternMaster: {fileID: 11400000, guid: 898562dfeb31ad5488c31d9e1160d200, type: 2}
@@ -165,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e67ed0cdfc4adfb985ea9f001c78e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boostMultiplier: 1.5
 --- !u!114 &8833217652067245739
 MonoBehaviour:
   m_ObjectHideFlags: 0

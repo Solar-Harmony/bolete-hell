@@ -60,12 +60,10 @@ namespace BoleteHell.Gameplay.InputControllers
         {
             if (currentShields.Count <= 1)
             {
-                Debug.LogWarning("No shields to cycle trough");
                 return;
             }
 
             _selectedShieldIndex = (_selectedShieldIndex + value + currentShields.Count) % currentShields.Count;
-            Debug.Log($"Equipped {GetSelectedShield().name}");
         }
 
         private void StartShield()
@@ -83,7 +81,7 @@ namespace BoleteHell.Gameplay.InputControllers
             _currentShieldPreview.FinishLine();
         }
 
-        private ShieldData GetSelectedShield()
+        public ShieldData GetSelectedShield()
         {
             if (currentShields.Count == 0)
             {
