@@ -46,7 +46,8 @@ namespace BoleteHell.Gameplay.InputControllers
 
         private void Shoot()
         {
-            _arsenal.Shoot(transform.up);
+            if(_arsenal.IsReadyToShoot())
+                _arsenal.Shoot(transform.up);
         }
     }
 }

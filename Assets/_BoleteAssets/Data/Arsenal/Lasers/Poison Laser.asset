@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
   m_Name: Poison Laser
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.16582623, g: 0.64420474, b: 0.27601868, a: 1}
+  <Color>k__BackingField: {r: 0.03678646, g: 0.3773585, b: 0.11495052, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
     rid: 795111371258462386
@@ -36,7 +36,7 @@ MonoBehaviour:
         tickInterval: 1
         stackBehavior:
           rid: 795111371258462395
-        DamageEachTick: 10
+        DamageEachTick: 3
     - rid: 795111371258462395
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data:
