@@ -40,6 +40,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
         
         [Required] [SerializeField] [ShowIf("usePatternMaster")]
         public ShotPatternMaster shotPatternMaster;
+
+        [SerializeField]
+        public string Name;
         
         public List<ShotPatternData> GetBulletPatterns()
         {

@@ -16,10 +16,10 @@ namespace BoleteHell.Code.UI
 
         private HealthComponent _healthComponent;
         private EnergyComponent _energyComponent;
+        private Arsenal.Arsenal _arsenal;
         
         private GameObject _player;
-
-
+        
         private void Awake()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
@@ -42,6 +42,7 @@ namespace BoleteHell.Code.UI
         {
             _healthComponent = _player.GetComponent<HealthComponent>();
             _energyComponent = _player.GetComponent<EnergyComponent>();
+            _arsenal = _player.GetComponent<Arsenal.Arsenal>();
             
             HealthComponent.OnDamaged += OnHealthChanged;
             HealthComponent.OnHealed += OnHealthChanged;
