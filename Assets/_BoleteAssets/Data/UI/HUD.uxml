@@ -1,0 +1,12 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_BoleteAssets/Data/UI/HUD.uss?fileID=7433441132597879392&amp;guid=e294e454bc139474690a55efbead6064&amp;type=3#HUD" />
+    <engine:VisualElement name="VisualElement" style="flex-grow: 1; justify-content: center; align-items: center;">
+        <engine:VisualElement name="bottomLeft" style="flex-grow: 1; position: absolute; left: 32px; bottom: 32px; flex-direction: column; height: auto; width: 594px; flex-shrink: 0;">
+            <engine:VisualElement name="icons" style="flex-grow: 1; flex-direction: row; flex-shrink: 0;">
+                <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/ThirdParty/Dreamteck/Splines/Components/Icons/SplineFollower.png?fileID=2800000&amp;guid=14d9ee407d8622249bb457e71b4400d1&amp;type=3#SplineFollower&quot;); background-position-x: center 0; width: 48px; height: 48px; -unity-background-scale-mode: scale-to-fit; max-width: 48px;" />
+            </engine:VisualElement>
+            <engine:ProgressBar value="22" name="health" />
+            <engine:ProgressBar value="22" name="energy" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

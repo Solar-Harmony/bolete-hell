@@ -56,10 +56,27 @@ namespace BoleteHell.AI.Services
             _money = _config.InitialMoney;
             _attackPlayerGroup = _groupService.CreateGroup();
             _attackPlayerGroup.Target = _entities.GetPlayer();
-            _outcome.OnVictory += () => CancelInvoke(nameof(Tick));
-            _outcome.OnDefeat += _ => CancelInvoke(nameof(Tick));
+            _outcome.OnVictory += OnGameEnded;
+            _outcome.OnDefeat += OnGameEnded;
             
             InvokeRepeating(nameof(Tick), _config.TickInterval, _config.TickInterval);
+        }
+
+        private void OnDestroy()
+        {
+            if (_outcome == null) return;
+            _outcome.OnVictory -= OnGameEnded;
+            _outcome.OnDefeat -= OnGameEnded;
+        }
+
+        private void OnGameEnded()
+        {
+            CancelInvoke(nameof(Tick));
+        }
+
+        private void OnGameEnded(string _)
+        {
+            CancelInvoke(nameof(Tick));
         }
 
         private void Update()
