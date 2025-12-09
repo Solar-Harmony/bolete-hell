@@ -18,5 +18,3 @@ MonoBehaviour:
     startingRotation: 0
     constantRotation: 30
     followOwnerLookingDirection: 0
-    startingDistance: 0
-    reverseMovementDirection: 0

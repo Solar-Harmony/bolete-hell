@@ -30,6 +30,8 @@ namespace BoleteHell.Code.Arsenal
         private readonly List<List<CannonInstance>> _cannonInstances = new();
 
         private GameObject _owner;
+
+        private EnergyComponent _energyComponent;
         
         private void OnDrawGizmosSelected()
         {
@@ -52,6 +54,7 @@ namespace BoleteHell.Code.Arsenal
 
             _owner = gameObject;
             _owner.GetComponent<HealthComponent>().OnDeath += OnShootCanceled;
+            _owner.TryGetComponent(out _energyComponent);
         }
        
         private void Update()
@@ -64,7 +67,26 @@ namespace BoleteHell.Code.Arsenal
 
         public bool IsReadyToShoot()
         {
-            return GetSelectedWeapons().Any(weapon => weapon.CanShoot);
+            return GetSelectedWeapons().Any(weapon => weapon.CanShoot) && HasEnergyToFire();
+        }
+
+        private bool HasEnergyToFire()
+        {
+            bool canFire = true;
+            
+            if (_energyComponent)
+            {
+                float totalEnergyCost = 0f;
+                
+                foreach (CannonInstance selectedWeapon in GetSelectedWeapons())
+                {
+                    totalEnergyCost += selectedWeapon.Config.cannonData.energyCostFire;
+                }
+
+                canFire = _energyComponent.CanSpend(totalEnergyCost);
+            }
+
+            return canFire;
         }
 
         public bool Shoot(Vector2 direction)
@@ -87,8 +109,15 @@ namespace BoleteHell.Code.Arsenal
                 {
                     doneFiring = false;
                 }
+                else
+                {
+                    if (_energyComponent)
+                    {
+                        _energyComponent.Spend(weapon.Config.cannonData.energyCostFire);
+                    }
+                }
             }
-
+            
             return doneFiring;
         }
         
@@ -162,6 +191,27 @@ namespace BoleteHell.Code.Arsenal
 
         private void OnDestroy()
         {
+            OnShootCanceled();
+        }
+        
+        //Je n'accepte pas de déscendre en bas de 1 car quand l'éffet de slowFireRate va être retirer
+        //il est possible que l'unité affecté ai changer de weapon équipper donc celui la aurait sont cooldown réduit
+        //Plutot que l'arme qui avait le malus
+        public void UpdateCooldownModifier(float value)
+        {
+            foreach (CannonInstance selectedWeapon in GetSelectedWeapons())
+            {
+                float updatedValue = Mathf.Clamp(selectedWeapon.CooldownModifier + value, 1, Mathf.Infinity); 
+                selectedWeapon.CooldownModifier = updatedValue;
+            }
+        }
+
+        public void SetCooldownModifier(float value)
+        {
+            foreach (CannonInstance selectedWeapon in GetSelectedWeapons())
+            {
+                selectedWeapon.CooldownModifier = value;
+            }
             OnShootCanceled();
         }
     }

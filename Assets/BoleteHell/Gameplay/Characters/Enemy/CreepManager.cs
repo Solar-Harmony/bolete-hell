@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace BoleteHell.Gameplay.Characters.Enemy
 {
@@ -6,6 +8,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
     {
         private static readonly int _corruption = Shader.PropertyToID("_Corruption");
         private static readonly int _worldLightDir = Shader.PropertyToID("_WorldLightDir");
+        private List<IObjective> objectives = new();
 
         [SerializeField]
         [Range(0.0f, 1.0f)]
@@ -44,6 +47,18 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         {
             SpreadLevel = _initialSpreadLevel;
             WorldLightDirection = _worldLightDirection;
+            objectives = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .OfType<IObjective>()
+                .ToList();
+            foreach (IObjective objective in objectives)
+            {
+                objective.OnCompleted += ObjectiveCompleted;
+            }
+        }
+
+        private void ObjectiveCompleted()
+        {
+            SpreadLevel -= 1f / objectives.Count;
         }
 
 #if UNITY_EDITOR

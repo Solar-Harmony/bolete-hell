@@ -10,35 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60b7d50c86e12244493f53598f866310, type: 3}
-  m_Name: Poison Laser
+  m_Name: Player Sniper Laser
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.03678646, g: 0.3773585, b: 0.11495052, a: 1}
+  <Color>k__BackingField: {r: 0, g: 0.07850083, b: 0.5031446, a: 1}
   <LightRefractiveIndex>k__BackingField: 1.33
   <Logic>k__BackingField:
-    rid: 795111371258462386
+    rid: 2169932578501689900
   AffectedSide: 2
-  <baseDamage>k__BackingField: 5
+  <baseDamage>k__BackingField: 25
   <MovementSpeed>k__BackingField: 3
   references:
     version: 2
     RefIds:
-    - rid: 795111371258462386
+    - rid: 2169932578501689900
       type: {class: StatusEffectOnHit, ns: BoleteHell.Code.Arsenal.Rays.RayLogic, asm: BoleteGameplay}
       data:
         statusEffectConfig:
-          rid: 795111371258462387
-    - rid: 795111371258462387
-      type: {class: PoisonStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
+          rid: 2169932578501689901
+    - rid: 2169932578501689901
+      type: {class: SlowFireRateEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
-        numTicks: 1
+        numTicks: 2
         initialDelay: 0
-        tickInterval: 1
+        tickInterval: 3
         stackBehavior:
-          rid: 795111371258462395
-        DamageEachTick: 3
-    - rid: 795111371258462395
-      type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
+          rid: 2169932578501689903
+        SlowPercentage: 0.5
+    - rid: 2169932578501689903
+      type: {class: StatusEffectStackBehavior/Replace, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data:
-        maxStacks: 3
         condition: 0

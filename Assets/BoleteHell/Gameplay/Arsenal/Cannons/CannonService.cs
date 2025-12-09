@@ -29,7 +29,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
             
             float currentCooldown =  cannon.Config.cannonData.GetCooldown(cannon.ShotCount);
             
-            if (cannon.AttackTimer < currentCooldown)
+            if (cannon.AttackTimer < currentCooldown * cannon.CooldownModifier)
             {
                 cannon.AttackTimer += Time.deltaTime;
             }
