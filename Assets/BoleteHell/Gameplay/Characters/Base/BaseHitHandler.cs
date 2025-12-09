@@ -2,6 +2,7 @@
 using System.Collections;
 using BoleteHell.Code.Arsenal.HitHandler;
 using BoleteHell.Gameplay.Characters.Registry;
+using BoleteHell.Utils.Advisor;
 using Unity.Behavior;
 using UnityEngine;
 using Zenject;
@@ -16,11 +17,17 @@ namespace BoleteHell.Gameplay.Characters.Base
         public Sprite DeathSprite;
 
         [Inject]
-        private IEntityRegistry _cache;
+        private IEntityRegistry _entities;
+
+        [Inject]
+        private TutorialPopup _tutorial;
+        
+        [Inject]
+        private Tutorial.Speakers _speakers;
         
         private BlackboardReference _blackboard;
         private Coroutine _deaggroCoroutine;
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -30,6 +37,16 @@ namespace BoleteHell.Gameplay.Characters.Base
         public override void OnHit(ITargetable.Context ctx, Action<ITargetable.Response> callback = null)
         {
             base.OnHit(ctx, callback);
+
+            // if (_health.Percent < 0.9f)
+            // {   
+            //     _tutorial.Show(new(_speakers.BaseAdvisor, "Here they come! Defend the base！", PreventDuplicates: true));
+            // }
+            
+            if (_health.Percent < 0.3f)
+            {
+                _tutorial.Show(new(_speakers.BaseAdvisor, "We cannot hold for much longer, commander!", PreventDuplicates: true));
+            }
             
             if (_health.IsDead)
             {
@@ -39,6 +56,10 @@ namespace BoleteHell.Gameplay.Characters.Base
 
             if (ctx.Instigator)
             {
+                // player cannot aggro the base
+                if (_entities.GetPlayer() == ctx.Instigator)
+                    return;
+                
                 var thisFaction = GetComponent<FactionComponent>();
                 
                 var instigatorFaction = ctx.Instigator.GetComponent<FactionComponent>();

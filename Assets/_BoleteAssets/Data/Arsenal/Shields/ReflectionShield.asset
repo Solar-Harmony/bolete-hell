@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604794fded01c8943a45fbfe5f2acd44, type: 3}
   m_Name: ReflectionShield
   m_EditorClassIdentifier: 
+  Name: Reflective Shield
   <color>k__BackingField: {r: 0, g: 0.79662085, b: 1, a: 1}
   <onHitLogic>k__BackingField:
     rid: 5809585285616631808

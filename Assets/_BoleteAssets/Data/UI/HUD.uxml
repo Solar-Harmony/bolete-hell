@@ -1,0 +1,17 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_BoleteAssets/Data/UI/HUD.uss?fileID=7433441132597879392&amp;guid=e294e454bc139474690a55efbead6064&amp;type=3#HUD" />
+    <engine:VisualElement name="VisualElement" style="flex-grow: 1; justify-content: center; align-items: center;">
+        <engine:VisualElement name="bottomLeft" style="flex-grow: 1; position: absolute; left: 32px; bottom: 32px; flex-direction: column; height: auto; width: 594px; flex-shrink: 0;">
+            <engine:VisualElement name="icons" style="flex-grow: 1; flex-direction: row; flex-shrink: 0; justify-content: space-between;">
+                <engine:VisualElement name="cannonBadge" class="badge" style="background-color: rgba(97, 56, 17, 0.56); align-self: flex-end; flex-shrink: 1; flex-direction: column; align-items: auto; align-content: auto;">
+                    <engine:Label text="Melee" name="cannon" style="font-size: 20px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; flex-shrink: 1; color: rgb(222, 217, 209); text-shadow: 0 1.2px 0 rgba(0, 0, 0, 0.82);" />
+                </engine:VisualElement>
+                <engine:VisualElement name="shieldBadge" class="badge" style="background-color: rgba(17, 64, 97, 0.56); align-self: flex-end; flex-shrink: 1; flex-direction: column; align-items: auto; align-content: auto;">
+                    <engine:Label text="Refraction shield" name="shield" style="font-size: 20px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; flex-shrink: 1; color: rgb(222, 217, 209); text-shadow: 0 1.2px 0 rgba(0, 0, 0, 0.82);" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:ProgressBar value="22" name="health" title="50 / 100" style="margin-top: 8px;" />
+            <engine:ProgressBar value="22" name="energy" title="22 / 100" style="margin-top: 4px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

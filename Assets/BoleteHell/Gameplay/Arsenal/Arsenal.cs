@@ -23,14 +23,13 @@ namespace BoleteHell.Code.Arsenal
         [SerializeField]
         private List<Cannon> cannons = new();
 
-        [Inject]
-        private ICannonService _cannonService;
+        [Inject] private ICannonService _cannonService;
+        
+        public event Action<Cannon> OnWeaponChanged;
         
         private int _selectedCannonIndex;
         private readonly List<List<CannonInstance>> _cannonInstances = new();
-
         private GameObject _owner;
-
         private EnergyComponent _energyComponent;
         
         private void OnDrawGizmosSelected()
@@ -175,6 +174,8 @@ namespace BoleteHell.Code.Arsenal
             }
             OnShootCanceled();
             _selectedCannonIndex = index;
+            
+            OnWeaponChanged?.Invoke(cannons[_selectedCannonIndex]);
         }
     
         public void OnShootCanceled()

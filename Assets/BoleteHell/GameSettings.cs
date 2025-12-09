@@ -3,6 +3,7 @@ using BoleteHell.Gameplay.Droppables;
 using BoleteHell.Gameplay.GameState;
 using UnityEngine;
 using Zenject;
+using Tutorial = BoleteHell.Utils.Advisor.Tutorial;
 
 namespace BoleteHell.Code.Core
 {
@@ -12,13 +13,15 @@ namespace BoleteHell.Code.Core
         public DropManager.Config DropManagerConfig;
         public AIDirector.Config SpawnControllerConfig;
         public GameOutcomeService.Config OutcomeConfig;
+        public Tutorial.Speakers TutorialSpeakers;
         
         public override void InstallBindings()
         {
             Container.BindInstances(
                 DropManagerConfig, 
                 SpawnControllerConfig, 
-                OutcomeConfig);
+                OutcomeConfig,
+                TutorialSpeakers);
         }
     }
 }

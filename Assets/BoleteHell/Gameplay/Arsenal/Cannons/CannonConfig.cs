@@ -17,6 +17,9 @@ namespace BoleteHell.Code.Arsenal.Cannons
     public class Cannon
     {
         [SerializeField]
+        public string Name;
+        
+        [SerializeField]
         [ValidateInput("@cannonConfigs.Count > 0", "Must have at least one cannon config.")]
         public List<CannonConfig> cannonConfigs = new();
     }
