@@ -2,7 +2,7 @@ using System;
 using BoleteHell.Utils.Progress;
 using UnityEngine;
 
-public class CapturePointComponent : MonoBehaviour
+public class CapturePointComponent : MonoBehaviour, IObjective
 {
     [Range(0, 360)]
     public int totalSeconds;
@@ -14,9 +14,10 @@ public class CapturePointComponent : MonoBehaviour
     
     private Collider2D _collider2D;
     private bool timerIsRunning;
+    private bool completed;
 
 
-    public static event Action OnCaptured;
+    public event Action OnCompleted;
     
     private void Awake()
     {
@@ -29,6 +30,8 @@ public class CapturePointComponent : MonoBehaviour
 
     private void Update()
     {
+        if (completed) return;
+        
         if (timerIsRunning)
         {
             UpdateRemainingTime(-Time.deltaTime);
@@ -37,7 +40,7 @@ public class CapturePointComponent : MonoBehaviour
         {
             if (remainingTime < totalSeconds)
             {
-                UpdateRemainingTime(Time.deltaTime);
+                UpdateRemainingTime(Time.deltaTime / 2);
             }
         }
     }
@@ -61,11 +64,13 @@ public class CapturePointComponent : MonoBehaviour
     private void UpdateRemainingTime(float delta)
     {
         remainingTime += delta;
-        visualTimer.Progress = (totalSeconds % remainingTime) / totalSeconds;
-            
+        visualTimer.Progress = (totalSeconds - remainingTime) / totalSeconds;
+        
         if (remainingTime <= 0)
         {
-            OnCaptured?.Invoke();
+            completed = true;
+            OnCompleted?.Invoke();
         }
     }
+
 }

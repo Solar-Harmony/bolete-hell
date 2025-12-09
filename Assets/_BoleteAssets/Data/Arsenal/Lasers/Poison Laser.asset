@@ -36,7 +36,7 @@ MonoBehaviour:
         tickInterval: 1
         stackBehavior:
           rid: 795111371258462395
-        DamageEachTick: 10
+        DamageEachTick: 3
     - rid: 795111371258462395
       type: {class: StatusEffectStackBehavior/Stacking, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data:
