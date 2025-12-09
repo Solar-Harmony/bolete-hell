@@ -17,7 +17,7 @@ MonoBehaviour:
   SpawnControllerConfig:
     CostTable: {fileID: 11400000, guid: da831a0b1a197814e9b58a78604371dd, type: 2}
     TickInterval: 2
-    MaxConcurrentEnemies: 10
+    MaxConcurrentEnemies: 8
     InitialMoney: 1000
     MoneyPerSecond: 10
     BossFightDistance: 25

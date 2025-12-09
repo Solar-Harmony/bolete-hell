@@ -12,7 +12,7 @@ namespace BoleteHell.Code.Arsenal.Cannons
         public readonly CannonConfig Config;
         public readonly FiringLogic.FiringLogic CurrentFiringLogic;
         public int ShotCount = 0;
-        public float AttackTimer = 0f;
+        public float AttackTimer = 100f;
         public float ChargeTimer = 0f;
         public float CooldownModifier = 1f;
         public bool CanShoot = false;

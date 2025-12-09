@@ -38,14 +38,19 @@ namespace BoleteHell.Gameplay.Characters.Base
         {
             base.OnHit(ctx, callback);
 
-            // if (_health.Percent < 0.9f)
-            // {   
-            //     _tutorial.Show(new(_speakers.BaseAdvisor, "Here they come! Defend the base！", PreventDuplicates: true));
-            // }
+            if (_health.Percent < 0.99f)
+            {   
+                _tutorial.Show(new(_speakers.BaseAdvisor, "Here they come! Our base is under attack!", PreventDuplicates: true));
+            }
             
-            if (_health.Percent < 0.3f)
+            if (_health.Percent < 0.5f)
             {
                 _tutorial.Show(new(_speakers.BaseAdvisor, "We cannot hold for much longer, commander!", PreventDuplicates: true));
+            }
+            
+            if (_health.Percent < 0.25f)
+            {
+                _tutorial.Show(new(_speakers.BaseAdvisor, "Make your last stand! We're doomed!", PreventDuplicates: true));
             }
             
             if (_health.IsDead)

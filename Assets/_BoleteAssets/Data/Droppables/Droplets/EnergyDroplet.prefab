@@ -47,23 +47,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effect:
-    rid: 795111371258462374
+    rid: 2169932595910148257
   _pickupDistance: 1
   _speed: 5
   references:
     version: 2
     RefIds:
-    - rid: 795111371258462374
-      type: {class: HealStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
+    - rid: 2169932595910148257
+      type: {class: GainEnergyStatusEffectConfig, ns: BoleteHell.Gameplay.StatusEffectImpl, asm: BoleteGameplay}
       data:
         isTransient: 0
         numTicks: 1
         initialDelay: 0
         tickInterval: 1
         stackBehavior:
-          rid: 795111371258462375
-        HealingEachTick: 10
-    - rid: 795111371258462375
+          rid: 2169932595910148258
+        EnergyEachTick: 10
+    - rid: 2169932595910148258
       type: {class: StatusEffectStackBehavior/Ignore, ns: BoleteHell.Code.Gameplay.Damage.Effects, asm: BoleteStatusEffects}
       data: 
 --- !u!212 &3624254693511255549
