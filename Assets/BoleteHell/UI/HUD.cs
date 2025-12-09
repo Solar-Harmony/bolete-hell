@@ -67,7 +67,7 @@ namespace BoleteHell.Code.UI
         private void OnEnergyChanged(float percent)
         {
             _energyBar.value = percent * 100;
-            _energyBar.title = $"{_energyComponent.MaxEnergy} / {_energyComponent.MaxEnergy}";
+            _energyBar.title = $"{_energyComponent.CurrentEnergy} / {_energyComponent.MaxEnergy}";
         }
     }
 }
