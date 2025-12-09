@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
     {
         private static readonly int _corruption = Shader.PropertyToID("_Corruption");
         private static readonly int _worldLightDir = Shader.PropertyToID("_WorldLightDir");
-        private List<IObjective> objectives = new();
+        private List<IObjective> _objectives = new();
 
         [SerializeField]
         [Range(0.0f, 1.0f)]
@@ -16,6 +17,9 @@ namespace BoleteHell.Gameplay.Characters.Enemy
 
         [SerializeField]
         private Vector3 _worldLightDirection = new Vector3(0.1f, 0.1f, 0.3f);
+        
+        [SerializeField]
+        private float _creepReductionDuration = 5f;
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -47,10 +51,10 @@ namespace BoleteHell.Gameplay.Characters.Enemy
         {
             SpreadLevel = _initialSpreadLevel;
             WorldLightDirection = _worldLightDirection;
-            objectives = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+            _objectives = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
                 .OfType<IObjective>()
                 .ToList();
-            foreach (IObjective objective in objectives)
+            foreach (IObjective objective in _objectives)
             {
                 objective.OnCompleted += ObjectiveCompleted;
             }
@@ -58,7 +62,7 @@ namespace BoleteHell.Gameplay.Characters.Enemy
 
         private void ObjectiveCompleted()
         {
-            SpreadLevel -= 1f / objectives.Count;
+            StartCoroutine(ReduceCreepGradually());
         }
 
 #if UNITY_EDITOR
@@ -69,5 +73,21 @@ namespace BoleteHell.Gameplay.Characters.Enemy
                 Shader.SetGlobalVector(_worldLightDir, _worldLightDirection.normalized);
         }
 #endif
+
+        private IEnumerator ReduceCreepGradually()
+        {
+            float startingLevel = SpreadLevel;
+            float targetLevel = SpreadLevel - 1f / _objectives.Count;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < _creepReductionDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                SpreadLevel = Mathf.Lerp(startingLevel, targetLevel, elapsedTime / _creepReductionDuration);
+                yield return null;
+            }
+
+            SpreadLevel = targetLevel;
+        }
     }
 }
