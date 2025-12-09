@@ -33,7 +33,6 @@ namespace BoleteHell.Gameplay.Characters
         {
             CurrentEnergy += amount;
             CurrentEnergy = Mathf.Min(CurrentEnergy, MaxEnergy);
-            Debug.Log($"Gained {amount} energy");
         }
         
         public void LoseFixedAmount(float amount)

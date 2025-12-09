@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -46,6 +45,7 @@ namespace BoleteHell.Utils.Advisor
         }
         
         private readonly Queue<QueuedMessage> _messageQueue = new();
+        private readonly HashSet<int> _shownMessageHashes = new();
 
         public enum Align
         {
@@ -56,19 +56,31 @@ namespace BoleteHell.Utils.Advisor
 
         public void Show(ShowOptions options)
         {
-            if (options.PreventDuplicates && _messageQueue.Any(m => m.Message == options.Message && m.Speaker == options.Speaker))
+            var messageHash = (options.Speaker, options.Message).GetHashCode();
+            if (options.PreventDuplicates && _shownMessageHashes.Contains(messageHash))
                 return;
             
             _messageQueue.Enqueue(new QueuedMessage(options.Speaker, options.Message, options.Delay));
+            if (options.PreventDuplicates)
+            {
+                _shownMessageHashes.Add(messageHash);
+            }
+            
             if (!_isProcessingQueue)
                 StartCoroutine(ProcessQueue());
         }
 
         public IEnumerator ShowAsync(ShowOptions options)
         {
-            if (!options.PreventDuplicates || _messageQueue.All(m => m.Message != options.Message || m.Speaker != options.Speaker))
+            var messageHash = (options.Speaker, options.Message).GetHashCode();
+            if (!options.PreventDuplicates || !_shownMessageHashes.Contains(messageHash))
             {
                 _messageQueue.Enqueue(new QueuedMessage(options.Speaker, options.Message, options.Delay));
+                if (options.PreventDuplicates)
+                {
+                    _shownMessageHashes.Add(messageHash);
+                }
+                
                 if (!_isProcessingQueue)
                     StartCoroutine(ProcessQueue());
             }

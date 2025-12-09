@@ -22,7 +22,7 @@ MonoBehaviour:
     MoneyPerSecond: 10
     BossFightDistance: 25
   OutcomeConfig:
-    DefeatWhenAllBasesDestroyed: 0
+    DefeatWhenAllBasesDestroyed: 1
   TutorialSpeakers:
     MainAdvisor:
       Name: Cpl. Yanvois

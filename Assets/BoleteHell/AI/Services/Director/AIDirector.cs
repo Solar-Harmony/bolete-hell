@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BoleteHell.AI.Services.Group;
 using BoleteHell.Gameplay.Characters.Enemy;
 using BoleteHell.Gameplay.Characters.Registry;
@@ -96,9 +95,13 @@ namespace BoleteHell.AI.Services
             if (IsInBossFight())
                 return;
 
-            var enemyToSpawn = _config.CostTable.Entries
-                .Where(e => e.Cost <= _money)
-                .WithHighest(e => e.Cost);
+            int rand = Random.Range(0, _config.CostTable.Entries.Length - 1);
+            var enemyToSpawn = _config.CostTable.Entries[rand];
+            
+            // TODO: The cost logic is not good as it is, we would need to complexify it to make it better
+            // var enemyToSpawn = _config.CostTable.Entries
+            //     .Where(e => e.Cost <= _money)
+            //     .WithHighest(e => e.Cost);
             
             Vector2 playerPos = _entities.GetPlayer().transform.position;
 
