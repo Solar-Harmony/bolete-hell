@@ -11,6 +11,10 @@
 
            #pragma vertex vert
            #pragma fragment frag
+           
+           CBUFFER_START(UnityPerMaterial)
+                float _ShadowHeight;
+           
 
            struct Attributes
            {

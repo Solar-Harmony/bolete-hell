@@ -8,10 +8,7 @@ namespace BoleteHell.Rendering.SRP.SunShadows
 {
     public class FakeSunShadowPass : ScriptableRenderPass
     {
-        private readonly Vector3 _sunDirection;
-        private readonly float _stepSize;
-        private readonly float _intensity;
-        private readonly float _softness;
+        private readonly SunShadowSettings _settings;
         private readonly Material _passMaterial;
 
         private static readonly int _sunDirectionId = Shader.PropertyToID("_SunDirection");
@@ -30,13 +27,10 @@ namespace BoleteHell.Rendering.SRP.SunShadows
             public float Softness;
         }
 
-        public FakeSunShadowPass(Material passMaterial, Vector3 sunDirection, float stepSize, float intensity, float softness)
+        public FakeSunShadowPass(Material passMaterial, SunShadowSettings settings)
         {
             _passMaterial = passMaterial;
-            _sunDirection = sunDirection;
-            _stepSize = stepSize;
-            _intensity = intensity;
-            _softness = softness;
+            _settings = settings;
         }
 
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -59,10 +53,10 @@ namespace BoleteHell.Rendering.SRP.SunShadows
 
             passData.SilhouetteTex = silhouetteTex;
             passData.Material = _passMaterial;
-            passData.SunDirection = _sunDirection;
-            passData.StepSize = _stepSize;
-            passData.Intensity = _intensity;
-            passData.Softness = _softness;
+            passData.SunDirection = _settings.SunDirection;
+            passData.StepSize = _settings.SunShadowStepSize;
+            passData.Intensity = _settings.SunShadowIntensity;
+            passData.Softness = _settings.SunShadowSoftness;
 
             builder.SetRenderFunc((FakeSunShadowPassData data, RasterGraphContext context) =>
             {

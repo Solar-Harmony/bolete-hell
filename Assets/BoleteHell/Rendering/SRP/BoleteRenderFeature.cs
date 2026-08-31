@@ -1,4 +1,4 @@
-    using System;
+using System;
 using BoleteHell.Rendering.SRP.FakeAO;
 using BoleteHell.Rendering.SRP.Ripples;
 using BoleteHell.Rendering.SRP.Silhouette;
@@ -28,20 +28,8 @@ namespace BoleteHell.Rendering.SRP
         [ToggleGroup(nameof(EnableSunShadow), "Screen-space sun shadow")]
         public bool EnableSunShadow = true;
 
-        [ToggleGroup(nameof(EnableSunShadow))] [AnglePicker]
-        public Vector2 SunDirection = new(0.1f, 0.1f);
-        
-        [ToggleGroup(nameof(EnableSunShadow))] 
-        [Tooltip("Step size for shadow raymarching.")]
-        public float SunShadowStepSize = 0.01f;
-        
-        [ToggleGroup(nameof(EnableSunShadow))]
-        [Tooltip("Intensity of the sun shadows.")]
-        public float SunShadowIntensity = 0.5f;
-        
-        [ToggleGroup(nameof(EnableSunShadow))]
-        [Tooltip("Softness of the sun shadows.")]
-        public float SunShadowSoftness = 0.0f;
+        [ToggleGroup(nameof(EnableSunShadow))] [InlineProperty]
+        public SunShadowSettings SunShadow = new();
 
         [ToggleGroup(nameof(EnableFakeAO))]
         [Tooltip("Radius for ambient occlusion sampling.")]
@@ -112,7 +100,7 @@ namespace BoleteHell.Rendering.SRP
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
             
-            _fakeSunShadowPass = new FakeSunShadowPass(_settings.FakeSunShadowMaterial, _settings.SunDirection, _settings.SunShadowStepSize, _settings.SunShadowIntensity, _settings.SunShadowSoftness)
+            _fakeSunShadowPass = new FakeSunShadowPass(_settings.FakeSunShadowMaterial, _settings.SunShadow)
             {
                 renderPassEvent = RenderPassEvent.AfterRenderingTransparents
             };
