@@ -934,4 +934,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097e7bf82fb04a8ab095671eba635d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BoleteRendering::BoleteHell.Rendering.SRP.SunShadows.ShadowCaster
-  _height: 0.5
+  _height: 0.15

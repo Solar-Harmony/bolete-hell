@@ -50,7 +50,7 @@
                 float2 uv0 = (p0 - _BufferOrigin) * _BufferInvSize;          // world -> mask UV
                 float h0 = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, uv0).r; // receiver height01 (0 = ground)
                 float marchLen = (1.0 - h0) * _ShadowMaxLength;             // ray only needs to rise to 1.0
-                float2 duv = _SunDirection * marchLen * _BufferInvSize;
+                float2 duv = _SunDirection.xy * marchLen * _BufferInvSize;
                 float transmittance = 1.0;
                 for (int i = 1; i <= _MaxSteps; ++i) {
                     float u  = (i + dither(input.texcoord, i)) / _MaxSteps;                    // existing hash dither in [-0.5, 0.5]

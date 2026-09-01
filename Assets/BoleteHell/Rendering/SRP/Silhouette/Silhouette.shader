@@ -12,6 +12,8 @@
            #pragma vertex vert
            #pragma fragment frag
 
+           float4x4 _WorldToBufferClip;
+
            struct Attributes
            {
                float3 positionOS   : POSITION;
@@ -25,7 +27,8 @@
            Varyings vert(Attributes i)
            {
                Varyings o;
-               o.positionCS = TransformObjectToHClip(i.positionOS);
+               float3 world = TransformObjectToWorld(i.positionOS);
+               o.positionCS = mul(_WorldToBufferClip, float4(world, 1.0));
                return o;
            }
  

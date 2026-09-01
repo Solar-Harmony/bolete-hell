@@ -38,6 +38,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
         private class PassData
         {
             public RendererListHandle RendererListHandle;
+            public Material Mat;
         }
         
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -58,7 +59,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             Rect cameraRect = new(cameraCenter.x - halfWidth, cameraCenter.y - halfHeight, halfWidth * 2, halfHeight * 2);
             
             // compute overscan bounds so that all shadow casters are included
-            float worldPerPixel = 2 * halfWidth / camera.pixelHeight;
+            float worldPerPixel = 2 * halfHeight / camera.pixelHeight;
             float worldAOPad = _settings.FakeAORadius * worldPerPixel + 2 * worldPerPixel;
             Vector2 sunDir = _settings.SunShadow.SunDirection;
             float maxLen = _settings.SunShadow.MaxLength;
@@ -101,7 +102,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             var planes = GeometryUtility.CalculateFrustumPlanes(worldToClip);
             for (int i = 0; i < cullingParams.cullingPlaneCount; ++i)
             {
-                cullingParams.SetCullingPlane(0, planes[i]);
+                cullingParams.SetCullingPlane(i, planes[i]);
             }
 
             CullingResults cullingResults = frameData.Get<CullContextData>().Cull(ref cullingParams);
@@ -116,6 +117,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             var filteringSettings = new FilteringSettings(RenderQueueRange.all);
             var rendererListParams = new RendererListParams(cullingResults, drawSettings, filteringSettings);
             passData.RendererListHandle = renderGraph.CreateRendererList(rendererListParams);
+            passData.Mat = _overrideMaterial;
             builder.UseRendererList(passData.RendererListHandle);
             
             RenderTextureDescriptor silhouetteDesc = new(pixelWidth, pixelHeight, GraphicsFormat.R8_UNorm, 0)
@@ -136,13 +138,12 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             outputData.BufferSize = size;
             outputData.MaxShadowLength = maxLen;
             
-            builder.SetRenderFunc((PassData data, RasterGraphContext context) => ExecutePass(data, context));
-        }
-        
-        private static void ExecutePass(PassData data, RasterGraphContext context)
-        {
-            context.cmd.ClearRenderTarget(RTClearFlags.Color, Color.clear, 1, 0);
-            context.cmd.DrawRendererList(data.RendererListHandle);
+            builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
+            {
+                data.Mat.SetMatrix(Shader.PropertyToID("_WorldToBufferClip"), worldToClip);
+                context.cmd.ClearRenderTarget(RTClearFlags.Color, Color.clear, 1, 0);
+                context.cmd.DrawRendererList(data.RendererListHandle);
+            });
         }
     }
 }

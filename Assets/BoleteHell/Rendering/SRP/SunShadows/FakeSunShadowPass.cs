@@ -74,8 +74,8 @@ namespace BoleteHell.Rendering.SRP.SunShadows
             passData.BufferInvSize = Vector2.one / heightField.BufferSize;
             passData.CamCenter = camera.transform.position;
             passData.MaxLength = _settings.MaxLength;
-            float camWidth = camera.orthographicSize * camera.aspect;
-            float camHeight = camera.orthographicSize;
+            float camWidth = camera.orthographicSize * camera.aspect * 2;
+            float camHeight = camera.orthographicSize * 2;
             passData.CamSize = new Vector2(camWidth, camHeight);
 
             builder.SetRenderFunc((FakeSunShadowPassData data, RasterGraphContext context) =>

@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _Radius: 10
-    - _ShadowIntensity: 0.5
+    - _ShadowIntensity: 1
     - _ShadowSoftness: 0
     - _StepSize: 0.15
     - _ZWrite: 0

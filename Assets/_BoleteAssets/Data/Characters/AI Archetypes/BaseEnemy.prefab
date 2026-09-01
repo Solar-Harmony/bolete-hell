@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 4396846389591327315}
   - component: {fileID: 6926482182757075913}
   - component: {fileID: 5057959314667780093}
+  - component: {fileID: 5441296706918097030}
   m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
@@ -1811,6 +1812,19 @@ MonoBehaviour:
   _extrudeFrom: 0
   _extrudeTo: 1
   _uniformUvs: 0
+--- !u!114 &5441296706918097030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4797534825759199376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 097e7bf82fb04a8ab095671eba635d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BoleteRendering::BoleteHell.Rendering.SRP.SunShadows.ShadowCaster
+  _height: 0.128
 --- !u!1 &6982038961960877227
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,7 +1856,6 @@ GameObject:
   - component: {fileID: 663910842235853150}
   - component: {fileID: 6423257584744604540}
   - component: {fileID: -6112053580834267571}
-  - component: {fileID: 6523037665584608912}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -2306,16 +2319,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6523037665584608912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982038961960877227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097e7bf82fb04a8ab095671eba635d32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BoleteRendering::BoleteHell.Rendering.SRP.SunShadows.ShadowCaster
-  _height: 0.296

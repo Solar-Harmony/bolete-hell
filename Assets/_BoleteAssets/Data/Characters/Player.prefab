@@ -29,7 +29,6 @@ GameObject:
   - component: {fileID: -2896426453427459091}
   - component: {fileID: 2471000404904255701}
   - component: {fileID: 1572448583162941704}
-  - component: {fileID: -8669251058615946733}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -429,19 +428,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-8669251058615946733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9803254034568238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097e7bf82fb04a8ab095671eba635d32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BoleteRendering::BoleteHell.Rendering.SRP.SunShadows.ShadowCaster
-  _height: 0.5
 --- !u!1 &1762079061245450209
 GameObject:
   m_ObjectHideFlags: 0
