@@ -23,6 +23,9 @@ namespace BoleteHell.Rendering.SRP.SunShadows
 
         [Tooltip("Shadow length multiplier.")]
         public float LengthScale = 2.0f;
+
+        [Tooltip("Shadow length multiplier.")]
+        public float MaxLength = 12;
         
         [Tooltip("Height of the tallest shadow-casting object.")]
         public float MaxHeight = 5.0f;

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -8370527189509674810}
   - component: {fileID: 3315598625102643069}
   - component: {fileID: 5437693159795558763}
+  - component: {fileID: -6127811843720958202}
   m_Layer: 6
   m_Name: Obstacle
   m_TagString: Untagged
@@ -487,6 +488,7 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!33 &7586376362338869267
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -515,6 +517,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
@@ -536,9 +540,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &-3793088510932194491
 MonoBehaviour:
@@ -916,3 +922,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 769b1a2652f446658b67568caf51e0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6127811843720958202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080979106228210044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 097e7bf82fb04a8ab095671eba635d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BoleteRendering::BoleteHell.Rendering.SRP.SunShadows.ShadowCaster
+  _height: 0.5

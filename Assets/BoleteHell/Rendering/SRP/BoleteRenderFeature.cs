@@ -90,7 +90,7 @@ namespace BoleteHell.Rendering.SRP
             if (!_settings.SilhouetteMaterial || !_settings.FakeAOMaterial || !_settings.FakeSunShadowMaterial)
                 return;
                 
-            _silhouettePass = new ObstaclesSilhouettePass(_settings.RenderingLayerMaskName, _settings.SilhouetteMaterial)
+            _silhouettePass = new ObstaclesSilhouettePass(_settings)
             {
                 renderPassEvent = RenderPassEvent.BeforeRendering
             };

@@ -32,9 +32,13 @@ MonoBehaviour:
     EnableSunShadow: 1
     SunShadow:
       SunDirection: {x: 0.8898171, y: -0.45631737}
-      SunShadowStepSize: 0.3
-      SunShadowIntensity: 0.5
-      SunShadowSoftness: 1
+      MaxSteps: 32
+      Intensity: 0.5
+      Softness: 0
+      LengthScale: 2
+      MaxLength: 12
+      MaxHeight: 5
+      MaxMaskResolution: 4096
     FakeAORadius: 64
     EnableRippleCompute: 1
     RippleTextureResolution: 256
@@ -74,6 +78,9 @@ MonoBehaviour:
   - {fileID: 4563492160744681872}
   m_RendererFeatureMap: 90717718f1c7543f
   m_UseNativeRenderPass: 0
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
   m_HDREmulationScale: 1
@@ -116,13 +123,17 @@ MonoBehaviour:
   _settings:
     RenderingLayerMaskName: Obstacle
     ReferenceHeight: 1080
-    EnableFakeAO: 1
+    EnableFakeAO: 0
     EnableSunShadow: 1
     SunShadow:
-      SunDirection: {x: 0.7661915, y: -0.64261234}
-      SunShadowStepSize: 0.15
-      SunShadowIntensity: 0.5
-      SunShadowSoftness: 0.8
+      SunDirection: {x: 0.787505, y: -0.6163083}
+      MaxSteps: 32
+      Intensity: 0.5
+      Softness: 0
+      LengthScale: 2
+      MaxLength: 12
+      MaxHeight: 5
+      MaxMaskResolution: 4096
     FakeAORadius: 64
     EnableRippleCompute: 1
     RippleTextureResolution: 512

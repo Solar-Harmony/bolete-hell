@@ -11,10 +11,6 @@
 
            #pragma vertex vert
            #pragma fragment frag
-           
-           CBUFFER_START(UnityPerMaterial)
-                float _ShadowHeight;
-           
 
            struct Attributes
            {
@@ -35,7 +31,8 @@
  
            float4 frag(Varyings i) : SV_Target
            {
-               return float4(1, 1, 1, 1);
+               float height01 = saturate(asfloat(unity_RendererUserValue));
+               return float4(height01, 0, 0, 1);
            }
 
            ENDHLSL

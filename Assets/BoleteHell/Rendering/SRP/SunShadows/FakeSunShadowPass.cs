@@ -13,18 +13,28 @@ namespace BoleteHell.Rendering.SRP.SunShadows
 
         private static readonly int _sunDirectionId = Shader.PropertyToID("_SunDirection");
         private static readonly int _silhouetteTexId = Shader.PropertyToID("_SilhouetteTex");
-        private static readonly int _stepSizeId = Shader.PropertyToID("_StepSize");
+        private static readonly int _maxStepsId = Shader.PropertyToID("_MaxSteps");
         private static readonly int _intensityId = Shader.PropertyToID("_ShadowIntensity");
         private static readonly int _softnessId = Shader.PropertyToID("_ShadowSoftness");
+        private static readonly int _bufferOrigin = Shader.PropertyToID("_BufferOrigin");
+        private static readonly int _bufferInvSize = Shader.PropertyToID("_BufferInvSize");
+        private static readonly int _camCenter = Shader.PropertyToID("_CamCenter");
+        private static readonly int _camSize = Shader.PropertyToID("_CamSize");
+        private static readonly int _maxLengthId = Shader.PropertyToID("_ShadowMaxLength");
 
         private class FakeSunShadowPassData
         {
             public TextureHandle SilhouetteTex;
             public Material Material;
             public Vector3 SunDirection;
-            public float StepSize;
+            public int MaxSteps;
             public float Intensity;
             public float Softness;
+            public Vector2 CamCenter;
+            public Vector2 CamSize;
+            public Vector2 BufferOrigin;
+            public Vector2 BufferInvSize;
+            public float MaxLength;
         }
 
         public FakeSunShadowPass(Material passMaterial, SunShadowSettings settings)
@@ -43,9 +53,12 @@ namespace BoleteHell.Rendering.SRP.SunShadows
             if (!srcCamColor.IsValid())
                 return;
 
-            TextureHandle silhouetteTex = frameData.Get<ObstaclesSilhouetteData>().SilhouetteTex;
+            var heightField = frameData.Get<ObstaclesSilhouetteData>();
+            TextureHandle silhouetteTex = heightField.SilhouetteTex;
             if (!silhouetteTex.IsValid())
                 return;
+            
+            Camera camera = frameData.Get<UniversalCameraData>().camera;
 
             using var builder = renderGraph.AddRasterRenderPass<FakeSunShadowPassData>("Fake 2D sun shadow", out var passData);
             builder.UseTexture(silhouetteTex);
@@ -54,17 +67,29 @@ namespace BoleteHell.Rendering.SRP.SunShadows
             passData.SilhouetteTex = silhouetteTex;
             passData.Material = _passMaterial;
             passData.SunDirection = _settings.SunDirection;
-            passData.StepSize = _settings.SunShadowStepSize;
-            passData.Intensity = _settings.SunShadowIntensity;
-            passData.Softness = _settings.SunShadowSoftness;
+            passData.MaxSteps = _settings.MaxSteps;
+            passData.Intensity = _settings.Intensity;
+            passData.Softness = _settings.Softness;
+            passData.BufferOrigin = heightField.BufferOrigin;
+            passData.BufferInvSize = Vector2.one / heightField.BufferSize;
+            passData.CamCenter = camera.transform.position;
+            passData.MaxLength = _settings.MaxLength;
+            float camWidth = camera.orthographicSize * camera.aspect;
+            float camHeight = camera.orthographicSize;
+            passData.CamSize = new Vector2(camWidth, camHeight);
 
             builder.SetRenderFunc((FakeSunShadowPassData data, RasterGraphContext context) =>
             {
                 data.Material.SetTexture(_silhouetteTexId, data.SilhouetteTex);
                 data.Material.SetVector(_sunDirectionId, data.SunDirection);
-                data.Material.SetFloat(_stepSizeId, data.StepSize);
+                data.Material.SetVector(_bufferOrigin, data.BufferOrigin);
+                data.Material.SetVector(_bufferInvSize, data.BufferInvSize);
+                data.Material.SetVector(_camCenter, data.CamCenter);
+                data.Material.SetVector(_camSize, data.CamSize);
+                data.Material.SetInteger(_maxStepsId, data.MaxSteps);
                 data.Material.SetFloat(_intensityId, data.Intensity);
                 data.Material.SetFloat(_softnessId, data.Softness);
+                data.Material.SetFloat(_maxLengthId, data.MaxLength);
                 Blitter.BlitTexture(context.cmd, srcCamColor, new Vector4(1, 1, 0, 0), data.Material, 0);
             });
         }
