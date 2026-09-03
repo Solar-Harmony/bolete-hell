@@ -126,12 +126,12 @@ MonoBehaviour:
     EnableFakeAO: 0
     EnableSunShadow: 1
     SunShadow:
-      SunDirection: {x: 0.83205026, y: -0.5547002}
-      MaxSteps: 32
-      Intensity: 1
+      SunDirection: {x: -0.10889872, y: 0.9940528}
+      MaxSteps: 64
+      Intensity: 0.5
       Softness: 0
       LengthScale: 2
-      MaxLength: 12
+      MaxLength: 25.49
       MaxHeight: 5
       MaxMaskResolution: 4096
     FakeAORadius: 64

@@ -66,7 +66,7 @@ namespace BoleteHell.Rendering.SRP.SunShadows
 
             passData.SilhouetteTex = silhouetteTex;
             passData.Material = _passMaterial;
-            passData.SunDirection = _settings.SunDirection;
+            passData.SunDirection = _settings.MarchDirection;
             passData.MaxSteps = _settings.MaxSteps;
             passData.Intensity = _settings.Intensity;
             passData.Softness = _settings.Softness;

@@ -1,6 +1,5 @@
 using System;
 using BoleteHell.Utils;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace BoleteHell.Rendering.SRP.SunShadows
@@ -9,8 +8,10 @@ namespace BoleteHell.Rendering.SRP.SunShadows
     public class SunShadowSettings
     {
         [AnglePicker]
-        [Tooltip("Sun direction for shadow raymarching.")]
+        [Tooltip("Direction the sun shadows are cast towards, matching the angle picker.")]
         public Vector2 SunDirection = new(0.1f, 0.1f);
+        
+        public Vector2 MarchDirection => -SunDirection;
 
         [Tooltip("Step count for shadow raymarching.")]
         public int MaxSteps = 32;

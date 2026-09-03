@@ -18,7 +18,6 @@ namespace BoleteHell.Utils
             const float radius = 1f;
 
             Vector2 vec = ValueEntry.SmartValue;
-            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
             Rect rect = EditorGUILayout.GetControlRect(false, 80);
             Rect discRect = new Rect(rect.x, rect.y + 20, rect.width, 60);
             Vector2 center = new Vector2(discRect.x + discRect.width / 2f, discRect.y + discRect.height / 2f);
@@ -29,17 +28,16 @@ namespace BoleteHell.Utils
             
             if (ShouldUseEvent(e, discRect, mouse, id))
             {
-                Vector2 local = -(mouse - center);
+                // GUI y grows downward; flip it so the stored vector is y-up (+x = right, +y = up),
+                // matching how the value is consumed (world / screen space).
+                Vector2 local = new Vector2(mouse.x - center.x, -(mouse.y - center.y));
                 if (local.sqrMagnitude > 0.00001f)
-                {
-                    angle = Mathf.Atan2(local.y, local.x) * Mathf.Rad2Deg;
-                    vec = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                }
+                    vec = local.normalized;
 
                 e.Use();
             }
 
-            DrawDialControl(label, rect, discRect, center, radiusPx, angle);
+            DrawDialControl(label, rect, discRect, center, radiusPx, vec);
 
             ValueEntry.SmartValue = vec;
         }
@@ -61,7 +59,7 @@ namespace BoleteHell.Utils
             }
         }
 
-        private static void DrawDialControl(GUIContent label, Rect rect, Rect discRect, Vector2 center, float radiusPx, float angle)
+        private static void DrawDialControl(GUIContent label, Rect rect, Rect discRect, Vector2 center, float radiusPx, Vector2 direction)
         {
             EditorGUI.LabelField(rect, label);
             EditorGUI.DrawRect(discRect, new Color(0f, 0f, 0f, 0.08f));
@@ -71,15 +69,14 @@ namespace BoleteHell.Utils
                 Handles.color = Color.gray;
                 Handles.DrawWireDisc(center, Vector3.forward, radiusPx);
 
-                // angle line
-                Vector2 dir = -new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                Vector3 to = center + dir * radiusPx;
+                // angle line: direction is y-up, but GUI y grows downward, so flip y when projecting.
+                Vector2 knob = center + new Vector2(direction.x, -direction.y) * radiusPx;
                 Handles.color = Color.yellow;
-                Handles.DrawLine(center, to);
+                Handles.DrawLine(center, knob);
 
                 // knob
                 float knobSize = 6f;
-                Rect knobRect = new Rect(to.x - knobSize * 0.5f, to.y - knobSize * 0.5f, knobSize, knobSize);
+                Rect knobRect = new Rect(knob.x - knobSize * 0.5f, knob.y - knobSize * 0.5f, knobSize, knobSize);
                 EditorGUI.DrawRect(knobRect, Color.white);
             }
             Handles.EndGUI();

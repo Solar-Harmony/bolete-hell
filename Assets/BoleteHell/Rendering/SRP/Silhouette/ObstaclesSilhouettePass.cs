@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BoleteHell.Rendering.SRP.SunShadows;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
@@ -27,6 +26,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
         private readonly RenderingLayerMask _renderingLayerMask;
         private readonly Material _overrideMaterial;
         private readonly BoleteRenderingSettings _settings;
+        private static readonly int _worldToBufferClipId = Shader.PropertyToID("_WorldToBufferClip");
         
         public ObstaclesSilhouettePass(BoleteRenderingSettings settings)
         {
@@ -61,7 +61,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             // compute overscan bounds so that all shadow casters are included
             float worldPerPixel = 2 * halfHeight / camera.pixelHeight;
             float worldAOPad = _settings.FakeAORadius * worldPerPixel + 2 * worldPerPixel;
-            Vector2 sunDir = _settings.SunShadow.SunDirection;
+            Vector2 sunDir = _settings.SunShadow.MarchDirection;
             float maxLen = _settings.SunShadow.MaxLength;
             Rect bufferRect = new(
                 cameraRect.xMin + Mathf.Min(0, sunDir.x) * maxLen - worldAOPad,
@@ -89,10 +89,23 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             // custom culling 
             camera.TryGetCullingParameters(out var cullingParams);
             Vector2 bufferCenter = origin + size * 0.5f;
-            var proj = Matrix4x4.Ortho(-size.x / 2.0f, size.x / 2f, -size.y / 2f, size.y / 2f, -1000, 1000);
-            var worldToClip = proj * Matrix4x4
-                .TRS(new Vector3(bufferCenter.x, bufferCenter.y, camera.transform.position.z), Quaternion.identity,
-                    Vector3.one).inverse;
+            var proj = Matrix4x4.Ortho(
+                -size.x / 2f,
+                size.x / 2f,
+                -size.y / 2f,
+                size.y / 2f,
+                -1000f,
+                1000f
+            );
+            proj = GL.GetGPUProjectionMatrix(proj, true);
+
+            var view = Matrix4x4.TRS(
+                new Vector3(bufferCenter.x, bufferCenter.y, camera.transform.position.z),
+                Quaternion.identity,
+                Vector3.one
+            ).inverse;
+            var worldToClip = proj * view;
+            
             cullingParams.isOrthographic = true;
             cullingParams.cullingOptions = CullingOptions.None;
             cullingParams.shadowDistance = 0f;
@@ -140,7 +153,7 @@ namespace BoleteHell.Rendering.SRP.Silhouette
             
             builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
             {
-                data.Mat.SetMatrix(Shader.PropertyToID("_WorldToBufferClip"), worldToClip);
+                data.Mat.SetMatrix(_worldToBufferClipId, worldToClip);
                 context.cmd.ClearRenderTarget(RTClearFlags.Color, Color.clear, 1, 0);
                 context.cmd.DrawRendererList(data.RendererListHandle);
             });

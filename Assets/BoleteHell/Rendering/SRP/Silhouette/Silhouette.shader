@@ -12,7 +12,9 @@
            #pragma vertex vert
            #pragma fragment frag
 
+           CBUFFER_START(UnityPerMaterial)
            float4x4 _WorldToBufferClip;
+           CBUFFER_END
 
            struct Attributes
            {
